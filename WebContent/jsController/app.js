@@ -8,7 +8,7 @@ var session = {
     testText : '我在这里存放全局缓存数据'
 };
 function login(){
-	$('#ff').form({
+	$('#login_form').form({
 		
 	})
 }
