@@ -67,7 +67,7 @@ public class UserController {
 		json.setSuccess(true);
 		return json;
 	}
-	@RequestMapping(value="/login",method=RequestMethod.POST)
+	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public String login(UserInfo userInfo, HttpServletRequest request, HttpSession session, Model model ){
 		String password = userInfo.getPassword();
 		userInfo = userService.findUser(userInfo);
@@ -86,6 +86,30 @@ public class UserController {
 		}
 		return "redirect:/login.jsp";
 //		return "login.jsp";
+	}
+	
+	@RequestMapping(value = "login",method = RequestMethod.POST)
+	@ResponseBody
+	public Json login(UserInfo userInfo, HttpServletRequest request, HttpSession session){
+		String password = userInfo.getPassword();
+		userInfo = userService.findUser(userInfo);
+		Json data = new Json();
+		if(null != userInfo){
+			if(password == userInfo.getPassword()){
+				userInfo.setIp(IpUtil.getIpAddr(request));
+				session.setAttribute(ResourceUtil.getSessionInfoName(), userInfo);
+				data.setSuccess(true);
+				data.setMsg("登陆成功");
+				data.setObj(userInfo);
+			}else{
+				data.setSuccess(false);
+				data.setMsg("您输入的密码有误！");
+			}
+		}else{
+			data.setSuccess(false);
+			data.setMsg("您输入的账号不存在！");
+		}
+		return data;
 	}
 	
 }
