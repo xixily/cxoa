@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>登陆</title>
+<title>超星OA登陆</title>
 <jsp:include page="inc.jsp"></jsp:include>
 <script type="text/javascript">
 $(document).ready(function () {
@@ -22,7 +22,7 @@ $(document).ready(function () {
 <body>
 <div id="dlg" class="easyui-dialog" title="登陆窗口" data-options="iconCls:'icon-save'" style="width:400px;padding:10px">
     <div style="padding:10px 60px 20px 60px">
-        <form id="ff" method="post" action="user/login.action">
+        <form id="login_frm" method="post" action="user/login.action">
             <table cellpadding="8">
                 <tr>
                     <td>登陆邮箱:</td>
@@ -34,7 +34,7 @@ $(document).ready(function () {
                 </tr>
             </table>
             <input style="margin-left:40px;"  type="submit" value="登陆">
-            <input style="margin-left:80px;" type="button" value="重置" onclick="$('#ff').form('clear')">
+            <input style="margin-left:80px;" type="button" value="重置" onclick="$('#login_frm').form('clear')">
             <br>
         </form>
     </div>

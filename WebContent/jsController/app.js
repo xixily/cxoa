@@ -4,7 +4,6 @@ $.ajaxSetup({
 var session = {
     logined : false,
     user : {},
-    renshiUserName : {},
     testText : '我在这里存放全局缓存数据'
 };
 $(window).on('beforeunload', function (e) {
@@ -13,6 +12,9 @@ $(window).on('beforeunload', function (e) {
     	return '警告：请使用系统的退出按钮正常退出系统!';
     }
 });
+/**
+ * 此login方法暂时弃用。
+ */
 function login(){
 	$('#login_form').form('submit', {
 		onSubmit: function(){
@@ -32,13 +34,99 @@ function login(){
 				session.user = data.obj;
 				$('#main_body').css('display','');
 				$('#login_dlg').dialog('close');
+				initClickHandler();
 				west.initWestTree();
-				center.queryEmployee();
+				center.initEmployee();
 			}
 		}
 	});
 }
+/**
+ * @author dengxuefeng
+ * @requires jquery.js easyui.js
+ * 初始化
+ */
+function initClickHandler() {
+    $(document).on("click", ".do_action", function(event) {
+        console.log('do_action!');
+        event.preventDefault();//关闭默认事件
+        event.stopImmediatePropagation();//停止冒泡
+        var src = $(event.currentTarget);
+        var action = src.attr("appaction");
+        var frm = src.closest("form");
+        if(!frm.form('validate')){
+            console.log('form 表单校验失败！');
+            return false;
+        }
+        var data = getDataOfForm(frm);
+        console.log('o%', data);
+        if (data.succeed) {
+            var actionHandler = eval(action);//jQuery.gloabEval()全局方法
+            if (actionHandler) {
+                actionHandler(data.data, src);
+            } else {
+                console.log('action handler [' + action + '] is not support!');
+            }
+        }
+    });
+}
 
+/**
+ * @author dengxuefeng
+ * @requires jquery.js
+ * 遍历form表单，取出input,textarea,select里面的值，返回data
+ */
+function getDataOfForm(form) {
+    var succeed = true;
+    var data = {};
+    var inputs = form.find("input,textarea,select");
+    if (inputs) {
+        for (var i = 0; i < inputs.length; i++) {
+            var ele = $(inputs[i]);
+            var name = ele.attr("name");
+            var value = $.trim(ele.val());
+            if (value.indexOf("****") != -1 && ele.attr("shieldedTel")) {
+                value = ele.attr("shieldedTel") || '';
+            }
+            if (ele[0].type == 'checkbox') {
+                var isGroup = ele.attr("fieldgroup");
+                if (isGroup) {
+                    if (!ele[0].checked) {
+                        continue;
+                    }
+                } else {
+                    value = ele[0].checked;
+                }
+            } else if (ele[0].type == 'radio') {
+                if (ele[0].checked)
+                    data[name] = value; else continue;
+            }
+            if (!name)
+                continue;
+
+            if (name.match(/\w\[\]/g)) {
+                name = name.substring(0, name.length - 2);
+                if (!data[name]) {
+                    data[name] = new Array();
+                }
+                data[name].push(value);
+            } else if ((ele[0].tagName).toLowerCase() == "select" && ele[0].name == 'role') {
+                data[name] = new Array();
+                var options = ele[0].options;
+                for (var j = 0, len = options.length; j < len; j++) {
+                    data[name].push(options[j].value);
+                }
+            }else {
+                data[name] = value;
+
+            }
+        }
+    }
+    return {
+        succeed: succeed,
+        data: data
+    };
+}
 
 /**
  * @author dengxf

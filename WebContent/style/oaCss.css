@@ -1,3 +1,9 @@
+.btn-separator {
+	height: 24px;
+	border-left: 1px solid LightGrey;
+	border-right: 0px solid LightGrey;
+	margin: 1px 1px;  
+}  
 .tableForm {
 	border-collapse: collapse;
 }

@@ -67,7 +67,7 @@ public class UserController {
 		json.setSuccess(true);
 		return json;
 	}
-	@RequestMapping(value="/login",method=RequestMethod.GET)
+	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public String login(UserInfo userInfo, HttpServletRequest request, HttpSession session, Model model ){
 		String password = userInfo.getPassword();
 		userInfo = userService.findUser(userInfo);
@@ -88,7 +88,7 @@ public class UserController {
 //		return "login.jsp";
 	}
 	
-	@RequestMapping(value = "login",method = RequestMethod.POST)
+	@RequestMapping(value = "login",method = RequestMethod.GET)
 	@ResponseBody
 	public Json login(UserInfo userInfo, HttpServletRequest request, HttpSession session){
 		String password = userInfo.getPassword();

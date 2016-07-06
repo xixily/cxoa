@@ -1,14 +1,15 @@
 package com.chaoxing.oa.service;
 
 import java.util.List;
+import java.util.Map;
 
-import com.chaoxing.oa.entity.page.Pager;
 import com.chaoxing.oa.entity.page.RenshiEmployeeInfo;
+import com.chaoxing.oa.entity.page.UserInfo;
 
 public interface EmployeeInfoServiceI {
 	public List<RenshiEmployeeInfo> getRenshiUserName();
 
-	public List<RenshiEmployeeInfo> getRenshiUserName(RenshiEmployeeInfo page);
+	public Map<String, Object> getRenshiUserName(UserInfo page);
 
-	public long getRenshiUserNameCount();
+	public long getRenshiUserNameCount(String hql, Map<String, Object> params);
 }

@@ -58,7 +58,7 @@ public class UserName implements Serializable {
 	private String Postcode;//邮编
 	private String remarks;//备注
 	private String contractNumber;//合同编号
-	private String dueSocialSecurity;//终止时间
+	private String dueSocialSecurity;//计划入保时间
 	private String socialSecurityHospital;//社保医院
 	private String level;//级别
 	private String recruitmentSources;//招聘来源

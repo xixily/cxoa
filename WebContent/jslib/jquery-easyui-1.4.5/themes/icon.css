@@ -19,6 +19,9 @@
 .icon-cut{
 	background:url('icons/cut.png') no-repeat center center;
 }
+.icon-copy{
+	background:url('icons/copy.png') no-repeat center center;
+}
 .icon-ok{
 	background:url('icons/ok.png') no-repeat center center;
 }
@@ -36,6 +39,9 @@
 }
 .icon-print{
 	background:url('icons/print.png') no-repeat center center;
+}
+.icon-export{
+	background:url('icons/export.png') no-repeat center center;
 }
 .icon-help{
 	background:url('icons/help.png') no-repeat center center;

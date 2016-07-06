@@ -5,6 +5,39 @@
 <head>
 <title>超星自动化办公系统</title>
 <jsp:include page="inc.jsp"></jsp:include>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsController/app.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsController/north.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsController/west.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsController/center.js"></script>
+<!-- 登陆窗口  -->
+	<c:if test="${sessionInfo != null}">
+		<%-- <jsp:include page="layout/components/logindialog.jsp"></jsp:include> --%>
+		<script type="text/javascript">
+		session.logined = true;
+		session.user.ID = '${sessionInfo.ID }';
+		session.user.username = '${sessionInfo.username }';
+		session.user.email = '${sessionInfo.email}';
+		session.user.rights = '${sessionInfo.rights}';
+		session.user.departmentId = '${sessionInfo.departmentId}';
+		session.user.position = '${sessionInfo.position}';
+		session.user.sex = '${sessionInfo.sex}';
+		session.user.phoneNumber = '${sessionInfo.phoneNumber}';
+		session.user.position = '${sessionInfo.position}';
+		session.user.position = '${sessionInfo.position}';
+		initClickHandler();
+		</script> 
+	  	<!-- $(document).ready(function () {
+			$('#login_dlg').dialog('close');
+		 	if(!session.logined){
+				$('#main_body').css('display','none');
+				$('#login_dlg').dialog('open');
+				$('#login_dlg').dialog({modal: true});
+			}else{
+				$('#main_body').css('display','');
+				$('#login_dlg').dialog('close');
+			} 
+			}) -->
+	 </c:if>
 </head>
 <body id = "body" class="easyui-layout">
 	<div id="main_body" class="easyui-layout" style="width:100%;height:100%;">
@@ -20,22 +53,6 @@
 		
 		<div data-options="region:'south',href:'${pageContext.request.contextPath}/layout/south.jsp'" style="height: 27px;overflow: hidden;"></div>
 	</div>
-	<!-- 登陆窗口  -->
-	<%--  <c:if test="${sessionInfo == null}"> --%>
-		<jsp:include page="layout/components/logindialog.jsp"></jsp:include>
-		<script type="text/javascript">
-	 	 $(document).ready(function () {
-			$('#login_dlg').dialog('close');
-		 	if(!session.logined){
-				$('#main_body').css('display','none');
-				$('#login_dlg').dialog('open');
-				$('#login_dlg').dialog({modal: true});
-			}else{
-				$('#main_body').css('display','');
-				$('#login_dlg').dialog('close');
-			} 
-			})  
-		</script>
-<%-- 	</c:if> --%>
+	
 </body>
 </html>

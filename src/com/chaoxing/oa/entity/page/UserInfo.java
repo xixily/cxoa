@@ -2,10 +2,16 @@ package com.chaoxing.oa.entity.page;
 
 
 public class UserInfo {
+	/**
+	 * 分页项
+	 */
 	private int page;
 	private int rows;
-	private String sort;
-	private String order_by;
+	private String sortName;
+	private String sortOrder;
+	/**
+	 * 信息项
+	 */
 	private String ip;
 	private int ID;//ID
 	private String email;//邮箱
@@ -65,11 +71,14 @@ public class UserInfo {
 	public int getRows() {
 		return rows;
 	}
-	public String getSort() {
-		return sort;
+	public String getSortName() {
+		return sortName;
 	}
-	public String getOrder_by() {
-		return order_by;
+	public String getSortOrder() {
+		return sortOrder;
+	}
+	public String getIp() {
+		return ip;
 	}
 	public int getID() {
 		return ID;
@@ -233,11 +242,14 @@ public class UserInfo {
 	public void setRows(int rows) {
 		this.rows = rows;
 	}
-	public void setSort(String sort) {
-		this.sort = sort;
+	public void setSortName(String sortName) {
+		this.sortName = sortName;
 	}
-	public void setOrder_by(String order_by) {
-		this.order_by = order_by;
+	public void setSortOrder(String sortOrder) {
+		this.sortOrder = sortOrder;
+	}
+	public void setIp(String ip) {
+		this.ip = ip;
 	}
 	public void setID(int iD) {
 		ID = iD;
@@ -395,12 +407,27 @@ public class UserInfo {
 	public void setIfSecret(int ifSecret) {
 		this.ifSecret = ifSecret;
 	}
-	public String getIp() {
-		return ip;
+	@Override
+	public String toString() {
+		return "UserInfo [page=" + page + ", rows=" + rows + ", sortName=" + sortName + ", sortOrder=" + sortOrder
+				+ ", ip=" + ip + ", ID=" + ID + ", email=" + email + ", username=" + username + ", password=" + password
+				+ ", rights=" + rights + ", departmentId=" + departmentId + ", position=" + position + ", sex=" + sex
+				+ ", identityCard=" + identityCard + ", borthDay=" + borthDay + ", nation=" + nation + ", degree="
+				+ degree + ", graduatedSchool=" + graduatedSchool + ", major=" + major + ", phoneNumber=" + phoneNumber
+				+ ", homeAddress=" + homeAddress + ", homeNumber=" + homeNumber + ", hiredate=" + hiredate
+				+ ", zhuanzhengTime=" + zhuanzhengTime + ", pastLeaveTime=" + pastLeaveTime + ", earlyEntryDate="
+				+ earlyEntryDate + ", householdType=" + householdType + ", insurance=" + insurance
+				+ ", insuranceCompany=" + insuranceCompany + ", company=" + company + ", resume=" + resume + ", photo="
+				+ photo + ", degreeCertificate=" + degreeCertificate + ", identityCardCopy=" + identityCardCopy
+				+ ", familyRegister=" + familyRegister + ", leavingCertificate=" + leavingCertificate + ", contract="
+				+ contract + ", managementSystem=" + managementSystem + ", entryForm=" + entryForm + ", signedTime="
+				+ signedTime + ", terminationTime=" + terminationTime + ", registeredAddress=" + registeredAddress
+				+ ", Postcode=" + Postcode + ", remarks=" + remarks + ", contractNumber=" + contractNumber
+				+ ", dueSocialSecurity=" + dueSocialSecurity + ", socialSecurityHospital=" + socialSecurityHospital
+				+ ", level=" + level + ", recruitmentSources=" + recruitmentSources + ", contractRenewal="
+				+ contractRenewal + ", originalNumber=" + originalNumber + ", secrecyAgreement=" + secrecyAgreement
+				+ ", reportForm=" + reportForm + ", panCard=" + panCard + ", leaveTime=" + leaveTime + ", workPlace="
+				+ workPlace + ", ifSecret=" + ifSecret + "]";
 	}
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-
 
 }

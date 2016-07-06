@@ -1,6 +1,6 @@
 var center = {
-		queryEmployee : function(data, user){
-			console.log("center.queryEmployee!");
+		initEmployee : function(data, user){
+			console.log("center.initEmployee!");
 			$('#employee_datas').datagrid({
 				title : '职工信息列表',
 				iconCls : 'icon-edit',// 图标
@@ -8,15 +8,15 @@ var center = {
 				fitColumns : true,
 				singleSelect : true,
 				url : 'employee/renshiUser.action',
-				queryParams : {
-					userName : '郭玉',
-					sex : '女',
-					position : '细胞核',
-					department : '人事'
-				},
+//				queryParams : {
+//					userName : '郭玉',
+//					sex : '女',
+//					position : '细胞核',
+//					department : '人事'
+//				},
 				singleSelect : true,// 是否单选
 				pagination : true,// 分页控件
-				pageSize : 15,
+				pageSize : 10,
 				pageList : [ 10, 15, 20, 30, 50, 100 ],
 				rownumbers : true,// 行号
 				columns : [ [ {
@@ -72,32 +72,14 @@ var center = {
 					title : '学历',
 					width : 80
 				} ] ],
-				toolbar : [ {
-					text : '编辑',
-					iconCls : 'icon-edit',
-					handler : function() {
-						editEmployee('edit')
-					}
-				}, '-', {
-					text : '增加',
-					iconCls : 'icon-add',
-					handler : function() {
-						addEmployee('add')
-					}
-				}, '-', {
-					text : '删除',
-					iconCls : 'icon-cancel',
-					handler : function() {
-						deleteEmployee('delete')
-					}
-				}, '-', {
-					text : '帮助',
-					iconCls : 'icon-help',
-					handler : function() {
-						helpEmployee('help')
-					}
-				} ]
+				toolbar : '#renshi_toolbar'
 			});
+		},
+		queryEmployee: function(data, src){
+			console.log("center.initEmployee!");
+			$('#employee_datas').datagrid({
+				queryParams : data
+			})
 		},
 		editEmployee : function(){
 			console.log('editEmployee');
