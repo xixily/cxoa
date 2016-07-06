@@ -2,15 +2,41 @@ $.ajaxSetup({
     cache: true
 });
 var session = {
-    logined : true,
+    logined : false,
     user : {},
     renshiUserName : {},
     testText : '我在这里存放全局缓存数据'
 };
+$(window).on('beforeunload', function (e) {
+    if (session.logined){
+    	north.logoutFun();
+    	return '警告：请使用系统的退出按钮正常退出系统!';
+    }
+});
 function login(){
-	$('#login_form').form({
-		
-	})
+	$('#login_form').form('submit', {
+		onSubmit: function(){
+			var isValid = $(this).form('validate');
+			if (!isValid){
+				console.log('登陆校验失败！');
+				$.messager.progress('close');	// hide progress bar while the form is invalid
+			}
+			return isValid;	// return false will stop the form submission
+		},
+		success: function(data_string){
+			var data = $.parseJSON(data_string);
+			console.log('o%', data);
+			$.messager.progress('close');	// hide progress bar while submit successfully
+			if(data.success){
+				session.logined = data.success;
+				session.user = data.obj;
+				$('#main_body').css('display','');
+				$('#login_dlg').dialog('close');
+				west.initWestTree();
+				center.queryEmployee();
+			}
+		}
+	});
 }
 
 

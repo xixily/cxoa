@@ -21,7 +21,7 @@
 		<div data-options="region:'south',href:'${pageContext.request.contextPath}/layout/south.jsp'" style="height: 27px;overflow: hidden;"></div>
 	</div>
 	<!-- 登陆窗口  -->
-	<%-- <c:if test="${sessionInfo == null}">
+	<%--  <c:if test="${sessionInfo == null}"> --%>
 		<jsp:include page="layout/components/logindialog.jsp"></jsp:include>
 		<script type="text/javascript">
 	 	 $(document).ready(function () {
@@ -31,10 +31,11 @@
 				$('#login_dlg').dialog('open');
 				$('#login_dlg').dialog({modal: true});
 			}else{
+				$('#main_body').css('display','');
 				$('#login_dlg').dialog('close');
 			} 
 			})  
 		</script>
-	</c:if> --%>
+<%-- 	</c:if> --%>
 </body>
 </html>
