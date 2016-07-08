@@ -39,3 +39,17 @@
 img {
 	cursor: pointer;
 }
+
+td .comboxy {
+	border: 1px dashed LightGrey;
+	padding-top: 6px;
+	padding-left: 1px;
+}
+
+td .comboxy .combtitle {
+	display: block;
+	float: left;
+	font-size: 12px;
+	margin-top: -14px;
+	color: #999999
+}

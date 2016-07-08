@@ -129,6 +129,44 @@ function getDataOfForm(form) {
 }
 
 /**
+ * @author dengxuef
+ * 
+ * @requires jQuery
+ * 
+ * @params action : {url:'',data:data}<br/>callback回调函数<br/>method 默认get<br/>async 是否异步<br/>timeout 超时时间
+ * 
+ * @description 发送do_action 请求 
+ */
+function sendAction(action, callback, method, async, timeout) {
+	async = async ? true : false;
+	method = (method && method == "post") ? 'post' : 'get';
+	timeout = timeout ? timeout : 20000;
+	if (!session.logined) {
+		alert('即将退出,请您先登陆！');
+		north.logoutFun();
+	}
+	if (!action.url) {
+		alert('您的请求不存在！');
+		return false;
+	}
+	$.ajax({
+		type : method,
+		url : action.url,
+		async : async,
+		data : action.data,
+		timeout : timeout,
+		dataType : "json",
+		success : function(data) {
+			if (data.succeed) {
+				callback(data.obj);
+			} else {
+				alert('请求失败！');
+			}
+		}
+	})
+}
+
+/**
  * @author dengxf
  * 
  * @requires jQuery,EasyUI
@@ -374,7 +412,7 @@ $.fn.panel.defaults.onMove = easyuiPanelOnMove;
  * @param themeName
  *            主题名称
  */
-changeTheme = function(themeName) {
+var changeTheme = function(themeName) {
 	var $easyuiTheme = $('#easyuiTheme');
 	var url = $easyuiTheme.attr('href');
 	var href = url.substring(0, url.indexOf('themes')) + 'themes/' + themeName + '/easyui.css';

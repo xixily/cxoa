@@ -92,6 +92,9 @@ var center = {
 		},
 		helpEmployee : function(){
 			console.log('helpEmployee');
+		},
+		findCompany : function(dom){
+			
 		}
 }
 /**

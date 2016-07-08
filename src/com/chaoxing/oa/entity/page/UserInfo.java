@@ -65,6 +65,12 @@ public class UserInfo {
 	private String leaveTime;//离职时间
 	private String workPlace;//工作地点
 	private int ifSecret;//是否保密
+	/**
+	 * 可配置项
+	 * @return
+	 */
+	private String configurable;
+	private String configurable_value;
 	public int getPage() {
 		return page;
 	}
@@ -406,6 +412,19 @@ public class UserInfo {
 	}
 	public void setIfSecret(int ifSecret) {
 		this.ifSecret = ifSecret;
+	}
+	
+	public String getConfigurable() {
+		return configurable;
+	}
+	public String getConfigurable_value() {
+		return configurable_value;
+	}
+	public void setConfigurable(String configurable) {
+		this.configurable = configurable;
+	}
+	public void setConfigurable_value(String configurable_value) {
+		this.configurable_value = configurable_value;
 	}
 	@Override
 	public String toString() {

@@ -3,6 +3,7 @@ package com.chaoxing.oa.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chaoxing.oa.entity.page.Json;
+import com.chaoxing.oa.entity.page.PCompany;
 import com.chaoxing.oa.entity.page.UserInfo;
 import com.chaoxing.oa.service.UserServiceI;
 import com.chaoxing.oa.util.IpUtil;
@@ -75,6 +77,8 @@ public class UserController {
 			if(password == userInfo.getPassword()){
 				userInfo.setIp(IpUtil.getIpAddr(request));
 				session.setAttribute(ResourceUtil.getSessionInfoName(), userInfo);
+				session.setAttribute("companys", userService.getCompany());
+				session.setAttribute("levels", userService.getLevel());
 				return "redirect:/index.jsp";
 			}else{
 				Map<String, String> info = new HashMap<String, String>();
@@ -88,7 +92,7 @@ public class UserController {
 //		return "login.jsp";
 	}
 	
-	@RequestMapping(value = "login",method = RequestMethod.GET)
+	/*@RequestMapping(value = "/login",method = RequestMethod.GET)
 	@ResponseBody
 	public Json login(UserInfo userInfo, HttpServletRequest request, HttpSession session){
 		String password = userInfo.getPassword();
@@ -98,6 +102,9 @@ public class UserController {
 			if(password == userInfo.getPassword()){
 				userInfo.setIp(IpUtil.getIpAddr(request));
 				session.setAttribute(ResourceUtil.getSessionInfoName(), userInfo);
+				session.setAttribute("companys", userService.getCompany());
+//				System.out.println("companys" + session.getAttribute("companys"));
+//				System.out.println("sessionInfo" + session.getAttribute("sessionInfo"));
 				data.setSuccess(true);
 				data.setMsg("登陆成功");
 				data.setObj(userInfo);
@@ -110,6 +117,12 @@ public class UserController {
 			data.setMsg("您输入的账号不存在！");
 		}
 		return data;
+	}*/
+	
+	@RequestMapping(value = "/getCompany", method = RequestMethod.GET)
+	@ResponseBody
+	public List<PCompany> getCompany(){
+		return userService.getCompany();
 	}
 	
 }

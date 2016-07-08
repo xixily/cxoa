@@ -84,6 +84,11 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 
 	protected void addCondition(StringBuffer hql, UserInfo page, Map<String, Object> params) {
 		if(page != null){
+			if(page.getConfigurable() != null && page.getConfigurable() != ""){
+				if(page.getConfigurable_value() != null && page.getConfigurable_value() != ""){
+					hql.append(" and t." + page.getConfigurable() + " like '%" + page.getConfigurable_value() + "%' ");
+				}
+			}
 			if(page.getUsername() != null && page.getUsername() != ""){
 				hql.append(" and t.username like :username ");
 				params.put("username", "%" + page.getUsername() + "%");
