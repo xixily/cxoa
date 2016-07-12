@@ -57,9 +57,11 @@ public class PUserName implements Serializable {
 	private String workPlace;//工作地点
 	private String email;//邮箱
 	private int ifSecret;//是否保密
-	public int getID() {
-		return ID;
-	}
+	private String firstLevel;//一级
+	private String secondLevel;//二级
+	private String thirdLevel;//三级
+	private String fourthLevel;//四级
+	
 	public String getUsername() {
 		return username;
 	}
@@ -215,6 +217,9 @@ public class PUserName implements Serializable {
 	}
 	public int getIfSecret() {
 		return ifSecret;
+	}
+	public int getID() {
+		return ID;
 	}
 	public void setID(int iD) {
 		ID = iD;
@@ -374,6 +379,30 @@ public class PUserName implements Serializable {
 	}
 	public void setIfSecret(int ifSecret) {
 		this.ifSecret = ifSecret;
+	}
+	public String getFirstLevel() {
+		return firstLevel;
+	}
+	public String getSecondLevel() {
+		return secondLevel;
+	}
+	public String getThirdLevel() {
+		return thirdLevel;
+	}
+	public String getFourthLevel() {
+		return fourthLevel;
+	}
+	public void setFirstLevel(String firstLevel) {
+		this.firstLevel = firstLevel;
+	}
+	public void setSecondLevel(String secondLevel) {
+		this.secondLevel = secondLevel;
+	}
+	public void setThirdLevel(String thirdLevel) {
+		this.thirdLevel = thirdLevel;
+	}
+	public void setFourthLevel(String fourthLevel) {
+		this.fourthLevel = fourthLevel;
 	}
 	
 

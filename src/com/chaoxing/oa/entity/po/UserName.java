@@ -19,7 +19,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicInsert(true)
 public class UserName implements Serializable {
 	private static final long serialVersionUID = -3664636485351959352L;
-	private int ID;//ID
+	private int id;//ID
 	private String username;//用户姓名
 	private String password;//用户密码
 	private int roleId;//权限
@@ -77,11 +77,11 @@ public class UserName implements Serializable {
 	@Id
 	@Column(name="ID", nullable=false)
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public int getID() {
-		return ID;
+	public int getId() {
+		return id;
 	}
-	public void setID(int iD) {
-		ID = iD;
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	@Column(name="username")
@@ -458,7 +458,7 @@ public class UserName implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "UserName [ID=" + ID + ", username=" + username + ", password=" + password + ", rights=" + roleId
+		return "UserName [id=" + id + ", username=" + username + ", password=" + password + ", rights=" + roleId
 				+ ", departmentId=" + departmentId + ", position=" + position + ", sex=" + sex + ", identityCard="
 				+ identityCard + ", borthDay=" + borthDay + ", nation=" + nation + ", degree=" + degree
 				+ ", graduatedSchool=" + graduatedSchool + ", major=" + major + ", phoneNumber=" + phoneNumber

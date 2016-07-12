@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.chaoxing.oa.dao.BaseDaoI;
 import com.chaoxing.oa.entity.page.PUser;
 import com.chaoxing.oa.entity.page.PUserName;
+import com.chaoxing.oa.entity.po.OrganizationStructure;
 import com.chaoxing.oa.entity.po.UserName;
 import com.chaoxing.oa.service.UserServiceI;
 
@@ -20,6 +21,16 @@ public class UserServiceImpl implements UserServiceI {
 	private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
 
 	private BaseDaoI<UserName> usernameDao;
+	private BaseDaoI<OrganizationStructure> ogsDao;
+
+	
+	public BaseDaoI<OrganizationStructure> getOgsDao() {
+		return ogsDao;
+	}
+	@Autowired
+	public void setOgsDao(BaseDaoI<OrganizationStructure> ogsDao) {
+		this.ogsDao = ogsDao;
+	}
 
 	public BaseDaoI<UserName> getUsernameDao() {
 		return usernameDao;
@@ -55,8 +66,10 @@ public class UserServiceImpl implements UserServiceI {
 		params.put("id", id);
 		UserName username = usernameDao.get("from UserName u where u.id = :id", params);
 		if(username!=null){
+			OrganizationStructure ogs = ogsDao.get("from OrganizationStructure o where o.id=" + username.getDepartmentId());
 			pusername = new PUserName();
 			BeanUtils.copyProperties(username, pusername);
+			BeanUtils.copyProperties(ogs, pusername);
 		}
 		return pusername;
 	}
@@ -82,8 +95,21 @@ public class UserServiceImpl implements UserServiceI {
 		try {
 			return (Long) usernameDao.save(u);
 		} catch (Exception e) {
-			System.out.println("添加失败！");
+			System.out.println("添加失败：" + e);
 			return -1;
 		}
+	}
+
+	@Override
+	public long updateUserName(PUserName username) {
+		UserName u = new UserName();
+		BeanUtils.copyProperties(username, u);
+		try {
+			usernameDao.update(u);
+		} catch (Exception e) {
+			System.out.println("更新失败：" + e);
+			return -1;
+		}
+		return 1;
 	}
 }

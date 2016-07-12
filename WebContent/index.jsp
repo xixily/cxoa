@@ -21,7 +21,7 @@
 		var handler = window.handler;
 		handler = center;
 		session.logined = true;
-		session.user.ID = '${sessionInfo.ID }';
+		session.user.ID = '${sessionInfo.id }';
 		session.user.username = '${sessionInfo.username }';
 		session.user.email = '${sessionInfo.email}';
 		session.user.rights = '${sessionInfo.rights}';

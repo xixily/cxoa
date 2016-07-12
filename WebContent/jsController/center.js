@@ -197,6 +197,18 @@ var center = {
 					}
 			}
 			});
+			$('#text_nation').textbox('setValue','汉');
+			$('#combox_sex').combobox('setValue','男');
+//			$("#textbox_id").textbox({
+//				iconCls:'icon-man',
+//                onChange:function(newValue){
+//                	if(newValue.length>14){
+//                		console.log(newValue.length);
+//                		borthday = newValue.substr(6,4) + "." + newValue.substr(10,2) + "." + newValue.substr(12,2);
+//                	}
+//                	$('#textbox_borth').textbox('setValue',borthday);
+//                }
+//			})
 		},
 		deleteEmployee : function(){
 			console.log('deleteEmployee');

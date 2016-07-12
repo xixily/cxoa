@@ -88,16 +88,16 @@
 		</tr>
 		<tr>
 			<td>入职时间:</td>
-			<td><input name="hiredate" class="easyui-datetimebox" style="width:160px"/></td>
+			<td><input name="hiredate" class="easyui-datebox" style="width:160px"/></td>
 
 			<td>离职时间:</td>
-			<td><input name="leaveTime" class="easyui-datetimebox" style="width:160px"/></td>
+			<td><input name="leaveTime" class="easyui-datebox" style="width:160px"/></td>
 
 			<td>转正时间:</td>
-			<td><input name="zhuanzhengTime" class="easyui-datetimebox" style="width:160px"/></td>
+			<td><input name="zhuanzhengTime" class="easyui-datebox" style="width:160px"/></td>
 
 			<td>计划入保时间:</td>
-			<td><input name="dueSocialSecurity" class="easyui-datetimebox" style="width:160px"/>
+			<td><input name="dueSocialSecurity" class="easyui-datebox" style="width:160px"/>
 			</td>
 
 		</tr>

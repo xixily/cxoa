@@ -3,6 +3,9 @@ package com.chaoxing.oa.service;
 import java.util.List;
 import java.util.Map;
 
+import com.chaoxing.oa.entity.page.PComboBox;
+import com.chaoxing.oa.entity.page.PLevel;
+import com.chaoxing.oa.entity.page.POStructs;
 import com.chaoxing.oa.entity.page.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.PUser;
 
@@ -14,4 +17,10 @@ public interface EmployeeInfoServiceI {
 	public long getRenshiUserNameCount(String hql, Map<String, Object> params);
 
 	public Map<String, Object> getQueryForm();
+
+	public List<PComboBox> getForthLevel();
+
+	public List<POStructs> getOStruct();
+	
+	public List<PLevel> getLevel();
 }

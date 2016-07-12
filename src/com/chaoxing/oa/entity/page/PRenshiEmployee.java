@@ -1,6 +1,9 @@
 package com.chaoxing.oa.entity.page;
 
-public class PRenshiEmployee {
+import java.io.Serializable;
+
+public class PRenshiEmployee implements Serializable{
+	private static final long serialVersionUID = 8022325028735486200L;
 	/**
 	 * 分页项
 	 */
@@ -31,14 +34,18 @@ public class PRenshiEmployee {
 	public int getRows() {
 		return rows;
 	}
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getSortName() {
 		return sortName;
 	}
 	public String getSortOrder() {
 		return sortOrder;
-	}
-	public int getId() {
-		return id;
 	}
 	public String getUsername() {
 		return username;
@@ -87,9 +94,6 @@ public class PRenshiEmployee {
 	}
 	public void setSortOrder(String sortOrder) {
 		this.sortOrder = sortOrder;
-	}
-	public void setId(int id) {
-		this.id = id;
 	}
 	public void setUsername(String username) {
 		this.username = username;

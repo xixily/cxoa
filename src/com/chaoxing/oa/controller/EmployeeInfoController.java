@@ -1,5 +1,6 @@
 package com.chaoxing.oa.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -11,6 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.chaoxing.oa.config.SysConfig;
+import com.chaoxing.oa.entity.page.PComboBox;
+import com.chaoxing.oa.entity.page.PLevel;
+import com.chaoxing.oa.entity.page.POStructs;
+import com.chaoxing.oa.entity.page.Json;
 import com.chaoxing.oa.entity.page.PUser;
 import com.chaoxing.oa.service.EmployeeInfoServiceI;
 import com.chaoxing.oa.util.ResourceUtil;
@@ -46,5 +52,35 @@ public class EmployeeInfoController {
 			return modelView;
 		}
 		return null;
+	}
+	
+	@RequestMapping(value = "/getFourThLevel")
+	@ResponseBody
+	public Json getFourthLevel(){
+		Json result = new Json();
+		List<PComboBox> lists = employeeInfoService.getForthLevel();
+		if(lists.size()>0){
+			result.setSuccess(true);
+			result.setMsg("查询成功！");
+			result.setObj(lists);
+		}else{
+			result.setErrorCode(SysConfig.REQUEST_ERROR);
+			result.setMsg("查询失败！");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/getOStruct")
+	@ResponseBody
+	public List<POStructs> getOStruct(){
+		List<POStructs> lists = employeeInfoService.getOStruct();
+		return lists;
+	}
+	
+	@RequestMapping(value = "/getLevel")
+	@ResponseBody
+	public List<PLevel> getLevel(){
+		List<PLevel> lists = employeeInfoService.getLevel();
+		return lists;
 	}
 }

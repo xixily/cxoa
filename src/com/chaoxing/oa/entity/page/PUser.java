@@ -13,7 +13,8 @@ public class PUser {
 	 * 信息项
 	 */
 	private String ip;
-	private int ID;//ID
+//	private int ID;//ID
+	private int id;//ID
 	private String email;//邮箱
 	private String username;//用户姓名
 	private String password;//用户密码
@@ -85,9 +86,6 @@ public class PUser {
 	}
 	public String getIp() {
 		return ip;
-	}
-	public int getID() {
-		return ID;
 	}
 	public String getEmail() {
 		return email;
@@ -257,8 +255,11 @@ public class PUser {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
-	public void setID(int iD) {
-		ID = iD;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public void setEmail(String email) {
 		this.email = email;
@@ -429,7 +430,7 @@ public class PUser {
 	@Override
 	public String toString() {
 		return "UserInfo [page=" + page + ", rows=" + rows + ", sortName=" + sortName + ", sortOrder=" + sortOrder
-				+ ", ip=" + ip + ", ID=" + ID + ", email=" + email + ", username=" + username + ", password=" + password
+				+ ", ip=" + ip + ", id=" + id + ", email=" + email + ", username=" + username + ", password=" + password
 				+ ", rights=" + rights + ", departmentId=" + departmentId + ", position=" + position + ", sex=" + sex
 				+ ", identityCard=" + identityCard + ", borthDay=" + borthDay + ", nation=" + nation + ", degree="
 				+ degree + ", graduatedSchool=" + graduatedSchool + ", major=" + major + ", phoneNumber=" + phoneNumber

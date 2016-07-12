@@ -14,4 +14,6 @@ public interface UserServiceI {
 
 	public long addUserName(PUserName username);
 
+	public long updateUserName(PUserName username);
+
 }

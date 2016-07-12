@@ -90,7 +90,8 @@ public class UserController {
 	
 	@RequestMapping(value = "/getUserName")
 	@ResponseBody
-	public Json getUserName(int id, HttpSession session){
+	public Json getUserName(PUser pu, HttpSession session){
+//		public Json getUserName(int id, HttpSession session){
 		Json result = new Json();
 		PUser userinfo = null;
 		if(session!=null){
@@ -100,21 +101,21 @@ public class UserController {
 			result.setMsg("您的登陆已失效！");
 			return result;
 		}
-		if(id == 0){
+		if(pu.getId() == 0){
 			result.setErrorCode(SysConfig.REQUEST_ERROR);
 			result.setMsg("您要查询的职员信息不存在！");
 			return result;
 		}
 		if(userinfo != null){
 			if(0 == userinfo.getRights()|| 1 == userinfo.getRights()){
-				PUserName pusername = userService.getUserName(id);
+				PUserName pusername = userService.getUserName(pu.getId());
 				if(pusername!=null){
 					result.setSuccess(true);
 					result.setMsg("获取员工信息成功");
 					result.setObj(pusername);
 				}else{
 					result.setErrorCode(SysConfig.REQUEST_ERROR);
-					result.setMsg("获取员工编号：" + id + " 职员信息失败！");
+					result.setMsg("获取员工编号：" + pu.getId() + " 职员信息失败！");
 				}
 				return result;
 			}else{
@@ -163,7 +164,7 @@ public class UserController {
 	}
 	@RequestMapping(value = "deleteUserName")
 	@ResponseBody
-	public Json deleteUserName(int id, HttpSession session){
+	public Json deleteUserName(PUser pu, HttpSession session){
 		Json result = new Json();
 		PUser userinfo = null;
 		if(session!=null){
@@ -173,7 +174,7 @@ public class UserController {
 			result.setMsg("您的登陆已失效！");
 			return result;
 		}
-		if(id == 0){
+		if(pu.getId() == 0){
 			result.setErrorCode(SysConfig.REQUEST_ERROR);
 			result.setMsg("您要查询的职员信息不存在！");
 			return result;
@@ -181,7 +182,7 @@ public class UserController {
 		if(userinfo != null){
 			if(0 == userinfo.getRights()|| 1 == userinfo.getRights()){
 				int r = 1;
-//				int r = userService.deleteUserName(id);
+//				int r = userService.deleteUserName(pu.getId());
 				if(r != 0){
 					result.setSuccess(true);
 					result.setMsg("删除成功！");
@@ -196,6 +197,38 @@ public class UserController {
 			}
 		}else{
 			result.setMsg("您未登陆或者登陆失效！");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/updateUserName")
+	@ResponseBody
+	public Json updateUserName(PUserName username, HttpSession session){
+		Json result = new Json();
+		PUser userinfo = null;
+		if(session!=null){
+			userinfo = (PUser) session.getAttribute(ResourceUtil.getSessionInfoName());
+		}else{
+			result.setErrorCode(SysConfig.SESSION_INVALIAD);
+			result.setMsg("您的登陆已失效！");
+			return result;
+		}
+		if(userinfo != null){
+			if(0 == userinfo.getRights()|| 1 == userinfo.getRights()){
+				long r = 2;
+//				long r = userService.updateUserName(username);
+				if(r != -1){
+					result.setSuccess(true);
+					result.setMsg("添加成功！");
+				}else{
+					result.setErrorCode(SysConfig.REQUEST_ERROR);
+					result.setMsg("插入失败！");
+				}
+				return result;
+			}else{
+				result.setErrorCode(SysConfig.NO_RIGHTS);
+				result.setMsg("您还没有权限！");
+			}
 		}
 		return result;
 	}

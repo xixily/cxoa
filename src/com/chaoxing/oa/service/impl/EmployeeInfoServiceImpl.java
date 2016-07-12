@@ -10,12 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chaoxing.oa.dao.BaseDaoI;
+import com.chaoxing.oa.entity.page.PComboBox;
 import com.chaoxing.oa.entity.page.PCompany;
 import com.chaoxing.oa.entity.page.PLevel;
+import com.chaoxing.oa.entity.page.POStructs;
 import com.chaoxing.oa.entity.page.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.PUser;
 import com.chaoxing.oa.entity.po.Company;
 import com.chaoxing.oa.entity.po.Level;
+import com.chaoxing.oa.entity.po.OrganizationStructure;
 import com.chaoxing.oa.entity.po.view.RenshiUserName;
 import com.chaoxing.oa.service.EmployeeInfoServiceI;
 
@@ -24,11 +27,21 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 
 	private BaseDaoI<RenshiUserName> userNameDao;
 	private BaseDaoI<Company> companyDao;
-	private BaseDaoI<Level> levelDao;
+	private BaseDaoI<Level> levelDao;//级别
+	private BaseDaoI<OrganizationStructure> organizationStructureDao;//组织结构
 
 
 	
 	
+	public BaseDaoI<OrganizationStructure> getOrganizationStructureDao() {
+		return organizationStructureDao;
+	}
+
+	@Autowired
+	public void setOrganizationStructureDao(BaseDaoI<OrganizationStructure> organizationStructureDao) {
+		this.organizationStructureDao = organizationStructureDao;
+	}
+
 	public BaseDaoI<Company> getCompanyDao() {
 		return companyDao;
 	}
@@ -65,7 +78,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		for (RenshiUserName renshiUserName : renshiUsernames) {
 			PRenshiEmployee renshiEmployeeInfo = new PRenshiEmployee();
 			BeanUtils.copyProperties(renshiUserName, renshiEmployeeInfo);
-			renshiEmployeeInfo.setId(renshiUserName.getID());
+//			renshiEmployeeInfo.setId(renshiUserName.getID());
 			renshiEmployeeInfos.add(renshiEmployeeInfo);
 		}
 		return renshiEmployeeInfos;
@@ -79,7 +92,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		Map<String, Object> params = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer("from RenshiUserName t where 1=1 ");
 		addCondition(hql, page, params);
-		hql.append(" order by t.ID asc");
+		hql.append(" order by t.id asc");
 		int intPage = (page == null || page.getPage() == 0) ? 1 : page.getPage();
 		int pageSize = (page == null || page.getRows() == 0) ? 100 : page.getRows();
 		List<RenshiUserName> renshiUsernames = userNameDao.find(hql.toString(), params, intPage, pageSize);
@@ -88,7 +101,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		for (RenshiUserName renshiUserName : renshiUsernames) {
 			PRenshiEmployee renshiEmployeeInfo = new PRenshiEmployee();
 			BeanUtils.copyProperties(renshiUserName, renshiEmployeeInfo);
-			renshiEmployeeInfo.setId(renshiUserName.getID());
+//			renshiEmployeeInfo.setID(renshiUserName.getID());
 			renshiEmployeeInfos.add(renshiEmployeeInfo);
 		}
 		long total = getRenshiUserNameCount(hql.toString(),params);
@@ -158,6 +171,8 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		results.put("companys", getCompany());
 		return results;
 	}
+	
+	@Override
 	public List<PLevel> getLevel() {
 		List<Level> levels = levelDao.find("from Level");
 		List<PLevel> plevels = new ArrayList<PLevel>();
@@ -177,5 +192,30 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 			pcompanys.add(pcompany);
 		}
 		return pcompanys;
+	}
+
+	@Override
+	public List<PComboBox> getForthLevel() {
+		List<OrganizationStructure> lists = organizationStructureDao.find("SELECT distinct o.thirdLevel from OrganizationStructure o");
+		List<PComboBox> listComs = new ArrayList<PComboBox>();
+		for (OrganizationStructure organizationStructure : lists) {
+			PComboBox comb = new PComboBox();
+			comb.setValue(organizationStructure.getFourthLevel());
+			comb.setText(organizationStructure.getFourthLevel());
+			listComs.add(comb);
+		}
+		return listComs;
+	}
+
+	@Override
+	public List<POStructs> getOStruct() {
+		List<POStructs> listComs = new ArrayList<POStructs>();
+		List<OrganizationStructure> lists = organizationStructureDao.find("from OrganizationStructure o");
+		for (OrganizationStructure organizationStructure : lists) {
+			POStructs postruct = new POStructs();
+			BeanUtils.copyProperties(organizationStructure, postruct);
+			listComs.add(postruct);
+		}
+		return listComs;
 	}
 }

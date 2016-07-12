@@ -19,7 +19,7 @@ public class RenshiUserName implements Serializable {
 	private String cellCoreEmail;//细胞核邮箱
 	private String guidance;//指导
 	private String guidanceEmail;//指导邮箱
-	private int ID;//ID
+	private int id;//ID
 	private String username;//用户姓名
 	private String password;//用户密码
 	private int rights;//权限
@@ -138,11 +138,11 @@ public class RenshiUserName implements Serializable {
 	
 	@Id
 	@Column(name="ID")
-	public int getID() {
-		return ID;
+	public int getId() {
+		return id;
 	}
-	public void setID(int iD) {
-		ID = iD;
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	@Column(name="username")

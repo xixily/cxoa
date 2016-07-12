@@ -37,13 +37,13 @@ public class OrganizationStructure implements Serializable{
 	private String cellCoreEmail;//细胞核邮箱
 	private String guidance;//指导
 	private String guidanceEmail;//指导邮箱
-	private String taxStructure;//税务架构
+	private String taxStructure;//报税架构
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}
-	@Column(name="排序代码")
+	@Column(name="代码")
 	public String getSortCode() {
 		return sortCode;
 	}
@@ -79,7 +79,7 @@ public class OrganizationStructure implements Serializable{
 	public String getGuidanceEmail() {
 		return guidanceEmail;
 	}
-	@Column(name="税务架构")
+	@Column(name="报税架构")
 	public String getTaxStructure() {
 		return taxStructure;
 	}

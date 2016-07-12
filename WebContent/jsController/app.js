@@ -170,6 +170,20 @@ function sendAction(action, callback, method, async, timeout) {
 	})
 }
 
+function formartDate(id){
+	 $("#" + id + " input[class='easyui-datebox datebox-f combo-f textbox-f']").each(function () {  
+	        $(this).combobox({
+	        	formatter:function(date){
+	        		var y = date.getFullYear();
+	        		var m = date.getMonth()+1;
+	        		var d = date.getDate();
+	        		return m+'.'+d+'.'+y;
+	        	}
+	        });
+	    });  
+//	easyui-datebox datebox-f combo-f textbox-f
+}
+
 /**
  * @author dengxf
  * @param id form表单的id
@@ -193,11 +207,20 @@ function disabledForm(formId, isDisabled){
       
     //禁用jquery easyui中的下拉选（使用input生成的combox）  
   
-    $("#" + formId + " input[class='combobox-f combo-f']").each(function () {  
-        if (this.id) {
+//    $("#" + formId + " input[class='combobox']").each(function () {  
+    $("#" + formId + " input[class='easyui-combobox combobox-f combo-f']").each(function () {  
+        /*if (this.id) {
 //        	alert("input"+this.id);  
             $("#" + this.id).combobox(attr);  
-        }  
+        }  */
+        $(this).combobox(attr);
+    });  
+    
+    $("#" + formId + ' input[class="easyui-combobox combobox-f combo-f textbox-f"]').each(function () {  
+    	if (this.id) {
+//        	alert("input"+this.id);  
+    		$("#" + this.id).combobox(attr);  
+    	}  
     });  
       
     //禁用jquery easyui中的下拉选（使用select生成的combox）  
@@ -207,7 +230,6 @@ function disabledForm(formId, isDisabled){
             $("#" + this.id).combobox(attr);  
         }  
     });  
-      
     //禁用jquery easyui中的日期组件dataBox  
     $("#" + formId + " input[class='datebox-f combo-f']").each(function () {  
         if (this.id) {  
@@ -255,6 +277,16 @@ $.fn.panel.defaults.onBeforeDestroy = function() {
 	} catch (e) {
 	}
 };
+
+/**
+ *时间格式化 
+ */
+$.fn.datebox.defaults.formatter = function(date){
+	var y = date.getFullYear();
+	var m = date.getMonth()+1;
+	var d = date.getDate();
+	return y + '.' + m + '.' + d;
+}
 
 /**
  * 使panel和datagrid在加载时提示
