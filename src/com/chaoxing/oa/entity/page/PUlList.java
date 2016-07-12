@@ -1,7 +1,7 @@
 package com.chaoxing.oa.entity.page;
 
 
-public class UlList {
+public class PUlList {
 	private String text;//li名字
 	private String url;//tab页
 	private String iconCls = "icon-man";//设置图标

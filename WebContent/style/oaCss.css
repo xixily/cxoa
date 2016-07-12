@@ -53,3 +53,6 @@ td .comboxy .combtitle {
 	margin-top: -14px;
 	color: #999999
 }
+.icon-excel{
+	background:url('images/extjs_icons/page/page_white_excel.png') no-repeat center center;
+}

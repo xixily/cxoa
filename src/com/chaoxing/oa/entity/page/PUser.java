@@ -1,7 +1,7 @@
 package com.chaoxing.oa.entity.page;
 
 
-public class UserInfo {
+public class PUser {
 	/**
 	 * 分页项
 	 */

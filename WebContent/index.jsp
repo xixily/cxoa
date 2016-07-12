@@ -4,15 +4,22 @@
 <html>
 <head>
 <title>超星自动化办公系统</title>
+<meta charset="UTF-8">
 <jsp:include page="inc.jsp"></jsp:include>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsController/app.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsController/north.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsController/west.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsController/center.js"></script>
 <!-- 登陆窗口  -->
-	<c:if test="${sessionInfo != null}">
+<c:if test="${sessionInfo == null }">
+		<c:redirect url="login.jsp"></c:redirect>
+</c:if>
+<%-- 	<c:if test="${sessionInfo != null}"> --%>
 		<%-- <jsp:include page="layout/components/logindialog.jsp"></jsp:include> --%>
 		<script type="text/javascript">
+		window.handler = {};
+		var handler = window.handler;
+		handler = center;
 		session.logined = true;
 		session.user.ID = '${sessionInfo.ID }';
 		session.user.username = '${sessionInfo.username }';
@@ -23,7 +30,7 @@
 		session.user.sex = '${sessionInfo.sex}';
 		session.user.phoneNumber = '${sessionInfo.phoneNumber}';
 		session.user.position = '${sessionInfo.position}';
-		session.user.position = '${sessionInfo.position}';
+		session.user.rights = '${sessionInfo.rights}'
 		initClickHandler();
 		</script> 
 	  	<!-- $(document).ready(function () {
@@ -37,7 +44,7 @@
 				$('#login_dlg').dialog('close');
 			} 
 			}) -->
-	 </c:if>
+	 <%-- </c:if> --%>
 </head>
 <body id = "body" class="easyui-layout">
 	<div id="main_body" class="easyui-layout" style="width:100%;height:100%;">

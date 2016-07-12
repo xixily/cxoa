@@ -10,8 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chaoxing.oa.dao.BaseDaoI;
-import com.chaoxing.oa.entity.page.RenshiEmployeeInfo;
-import com.chaoxing.oa.entity.page.UserInfo;
+import com.chaoxing.oa.entity.page.PCompany;
+import com.chaoxing.oa.entity.page.PLevel;
+import com.chaoxing.oa.entity.page.PRenshiEmployee;
+import com.chaoxing.oa.entity.page.PUser;
+import com.chaoxing.oa.entity.po.Company;
+import com.chaoxing.oa.entity.po.Level;
 import com.chaoxing.oa.entity.po.view.RenshiUserName;
 import com.chaoxing.oa.service.EmployeeInfoServiceI;
 
@@ -19,17 +23,28 @@ import com.chaoxing.oa.service.EmployeeInfoServiceI;
 public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 
 	private BaseDaoI<RenshiUserName> userNameDao;
-	private BaseDaoI<Long> countDao;
+	private BaseDaoI<Company> companyDao;
+	private BaseDaoI<Level> levelDao;
 
 
-	public BaseDaoI<Long> getCountDao() {
-		return countDao;
+	
+	
+	public BaseDaoI<Company> getCompanyDao() {
+		return companyDao;
 	}
 
+	public BaseDaoI<Level> getLevelDao() {
+		return levelDao;
+	}
 	@Autowired
-	public void setCountDao(BaseDaoI<Long> countDao) {
-		this.countDao = countDao;
+	public void setCompanyDao(BaseDaoI<Company> companyDao) {
+		this.companyDao = companyDao;
 	}
+	@Autowired
+	public void setLevelDao(BaseDaoI<Level> levelDao) {
+		this.levelDao = levelDao;
+	}
+
 
 	public BaseDaoI<RenshiUserName> getUserNameDao() {
 		return userNameDao;
@@ -41,14 +56,14 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 	}
 
 	@Override
-	public List<RenshiEmployeeInfo> getRenshiUserName() {
+	public List<PRenshiEmployee> getRenshiUserName() {
 		Map<String, Object> params = new HashMap<String, Object>();
-		List<RenshiEmployeeInfo> renshiEmployeeInfos = new ArrayList<RenshiEmployeeInfo>();
+		List<PRenshiEmployee> renshiEmployeeInfos = new ArrayList<PRenshiEmployee>();
 		params.put("fourthLevel", "常规数据");
 		List<RenshiUserName> renshiUsernames = userNameDao
 				.find("from RenshiUserName r where r.fourthLevel=:fourthLevel", params);
 		for (RenshiUserName renshiUserName : renshiUsernames) {
-			RenshiEmployeeInfo renshiEmployeeInfo = new RenshiEmployeeInfo();
+			PRenshiEmployee renshiEmployeeInfo = new PRenshiEmployee();
 			BeanUtils.copyProperties(renshiUserName, renshiEmployeeInfo);
 			renshiEmployeeInfo.setId(renshiUserName.getID());
 			renshiEmployeeInfos.add(renshiEmployeeInfo);
@@ -57,9 +72,9 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 	}
 
 	@Override
-	public Map<String, Object> getRenshiUserName(UserInfo page) {
+	public Map<String, Object> getRenshiUserName(PUser page) {
 		System.out.println(page);
-		List<RenshiEmployeeInfo> renshiEmployeeInfos = new ArrayList<RenshiEmployeeInfo>();
+		List<PRenshiEmployee> renshiEmployeeInfos = new ArrayList<PRenshiEmployee>();
 		Map<String, Object> userInfos = new HashMap<String, Object>();
 		Map<String, Object> params = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer("from RenshiUserName t where 1=1 ");
@@ -71,7 +86,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 //		List<RenshiUserName> renshiUsernames = userNameDao
 //				.find("from RenshiUserName t where t.fourthLevel=:fourthLevel", params, intPage, pageSize);
 		for (RenshiUserName renshiUserName : renshiUsernames) {
-			RenshiEmployeeInfo renshiEmployeeInfo = new RenshiEmployeeInfo();
+			PRenshiEmployee renshiEmployeeInfo = new PRenshiEmployee();
 			BeanUtils.copyProperties(renshiUserName, renshiEmployeeInfo);
 			renshiEmployeeInfo.setId(renshiUserName.getID());
 			renshiEmployeeInfos.add(renshiEmployeeInfo);
@@ -82,7 +97,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		return userInfos;
 	}
 
-	protected void addCondition(StringBuffer hql, UserInfo page, Map<String, Object> params) {
+	protected void addCondition(StringBuffer hql, PUser page, Map<String, Object> params) {
 		if(page != null){
 			if(page.getConfigurable() != null && page.getConfigurable() != ""){
 				if(page.getConfigurable_value() != null && page.getConfigurable_value() != ""){
@@ -134,5 +149,33 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		hqll.append(hql.split("where")[1]);
 		System.out.println("+++++++hqll+++++employeeInfoServiceImpl.getRenshiusernameCount" + hqll.toString());
 		return userNameDao.count(hqll.toString(), params);
+	}
+
+	@Override
+	public Map<String, Object> getQueryForm() {
+		Map<String, Object> results = new HashMap<String, Object>();
+		results.put("levels", getLevel());
+		results.put("companys", getCompany());
+		return results;
+	}
+	public List<PLevel> getLevel() {
+		List<Level> levels = levelDao.find("from Level");
+		List<PLevel> plevels = new ArrayList<PLevel>();
+		for (Level level : levels) {
+			PLevel plevel = new PLevel();
+			BeanUtils.copyProperties(level, plevel);
+			plevels.add(plevel);
+		}
+		return plevels;
+	}
+	public List<PCompany> getCompany() {
+		List<Company> cmopanys = companyDao.find("from Company");
+		List<PCompany> pcompanys = new ArrayList<PCompany>();
+		for (Company company : cmopanys) {
+			PCompany pcompany = new PCompany();
+			BeanUtils.copyProperties(company, pcompany);
+			pcompanys.add(pcompany);
+		}
+		return pcompanys;
 	}
 }

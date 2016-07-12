@@ -3,6 +3,8 @@ package com.chaoxing.oa.entity.page;
 public class Json {
 
 	private boolean success = false;
+	
+	private int errorCode;
 
 	private String msg = "";
 
@@ -30,6 +32,14 @@ public class Json {
 
 	public void setObj(Object obj) {
 		this.obj = obj;
+	}
+
+	public int getErrorCode() {
+		return errorCode;
+	}
+
+	public void setErrorCode(int errorCode) {
+		this.errorCode = errorCode;
 	}
 
 }

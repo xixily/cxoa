@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.chaoxing.oa.dao.BaseDaoI;
-import com.chaoxing.oa.entity.page.MenuInfo;
+import com.chaoxing.oa.entity.page.PMenu;
 import com.chaoxing.oa.entity.page.Right;
-import com.chaoxing.oa.entity.page.UlList;
+import com.chaoxing.oa.entity.page.PUlList;
 import com.chaoxing.oa.entity.po.RoleMenu;
 import com.chaoxing.oa.service.RoleMenuServiceI;
 
@@ -35,8 +35,8 @@ public class RoleMenuServiceImpl implements RoleMenuServiceI {
 
 
 	@Override
-	public List< MenuInfo> findMenu(int roleId) {
-		List<MenuInfo> l_menuInfos = new ArrayList<MenuInfo>();
+	public List< PMenu> findMenu(int roleId) {
+		List<PMenu> l_menuInfos = new ArrayList<PMenu>();
 		List<RoleMenu> roleMenus;
 		List<RoleMenu> ulMenus;
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -44,14 +44,14 @@ public class RoleMenuServiceImpl implements RoleMenuServiceI {
 		roleMenus = roleMenuDao.find("from RoleMenu r where r.roleId=:roleId and r.menuLevel = 1",params);
 		ulMenus = roleMenuDao.find("from RoleMenu r where r.roleId=:roleId and r.menuLevel = 2",params);
 		for (RoleMenu roleMenu : roleMenus) {
-				MenuInfo menuInfo = new MenuInfo(); 
+				PMenu menuInfo = new PMenu(); 
 				menuInfo.setUserId(roleMenu.getRoleId());
 				menuInfo.setMenuId(roleMenu.getMenuId());
 				menuInfo.setMenuName(roleMenu.getMenuName());
 				l_menuInfos.add(menuInfo);
 				for (RoleMenu ulMenu : ulMenus) {
 					if(ulMenu.getPreMenuId()== menuInfo.getMenuId()){
-						UlList ulList = new UlList();
+						PUlList ulList = new PUlList();
 						ulList.setDomId(ulMenu.getMenuId());
 						ulList.setText(ulMenu.getMenuName());
 //						ulList.setState("closed");

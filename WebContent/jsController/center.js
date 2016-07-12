@@ -8,12 +8,6 @@ var center = {
 				fitColumns : true,
 				singleSelect : true,
 				url : 'employee/renshiUser.action',
-//				queryParams : {
-//					userName : '郭玉',
-//					sex : '女',
-//					position : '细胞核',
-//					department : '人事'
-//				},
 				singleSelect : true,// 是否单选
 				pagination : true,// 分页控件
 				pageSize : 10,
@@ -72,7 +66,41 @@ var center = {
 					title : '学历',
 					width : 80
 				} ] ],
-				toolbar : '#renshi_toolbar'
+				/*toolbar : '#renshi_toolbar'*/
+				toolbar: [{
+		            text:'查看',
+		            iconCls: 'icon-search',
+		            handler: function(){
+		            	center.view();
+		            }
+		        },'-',{
+		            text:'编辑',
+		            iconCls: 'icon-edit',
+		            handler: function(){
+		            	center.editEmployee();
+		            }
+		        },'-',{
+		            text:'新增',
+		            iconCls: 'icon-add',
+		            handler: function(){
+		            	center.addEmployee();
+		            }
+		        },'-',{
+		            text:'删除',
+		            iconCls: 'icon-cancel',
+		            handler: function(){
+		            	center.deleteEmployee();
+		            }
+		        },'-',{
+		            text:'导出报表',
+		            iconCls: 'icon-excel',
+		            handler: function(){
+		            	center.exportExcel();
+		            }
+		        }],
+		        onDblClickCell: function(index,field,value){
+		        	center.view();
+		    	}
 			});
 		},
 		queryEmployee: function(data, src){
@@ -81,20 +109,119 @@ var center = {
 				queryParams : data
 			})
 		},
-		editEmployee : function(){
+		view: function(){
+			var rights = session.user.rights;
 			console.log('editEmployee');
+			var userInfo = $('#employee_datas').datagrid('getSelected');
+			var url = "user/getUserName.action";
+			$.getJSON(url, userInfo, function(result){
+				if(result.success){
+					console.log('o%', result.obj);
+					$('#updateUsesrname_form').form('load', result.obj);
+					disabledForm('updateUsesrname_form', true);
+					$('#userName_info').window('open').window('resize',{top:$(document).scrollTop() + ($(window).height()-480) * 0.5});  
+					$('#btn_employeeSave').linkbutton("disable");
+					$('#btn_employeeRest').linkbutton("disable");
+					$('#btn_employeeEdit').linkbutton("enable");
+				}else{
+					alert(result.msg);
+				}
+			})
+		},
+		editEmployee : function(){
+			if(session.user.rights != 0 && session.user.rights != 1){
+				alert('您没有编辑权限！~');
+				return ;
+			}
+			console.log('editEmployee');
+			var userInfo = $('#employee_datas').datagrid('getSelected');
+			var url = "user/getUserName.action";
+			var form_url = "user/updateUserName.action"
+			$('#updateUsesrname_form').form({
+				url : form_url,
+				success : function(result){
+					var result = eval('(' + result + ')');
+					if(result.success){
+						alert("更新成功！");
+					}else{
+						alert("更新失败！")
+					}
+				}
+			});
+			$.getJSON(url, userInfo, function(result){
+				if(result.success){
+					console.log('o%', result.obj);
+					$('#updateUsesrname_form').form('load', result.obj);
+					$('#userName_info').window('open').window('resize',{top:$(document).scrollTop() + ($(window).height()-480) * 0.5});
+					disabledForm('updateUsesrname_form', false);
+					$('#btn_employeeSave').linkbutton("enable");
+					$('#btn_employeeRest').linkbutton("enable");
+					$('#btn_employeeEdit').linkbutton("disable");
+				}else{
+					alert(result.msg);
+				}
+			})
+		},
+		openAddEEmployee : function(){
+			if(session.user.rights != 0 && session.user.rights != 1){
+				alert('您没有编辑权限！~');
+				return ;
+			}
+			$('#updateUsesrname_form').form('clear');
+			$('#userName_info').window('open').window('resize',{top:$(document).scrollTop() + ($(window).height()-480) * 0.5});
+			disabledForm('updateUsesrname_form', false);
+			$('#btn_employeeSave').linkbutton("enable");
+			$('#btn_employeeRest').linkbutton("enable");
+			$('#btn_employeeEdit').linkbutton("disable");
 		},
 		addEmployee : function(){
-			console.log('addEmployee');
+			if(session.user.rights != 0 && session.user.rights != 1){
+				alert('您没有编辑权限！~');
+				return ;
+			}
+			$('#updateUsesrname_form').form('clear');
+			$('#userName_info').window('open').window('resize',{top:$(document).scrollTop() + ($(window).height()-480) * 0.5});
+			disabledForm('updateUsesrname_form', false);
+			$('#btn_employeeSave').linkbutton("enable");
+			$('#btn_employeeRest').linkbutton("enable");
+			$('#btn_employeeEdit').linkbutton("disable");
+			var url = "user/addUserName.action";
+			$('#updateUsesrname_form').form({
+				url : url,
+				success : function(result) {
+					var result = eval('(' + result + ')');
+					if(result.success){
+						alert("添加成功！");
+					}else{
+						alert("添加失败！")
+					}
+			}
+			});
 		},
 		deleteEmployee : function(){
 			console.log('deleteEmployee');
+			if(session.user.rights != 0 && session.user.rights != 1){
+				alert('您没有编辑权限！~');
+				return ;
+			}
+			var userInfo = $('#employee_datas').datagrid('getSelected');
+			var url = "user/deleteUserName.action";
+			$.getJSON(url, userInfo, function(result){
+				if(result.success){
+					alert(result.msg);
+				}else{
+					alert(result.msg);
+				}
+			})
+		},
+		exportExcel : function(){
+			console.log('exportExcel');
 		},
 		helpEmployee : function(){
 			console.log('helpEmployee');
 		},
-		findCompany : function(dom){
-			
+		reloadQueryForm : function(dom){
+			alert(dom);
 		}
 }
 /**

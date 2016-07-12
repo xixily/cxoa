@@ -1,6 +1,6 @@
 package com.chaoxing.oa.entity.page;
 
-public class RenshiEmployeeInfo {
+public class PRenshiEmployee {
 	/**
 	 * 分页项
 	 */

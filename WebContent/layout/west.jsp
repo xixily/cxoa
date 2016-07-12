@@ -5,6 +5,8 @@
 $(document).ready(function () {
 	if(session.logined){
 		west.initWestTree();
+	}else{
+		north.logoutFun();
 	}
 /* 	initWestTree(); */
 });

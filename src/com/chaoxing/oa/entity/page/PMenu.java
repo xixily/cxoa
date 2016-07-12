@@ -3,11 +3,11 @@ package com.chaoxing.oa.entity.page;
 import java.util.HashSet;
 import java.util.Set;
 
-public class MenuInfo {
+public class PMenu {
 	private int userId;
 	private int menuId;
 	private String menuName;
-	private Set<UlList> uls = new HashSet<UlList>();;
+	private Set<PUlList> uls = new HashSet<PUlList>();;
 	public int getUserId() {
 		return userId;
 	}
@@ -26,10 +26,10 @@ public class MenuInfo {
 	public void setMenuName(String menuName) {
 		this.menuName = menuName;
 	}
-	public Set<UlList> getUls() {
+	public Set<PUlList> getUls() {
 		return uls;
 	}
-	public void setUls(Set<UlList> uls) {
+	public void setUls(Set<PUlList> uls) {
 		this.uls = uls;
 	}
 	@Override

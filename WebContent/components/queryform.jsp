@@ -18,18 +18,6 @@
 			<c:forEach items="${companys}" var="company">
 				<option value="${company.cmopany}">${company.cmopany}</option>
 			</c:forEach>
-				<!-- <option value="世纪超星">世纪超星</option>
-				<option value="莱博锐通">莱博锐通</option>
-				<option value="世纪读秀">世纪读秀</option>
-				<option value="世纪大医">世纪大医</option>
-				<option value="超星数图">超星数图</option>
-				<option value="超星尔雅">超星尔雅</option>
-				<option value="红鸽">红鸽</option>
-				<option value="武汉歌德">武汉歌德</option>
-				<option value="武汉超星">武汉超星</option>
-				<option value="百链">百链</option>
-				<option value="杭州慕课">杭州慕课</option>
-				<option value="贵州超星">贵州超星</option> -->
 			</select>			
 
 			<td>级别:</td>
@@ -122,8 +110,6 @@
 			<td>
 				<input class="easyui-linkbutton do_action" appaction="center.queryEmployee"
 				type="button" value="查询" onclick="" style="width:46px;height:26px;" />
-<!-- 			<span class="easyui-linkbutton"><input class="easyui-linkbutton do_action" appaction="center.queryEmployee"
-				type="button" value="查询" onclick="" /></span> -->
 			</td>
 			<td></td>
 			<td><input class="easyui-linkbutton" id="btn_reset" type="button" value="重置"

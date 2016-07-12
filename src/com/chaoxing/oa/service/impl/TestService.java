@@ -13,9 +13,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.chaoxing.oa.entity.page.MenuInfo;
-import com.chaoxing.oa.entity.page.UlList;
-import com.chaoxing.oa.entity.page.UserInfo;
+import com.chaoxing.oa.entity.page.PMenu;
+import com.chaoxing.oa.entity.page.PUlList;
+import com.chaoxing.oa.entity.page.PUser;
 import com.chaoxing.oa.entity.po.UserName;
 import com.chaoxing.oa.service.RoleMenuServiceI;
 import com.chaoxing.oa.service.UserServiceI;
@@ -49,14 +49,14 @@ public class TestService {
 //			}
 //		}
 		try {
-			List<MenuInfo> menuInfos = roleMenuService.findMenu(0);
-			for (MenuInfo menuInfo : menuInfos) {
+			List<PMenu> menuInfos = roleMenuService.findMenu(0);
+			for (PMenu menuInfo : menuInfos) {
 				if(menuInfo.getUls() == null){
 					System.out.println(menuInfo.toString());
 				}else{
 					System.out.println(menuInfo.toString());
-					Set<UlList> uls = menuInfo.getUls();
-					for (UlList ulList : uls) {
+					Set<PUlList> uls = menuInfo.getUls();
+					for (PUlList ulList : uls) {
 						System.out.println(ulList.getText());
 					}
 				}

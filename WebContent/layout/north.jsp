@@ -18,6 +18,5 @@
 </div>
 <div id="layout_north_zxMenu" style="width: 100px; display: none;">
 	<div class="menu-sep"></div>
-	<%-- <div onclick="logoutFun(true);"><a href="${pageContext.request.contextPath}/user/logout.action">退出系统</a></div> --%>
 	<div onclick="north.logoutFun(true);">退出系统</div>
 </div>

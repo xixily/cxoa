@@ -8,8 +8,8 @@ var session = {
 };
 $(window).on('beforeunload', function (e) {
     if (session.logined){
-    	north.logoutFun();
-    	return '警告：请使用系统的退出按钮正常退出系统!';
+//    	north.logoutFun();
+//    	return '警告：请使用系统的退出按钮正常退出系统!';
     }
 });
 /**
@@ -133,7 +133,11 @@ function getDataOfForm(form) {
  * 
  * @requires jQuery
  * 
- * @params action : {url:'',data:data}<br/>callback回调函数<br/>method 默认get<br/>async 是否异步<br/>timeout 超时时间
+ * @param action : {url:'',data:data}
+ * @param callback 回调函数
+ * @param method 默认get 
+ * @param async 是否异步 
+ * @param timeout 超时时间
  * 
  * @description 发送do_action 请求 
  */
@@ -166,6 +170,68 @@ function sendAction(action, callback, method, async, timeout) {
 	})
 }
 
+/**
+ * @author dengxf
+ * @param id form表单的id
+ * @param isDisabled boolean型，默认true
+ * @description 对指定id下的form表单设置 disabled
+ */
+function disabledForm(formId, isDisabled){
+	var attr="disable";  
+    if(!isDisabled){  
+       attr="enable"; 
+       isDisabled = false;
+    }else{
+    	attr="disable"; 
+    	isDisabled = true;
+    }
+    $("form[id='"+formId+"'] :text").attr("disabled",isDisabled);  
+    $("form[id='"+formId+"'] textarea").attr("disabled",isDisabled);  
+    $("form[id='"+formId+"'] select").attr("disabled",isDisabled);  
+    $("form[id='"+formId+"'] :radio").attr("disabled",isDisabled);  
+    $("form[id='"+formId+"'] :checkbox").attr("disabled",isDisabled);  
+      
+    //禁用jquery easyui中的下拉选（使用input生成的combox）  
+  
+    $("#" + formId + " input[class='combobox-f combo-f']").each(function () {  
+        if (this.id) {
+//        	alert("input"+this.id);  
+            $("#" + this.id).combobox(attr);  
+        }  
+    });  
+      
+    //禁用jquery easyui中的下拉选（使用select生成的combox）  
+    $("#" + formId + " select[class='combobox-f combo-f']").each(function () {  
+        if (this.id) {  
+//        alert(this.id);  
+            $("#" + this.id).combobox(attr);  
+        }  
+    });  
+      
+    //禁用jquery easyui中的日期组件dataBox  
+    $("#" + formId + " input[class='datebox-f combo-f']").each(function () {  
+        if (this.id) {  
+//        alert(this.id)  
+            $("#" + this.id).datebox(attr);  
+        }  
+    });  
+}
+
+function closeDialog(dom){
+	var dialog = dom.closest(".easyui-dialog");
+	dialog.dialog('close');
+}
+
+function clearForm(dom){
+	var form = dom.closest("form");
+	form.form('clear');
+}
+
+function submitForm(dom){
+	var form = dom.closest("form");
+	console.log(form);
+	form.form('submit');
+}
 /**
  * @author dengxf
  * 

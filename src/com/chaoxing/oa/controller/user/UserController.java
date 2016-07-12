@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.chaoxing.oa.entity.page.UserInfo;
+import com.chaoxing.oa.entity.page.PUser;
 import com.chaoxing.oa.service.UserServiceI;
 import com.chaoxing.oa.util.IpUtil;
 import com.chaoxing.oa.util.ResourceUtil;
@@ -27,7 +27,7 @@ public class UserController {
 
 
 	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public String login(UserInfo userPageInfo, Model model, HttpServletRequest request, HttpSession session){
+	public String login(PUser userPageInfo, Model model, HttpServletRequest request, HttpSession session){
 		String password = userPageInfo.getPassword();
 		userPageInfo = userService.findUser(userPageInfo);
 		if(null != userPageInfo){

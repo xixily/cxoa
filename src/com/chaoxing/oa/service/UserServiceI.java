@@ -1,16 +1,17 @@
 package com.chaoxing.oa.service;
 
-import java.util.List;
 
-import com.chaoxing.oa.entity.page.PCompany;
-import com.chaoxing.oa.entity.page.PLevel;
-import com.chaoxing.oa.entity.page.UserInfo;
+import com.chaoxing.oa.entity.page.PUser;
+import com.chaoxing.oa.entity.page.PUserName;
 
 public interface UserServiceI {
 
-	public UserInfo findUser(UserInfo userInfo);
-
-	public List<PCompany> getCompany();
+	public PUser findUser(PUser userInfo);
 	
-	public List<PLevel> getLevel();
+	public PUserName getUserName(int id);
+
+	public int deleteUserName(int id);
+
+	public long addUserName(PUserName username);
+
 }

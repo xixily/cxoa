@@ -52,6 +52,7 @@ public class UserName implements Serializable {
 	private String contract;//合同
 	private String managementSystem;//管理制度
 	private String entryForm;//入职表
+	private String noSignReason;//未签原因
 	private String signedTime;//签定时间
 	private String terminationTime;//终止时间
 	private String registeredAddress;//户口地址
@@ -62,6 +63,7 @@ public class UserName implements Serializable {
 	private String socialSecurityHospital;//社保医院
 	private String level;//级别
 	private String recruitmentSources;//招聘来源
+	private String nowAddress;//现居地址
 	private String contractRenewal;//合同续签
 	private String originalNumber;//原编号
 	private String secrecyAgreement;//保密协议
@@ -304,6 +306,13 @@ public class UserName implements Serializable {
 	public String getEntryForm() {
 		return entryForm;
 	}
+	@Column(name = "未签原因")
+	public String getNoSignReason() {
+		return noSignReason;
+	}
+	public void setNoSignReason(String noSignReason) {
+		this.noSignReason = noSignReason;
+	}
 	public void setEntryForm(String entryForm) {
 		this.entryForm = entryForm;
 	}
@@ -376,6 +385,13 @@ public class UserName implements Serializable {
 	}
 	public void setRecruitmentSources(String recruitmentSources) {
 		this.recruitmentSources = recruitmentSources;
+	}
+	@Column(name="现居地址")
+	public String getNowAddress() {
+		return nowAddress;
+	}
+	public void setNowAddress(String nowAddress) {
+		this.nowAddress = nowAddress;
 	}
 	@Column(name="合同续签")
 	public String getContractRenewal() {
