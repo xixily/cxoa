@@ -55,7 +55,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
 			return true;
 		} else {
 			SessionInfo sessionInfo = (SessionInfo) request.getSession().getAttribute(ResourceUtil.getSessionInfoName());
-			if (sessionInfo.getUserId().equals("0")) {// 超管不需要验证权限
+			if (sessionInfo.getRights()==0) {// 超管不需要验证权限
 				return true;
 			} else {
 				List<String> urls = sessionInfo.getResourceUrls();

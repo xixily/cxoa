@@ -55,7 +55,7 @@ public class SessionInterceptor implements HandlerInterceptor {
 			return true;
 		} else {
 			SessionInfo sessionInfo = (SessionInfo) request.getSession().getAttribute(ResourceUtil.getSessionInfoName());
-			if (sessionInfo != null && sessionInfo.getUserId() != null && !sessionInfo.getUserId().equals("")) {
+			if (sessionInfo != null && sessionInfo.getId() != 0) {
 				return true;
 			} else {
 				request.setAttribute("msg", "您还没有登录或登录已超时，请重新登录，然后再刷新本功能！");

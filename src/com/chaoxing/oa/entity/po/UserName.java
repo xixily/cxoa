@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.GenericGenerator;
 
 
 @Entity
@@ -56,7 +57,7 @@ public class UserName implements Serializable {
 	private String signedTime;//签定时间
 	private String terminationTime;//终止时间
 	private String registeredAddress;//户口地址
-	private String Postcode;//邮编
+	private String postCode;//邮编
 	private String remarks;//备注
 	private String contractNumber;//合同编号
 	private String dueSocialSecurity;//计划入保时间
@@ -73,10 +74,12 @@ public class UserName implements Serializable {
 	private String workPlace;//工作地点
 	private String email;//邮箱
 	private int ifSecret;//是否保密
+	private String maritalStatus;//婚姻状况
 	
 	@Id
 	@Column(name="ID", nullable=false)
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GenericGenerator(name = "usernameTableGenerator", strategy = "native")
 	public int getId() {
 		return id;
 	}
@@ -260,7 +263,7 @@ public class UserName implements Serializable {
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
-	@Column(name="学历证件")
+	@Column(name="学历证书")
 	public String getDegreeCertificate() {
 		return degreeCertificate;
 	}
@@ -338,11 +341,11 @@ public class UserName implements Serializable {
 		this.registeredAddress = registeredAddress;
 	}
 	@Column(name="邮编")
-	public String getPostcode() {
-		return Postcode;
+	public String getPostCode() {
+		return postCode;
 	}
-	public void setPostcode(String postcode) {
-		Postcode = postcode;
+	public void setPostCode(String postCode) {
+		this.postCode = postCode;
 	}
 	@Column(name="备注")
 	public String getRemarks() {
@@ -386,7 +389,7 @@ public class UserName implements Serializable {
 	public void setRecruitmentSources(String recruitmentSources) {
 		this.recruitmentSources = recruitmentSources;
 	}
-	@Column(name="现居地址")
+	@Column(name="现居住地")
 	public String getNowAddress() {
 		return nowAddress;
 	}
@@ -456,6 +459,13 @@ public class UserName implements Serializable {
 	public void setIfSecret(int ifSecret) {
 		this.ifSecret = ifSecret;
 	}
+	@Column(name="婚姻状况")
+	public String getMaritalStatus() {
+		return maritalStatus;
+	}
+	public void setMaritalStatus(String maritalStatus) {
+		this.maritalStatus = maritalStatus;
+	}
 	@Override
 	public String toString() {
 		return "UserName [id=" + id + ", username=" + username + ", password=" + password + ", rights=" + roleId
@@ -470,7 +480,7 @@ public class UserName implements Serializable {
 				+ ", familyRegister=" + familyRegister + ", leavingCertificate=" + leavingCertificate + ", contract="
 				+ contract + ", managementSystem=" + managementSystem + ", entryForm=" + entryForm + ", signedTime="
 				+ signedTime + ", terminationTime=" + terminationTime + ", registeredAddress=" + registeredAddress
-				+ ", Postcode=" + Postcode + ", remarks=" + remarks + ", contractNumber=" + contractNumber
+				+ ", postCode=" + postCode + ", remarks=" + remarks + ", contractNumber=" + contractNumber
 				+ ", dueSocialSecurity=" + dueSocialSecurity + ", socialSecurityHospital=" + socialSecurityHospital
 				+ ", level=" + level + ", recruitmentSources=" + recruitmentSources + ", contractRenewal="
 				+ contractRenewal + ", originalNumber=" + originalNumber + ", secrecyAgreement=" + secrecyAgreement

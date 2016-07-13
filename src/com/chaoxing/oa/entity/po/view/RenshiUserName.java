@@ -71,6 +71,7 @@ public class RenshiUserName implements Serializable {
 	private String workPlace;//工作地点
 	private String email;//邮箱
 	private int ifSecret;//是否保密
+	private String maritalStatus;//婚姻状况
 	
 	@Column(name="人事权限")
 	public String getRenshiRight() {
@@ -503,4 +504,12 @@ public class RenshiUserName implements Serializable {
 	public void setIfSecret(int ifSecret) {
 		this.ifSecret = ifSecret;
 	}
+	@Column(name="婚姻状况")
+	public String getMaritalStatus() {
+		return maritalStatus;
+	}
+	public void setMaritalStatus(String maritalStatus) {
+		this.maritalStatus = maritalStatus;
+	}
+	
 }

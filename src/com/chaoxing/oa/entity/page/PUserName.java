@@ -1,10 +1,9 @@
 package com.chaoxing.oa.entity.page;
 
-import java.io.Serializable;
 
-public class PUserName implements Serializable {
-	private static final long serialVersionUID = -659885126223813837L;
-	private int ID;//ID
+public class PUserName {
+//	private int ID;//ID
+	private int id;//ID
 	private String username;//用户姓名
 	private int roleId;//权限
 	private int departmentId;//部门ID
@@ -40,7 +39,7 @@ public class PUserName implements Serializable {
 	private String signedTime;//签定时间
 	private String terminationTime;//终止时间
 	private String registeredAddress;//户口地址
-	private String Postcode;//邮编
+	private String postCode;//邮编
 	private String remarks;//备注
 	private String contractNumber;//合同编号
 	private String dueSocialSecurity;//计划入保时间
@@ -167,9 +166,6 @@ public class PUserName implements Serializable {
 	public String getRegisteredAddress() {
 		return registeredAddress;
 	}
-	public String getPostcode() {
-		return Postcode;
-	}
 	public String getRemarks() {
 		return remarks;
 	}
@@ -218,11 +214,11 @@ public class PUserName implements Serializable {
 	public int getIfSecret() {
 		return ifSecret;
 	}
-	public int getID() {
-		return ID;
+	public int getId() {
+		return id;
 	}
-	public void setID(int iD) {
-		ID = iD;
+	public void setId(int id) {
+		this.id = id;
 	}
 	public void setUsername(String username) {
 		this.username = username;
@@ -329,11 +325,14 @@ public class PUserName implements Serializable {
 	public void setRegisteredAddress(String registeredAddress) {
 		this.registeredAddress = registeredAddress;
 	}
-	public void setPostcode(String postcode) {
-		Postcode = postcode;
-	}
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+	public String getPostCode() {
+		return postCode;
+	}
+	public void setPostCode(String postCode) {
+		this.postCode = postCode;
 	}
 	public void setContractNumber(String contractNumber) {
 		this.contractNumber = contractNumber;

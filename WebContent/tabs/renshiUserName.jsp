@@ -16,9 +16,9 @@ $(document).ready(function() {
 				{iconCls:'icon-reload',handler:function(){$('#renshi_form').panel('open').panel('refresh')}}]"
 		style="width: 98%; padding: 10px; margin-bottom: 10px;"></div>
 	<%-- <jsp:include page="../components/toolbar.jsp"></jsp:include> --%>
-	<div id="employee_datas" style="width: 98%"></div>
+	<div id="employee_datas" style="width: 98%"></div><!-- 780  -->
 	<div id="userName_info" class="easyui-dialog" title="查看修改职员信息"
-		style="width: 780px;overflow: hidden"
+		style="width: 980px;overflow: hidden"
 		data-options="
                 iconCls : 'icon-edit',
               <!--   href : 'components/usernameForm.jsp', -->

@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.chaoxing.oa.entity.page.PMenu;
 import com.chaoxing.oa.entity.page.PUlList;
-import com.chaoxing.oa.entity.page.PUser;
+import com.chaoxing.oa.entity.page.QueryForm;
 import com.chaoxing.oa.entity.po.UserName;
 import com.chaoxing.oa.service.RoleMenuServiceI;
 import com.chaoxing.oa.service.UserServiceI;

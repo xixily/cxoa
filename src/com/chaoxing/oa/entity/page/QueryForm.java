@@ -1,7 +1,7 @@
 package com.chaoxing.oa.entity.page;
 
 
-public class PUser {
+public class QueryForm {
 	/**
 	 * 分页项
 	 */
@@ -66,6 +66,10 @@ public class PUser {
 	private String leaveTime;//离职时间
 	private String workPlace;//工作地点
 	private int ifSecret;//是否保密
+	private String firstLevel;//一级
+	private String secondLevel;//二级
+	private String thirdLevel;//三级
+	private String fourthLevel;//四级（小组）
 	/**
 	 * 可配置项
 	 * @return
@@ -426,6 +430,31 @@ public class PUser {
 	}
 	public void setConfigurable_value(String configurable_value) {
 		this.configurable_value = configurable_value;
+	}
+	
+	public String getFirstLevel() {
+		return firstLevel;
+	}
+	public String getSecondLevel() {
+		return secondLevel;
+	}
+	public String getThirdLevel() {
+		return thirdLevel;
+	}
+	public String getFourthLevel() {
+		return fourthLevel;
+	}
+	public void setFirstLevel(String firstLevel) {
+		this.firstLevel = firstLevel;
+	}
+	public void setSecondLevel(String secondLevel) {
+		this.secondLevel = secondLevel;
+	}
+	public void setThirdLevel(String thirdLevel) {
+		this.thirdLevel = thirdLevel;
+	}
+	public void setFourthLevel(String fourthLevel) {
+		this.fourthLevel = fourthLevel;
 	}
 	@Override
 	public String toString() {

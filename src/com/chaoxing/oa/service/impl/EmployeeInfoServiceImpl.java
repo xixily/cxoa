@@ -15,7 +15,7 @@ import com.chaoxing.oa.entity.page.PCompany;
 import com.chaoxing.oa.entity.page.PLevel;
 import com.chaoxing.oa.entity.page.POStructs;
 import com.chaoxing.oa.entity.page.PRenshiEmployee;
-import com.chaoxing.oa.entity.page.PUser;
+import com.chaoxing.oa.entity.page.QueryForm;
 import com.chaoxing.oa.entity.po.Company;
 import com.chaoxing.oa.entity.po.Level;
 import com.chaoxing.oa.entity.po.OrganizationStructure;
@@ -26,6 +26,7 @@ import com.chaoxing.oa.service.EmployeeInfoServiceI;
 public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 
 	private BaseDaoI<RenshiUserName> userNameDao;
+	private BaseDaoI<Object> objectDao;
 	private BaseDaoI<Company> companyDao;
 	private BaseDaoI<Level> levelDao;//级别
 	private BaseDaoI<OrganizationStructure> organizationStructureDao;//组织结构
@@ -33,6 +34,15 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 
 	
 	
+	public BaseDaoI<Object> getObjectDao() {
+		return objectDao;
+	}
+
+	@Autowired
+	public void setObjectDao(BaseDaoI<Object> objectDao) {
+		this.objectDao = objectDao;
+	}
+
 	public BaseDaoI<OrganizationStructure> getOrganizationStructureDao() {
 		return organizationStructureDao;
 	}
@@ -85,7 +95,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 	}
 
 	@Override
-	public Map<String, Object> getRenshiUserName(PUser page) {
+	public Map<String, Object> getRenshiUserName(QueryForm page) {
 		System.out.println(page);
 		List<PRenshiEmployee> renshiEmployeeInfos = new ArrayList<PRenshiEmployee>();
 		Map<String, Object> userInfos = new HashMap<String, Object>();
@@ -96,12 +106,9 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		int intPage = (page == null || page.getPage() == 0) ? 1 : page.getPage();
 		int pageSize = (page == null || page.getRows() == 0) ? 100 : page.getRows();
 		List<RenshiUserName> renshiUsernames = userNameDao.find(hql.toString(), params, intPage, pageSize);
-//		List<RenshiUserName> renshiUsernames = userNameDao
-//				.find("from RenshiUserName t where t.fourthLevel=:fourthLevel", params, intPage, pageSize);
 		for (RenshiUserName renshiUserName : renshiUsernames) {
 			PRenshiEmployee renshiEmployeeInfo = new PRenshiEmployee();
 			BeanUtils.copyProperties(renshiUserName, renshiEmployeeInfo);
-//			renshiEmployeeInfo.setID(renshiUserName.getID());
 			renshiEmployeeInfos.add(renshiEmployeeInfo);
 		}
 		long total = getRenshiUserNameCount(hql.toString(),params);
@@ -110,7 +117,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		return userInfos;
 	}
 
-	protected void addCondition(StringBuffer hql, PUser page, Map<String, Object> params) {
+	protected void addCondition(StringBuffer hql, QueryForm page, Map<String, Object> params) {
 		if(page != null){
 			if(page.getConfigurable() != null && page.getConfigurable() != ""){
 				if(page.getConfigurable_value() != null && page.getConfigurable_value() != ""){
@@ -121,37 +128,33 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 				hql.append(" and t.username like :username ");
 				params.put("username", "%" + page.getUsername() + "%");
 			}
-			if(page.getIdentityCard() != null && page.getIdentityCard() != ""){
-				hql.append(" and t.identityCard like :identityCard ");
-				params.put("identityCard", "%" + page.getIdentityCard() + "%");
+			if(page.getFourthLevel() != null && page.getFourthLevel() != ""){
+				hql.append(" and t.fourthLevel like :fourthLevel ");
+				params.put("fourthLevel", "%" + page.getFourthLevel() + "%");
 			}
 			if(page.getCompany() != null && page.getCompany() != ""){
 				hql.append(" and t.company like :company ");
 				params.put("company", "%" + page.getCompany() + "%");
 			}
-			if(page.getPosition() != null && page.getPosition() != ""){
-				hql.append(" and t.position like :position ");
-				params.put("position", "%" + page.getPosition() + "%");
+			if(page.getInsuranceCompany() != null && page.getInsuranceCompany() != ""){
+				hql.append(" and t.insuranceCompany like :insuranceCompany ");
+				params.put("insuranceCompany", "%" + page.getInsuranceCompany() + "%");
 			}
-			if(page.getLevel() != null && page.getLevel() != ""){
-				hql.append(" and t.level like :level ");
-				params.put("level", "%" + page.getLevel() + "%");
+			if(page.getDegree() != null && page.getDegree() != ""){
+				hql.append(" and t.degree like :degree ");
+				params.put("degree", "%" + page.getDegree() + "%");
 			}
-			if(page.getHiredate() != null && page.getHiredate() != ""){
-				hql.append(" and t.hiredate like :hiredate ");
-				params.put("hiredate", "%" + page.getHiredate() + "%");
+			if(page.getEarlyEntryDate() != null && page.getEarlyEntryDate() != ""){
+				hql.append(" and t.earlyEntryDate like :earlyEntryDate ");
+				params.put("earlyEntryDate", "%" + page.getEarlyEntryDate() + "%");
 			}
 			if(page.getLeaveTime() != null && page.getLeaveTime() != ""){
-				hql.append(" and t.leaveTime like :leaveTime% ");
+				hql.append(" and t.leaveTime like :leaveTime ");
 				params.put("leaveTime", "%" + page.getLeaveTime() + "%");
 			}
 			if(page.getZhuanzhengTime() != null && page.getZhuanzhengTime() != ""){
-				hql.append(" and t.zhuanzhengTime like :zhuanzhengTime% ");
+				hql.append(" and t.zhuanzhengTime like :zhuanzhengTime ");
 				params.put("zhuanzhengTime", "%" + page.getZhuanzhengTime() + "%");
-			}
-			if(page.getDueSocialSecurity() != null && page.getDueSocialSecurity() != ""){
-				hql.append(" and t.dueSocialSecurity like :dueSocialSecurity ");
-				params.put("dueSocialSecurity", "%" + page.getDueSocialSecurity() + "%");
 			}
 		}
 	}
@@ -183,6 +186,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		}
 		return plevels;
 	}
+	@Override
 	public List<PCompany> getCompany() {
 		List<Company> cmopanys = companyDao.find("from Company");
 		List<PCompany> pcompanys = new ArrayList<PCompany>();
@@ -214,8 +218,22 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		for (OrganizationStructure organizationStructure : lists) {
 			POStructs postruct = new POStructs();
 			BeanUtils.copyProperties(organizationStructure, postruct);
+			postruct.setDepartmentId(organizationStructure.getId());
 			listComs.add(postruct);
 		}
 		return listComs;
+	}
+
+	@Override
+	public List<PComboBox> getInsuranceCompany() {
+		List<Object> lists = objectDao.find("select distinct(u.insuranceCompany) from UserName u");
+		List<PComboBox> pcbs = new ArrayList<PComboBox>();
+		for (Object renshiUserName : lists) {
+			PComboBox pcb = new PComboBox();
+			pcb.setText((String)renshiUserName);
+			pcb.setValue((String)renshiUserName);
+			pcbs.add(pcb);
+		}
+		return pcbs;
 	}
 }

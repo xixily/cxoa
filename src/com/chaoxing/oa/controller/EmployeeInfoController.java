@@ -14,10 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.chaoxing.oa.config.SysConfig;
 import com.chaoxing.oa.entity.page.PComboBox;
+import com.chaoxing.oa.entity.page.PCompany;
 import com.chaoxing.oa.entity.page.PLevel;
 import com.chaoxing.oa.entity.page.POStructs;
 import com.chaoxing.oa.entity.page.Json;
-import com.chaoxing.oa.entity.page.PUser;
+import com.chaoxing.oa.entity.page.QueryForm;
 import com.chaoxing.oa.service.EmployeeInfoServiceI;
 import com.chaoxing.oa.util.ResourceUtil;
 
@@ -36,7 +37,7 @@ public class EmployeeInfoController {
 
 	@RequestMapping(value = "/renshiUser")
 	@ResponseBody
-	public Map<String, Object> getRenshiUserName(PUser page){
+	public Map<String, Object> getRenshiUserName(QueryForm page){
 		Map<String, Object> userInfos = employeeInfoService.getRenshiUserName(page);
 		return userInfos;
 	}
@@ -82,5 +83,17 @@ public class EmployeeInfoController {
 	public List<PLevel> getLevel(){
 		List<PLevel> lists = employeeInfoService.getLevel();
 		return lists;
+	}
+	
+	@RequestMapping(value = "/getCompany")
+	@ResponseBody
+	public List<PCompany> getCompany(){
+		return employeeInfoService.getCompany();
+	}
+	
+	@RequestMapping(value = "/getInsuranceCompany")
+	@ResponseBody
+	public List<PComboBox> getInsuranceCompany(){
+		return employeeInfoService.getInsuranceCompany();
 	}
 }

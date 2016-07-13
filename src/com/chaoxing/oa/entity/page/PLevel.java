@@ -1,9 +1,6 @@
 package com.chaoxing.oa.entity.page;
 
-import java.io.Serializable;
-
-public class PLevel implements Serializable {
-	private static final long serialVersionUID = 3946996978367282290L;
+public class PLevel {
 	private int id;
 	private String name;
 	public int getId() {

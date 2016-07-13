@@ -3,20 +3,22 @@
     .form_width input{
         width: 100px;
     }
-</style>
-<div class="easyui-panel" style="width:768px;overflow: hidden" >
+</style><!-- 768 -->
+<div class="easyui-panel" style="width:960px;overflow: hidden" >
     <div style="padding:2px">
-        <form id="updateUsesrname_form" class="easyui-form form_width"  method="post">
+        <form id="updateUsesrname_form" class="easyui-form"  method="post"  data-options="novalidate:true">
             <table cellpadding="2">
                 <tr>
                     <td>姓名:</td>
-                    <td><input class="easyui-textbox" type="text" name="username" /></td>
+                    <td>
+					<input id="form_hidden_ID" type="hidden" name="id"/>
+                    <input class="easyui-textbox" type="text" name="username" /></td>
                     <td>家庭住址:</td>
-                    <td><input class="easyui-textbox" type="text" name="homeAddress" /></td>
+                    <td><input id="textbox_addrss" class="easyui-textbox" type="text" name="homeAddress" /></td>
                     <td>毕业时间:</td>
                     <td><input class="easyui-datebox" type="text" name="degreeCertificate" /></td>
                     <td>户口地址:</td>
-                    <td><input class="easyui-textbox" type="text" name="registeredAddress" /></td>
+                    <td><input id="textbox_hukou" class="easyui-textbox" type="text" name="registeredAddress" /></td>
                 </tr>
                 <tr>
                     <td>公司:</td>
@@ -29,7 +31,7 @@
                     <td>身份证复印件:</td>
                     <td><input class="easyui-textbox" type="text" name="identityCardCopy" /></td>
                     <td>邮编:</td>
-                    <td><input class="easyui-textbox" type="text" name="Postcode" /></td>
+                    <td><input class="easyui-textbox" type="text" name="postCode" /></td>
                 </tr>
                 <tr>
                     <td>部门:</td><!-- 部门ID下拉 -->
@@ -45,7 +47,7 @@
                     <td>岗位:</td><!-- 三级 -->
                     <td><input id="input_thirdLevel" class="easyui-textbox" type="text" name="thirdLevel"  readonly="true"/></td>
                     <td>入职时间:</td>
-                    <td><input class="easyui-datebox" type="text" name="hiredate" /></td>
+                    <td><input id="date_hiredate" class="easyui-datebox" type="text" name="hiredate" /></td>
                     <td>离职证明:</td>
                     <td><input class="easyui-textbox" type="text" name="leavingCertificate" /></td>
                     <td>合同编号:</td>
@@ -54,8 +56,8 @@
                 <tr>
                     <td>小组:</td><!-- 四级 -->
                     <td>
-                    <input id="form_hidden" type="hidden" name="departmentId" />
-                     <input id="combox" class="easyui-combobox" name="fourthLevel" style="width:100%;height:26px;" data-options="
+                    <input id="form_hidden_departmentId" type="hidden" name="departmentId" />
+                     <input id="combox" class="easyui-combobox" name="fourthLevel" style="width:103px;height:26px;" data-options="
                     url: 'employee/getOStruct.action',
                     valueField:'fourthLevel',
                     textField:'fourthLevel',
@@ -65,7 +67,9 @@
                     		$('#updateUsesrname_form').form('load',{
                     			firstLevel : obj.firstLevel,
                     			secondLevel : obj.secondLevel,
-                    			thirdLevel : obj.thirdLevel
+                    			thirdLevel : obj.thirdLevel,
+                    			cellCore : obj.cellCore,
+                    			departmentId : obj.departmentId
                     		});
                     	}
                     	})
@@ -80,7 +84,7 @@
                     <td>合同:</td>
                     <td><input class="easyui-textbox" type="text" name="contract" /></td>
                     <td>计划入保时间:</td>
-                    <td><input class="easyui-datebox" type="text" name="dueSocialSecurity" /></td>
+                    <td><input class="easyui-textbox" type="text" name="dueSocialSecurity" /></td>
                 </tr>
                 <tr>
                     <td>职位:</td>
@@ -95,7 +99,7 @@
                 <tr>
                     <td>性别:</td>
                     <td>
-                    	<select id="combox_sex" class="easyui-combobox" name="sex" style="width:80%" data-options="
+                    	<input id="combox_sex" class="easyui-combobox" name="sex" data-options="
 							valueField: 'label',
 							textField: 'value',
 							data: [{
@@ -104,8 +108,7 @@
 							},{
 								label: '女',
 								value: '女'
-							}]">
-						</select>
+							}]" />
                     </td>
                     <td>早期入职时间:</td>
                     <td><input id="datebox_entry" class="easyui-datebox" type="text" name="earlyEntryDate" /></td>
@@ -117,18 +120,15 @@
                 <tr>
                     <td>身份证号:</td>
                     <td><input id="textbox_id" class="easyui-textbox" type="text" name="identityCard" data-options="
-                    required:true,
-	                onChange:function(newValue){
-	                var borthday = '';
-	               	if(newValue&&newValue.length>14){
-	               		console.log(newValue.length);
-	               		borthday = newValue.substr(6,4) + '.' + newValue.substr(10,2) + '.' + newValue.substr(12,2);
-	               	$('#textbox_borth').textbox('setValue',borthday);
-	               	}
-	                }
                     "/></td>
                     <td>户口性质:</td>
-                    <td><input class="easyui-textbox" type="text" name="householdType" /></td>
+                    <td>
+                    <input id="combox_hoseholdType" class="easyui-combobox" name="householdType"  data-options="
+                    valueField:'name',
+                    textField:'name',
+                    data : [{name:'外埠城镇'},{name:'外埠农村'},{name:'本市城镇'},{name:'本市农村'},{name:'其他'}]
+                    ">
+                    </td>
                     <td>签定时间:</td>
                     <td><input class="easyui-datebox" type="text" name="signedTime" /></td>
                     <td>现工作地:</td>
@@ -142,13 +142,19 @@
                     <td>终止时间:</td>
                     <td><input class="easyui-datebox" type="text" name="terminationTime" /></td>
                     <td>邮箱:</td>
-                    <td><input class="easyui-textbox" type="email" name="email" /></td>
+                    <td><input id="vie_mail" class="easyui-textbox" type="email" name="email" /></td>
                 </tr>
                 <tr>
                     <td>民族:</td>
                     <td><input id="text_nation" class="easyui-textbox" type="text" name="nation" ></td>
                     <td>保险公司:</td>
-                    <td><input class="easyui-textbox" type="text" name="insuranceCompany" /></td>
+                    <td><!-- <input class="easyui-textbox" type="text" name="insuranceCompany" /> -->
+                    <input class="easyui-combobox" name="insuranceCompany" data-options="
+                    url: 'employee/getInsuranceCompany.action',
+                    valueField:'value',
+                    textField:'text',
+                    " />
+                    </td>
                     <td>离职时间:</td>
                     <td><input class="easyui-datebox" type="text" name="leaveTime" /></td>
                     <td>部门调动时间:</td>
@@ -156,13 +162,35 @@
                 </tr>
                 <tr>
                     <td>学历:</td>
-                    <td><input class="easyui-textbox" type="text" name="degree" /></td>
+                    <td>
+                   <!--  <input class="easyui-textbox" type="text" name="degree" /> -->
+                    	<input id="combox_degree" class="easyui-combobox" style="width:103px;" name="degree"  data-options="
+							valueField: 'name',
+							textField: 'name',
+							data: [
+							{name : '博士'	},
+							{name : '硕士'	},
+							{name : '本科'	},
+							{name : '大专'	},
+							{name : '高中'	},
+							{name : '中专'	},
+							{name : '技校'	},
+							{name : '初中'	},
+							{name : '其他'	}
+							]" />
+                    </td>
                     <td>公司名称:</td>
-                    <td><input class="easyui-textbox" type="text" name="company" /></td>
+                    <td>
+                     <input class="easyui-combobox" name="company" data-options="
+                    url: 'employee/getCompany.action',
+                    valueField:'cmopany',
+                    textField:'cmopany',
+                    " />
+                    </td>
                     <td>原编号:</td>
                     <td><input class="easyui-textbox" type="text" name="originalNumber" /></td>
                     <td>办理工资卡:</td>
-                    <td><input class="easyui-textbox" type="text" name="" /></td>
+                    <td><input class="easyui-textbox" type="text" name="panCard" /></td>
                 </tr>
                 <tr>
                     <td>毕业院校:</td>
@@ -193,7 +221,7 @@
                 </tr>
                 <tr>
                     <td>负责人:</td>
-                    <td><input class="easyui-textbox" type="text" name="" /></td>
+                    <td><input class="easyui-textbox" type="text" name="cellCore" /></td>
                     <td>招聘来源:</td>
                     <td><input class="easyui-textbox" type="text" name="recruitmentSources" /></td>
                     <td></td>
@@ -201,9 +229,9 @@
                 </tr>
                 <tr>
                     <td>签字人:</td>
-                    <td><input class="easyui-textbox" type="text" name="" /></td>
+                    <td><input class="easyui-textbox" type="text" name="cellCore" /></td>
                     <td>关系:</td>
-                    <td><input class="easyui-textbox" type="text" name="" /></td>
+                    <td><input class="easyui-textbox" type="text" name="managementSystem" /></td>
                     <td></td>
                     <td></td>
                 </tr>

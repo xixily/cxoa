@@ -204,38 +204,29 @@ function disabledForm(formId, isDisabled){
     $("form[id='"+formId+"'] select").attr("disabled",isDisabled);  
     $("form[id='"+formId+"'] :radio").attr("disabled",isDisabled);  
     $("form[id='"+formId+"'] :checkbox").attr("disabled",isDisabled);  
+    $("form[id='"+formId+"'] :input").attr("disabled",isDisabled);  
       
     //禁用jquery easyui中的下拉选（使用input生成的combox）  
   
-//    $("#" + formId + " input[class='combobox']").each(function () {  
     $("#" + formId + " input[class='easyui-combobox combobox-f combo-f']").each(function () {  
-        /*if (this.id) {
-//        	alert("input"+this.id);  
-            $("#" + this.id).combobox(attr);  
-        }  */
         $(this).combobox(attr);
     });  
     
     $("#" + formId + ' input[class="easyui-combobox combobox-f combo-f textbox-f"]').each(function () {  
-    	if (this.id) {
-//        	alert("input"+this.id);  
-    		$("#" + this.id).combobox(attr);  
-    	}  
+    	$(this).combobox(attr);
     });  
       
     //禁用jquery easyui中的下拉选（使用select生成的combox）  
     $("#" + formId + " select[class='combobox-f combo-f']").each(function () {  
-        if (this.id) {  
-//        alert(this.id);  
-            $("#" + this.id).combobox(attr);  
-        }  
+//        if (this.id) {  
+////        alert(this.id);  
+//            $("#" + this.id).combobox(attr);  
+//        }
+        $(this).combobox(attr);
     });  
     //禁用jquery easyui中的日期组件dataBox  
-    $("#" + formId + " input[class='datebox-f combo-f']").each(function () {  
-        if (this.id) {  
-//        alert(this.id)  
-            $("#" + this.id).datebox(attr);  
-        }  
+    $("#" + formId + " input[class='easyui-datebox datebox-f combo-f textbox-f']").each(function () {  
+        $(this).datebox(attr);
     });  
 }
 
@@ -280,12 +271,57 @@ $.fn.panel.defaults.onBeforeDestroy = function() {
 
 /**
  *时间格式化 
+ *出现冒泡实现，与jquery冲突
  */
+/*var flag = 0;
+var dateTrue = '';
+$.fn.datebox.defaults.formatter = function(date){
+	flag = flag%2 + 1;
+	console.log(flag);
+	if((flag%2) === 1){
+		var y = date.getFullYear();
+		var m = date.getMonth()+1;
+		var d = date.getDate();
+		dateTrue = y + '.' + (m<10?('0'+m):m) + '.' + (d<10?('0'+d):d);
+	}
+	return dateTrue;
+}*/
 $.fn.datebox.defaults.formatter = function(date){
 	var y = date.getFullYear();
 	var m = date.getMonth()+1;
 	var d = date.getDate();
-	return y + '.' + m + '.' + d;
+	return y + '.' + (m<10?('0'+m):m) + '.' + (d<10?('0'+d):d);
+}
+$.fn.datebox.defaults.parser = function(s){
+	 if (!s) return new Date();
+	    var ss = (s.split('.'));
+	    var y = parseInt(ss[0],10);
+	    var m = parseInt(ss[1]?ss[1]:'01',10);
+	    var d = parseInt(ss[2]?ss[2]:'01',10);
+	    if (!isNaN(y) && !isNaN(m) && !isNaN(d)){
+	    		return new Date(y,m-1,d);
+	    } else {
+	        return new Date();
+	    }
+}
+function myformatter(date){
+    var y = date.getFullYear();
+    var m = date.getMonth()+1;
+    var d = date.getDate();
+    return y+'.'+(m<10?('0'+m):m)+'.'+(d<10?('0'+d):d);
+}
+
+function myparser(s){
+    if (!s) return new Date();
+    var ss = (s.split('.'));
+    var y = parseInt(ss[0],10);
+    var m = parseInt(ss[1],10);
+    var d = parseInt(ss[2],10);
+    if (!isNaN(y) && !isNaN(m) && !isNaN(d)){
+        return new Date(y,m-1,d);
+    } else {
+        return new Date();
+    }
 }
 
 /**

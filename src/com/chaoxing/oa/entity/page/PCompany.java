@@ -1,9 +1,7 @@
 package com.chaoxing.oa.entity.page;
 
-import java.io.Serializable;
 
-public class PCompany implements Serializable{
-	private static final long serialVersionUID = 4469578425454537573L;
+public class PCompany {
 	private int id;
 	private String cmopany;
 

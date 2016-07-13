@@ -16,55 +16,75 @@ var center = {
 				columns : [ [ {
 					field : 'id',
 					title : '员工编号',
-					width : 60
+					width : 0
 				}, {
 					field : 'username',
 					title : '姓名',
-					width : 80
+					width : 4
 				}, {
 					field : 'firstLevel',
-					title : '一级',
-					width : 80
+					title : '公司',
+					width : 4
 				}, {
 					field : 'secondLevel',
-					title : '二级',
-					width : 100
+					title : '部门',
+					width : 5
 				}, {
 					field : 'thirdLevel',
-					title : '三级',
-					width : 100
+					title : '岗位',
+					width : 5
 				}, {
 					field : 'fourthLevel',
-					title : '四级',
-					width : 100
+					title : '小组',
+					width : 5
 				}, {
 					field : 'position',
 					title : '职位',
-					width : 80
+					width : 4
 				}, {
 					field : 'sex',
 					title : '性别',
-					width : 70
+					width : 3
 				}, {
-					field : 'hiredate',
-					title : '入职时间',
-					width : 80
+					field : 'company',
+					title : '公司名称',
+					width : 4
 				}, {
-					field : 'leaveTime',
-					title : '离职时间',
-					width : 80
-				}, {
-					field : 'workPlace',
-					title : '工作地点',
-					width : 96
-				}, {
-					field : 'phoneNumber',
-					title : '联系方式',
-					width : 80
+					field : 'insuranceCompany',
+					title : '保险公司',
+					width : 4
 				}, {
 					field : 'degree',
 					title : '学历',
-					width : 80
+					width : 4
+				}, {
+					field : 'workPlace',
+					title : '工作地点',
+					width : 5
+				}, {
+					field : 'earlyEntryDate',
+					title : '早期入职时间',
+					width : 4
+				}, {
+					field : 'hiredate',
+					title : '入职时间',
+					width : 4
+				}, {
+					field : 'zhuanzhengTime',
+					title : '转正时间',
+					width : 4
+				}, {
+					field : 'leaveTime',
+					title : '离职时间',
+					width : 4
+				}, {
+					field : 'phoneNumber',
+					title : '联系方式',
+					width : 4
+				}, {
+					field : 'maritalStatus',
+					title : '婚姻状况',
+					width : 4
 				} ] ],
 				/*toolbar : '#renshi_toolbar'*/
 				toolbar: [{
@@ -112,6 +132,9 @@ var center = {
 		view: function(){
 			var rights = session.user.rights;
 			console.log('editEmployee');
+			$('#userName_info').dialog({title:'查看职员信息'});
+			$("#textbox_id").textbox({onChange:function(){return}});
+			$("#textbox_addrss").textbox({onChange:function(){return}});
 			var userInfo = $('#employee_datas').datagrid('getSelected');
 			var url = "user/getUserName.action";
 			$.getJSON(url, userInfo, function(result){
@@ -133,6 +156,9 @@ var center = {
 				alert('您没有编辑权限！~');
 				return ;
 			}
+			$('#userName_info').dialog({title:'编辑职员信息'});
+			$("#textbox_id").textbox({onChange:function(){return}});
+			$("#textbox_addrss").textbox({onChange:function(){return}});
 			console.log('editEmployee');
 			var userInfo = $('#employee_datas').datagrid('getSelected');
 			var url = "user/getUserName.action";
@@ -179,12 +205,15 @@ var center = {
 				alert('您没有编辑权限！~');
 				return ;
 			}
+			$('#userName_info').dialog({title:'增加职员'});
 			$('#updateUsesrname_form').form('clear');
 			$('#userName_info').window('open').window('resize',{top:$(document).scrollTop() + ($(window).height()-480) * 0.5});
 			disabledForm('updateUsesrname_form', false);
 			$('#btn_employeeSave').linkbutton("enable");
 			$('#btn_employeeRest').linkbutton("enable");
 			$('#btn_employeeEdit').linkbutton("disable");
+			$('#updateUsesrname_form').form('load',{id:-1});
+			
 			var url = "user/addUserName.action";
 			$('#updateUsesrname_form').form({
 				url : url,
@@ -199,16 +228,30 @@ var center = {
 			});
 			$('#text_nation').textbox('setValue','汉');
 			$('#combox_sex').combobox('setValue','男');
-//			$("#textbox_id").textbox({
-//				iconCls:'icon-man',
-//                onChange:function(newValue){
-//                	if(newValue.length>14){
-//                		console.log(newValue.length);
-//                		borthday = newValue.substr(6,4) + "." + newValue.substr(10,2) + "." + newValue.substr(12,2);
-//                	}
-//                	$('#textbox_borth').textbox('setValue',borthday);
-//                }
-//			})
+			$("#textbox_id").textbox({
+                onChange:function(newValue,oldValue){
+                	var borthday = '';
+                	if(newValue&&newValue.length != 18){
+                		alert('输入长度有问题，您输入了：' + newValue.length + '位');
+                		return;
+                	}
+					if(oldValue&&oldValue.length>0){
+						return;
+					}
+                	console.log(newValue.length);
+                	borthday = newValue.substr(6,4) + '.' + newValue.substr(10,2) + '.' + newValue.substr(12,2);
+                	$('#textbox_borth').textbox('setValue',borthday);
+                }
+			})
+			$("#textbox_addrss").textbox({
+				onChange:function(newValue,oldValue){
+					if(oldValue&&oldValue.length>0){
+						return;
+					}
+					$('#textbox_hukou').textbox('setValue',newValue);
+				}
+			})
+			
 		},
 		deleteEmployee : function(){
 			console.log('deleteEmployee');

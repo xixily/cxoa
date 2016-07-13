@@ -4,16 +4,6 @@ import java.io.Serializable;
 
 public class PRenshiEmployee implements Serializable{
 	private static final long serialVersionUID = 8022325028735486200L;
-	/**
-	 * 分页项
-	 */
-	private int page;
-	private int rows;
-	private String sortName;
-	private String sortOrder;
-	/**
-	 * 信息项
-	 */
 	private int id;//employeeId
 	private String username;//用户姓名
 	private String firstLevel;//一级
@@ -27,25 +17,17 @@ public class PRenshiEmployee implements Serializable{
 	private String workPlace;//工作地点
 	private String phoneNumber;//电话号码
 	private String degree;//学历
-	
-	public int getPage() {
-		return page;
-	}
-	public int getRows() {
-		return rows;
-	}
+	private String maritalStatus;//婚姻状况
+	private String insuranceCompany;//保险公司
+	private String company;//公司名称
+	private String earlyEntryDate;//早期入职时间
+	private String zhuanzhengTime;//转正时间
 	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	public String getSortName() {
-		return sortName;
-	}
-	public String getSortOrder() {
-		return sortOrder;
 	}
 	public String getUsername() {
 		return username;
@@ -83,17 +65,11 @@ public class PRenshiEmployee implements Serializable{
 	public String getDegree() {
 		return degree;
 	}
-	public void setPage(int page) {
-		this.page = page;
+	public String getMaritalStatus() {
+		return maritalStatus;
 	}
-	public void setRows(int rows) {
-		this.rows = rows;
-	}
-	public void setSortName(String sortName) {
-		this.sortName = sortName;
-	}
-	public void setSortOrder(String sortOrder) {
-		this.sortOrder = sortOrder;
+	public void setMaritalStatus(String maritalStatus) {
+		this.maritalStatus = maritalStatus;
 	}
 	public void setUsername(String username) {
 		this.username = username;
@@ -131,13 +107,30 @@ public class PRenshiEmployee implements Serializable{
 	public void setDegree(String degree) {
 		this.degree = degree;
 	}
-	@Override
-	public String toString() {
-		return "RenshiEmployeeInfo [page=" + page + ", rows=" + rows + ", sortName=" + sortName + ", sortOrder="
-				+ sortOrder + ", id=" + id + ", username=" + username + ", firstLevel=" + firstLevel + ", secondLevel="
-				+ secondLevel + ", thirdLevel=" + thirdLevel + ", fourthLevel=" + fourthLevel + ", position=" + position
-				+ ", sex=" + sex + ", hiredate=" + hiredate + ", leaveTime=" + leaveTime + ", workPlace=" + workPlace
-				+ ", phoneNumber=" + phoneNumber + ", degree=" + degree + "]";
+	
+	public String getInsuranceCompany() {
+		return insuranceCompany;
+	}
+	public String getCompany() {
+		return company;
+	}
+	public String getEarlyEntryDate() {
+		return earlyEntryDate;
+	}
+	public String getZhuanzhengTime() {
+		return zhuanzhengTime;
+	}
+	public void setInsuranceCompany(String insuranceCompany) {
+		this.insuranceCompany = insuranceCompany;
+	}
+	public void setCompany(String company) {
+		this.company = company;
+	}
+	public void setEarlyEntryDate(String earlyEntryDate) {
+		this.earlyEntryDate = earlyEntryDate;
+	}
+	public void setZhuanzhengTime(String zhuanzhengTime) {
+		this.zhuanzhengTime = zhuanzhengTime;
 	}
 	
 }

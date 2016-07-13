@@ -5,28 +5,28 @@
 	enctype="multipart/form-data">
 	<table>
 		<tr>
-			<td>职员姓名:</td>
+			<td>姓名:</td>
 			<td><input name="username" class="f1 easyui-textbox" style="width:160px" /></td>
 
-			<td>身份证号:</td>
-			<td><input name="identityCard" class="f1 easyui-textbox" style="width:160px"/></td>
+			<td>小组:</td>
+			<td><input name="fourthLevel" class="f1 easyui-textbox" style="width:160px"/></td>
 
+			<td>保险公司:</td>
+			<td>
+                    <input class="easyui-combobox" name="insuranceCompany" data-options="
+                    url: 'employee/getInsuranceCompany.action',
+                    valueField:'value',
+                    textField:'text',
+                    " />
+			</td>
 			<td>公司名称:</td>
 			<td>
-			<select name="company" class="easyui-combobox" style="width: 160px; height: 26px;">
-			<option value=""></option>
-			<c:forEach items="${companys}" var="company">
-				<option value="${company.cmopany}">${company.cmopany}</option>
-			</c:forEach>
-			</select>			
-
-			<td>级别:</td>
-			<td><select class="easyui-combobox" name="level" style="width: 160px; height: 26px;">
-			<option value=""></option>
-			<c:forEach items="${levels}" var="level">
-				<option value="${level.name}">${level.name}</option>
-			</c:forEach>
-			</select></td>
+                     <input class="easyui-combobox" name="company" data-options="
+                    url: 'employee/getCompany.action',
+                    valueField:'cmopany',
+                    textField:'cmopany',
+                    " />
+            </td>
 			<td rowspan="2">
 				<div class="comboxy">
 					<span class="combtitle">可配查询</span> 
@@ -87,18 +87,19 @@
 			</td>
 		</tr>
 		<tr>
-			<td>入职时间:</td>
-			<td><input name="hiredate" class="easyui-datebox" style="width:160px"/></td>
+			<td>学历:</td>
+			<td><input name="degree" class="easyui-textbox" style="width:160px" /></td>
+			
+			<td>早期入职时间:</td>
+			<td><input name="earlyEntryDate" class="easyui-datebox" style="width:160px" />
+			</td>
 
 			<td>离职时间:</td>
-			<td><input name="leaveTime" class="easyui-datebox" style="width:160px"/></td>
+			<td><input name="leaveTime" class="easyui-datebox" style="width:160px" /></td>
 
 			<td>转正时间:</td>
-			<td><input name="zhuanzhengTime" class="easyui-datebox" style="width:160px"/></td>
+			<td><input name="zhuanzhengTime" class="easyui-datebox" style="width:160px" /></td>
 
-			<td>计划入保时间:</td>
-			<td><input name="dueSocialSecurity" class="easyui-datebox" style="width:160px"/>
-			</td>
 
 		</tr>
 		<tr>
@@ -108,12 +109,16 @@
 			<td></td>
 			<td></td>
 			<td>
-				<input class="easyui-linkbutton do_action" appaction="center.queryEmployee"
+			<!--  <a href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="submitForm($(this))">保存</a> -->
+			<input class="easyui-linkbutton do_action" appaction="center.queryEmployee"
 				type="button" value="查询" onclick="" style="width:46px;height:26px;" />
 			</td>
 			<td></td>
-			<td><input class="easyui-linkbutton" id="btn_reset" type="button" value="重置"
-				onclick="$('#renshiquery_form').form('clear')" style="width:46px;height:26px;" /></td>
+			<td>
+            <!--  <a href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="clearForm($(this))">重置</a> -->
+			<input class="easyui-linkbutton" id="btn_reset" type="button" value="重置"
+				onclick="$('#renshiquery_form').form('clear')" style="width:46px;height:26px;" />
+			</td>
 		</tr>
 	</table>
 </form>

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.chaoxing.oa.dao.BaseDaoI;
 import com.chaoxing.oa.entity.page.PMenu;
-import com.chaoxing.oa.entity.page.Right;
 import com.chaoxing.oa.entity.page.PUlList;
 import com.chaoxing.oa.entity.po.RoleMenu;
 import com.chaoxing.oa.service.RoleMenuServiceI;
@@ -63,13 +62,5 @@ public class RoleMenuServiceImpl implements RoleMenuServiceI {
 				}
 		}
 		return l_menuInfos;
-	}
-	/**
-	 * 获取所有权限
-	 * @return
-	 */
-	public Right getRight(){
-		
-		return null;
 	}
 }

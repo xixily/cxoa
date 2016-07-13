@@ -9,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chaoxing.oa.dao.BaseDaoI;
-import com.chaoxing.oa.entity.page.PUser;
+import com.chaoxing.oa.entity.page.QueryForm;
+import com.chaoxing.oa.entity.page.SessionInfo;
 import com.chaoxing.oa.entity.page.PUserName;
 import com.chaoxing.oa.entity.po.OrganizationStructure;
 import com.chaoxing.oa.entity.po.UserName;
@@ -46,15 +47,16 @@ public class UserServiceImpl implements UserServiceI {
 	 * 查找一个userName信息copy到UserInfo中
 	 */
 	@Override
-	public PUser findUser(PUser userPageInfo) {
+	public SessionInfo findUser(QueryForm userPageInfo) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		UserName userName;
 		params.put("email", userPageInfo.getEmail());
-		userName = usernameDao.get("from UserName u where u.email=:email",params);
+		UserName userName = usernameDao.get("from UserName u where u.email=:email",params);
 		if(null != userName){
-			BeanUtils.copyProperties(userName, userPageInfo);
+			SessionInfo sessioninfo = new SessionInfo();
+			BeanUtils.copyProperties(userName, sessioninfo);
+//			BeanUtils.copyProperties(userName, userPageInfo);
 			userPageInfo.setRights(userName.getRoleId());
-			return userPageInfo;
+			return sessioninfo;
 		}
 		return null;
 	}
@@ -93,7 +95,8 @@ public class UserServiceImpl implements UserServiceI {
 		UserName u = new UserName();
 		BeanUtils.copyProperties(username, u);
 		try {
-			return (Long) usernameDao.save(u);
+			Integer re = (Integer) usernameDao.save(u);
+			return re;
 		} catch (Exception e) {
 			System.out.println("添加失败：" + e);
 			return -1;

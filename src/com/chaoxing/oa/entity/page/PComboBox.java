@@ -1,8 +1,7 @@
 package com.chaoxing.oa.entity.page;
 
-import java.io.Serializable;
 
-public class PComboBox implements Serializable {
+public class PComboBox {
 	private String value;
 	private String text;
 	public String getValue() {

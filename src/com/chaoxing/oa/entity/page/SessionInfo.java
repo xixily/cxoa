@@ -1,159 +1,164 @@
 package com.chaoxing.oa.entity.page;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class SessionInfo implements java.io.Serializable {
 	private static final long serialVersionUID = -610081469379406214L;
-	private String userId;//ID
-	private String loginName;//username
+	private int id;//ID
 	private String ip;
-	private int roleId;//权限
-	private Set<Right> rights;//权限
-	private int departmentId;//部门ID
-	private String position;//职位
-	private String sex;//性别
-	private String company;//公司名称
 	private String email;//邮箱
+	private String password;//用户密码
+	private String username;//用户姓名
+	private int rights;//权限(判断是否为人事)
+	private String position;//职位
+	private String company;//公司名称
+	private String identityCard;//身份号
+	private String borthDay;//出生年月 
+	private String nation;//民族
+	private String degree;//学历
+	private String phoneNumber;//电话号码
+	private String sex;//性别
+	private int departmentId;//部门ID
 	private int paySecrecy;//工资保密
-	private String roleNames;
-	private String roleIds;
-	private String resourceIds;
-	private String resourceNames;
-	private List<String> resourceUrls = new ArrayList<String>();
-
-	public List<String> getResourceUrls() {
-		return resourceUrls;
+	private String graduatedSchool;//毕业学校
+	private String major;//专业
+	private String level;//级别
+	private String workPlace;//工作地点
+	private int ifSecret;//是否保密
+	List<String> resourceUrls;
+	public int getId() {
+		return id;
 	}
-
-	public void setResourceUrls(List<String> resourceUrls) {
-		this.resourceUrls = resourceUrls;
-	}
-
-	public String getRoleNames() {
-		return roleNames;
-	}
-
-	public void setRoleNames(String roleNames) {
-		this.roleNames = roleNames;
-	}
-
-	public String getRoleIds() {
-		return roleIds;
-	}
-
-	public void setRoleIds(String roleIds) {
-		this.roleIds = roleIds;
-	}
-
-	public String getResourceIds() {
-		return resourceIds;
-	}
-
-	public void setResourceIds(String resourceIds) {
-		this.resourceIds = resourceIds;
-	}
-
-	public String getResourceNames() {
-		return resourceNames;
-	}
-
-	public void setResourceNames(String resourceNames) {
-		this.resourceNames = resourceNames;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
 	public String getIp() {
 		return ip;
 	}
-
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-
-	public String getLoginName() {
-		return loginName;
-	}
-
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
-	}
-
-	public int getDepartmentId() {
-		return departmentId;
-	}
-
-	public String getPosition() {
-		return position;
-	}
-
-	public String getSex() {
-		return sex;
-	}
-
-	public String getCompany() {
-		return company;
-	}
-
 	public String getEmail() {
 		return email;
 	}
-
+	public String getPassword() {
+		return password;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public int getRights() {
+		return rights;
+	}
+	public String getPosition() {
+		return position;
+	}
+	public String getCompany() {
+		return company;
+	}
+	public String getIdentityCard() {
+		return identityCard;
+	}
+	public String getBorthDay() {
+		return borthDay;
+	}
+	public String getNation() {
+		return nation;
+	}
+	public String getDegree() {
+		return degree;
+	}
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+	public String getSex() {
+		return sex;
+	}
+	public int getDepartmentId() {
+		return departmentId;
+	}
 	public int getPaySecrecy() {
 		return paySecrecy;
 	}
-
-	public void setDepartmentId(int departmentId) {
-		this.departmentId = departmentId;
+	public String getGraduatedSchool() {
+		return graduatedSchool;
 	}
-
-	public void setPosition(String position) {
-		this.position = position;
+	public String getMajor() {
+		return major;
 	}
-
-	public void setSex(String sex) {
-		this.sex = sex;
+	public String getLevel() {
+		return level;
 	}
-
-	public void setCompany(String company) {
-		this.company = company;
+	public String getWorkPlace() {
+		return workPlace;
 	}
-
+	public int getIfSecret() {
+		return ifSecret;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public void setRights(int rights) {
+		this.rights = rights;
+	}
+	public void setPosition(String position) {
+		this.position = position;
+	}
+	public void setCompany(String company) {
+		this.company = company;
+	}
+	public void setIdentityCard(String identityCard) {
+		this.identityCard = identityCard;
+	}
+	public void setBorthDay(String borthDay) {
+		this.borthDay = borthDay;
+	}
+	public void setNation(String nation) {
+		this.nation = nation;
+	}
+	public void setDegree(String degree) {
+		this.degree = degree;
+	}
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+	public void setDepartmentId(int departmentId) {
+		this.departmentId = departmentId;
+	}
 	public void setPaySecrecy(int paySecrecy) {
 		this.paySecrecy = paySecrecy;
 	}
-
-	@Override
-	public String toString() {
-		return loginName;
+	public void setGraduatedSchool(String graduatedSchool) {
+		this.graduatedSchool = graduatedSchool;
 	}
-
-	public int getRoleId() {
-		return roleId;
+	public void setMajor(String major) {
+		this.major = major;
 	}
-
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
+	public void setLevel(String level) {
+		this.level = level;
 	}
-
-	public Set<Right> getRights() {
-		return rights;
+	public void setWorkPlace(String workPlace) {
+		this.workPlace = workPlace;
 	}
-
-	public void setRights(Set<Right> rights) {
-		this.rights = rights;
+	public void setIfSecret(int ifSecret) {
+		this.ifSecret = ifSecret;
 	}
+	public List<String> getResourceUrls() {
+		return resourceUrls;
+	}
+	public void setResourceUrls(List<String> resourceUrls) {
+		this.resourceUrls = resourceUrls;
+	}
+	
+
 
 }

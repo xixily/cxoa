@@ -19,7 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.chaoxing.oa.config.SysConfig;
 import com.chaoxing.oa.entity.page.Json;
-import com.chaoxing.oa.entity.page.PUser;
+import com.chaoxing.oa.entity.page.QueryForm;
+import com.chaoxing.oa.entity.page.SessionInfo;
 import com.chaoxing.oa.entity.page.PUserName;
 import com.chaoxing.oa.service.UserServiceI;
 import com.chaoxing.oa.util.IpUtil;
@@ -69,14 +70,15 @@ public class UserController {
 		return json;
 	}
 	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public ModelAndView login(PUser userInfo, HttpServletRequest request, HttpSession session, Model model ){
+	public ModelAndView login(QueryForm queryForm, HttpServletRequest request, HttpSession session, Model model ){
 		ModelAndView modelView = new ModelAndView("redirect:/index.jsp");
-		String password = userInfo.getPassword();
-		userInfo = userService.findUser(userInfo);
-		if(null != userInfo){
-			if(password == userInfo.getPassword()){
-				userInfo.setIp(IpUtil.getIpAddr(request));
-				session.setAttribute(ResourceUtil.getSessionInfoName(), userInfo);
+		String password = queryForm.getPassword();
+		SessionInfo sessionInfo = userService.findUser(queryForm);
+		if(null != sessionInfo){
+			System.out.println(sessionInfo.getPassword());
+			if(password == sessionInfo.getPassword()){
+				sessionInfo.setIp(IpUtil.getIpAddr(request));
+				session.setAttribute(ResourceUtil.getSessionInfoName(), sessionInfo);
 			}else{
 				modelView.setViewName("login");
 				modelView.addObject("password_login_error", "您输入的密码不正确！");
@@ -90,12 +92,12 @@ public class UserController {
 	
 	@RequestMapping(value = "/getUserName")
 	@ResponseBody
-	public Json getUserName(PUser pu, HttpSession session){
+	public Json getUserName(QueryForm pu, HttpSession session){
 //		public Json getUserName(int id, HttpSession session){
 		Json result = new Json();
-		PUser userinfo = null;
+		SessionInfo sessionInfo = null;
 		if(session!=null){
-			userinfo = (PUser) session.getAttribute(ResourceUtil.getSessionInfoName());
+			sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
 		}else{
 			result.setErrorCode(SysConfig.SESSION_INVALIAD);
 			result.setMsg("您的登陆已失效！");
@@ -106,8 +108,8 @@ public class UserController {
 			result.setMsg("您要查询的职员信息不存在！");
 			return result;
 		}
-		if(userinfo != null){
-			if(0 == userinfo.getRights()|| 1 == userinfo.getRights()){
+		if(sessionInfo != null){
+			if(0 == sessionInfo.getRights()|| 1 == sessionInfo.getRights()){
 				PUserName pusername = userService.getUserName(pu.getId());
 				if(pusername!=null){
 					result.setSuccess(true);
@@ -133,20 +135,20 @@ public class UserController {
 	@ResponseBody
 	public Json addUserName(PUserName username, HttpSession session){
 		Json result = new Json();
-		PUser userinfo = null;
+		SessionInfo sessionInfo = null;
 		
 		if(session!=null){
-			userinfo = (PUser) session.getAttribute(ResourceUtil.getSessionInfoName());
+			sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
 		}else{
 			result.setErrorCode(SysConfig.SESSION_INVALIAD);
 			result.setMsg("您的登陆已失效！");
 			return result;
 		}
 //		userinfo = null;
-		if(userinfo != null){
-			if(0 == userinfo.getRights()|| 1 == userinfo.getRights()){
-				long r = 2;
-//				long r = userService.addUserName(username);
+		if(sessionInfo != null){
+			if(0 == sessionInfo.getRights()|| 1 == sessionInfo.getRights()){
+//				long r = 2;
+				long r = userService.addUserName(username);
 				if(r != -1){
 					result.setSuccess(true);
 					result.setMsg("添加成功！");
@@ -164,11 +166,11 @@ public class UserController {
 	}
 	@RequestMapping(value = "deleteUserName")
 	@ResponseBody
-	public Json deleteUserName(PUser pu, HttpSession session){
+	public Json deleteUserName(QueryForm pu, HttpSession session){
 		Json result = new Json();
-		PUser userinfo = null;
+		SessionInfo sessionInfo = null;
 		if(session!=null){
-			userinfo = (PUser) session.getAttribute(ResourceUtil.getSessionInfoName());
+			sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
 		}else{
 			result.setErrorCode(SysConfig.SESSION_INVALIAD);
 			result.setMsg("您的登陆已失效！");
@@ -179,8 +181,8 @@ public class UserController {
 			result.setMsg("您要查询的职员信息不存在！");
 			return result;
 		}
-		if(userinfo != null){
-			if(0 == userinfo.getRights()|| 1 == userinfo.getRights()){
+		if(sessionInfo != null){
+			if(0 == sessionInfo.getRights()|| 1 == sessionInfo.getRights()){
 				int r = 1;
 //				int r = userService.deleteUserName(pu.getId());
 				if(r != 0){
@@ -205,16 +207,16 @@ public class UserController {
 	@ResponseBody
 	public Json updateUserName(PUserName username, HttpSession session){
 		Json result = new Json();
-		PUser userinfo = null;
+		SessionInfo sessionInfo = null;
 		if(session!=null){
-			userinfo = (PUser) session.getAttribute(ResourceUtil.getSessionInfoName());
+			sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
 		}else{
 			result.setErrorCode(SysConfig.SESSION_INVALIAD);
 			result.setMsg("您的登陆已失效！");
 			return result;
 		}
-		if(userinfo != null){
-			if(0 == userinfo.getRights()|| 1 == userinfo.getRights()){
+		if(sessionInfo != null){
+			if(0 == sessionInfo.getRights()|| 1 == sessionInfo.getRights()){
 				long r = 2;
 //				long r = userService.updateUserName(username);
 				if(r != -1){
