@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.BeanUtils;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,8 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.chaoxing.oa.entity.page.PMenu;
 import com.chaoxing.oa.entity.page.PUlList;
 import com.chaoxing.oa.entity.page.QueryForm;
+import com.chaoxing.oa.entity.po.RoleRights;
 import com.chaoxing.oa.entity.po.UserName;
 import com.chaoxing.oa.service.RoleMenuServiceI;
+import com.chaoxing.oa.service.RoleRightsService;
 import com.chaoxing.oa.service.UserServiceI;
 
 @Transactional
@@ -28,6 +31,8 @@ public class TestService {
 	private UserServiceI userService;
 	@Resource(name = "roleMenuService")
 	private RoleMenuServiceI roleMenuService;
+	@Resource(name = "roleRightsService")
+	private RoleRightsService roleRights;
 //	@Resource(name = "roleMenuService")
 //	private RoleMenuServiceI roleMenuService;
 	@Test
@@ -49,20 +54,44 @@ public class TestService {
 //			}
 //		}
 		try {
-			List<PMenu> menuInfos = roleMenuService.findMenu(0);
-			for (PMenu menuInfo : menuInfos) {
-				if(menuInfo.getUls() == null){
-					System.out.println(menuInfo.toString());
-				}else{
-					System.out.println(menuInfo.toString());
-					Set<PUlList> uls = menuInfo.getUls();
-					for (PUlList ulList : uls) {
-						System.out.println(ulList.getText());
-					}
-				}
-			}
+//			List<PMenu> menuInfos = roleMenuService.findMenu(0);
+//			for (PMenu menuInfo : menuInfos) {
+//				if(menuInfo.getUls() == null){
+//					System.out.println(menuInfo.toString());
+//				}else{
+//					System.out.println(menuInfo.toString());
+//					Set<PUlList> uls = menuInfo.getUls();
+//					for (PUlList ulList : uls) {
+//						System.out.println(ulList.getText());
+//					}
+//				}
+//			}
+			List<Object> lists = roleRights.getObjectList(1);
+			List<RoleRights> list = roleRights.getRightsbyId(1);
+			List<RoleRights> list3 = roleRights.getRightsbyRoleId(1);
+//			for (RoleRights roleRights : list) {
+//				System.out.println(roleRights.getMenuId());
+//				System.out.println(roleRights.getMenuName());
+//				System.out.println(roleRights.getRoleId().getRoleId());
+//			}
+//			for (RoleRights roleRights : list3) {
+//				System.out.println(roleRights.getMenuId());
+//				System.out.println(roleRights.getMenuName());
+//				System.out.println(roleRights.getRoleId().getRoleId());
+//			}
+			RoleRights roleRight = list3.get(8);
+			roleRight.setMenuName("为什么更新不成功呢！");
+			RoleRights newRolerights = new RoleRights();
+			BeanUtils.copyProperties(roleRight, newRolerights);
+//			RoleRights rn = new RoleRights();
+//			rn.setMenuId(roleRight.getMenuId());
+//			rn.setMenuLevel(3);
+//			rn.setMenuName("更新一次");
+//			BeanUtils.copyProperties(rn, roleRight);
+//			roleRights.updateRoleRight(roleRight);
+			roleRights.addRoleRight(newRolerights);
 		} catch (Exception e) {
 		}
-		fail("Not yet implemented");
+		fail("======Not yet implemented=======");
 	}
 }

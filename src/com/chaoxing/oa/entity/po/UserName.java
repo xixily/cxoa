@@ -468,7 +468,7 @@ public class UserName implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "UserName [id=" + id + ", username=" + username + ", password=" + password + ", rights=" + roleId
+		return "UserName [id=" + id + ", username=" + username + ", password=" + password + ", roleId=" + roleId
 				+ ", departmentId=" + departmentId + ", position=" + position + ", sex=" + sex + ", identityCard="
 				+ identityCard + ", borthDay=" + borthDay + ", nation=" + nation + ", degree=" + degree
 				+ ", graduatedSchool=" + graduatedSchool + ", major=" + major + ", phoneNumber=" + phoneNumber
@@ -478,14 +478,15 @@ public class UserName implements Serializable {
 				+ ", insuranceCompany=" + insuranceCompany + ", company=" + company + ", resume=" + resume + ", photo="
 				+ photo + ", degreeCertificate=" + degreeCertificate + ", identityCardCopy=" + identityCardCopy
 				+ ", familyRegister=" + familyRegister + ", leavingCertificate=" + leavingCertificate + ", contract="
-				+ contract + ", managementSystem=" + managementSystem + ", entryForm=" + entryForm + ", signedTime="
-				+ signedTime + ", terminationTime=" + terminationTime + ", registeredAddress=" + registeredAddress
-				+ ", postCode=" + postCode + ", remarks=" + remarks + ", contractNumber=" + contractNumber
-				+ ", dueSocialSecurity=" + dueSocialSecurity + ", socialSecurityHospital=" + socialSecurityHospital
-				+ ", level=" + level + ", recruitmentSources=" + recruitmentSources + ", contractRenewal="
-				+ contractRenewal + ", originalNumber=" + originalNumber + ", secrecyAgreement=" + secrecyAgreement
-				+ ", reportForm=" + reportForm + ", panCard=" + panCard + ", leaveTime=" + leaveTime + ", workPlace="
-				+ workPlace + ", email=" + email + "]";
+				+ contract + ", managementSystem=" + managementSystem + ", entryForm=" + entryForm + ", noSignReason="
+				+ noSignReason + ", signedTime=" + signedTime + ", terminationTime=" + terminationTime
+				+ ", registeredAddress=" + registeredAddress + ", postCode=" + postCode + ", remarks=" + remarks
+				+ ", contractNumber=" + contractNumber + ", dueSocialSecurity=" + dueSocialSecurity
+				+ ", socialSecurityHospital=" + socialSecurityHospital + ", level=" + level + ", recruitmentSources="
+				+ recruitmentSources + ", nowAddress=" + nowAddress + ", contractRenewal=" + contractRenewal
+				+ ", originalNumber=" + originalNumber + ", secrecyAgreement=" + secrecyAgreement + ", reportForm="
+				+ reportForm + ", panCard=" + panCard + ", leaveTime=" + leaveTime + ", workPlace=" + workPlace
+				+ ", email=" + email + ", ifSecret=" + ifSecret + ", maritalStatus=" + maritalStatus + "]";
 	}
 
 }

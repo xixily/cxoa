@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,12 @@ public class BaseDaoImpl<T> implements BaseDaoI<T> {
 	}
 
 	@Override
-	public Serializable save(T o) {
-		return this.getCurrentSession().save(o);
+	public Serializable save(T o) throws Exception {
+		try {
+			return this.getCurrentSession().save(o);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 	@Override
@@ -72,8 +77,12 @@ public class BaseDaoImpl<T> implements BaseDaoI<T> {
 	}
 
 	@Override
-	public void update(T o) {
-		this.getCurrentSession().update(o);
+	public void update(T o) throws Exception {
+		try {
+			this.getCurrentSession().update(o);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 	@Override
@@ -157,5 +166,9 @@ public class BaseDaoImpl<T> implements BaseDaoI<T> {
 		}
 		return q.executeUpdate();
 	}
-
+	
+	public List<T> findSql(String sql){
+		SQLQuery sq = this.getCurrentSession().createSQLQuery(sql);
+		return sq.list();
+	}
 }

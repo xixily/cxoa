@@ -95,16 +95,25 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 	}
 
 	@Override
-	public Map<String, Object> getRenshiUserName(QueryForm page) {
-		System.out.println(page);
+	public Map<String, Object> getRenshiUserName(QueryForm queryForm) {
+		return getRenshiUserName(queryForm, 0);
+	}
+	
+	@Override
+	public Map<String, Object> getRenshiUserName(QueryForm queryForm, int isExport) {
+		System.out.println(queryForm);
 		List<PRenshiEmployee> renshiEmployeeInfos = new ArrayList<PRenshiEmployee>();
 		Map<String, Object> userInfos = new HashMap<String, Object>();
 		Map<String, Object> params = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer("from RenshiUserName t where 1=1 ");
-		addCondition(hql, page, params);
+		addCondition(hql, queryForm, params);
 		hql.append(" order by t.id asc");
-		int intPage = (page == null || page.getPage() == 0) ? 1 : page.getPage();
-		int pageSize = (page == null || page.getRows() == 0) ? 100 : page.getRows();
+		int intPage = 0;
+		int pageSize = 30000;//最多导出30000条数据
+		if(isExport == 0){
+			intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
+			pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+		}
 		List<RenshiUserName> renshiUsernames = userNameDao.find(hql.toString(), params, intPage, pageSize);
 		for (RenshiUserName renshiUserName : renshiUsernames) {
 			PRenshiEmployee renshiEmployeeInfo = new PRenshiEmployee();
@@ -117,44 +126,44 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		return userInfos;
 	}
 
-	protected void addCondition(StringBuffer hql, QueryForm page, Map<String, Object> params) {
-		if(page != null){
-			if(page.getConfigurable() != null && page.getConfigurable() != ""){
-				if(page.getConfigurable_value() != null && page.getConfigurable_value() != ""){
-					hql.append(" and t." + page.getConfigurable() + " like '%" + page.getConfigurable_value() + "%' ");
+	protected void addCondition(StringBuffer hql, QueryForm queryForm, Map<String, Object> params) {
+		if(queryForm != null){
+			if(queryForm.getConfigurable() != null && queryForm.getConfigurable() != ""){
+				if(queryForm.getConfigurable_value() != null && queryForm.getConfigurable_value() != ""){
+					hql.append(" and t." + queryForm.getConfigurable() + " like '%" + queryForm.getConfigurable_value() + "%' ");
 				}
 			}
-			if(page.getUsername() != null && page.getUsername() != ""){
+			if(queryForm.getUsername() != null && queryForm.getUsername() != ""){
 				hql.append(" and t.username like :username ");
-				params.put("username", "%" + page.getUsername() + "%");
+				params.put("username", "%" + queryForm.getUsername() + "%");
 			}
-			if(page.getFourthLevel() != null && page.getFourthLevel() != ""){
+			if(queryForm.getFourthLevel() != null && queryForm.getFourthLevel() != ""){
 				hql.append(" and t.fourthLevel like :fourthLevel ");
-				params.put("fourthLevel", "%" + page.getFourthLevel() + "%");
+				params.put("fourthLevel", "%" + queryForm.getFourthLevel() + "%");
 			}
-			if(page.getCompany() != null && page.getCompany() != ""){
+			if(queryForm.getCompany() != null && queryForm.getCompany() != ""){
 				hql.append(" and t.company like :company ");
-				params.put("company", "%" + page.getCompany() + "%");
+				params.put("company", "%" + queryForm.getCompany() + "%");
 			}
-			if(page.getInsuranceCompany() != null && page.getInsuranceCompany() != ""){
+			if(queryForm.getInsuranceCompany() != null && queryForm.getInsuranceCompany() != ""){
 				hql.append(" and t.insuranceCompany like :insuranceCompany ");
-				params.put("insuranceCompany", "%" + page.getInsuranceCompany() + "%");
+				params.put("insuranceCompany", "%" + queryForm.getInsuranceCompany() + "%");
 			}
-			if(page.getDegree() != null && page.getDegree() != ""){
+			if(queryForm.getDegree() != null && queryForm.getDegree() != ""){
 				hql.append(" and t.degree like :degree ");
-				params.put("degree", "%" + page.getDegree() + "%");
+				params.put("degree", "%" + queryForm.getDegree() + "%");
 			}
-			if(page.getEarlyEntryDate() != null && page.getEarlyEntryDate() != ""){
+			if(queryForm.getEarlyEntryDate() != null && queryForm.getEarlyEntryDate() != ""){
 				hql.append(" and t.earlyEntryDate like :earlyEntryDate ");
-				params.put("earlyEntryDate", "%" + page.getEarlyEntryDate() + "%");
+				params.put("earlyEntryDate", "%" + queryForm.getEarlyEntryDate() + "%");
 			}
-			if(page.getLeaveTime() != null && page.getLeaveTime() != ""){
+			if(queryForm.getLeaveTime() != null && queryForm.getLeaveTime() != ""){
 				hql.append(" and t.leaveTime like :leaveTime ");
-				params.put("leaveTime", "%" + page.getLeaveTime() + "%");
+				params.put("leaveTime", "%" + queryForm.getLeaveTime() + "%");
 			}
-			if(page.getZhuanzhengTime() != null && page.getZhuanzhengTime() != ""){
+			if(queryForm.getZhuanzhengTime() != null && queryForm.getZhuanzhengTime() != ""){
 				hql.append(" and t.zhuanzhengTime like :zhuanzhengTime ");
-				params.put("zhuanzhengTime", "%" + page.getZhuanzhengTime() + "%");
+				params.put("zhuanzhengTime", "%" + queryForm.getZhuanzhengTime() + "%");
 			}
 		}
 	}

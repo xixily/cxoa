@@ -13,7 +13,9 @@ import com.chaoxing.oa.entity.page.QueryForm;
 public interface EmployeeInfoServiceI {
 	public List<PRenshiEmployee> getRenshiUserName();
 
-	public Map<String, Object> getRenshiUserName(QueryForm page);
+	public Map<String, Object> getRenshiUserName(QueryForm queryForm);
+	
+	public Map<String, Object> getRenshiUserName(QueryForm queryForm, int isExport);
 
 	public long getRenshiUserNameCount(String hql, Map<String, Object> params);
 

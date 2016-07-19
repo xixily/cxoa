@@ -37,11 +37,12 @@ public class EmployeeInfoController {
 
 	@RequestMapping(value = "/renshiUser")
 	@ResponseBody
-	public Map<String, Object> getRenshiUserName(QueryForm page){
-		Map<String, Object> userInfos = employeeInfoService.getRenshiUserName(page);
+	public Map<String, Object> getRenshiUserName(QueryForm queryForm){
+		Map<String, Object> userInfos = employeeInfoService.getRenshiUserName(queryForm);
 		return userInfos;
 	}
 	
+	//TODO 方法貌似弃用了,有时间整理一下删除掉
 	@RequestMapping(value = "/getQueryForm")
 	public ModelAndView getQueryForm(HttpSession session, Model model){
 		if(session.getAttribute(ResourceUtil.getSessionInfoName()) != null){

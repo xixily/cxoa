@@ -80,6 +80,7 @@
 						<option value="secrecyAgreement">保密协议</option>
 						<option value="panCard">办理工资卡</option>
 						<option value="email">邮箱</option>
+						<option value="reportForm">报表</option>
 					</select>
 					<div style="height: 2px; border: 0px;"></div>
 					<input name="configurable_value" class="f1 easyui-textbox" />

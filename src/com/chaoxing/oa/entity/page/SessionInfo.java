@@ -9,7 +9,7 @@ public class SessionInfo implements java.io.Serializable {
 	private String email;//邮箱
 	private String password;//用户密码
 	private String username;//用户姓名
-	private int rights;//权限(判断是否为人事)
+	private int roleId;//权限
 	private String position;//职位
 	private String company;//公司名称
 	private String identityCard;//身份号
@@ -40,9 +40,6 @@ public class SessionInfo implements java.io.Serializable {
 	}
 	public String getUsername() {
 		return username;
-	}
-	public int getRights() {
-		return rights;
 	}
 	public String getPosition() {
 		return position;
@@ -104,11 +101,14 @@ public class SessionInfo implements java.io.Serializable {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public void setRights(int rights) {
-		this.rights = rights;
-	}
 	public void setPosition(String position) {
 		this.position = position;
+	}
+	public int getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 	public void setCompany(String company) {
 		this.company = company;
@@ -157,6 +157,11 @@ public class SessionInfo implements java.io.Serializable {
 	}
 	public void setResourceUrls(List<String> resourceUrls) {
 		this.resourceUrls = resourceUrls;
+	}
+	@Override
+	public String toString() {
+		return "SessionInfo [id=" + id + ", ip=" + ip + ", email=" + email + ", username="
+				+ username + ", roleId=" + roleId + "]";
 	}
 	
 

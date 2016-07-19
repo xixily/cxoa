@@ -6,11 +6,11 @@ import java.util.Map;
 
 public interface BaseDaoI<T> {
 
-	public Serializable save(T o);
+	public Serializable save(T o) throws Exception;
 
 	public void delete(T o);
 
-	public void update(T o);
+	public void update(T o) throws Exception;
 
 	public void saveOrUpdate(T o);
 

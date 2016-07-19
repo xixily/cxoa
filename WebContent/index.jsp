@@ -24,13 +24,12 @@
 		session.user.ID = '${sessionInfo.id }';
 		session.user.username = '${sessionInfo.username }';
 		session.user.email = '${sessionInfo.email}';
-		session.user.rights = '${sessionInfo.rights}';
+		session.user.roleId = '${sessionInfo.roleId}';
 		session.user.departmentId = '${sessionInfo.departmentId}';
 		session.user.position = '${sessionInfo.position}';
 		session.user.sex = '${sessionInfo.sex}';
 		session.user.phoneNumber = '${sessionInfo.phoneNumber}';
 		session.user.position = '${sessionInfo.position}';
-		session.user.rights = '${sessionInfo.rights}'
 		initClickHandler();
 		</script> 
 	  	<!-- $(document).ready(function () {

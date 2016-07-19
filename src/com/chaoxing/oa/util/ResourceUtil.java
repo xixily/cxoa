@@ -59,5 +59,13 @@ public class ResourceUtil {
 	public static final String getUploadDirectory() {
 		return bundle.getString("uploadDirectory");
 	}
+	
+	/**
+	 * 获得下载文件的目录(exceldir)
+	 * @return
+	 */
+	public static final String getDownloadDirectory(){
+		return bundle.getString("excelDir");
+	}
 
 }

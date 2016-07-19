@@ -7,4 +7,6 @@ import com.chaoxing.oa.entity.page.PMenu;
 
 public interface RoleMenuServiceI {
 	public List<PMenu> findMenu(int roleId);
+
+	public List<PMenu> findAllMenu();
 }

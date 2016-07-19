@@ -92,7 +92,8 @@ public class UserController {
 	
 	@RequestMapping(value = "/getUserName")
 	@ResponseBody
-	public Json getUserName(QueryForm pu, HttpSession session){
+	public Json getUserName(QueryForm queryForm, HttpSession session){
+//		public Json getUserName(QueryForm pu, HttpSession session){
 //		public Json getUserName(int id, HttpSession session){
 		Json result = new Json();
 		SessionInfo sessionInfo = null;
@@ -103,21 +104,21 @@ public class UserController {
 			result.setMsg("您的登陆已失效！");
 			return result;
 		}
-		if(pu.getId() == 0){
+		if(queryForm.getId() == 0){
 			result.setErrorCode(SysConfig.REQUEST_ERROR);
 			result.setMsg("您要查询的职员信息不存在！");
 			return result;
 		}
 		if(sessionInfo != null){
-			if(0 == sessionInfo.getRights()|| 1 == sessionInfo.getRights()){
-				PUserName pusername = userService.getUserName(pu.getId());
+			if(0 == sessionInfo.getRoleId()|| 1 == sessionInfo.getRoleId()){
+				PUserName pusername = userService.getUserName(queryForm.getId());
 				if(pusername!=null){
 					result.setSuccess(true);
 					result.setMsg("获取员工信息成功");
 					result.setObj(pusername);
 				}else{
 					result.setErrorCode(SysConfig.REQUEST_ERROR);
-					result.setMsg("获取员工编号：" + pu.getId() + " 职员信息失败！");
+					result.setMsg("获取员工编号：" + queryForm.getId() + " 职员信息失败！");
 				}
 				return result;
 			}else{
@@ -146,7 +147,7 @@ public class UserController {
 		}
 //		userinfo = null;
 		if(sessionInfo != null){
-			if(0 == sessionInfo.getRights()|| 1 == sessionInfo.getRights()){
+			if(0 == sessionInfo.getRoleId()|| 1 == sessionInfo.getRoleId()){
 //				long r = 2;
 				long r = userService.addUserName(username);
 				if(r != -1){
@@ -182,7 +183,7 @@ public class UserController {
 			return result;
 		}
 		if(sessionInfo != null){
-			if(0 == sessionInfo.getRights()|| 1 == sessionInfo.getRights()){
+			if(0 == sessionInfo.getRoleId()|| 1 == sessionInfo.getRoleId()){
 				int r = 1;
 //				int r = userService.deleteUserName(pu.getId());
 				if(r != 0){
@@ -216,7 +217,7 @@ public class UserController {
 			return result;
 		}
 		if(sessionInfo != null){
-			if(0 == sessionInfo.getRights()|| 1 == sessionInfo.getRights()){
+			if(0 == sessionInfo.getRoleId()|| 1 == sessionInfo.getRoleId()){
 				long r = 2;
 //				long r = userService.updateUserName(username);
 				if(r != -1){

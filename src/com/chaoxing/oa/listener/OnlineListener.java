@@ -41,7 +41,7 @@ public class OnlineListener implements ServletContextListener, ServletContextAtt
 
 	public void requestDestroyed(ServletRequestEvent arg0) {
 	}
-
+	
 	*//**
 	 * 向session里增加属性时调用(用户成功登陆后会调用)
 	 *//*

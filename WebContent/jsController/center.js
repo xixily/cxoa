@@ -86,38 +86,38 @@ var center = {
 					title : '婚姻状况',
 					width : 4
 				} ] ],
-				/*toolbar : '#renshi_toolbar'*/
-				toolbar: [{
-		            text:'查看',
-		            iconCls: 'icon-search',
-		            handler: function(){
-		            	center.view();
-		            }
-		        },'-',{
-		            text:'编辑',
-		            iconCls: 'icon-edit',
-		            handler: function(){
-		            	center.editEmployee();
-		            }
-		        },'-',{
-		            text:'新增',
-		            iconCls: 'icon-add',
-		            handler: function(){
-		            	center.addEmployee();
-		            }
-		        },'-',{
-		            text:'删除',
-		            iconCls: 'icon-cancel',
-		            handler: function(){
-		            	center.deleteEmployee();
-		            }
-		        },'-',{
-		            text:'导出报表',
-		            iconCls: 'icon-excel',
-		            handler: function(){
-		            	center.exportExcel();
-		            }
-		        }],
+				toolbar : '#renshi_toolbar',
+//				toolbar: [{
+//		            text:'查看',
+//		            iconCls: 'icon-search',
+//		            handler: function(){
+//		            	center.view();
+//		            }
+//		        },'-',{
+//		            text:'编辑',
+//		            iconCls: 'icon-edit',
+//		            handler: function(){
+//		            	center.editEmployee();
+//		            }
+//		        },'-',{
+//		            text:'新增',
+//		            iconCls: 'icon-add',
+//		            handler: function(){
+//		            	center.addEmployee();
+//		            }
+//		        },'-',{
+//		            text:'删除',
+//		            iconCls: 'icon-cancel',
+//		            handler: function(){
+//		            	center.deleteEmployee();
+//		            }
+//		        },'-',{
+//		            text:'导出报表',
+//		            iconCls: 'icon-excel',
+//		            handler: function(){
+//		            	center.exportExcel();
+//		            }
+//		        }],
 		        onDblClickCell: function(index,field,value){
 		        	center.view();
 		    	}
@@ -130,7 +130,7 @@ var center = {
 			})
 		},
 		view: function(){
-			var rights = session.user.rights;
+			var rights = session.user.roleId;
 			console.log('editEmployee');
 			$('#userName_info').dialog({title:'查看职员信息'});
 			$("#textbox_id").textbox({onChange:function(){return}});
@@ -152,7 +152,7 @@ var center = {
 			})
 		},
 		editEmployee : function(){
-			if(session.user.rights != 0 && session.user.rights != 1){
+			if(session.user.roleId != 0 && session.user.roleId != 1){
 				alert('您没有编辑权限！~');
 				return ;
 			}
@@ -189,7 +189,7 @@ var center = {
 			})
 		},
 		openAddEEmployee : function(){
-			if(session.user.rights != 0 && session.user.rights != 1){
+			if(session.user.roleId != 0 && session.user.roleId != 1){
 				alert('您没有编辑权限！~');
 				return ;
 			}
@@ -201,8 +201,8 @@ var center = {
 			$('#btn_employeeEdit').linkbutton("disable");
 		},
 		addEmployee : function(){
-			if(session.user.rights != 0 && session.user.rights != 1){
-				alert('您没有编辑权限！~');
+			if(session.user.roleId != 0 && session.user.roleId != 1){
+				alert('您没有增加权限！~');
 				return ;
 			}
 			$('#userName_info').dialog({title:'增加职员'});
@@ -255,8 +255,8 @@ var center = {
 		},
 		deleteEmployee : function(){
 			console.log('deleteEmployee');
-			if(session.user.rights != 0 && session.user.rights != 1){
-				alert('您没有编辑权限！~');
+			if(session.user.roleId != 0 && session.user.roleId != 1){
+				alert('您没有删除权限！~');
 				return ;
 			}
 			var userInfo = $('#employee_datas').datagrid('getSelected');
@@ -269,8 +269,96 @@ var center = {
 				}
 			})
 		},
-		exportExcel : function(){
-			console.log('exportExcel');
+		exportExcel : function(month){
+			console.log('exportExcel:' + month);
+			var exportParam = {};
+			var form = $('#renshiquery_form');
+			var data = getDataOfForm(form);
+			var frm = $("<form>");
+			frm.attr("style","display:none");
+			frm.attr("target","");
+			frm.attr("id","export_query");
+			frm.attr("method","post");
+			$("body").append(frm);//将表单放置在web中
+			var url = "file/exportExcel.action";
+			var mydate = new Date();
+			var year = mydate.getFullYear(); //获取完整的年份(4位,1970-????)
+			var month = mydate.getMonth()+1; //获取当前月份(0-11,0代表1月)
+			var monthb = month-1;
+			var montha = month+1;
+			var date = year + (month<10?('0'+month):month);
+			var dateBefore = year + (monthb<10?('0'+monthb):monthb);
+			var dateAfter = year + (montha<10?('0'+montha):montha);
+			exportParam.configurable = 'reportForm';
+			if(!month || month == 0){
+				delete exportParam.configurable;
+				if (data.succeed) {
+					exportParam = data.data;
+		        }
+			}else if(month==111 || month == 112 || month == 113|| month == 121|| month == 122|| month == 123 ){
+				if(month == 111){
+					exportParam.configurable_value = dateBefore + "入职";
+				}else if(month == 112){
+					exportParam.configurable_value = date + "入职";
+				}else if(month == 113){
+					exportParam.configurable_value = dateAfter + "入职";
+				}else if(month == 121){
+					exportParam.configurable_value = dateBefore + "入职";
+				}else if(month == 122){
+					exportParam.configurable_value = date + "入职";
+				}else{
+					exportParam.configurable_value = dateAfter + "入职";
+				}
+			}else if(month==211 || month == 212 || month == 213|| month == 221|| month == 222|| month == 223 ){
+				if(month == 211){
+					exportParam.configurable_value = dateBefore + "转正";
+				}else if(month == 212){
+					exportParam.configurable_value = date + "转正";
+				}else if(month == 213){
+					exportParam.configurable_value = dateAfter + "转正";
+				}else if(month == 221){
+					exportParam.configurable_value = dateBefore + "转正";
+				}else if(month == 222){
+					exportParam.configurable_value = date + "转正";
+				}else{
+					exportParam.configurable_value = dateAfter + "转正";
+				}
+			}else if(month==311 || month == 312 || month == 313|| month == 321|| month == 322|| month == 323 ){
+				if(month == 311){
+					exportParam.configurable_value = dateBefore + "离职";
+				}else if(month == 312){
+					exportParam.configurable_value = date + "离职";
+				}else if(month == 313){
+					exportParam.configurable_value = dateAfter + "离职";
+				}else if(month == 321){
+					exportParam.configurable_value = dateBefore + "离职";
+				}else if(month == 322){
+					exportParam.configurable_value = date + "离职";
+				}else{
+					exportParam.configurable_value = dateAfter + "离职";
+				}
+			}else if(month==411 || month == 412 || month == 413|| month == 421|| month == 422|| month == 423 ){
+				if(month == 411){
+					exportParam.configurable_value = dateBefore + "异动";
+				}else if(month == 412){
+					exportParam.configurable_value = date + "异动";
+				}else if(month == 413){
+					exportParam.configurable_value = dateAfter + "异动";
+				}else if(month == 421){
+					exportParam.configurable_value = dateBefore + "异动";
+				}else if(month == 422){
+					exportParam.configurable_value = date + "异动";
+				}else{
+					exportParam.configurable_value = dateAfter + "异动";
+				}
+			}
+			$("#export_query").form('submit',{
+				url : url,
+				queryParams : exportParam,
+				onSubmit : function(){
+					console.log("正在导出,请稍后");
+				}
+			});
 		},
 		helpEmployee : function(){
 			console.log('helpEmployee');
@@ -279,65 +367,3 @@ var center = {
 			alert(dom);
 		}
 }
-/**
- * 打开dialog的参考
- */
-/*var url;
-function newUser() {
-	$('#dlg').dialog('open').dialog('center').dialog('setTitle', 'New User');
-	$('#fm').form('clear');
-	url = 'save_user.php';
-}
-function editUser() {
-	var row = $('#dg').datagrid('getSelected');
-	if (row) {
-		$('#dlg').dialog('open').dialog('center').dialog('setTitle',
-				'Edit User');
-		$('#fm').form('load', row);
-		url = 'update_user.php?id=' + row.id;
-	}
-}
-function saveUser() {
-	$('#fm').form('submit', {
-		url : url,
-		onSubmit : function() {
-			return $(this).form('validate');
-		},
-		success : function(result) {
-			var result = eval('(' + result + ')');
-			if (result.errorMsg) {
-				$.messager.show({
-					title : 'Error',
-					msg : result.errorMsg
-				});
-			} else {
-				$('#dlg').dialog('close'); // close the dialog
-				$('#dg').datagrid('reload'); // reload the user data
-			}
-		}
-	});
-}
-function destroyUser() {
-	var row = $('#dg').datagrid('getSelected');
-	if (row) {
-		$.messager.confirm('Confirm',
-				'Are you sure you want to destroy this user?', function(r) {
-					if (r) {
-						$.post('destroy_user.php', {
-							id : row.id
-						}, function(result) {
-							if (result.success) {
-								$('#dg').datagrid('reload'); // reload the
-																// user data
-							} else {
-								$.messager.show({ // show error message
-									title : 'Error',
-									msg : result.errorMsg
-								});
-							}
-						}, 'json');
-					}
-				});
-	}
-
-}*/

@@ -1,5 +1,7 @@
 package com.chaoxing.oa.config;
 
+import com.chaoxing.oa.util.ResourceUtil;
+
 public class SysConfig {
 	/**
 	 * 降序排序
@@ -25,4 +27,12 @@ public class SysConfig {
 	 * 请求错误
 	 */
 	public final static int REQUEST_ERROR = 2;
+	/**
+	 * 
+	 */
+	public final static String UPLOAD_DIR = "uploadDir";
+	/**
+	 * excel文件目录
+	 */
+	public final static String DOWNLOAD_EXCEL = ResourceUtil.getDownloadDirectory();
 }

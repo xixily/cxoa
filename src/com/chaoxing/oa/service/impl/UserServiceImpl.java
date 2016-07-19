@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserServiceI {
 			SessionInfo sessioninfo = new SessionInfo();
 			BeanUtils.copyProperties(userName, sessioninfo);
 //			BeanUtils.copyProperties(userName, userPageInfo);
-			userPageInfo.setRights(userName.getRoleId());
+//			sessioninfo.setRights(userName.getRoleId());
 			return sessioninfo;
 		}
 		return null;
