@@ -12,13 +12,9 @@ $(document).ready(function() {
 	data-options="iconCls:'icon-man',closable:true">
 	<!-- 组合查询form表单 -->
 	<div id="renshi_form" title="组合查询" class="easyui-panel"
-		data-options="iconCls:'icon-search',href:'${pageContext.request.contextPath}/components/queryform.jsp',tools:[
+		data-options="iconCls:'icon-search',href:'${pageContext.request.contextPath}/components/renshi_queryform.jsp',tools:[
 				{iconCls:'icon-reload',handler:function(){$('#renshi_form').panel('open').panel('refresh')}}]"
 		style="width: 98%; padding: 10px; margin-bottom: 10px;"></div>
-	<!-- <div id="renshi_form" title="组合查询" class="easyui-panel"
-		data-options="iconCls:'icon-search',href:'employee/getQueryForm.action',tools:[
-				{iconCls:'icon-reload',handler:function(){$('#renshi_form').panel('open').panel('refresh')}}]"
-		style="width: 98%; padding: 10px; margin-bottom: 10px;"></div> -->
 	<jsp:include page="../components/toolbar.jsp"></jsp:include>
 	<div id="employee_datas" style="width: 98%"></div><!-- 780  -->
 	<div id="userName_info" class="easyui-dialog" title="查看修改职员信息"
@@ -30,5 +26,14 @@ $(document).ready(function() {
                 closed : true
             ">
            	<jsp:include page="../components/usernameForm.jsp"></jsp:include>
+	</div>
+	<div id="dialog_wagesInfo" class="easyui-dialog" title="查看修改职员工资信息"
+		style="width: 980px;overflow: hidden"
+		data-options="
+                iconCls : 'icon-edit',
+                modal : false,
+                closed : true
+            ">
+           	<jsp:include page="../components/wages.jsp"></jsp:include>
 	</div>
 </div>

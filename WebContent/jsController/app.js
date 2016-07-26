@@ -4,8 +4,9 @@ $.ajaxSetup({
 var session = {
     logined : false,
     user : {},
-    testText : '我在这里存放全局缓存数据'
+//    testText : '我在这里存放全局缓存数据'
 };
+var editIndex = undefined;
 $(window).on('beforeunload', function (e) {
     if (session.logined){
 //    	north.logoutFun();
@@ -170,6 +171,10 @@ function sendAction(action, callback, method, async, timeout) {
 	})
 }
 
+/**
+ * 
+ * @param id
+ */
 function formartDate(id){
 	 $("#" + id + " input[class='easyui-datebox datebox-f combo-f textbox-f']").each(function () {  
 	        $(this).combobox({
@@ -240,10 +245,27 @@ function clearForm(dom){
 	form.form('clear');
 }
 
-function submitForm(dom){
+function submitForm(dom, callback){
 	var form = dom.closest("form");
 	console.log(form);
-	form.form('submit');
+//	if(form.form('validate')){
+//		form.form('submit');
+//	}else{
+//		alert('您的输入有误，请您核查!');
+//	}
+	form.form('submit',{
+         onSubmit:function(){
+             return $(this).form('enableValidation').form('validate');
+         },
+         success:function(result){
+        	 var result =  eval("(" + result + ")");
+        	 if(callback){
+        		 callback(result);
+        	 }else{
+        		 $.messager.alert('消息', result.msg, 'info');
+        	 }
+         }
+     });
 }
 /**
  * @author dengxf
@@ -270,28 +292,17 @@ $.fn.panel.defaults.onBeforeDestroy = function() {
 };
 
 /**
- *时间格式化 
- *出现冒泡实现，与jquery冲突
+ * 时间datebox控件格式化
  */
-/*var flag = 0;
-var dateTrue = '';
-$.fn.datebox.defaults.formatter = function(date){
-	flag = flag%2 + 1;
-	console.log(flag);
-	if((flag%2) === 1){
-		var y = date.getFullYear();
-		var m = date.getMonth()+1;
-		var d = date.getDate();
-		dateTrue = y + '.' + (m<10?('0'+m):m) + '.' + (d<10?('0'+d):d);
-	}
-	return dateTrue;
-}*/
 $.fn.datebox.defaults.formatter = function(date){
 	var y = date.getFullYear();
 	var m = date.getMonth()+1;
 	var d = date.getDate();
 	return y + '.' + (m<10?('0'+m):m) + '.' + (d<10?('0'+d):d);
 }
+/**
+ * 时间datebox控件解析
+ */
 $.fn.datebox.defaults.parser = function(s){
 	 if (!s) return new Date();
 	    var ss = (s.split('.'));
@@ -304,13 +315,22 @@ $.fn.datebox.defaults.parser = function(s){
 	        return new Date();
 	    }
 }
+/**
+ * 自定义时间格式化规则
+ * @param date
+ * @returns {String}
+ */
 function myformatter(date){
     var y = date.getFullYear();
     var m = date.getMonth()+1;
     var d = date.getDate();
     return y+'.'+(m<10?('0'+m):m)+'.'+(d<10?('0'+d):d);
 }
-
+/**
+ * 自定义时间解析规则
+ * @param s
+ * @returns {Date}
+ */
 function myparser(s){
     if (!s) return new Date();
     var ss = (s.split('.'));
@@ -322,6 +342,148 @@ function myparser(s){
     } else {
         return new Date();
     }
+}
+/**
+ * 创建销毁临时form表，用于临时下载文件请求<br/>
+ * <strong>创建之后记得用destoryForm删除临时表</strong>
+ */
+var downloadForm = {
+		/**
+		 * 创建一个临时form，用于文件下载请求
+		 * @param formId
+		 * @returns {String}
+		 */
+	createForm : function(formId){
+		var rformId = formId? formId : 'export_query';
+		var frm = $("<form>");
+		frm.attr("style","display:none");
+		frm.attr("target","");
+		frm.attr("id",rformId);
+		frm.attr("method","post");
+		$("body").append(frm);//将表单放置在web中
+		return rformId;
+	},
+	/**
+	 * 销毁创建的临时form
+	 * @param formId
+	 */
+	destoryForm : function(formId){
+		if(!formId||formId==''){
+			$("#export_query").remove();
+		}
+		$("#"+formId).remove();
+	}
+}
+/**
+ * 创建销毁临时form表，用于提示框<br/>
+ * <strong>创建之后记得用destoryForm删除临时表</strong>
+ */
+var confirmDialog = {
+		/**
+		 * 创建一个临时dialog，用于删除确认
+		 * @param url 必要的,要删除提交的action地址
+		 * @param message 必要的,弹出的提示消息
+		 * @data data 必要的,删除给的传入参数
+		 * @returns {String}
+		 */
+		createUrlDialog : function(url, message, data){
+			var confirmId = 'confirm_dialog';
+			var dialog = $('<div>');
+			dialog.attr("style","display:none");
+			dialog.attr("id",confirmId);
+			dialog.append('<div style="height:26px;margin: 0 auto;"><h3>'+ message + '</h3></div>');
+			dialog.append('<form id="confirm_dialog_form"></form>');
+			dialog.addClass('easyui-dialog');
+			$("body").append(dialog);//将dialog放置在web中
+			$('#confirm_dialog').dialog({
+			    title: '消息提示',
+			    width: 400,
+			    height: 200,
+			    closed: false,
+			    cache: false,
+			    modal: true,
+			    buttons:[{
+					text:'确定',
+					iconCls:'icon-ok',
+					handler:function(){
+						$(confirmId).form('submit');
+						load('正在删除...');
+						confirmDialog.destoryDialog(confirmId);
+					}
+				},{
+					text:'取消',
+					iconCls:'icon-cancel',
+					handler:function(){
+						confirmDialog.destoryDialog(confirmId);
+					}
+				}]
+			});
+			$('#confirm_dialog_form').form({
+			    url : url,
+			    queryParams : data,
+			    success : function(result){
+			    	disLoad();
+			    	if(result.success){
+			    		alert(result.msg);
+			    	}
+			    }
+			});
+			return confirmId;
+		},
+		createDialog : function(message, callback){
+			var confirmId = 'confirm_dialog';
+			var dialog = $('<div>');
+			dialog.attr("style","display:none");
+			dialog.attr("id",confirmId);
+			dialog.append('<div><h3 style="text-align: center;margin-top: 46px;">'+ message + '</h3></div>');
+			dialog.addClass('easyui-dialog');
+			$("body").append(dialog);//将dialog放置在web中
+			$('#confirm_dialog').dialog({
+			    title: '消息提示',
+			    width: 400,
+			    height: 200,
+			    closed: false,
+			    cache: false,
+			    modal: true,
+			    buttons:[{
+					text:'确定',
+					iconCls:'icon-ok',
+					handler:function(){
+						callback(confirmId);
+					}
+				},{
+					text:'取消',
+					iconCls:'icon-cancel',
+					handler:function(){
+						confirmDialog.destoryDialog(confirmId);
+					}
+				}]
+			});
+			return confirmId;
+		},
+		/**
+		 * 销毁创建的临时dialog
+		 * @param confirmId
+		 */
+		destoryDialog : function(confirmId){
+			if(!confirmId||confirmId==''){
+				$("#confirm_dialog").dialog('destroy');
+			}else{
+				$("#"+confirmId).dialog('destroy');
+			}
+		}
+}
+//弹出加载层
+function load(message) {  
+	var message = message ? message:"正在加载，请稍后";
+    $("<div class=\"datagrid-mask\"></div>").css({ display: "block", width: "100%", height: $(window).height() }).appendTo("body");  
+    $("<div class=\"datagrid-mask-msg\"></div>").html(message).appendTo("body").css({ display: "block", left: ($(document.body).outerWidth(true) - 190) / 2, top: ($(window).height() - 45) / 2 });  
+}  
+  
+//取消加载层  
+function disLoad() {  
+    $(".datagrid-mask").remove();  
+    $(".datagrid-mask-msg").remove();  
 }
 
 /**
@@ -635,4 +797,187 @@ $.ajaxSetup({
 		$.messager.progress('close');
 		$.messager.alert('错误', XMLHttpRequest.responseText);
 	}
+});
+
+/**
+ * 扩展的基本校验规则，/i 忽略大小写
+ */
+$.extend($.fn.validatebox.defaults.rules, { 
+    minLength : { // 判断最小长度 
+        validator : function(value, param) { 
+            value = $.trim(value); //去空格 
+            return value.length >= param[0]; 
+        }, 
+        message : '最少输入 {0} 个字符。'
+    }, 
+    length:{validator:function(value,param){ 
+        var len=$.trim(value).length; 
+            return len>=param[0]&&len<=param[1]; 
+        }, 
+            message:"输入大小不正确"
+        }, 
+    phone : {// 验证电话号码 
+        validator : function(value) { 
+            return /^((\(\d{2,3}\))|(\d{3}\-))?(\(0\d{2,3}\)|0\d{2,3}-)?[1-9]\d{6,7}(\-\d{1,4})?$/i.test(value); 
+        }, 
+        message : '格式不正确,请使用下面格式:020-88888888'
+    }, 
+    mobile : {// 验证手机号码 
+        validator : function(value) { 
+            return /^(13|15|17|18)\d{9}$/i.test(value); 
+        }, 
+        message : '手机号码格式不正确'
+    }, 
+    idcard : {// 验证身份证 
+        validator : function(value) { 
+            return /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/i.test(value); 
+//            return /^\d{15}(\d{2}[A-Za-z0-9])?$/i.test(value); 
+        }, 
+        message : '身份证号码格式不正确'
+    }, 
+    intOrFloat : {// 验证整数或小数 
+        validator : function(value) { 
+            return /^\d+(\.\d+)?$/i.test(value); 
+        }, 
+        message : '请输入数字，并确保格式正确'
+    }, 
+    currency : {// 验证货币 
+        validator : function(value) { 
+            return /^\d+(\.\d+)?$/i.test(value); 
+        }, 
+        message : '货币格式不正确'
+    }, 
+    qq : {// 验证QQ,从10000开始 
+        validator : function(value) { 
+            return /^[1-9]\d{4,9}$/i.test(value); 
+        }, 
+        message : 'QQ号码格式不正确'
+    }, 
+    integer : {// 验证整数 
+        validator : function(value) { 
+            return /^[+]?[1-9]+\d*$/i.test(value); 
+        }, 
+        message : '请输入整数'
+    },     
+    chinese : {// 验证中文 
+        validator : function(value) { 
+            return /^[\u0391-\uFFE5]+$/i.test(value); 
+        }, 
+        message : '请输入中文'
+    }, 
+    english : {// 验证英语 
+        validator : function(value) { 
+            return /^[A-Za-z]+$/i.test(value); 
+        }, 
+        message : '请输入英文'
+    }, 
+    unnormal : {// 验证是否包含空格和非法字符 
+        validator : function(value) { 
+            return /.+/i.test(value); 
+        }, 
+        message : '输入值不能为空和包含其他非法字符'
+    }, 
+    username : {// 验证用户名 
+        validator : function(value) { 
+            return /^[a-zA-Z][a-zA-Z0-9_]{5,15}$/i.test(value); 
+        }, 
+        message : '用户名不合法（字母开头，允许6-16字节，允许字母数字下划线）'
+    }, 
+    faxno : {// 验证传真 
+        validator : function(value) { 
+//            return /^[+]{0,1}(\d){1,3}[ ]?([-]?((\d)|[ ]){1,12})+$/i.test(value); 
+            return /^((\(\d{2,3}\))|(\d{3}\-))?(\(0\d{2,3}\)|0\d{2,3}-)?[1-9]\d{6,7}(\-\d{1,4})?$/i.test(value); 
+        }, 
+        message : '传真号码不正确'
+    }, 
+    zip : {// 验证邮政编码 
+        validator : function(value) { 
+            return /^[1-9]\d{5}$/i.test(value); 
+        }, 
+        message : '邮政编码格式不正确'
+    }, 
+    ip : {// 验证IP地址 
+        validator : function(value) { 
+            return /d+.d+.d+.d+/i.test(value); 
+        }, 
+        message : 'IP地址格式不正确'
+    }, 
+    name : {// 验证姓名，可以是中文或英文 
+            validator : function(value) { 
+                return /^[\u0391-\uFFE5]+$/i.test(value)|/^\w+[\w\s]+\w+$/i.test(value); 
+            }, 
+            message : '请输入姓名'
+    }, 
+    carNo:{ 
+        validator : function(value){ 
+            return /^[\u4E00-\u9FA5][\da-zA-Z]{6}$/.test(value); 
+        }, 
+        message : '车牌号码无效（例：粤J12350）'
+    }, 
+    carenergin:{ 
+        validator : function(value){ 
+            return /^[a-zA-Z0-9]{16}$/.test(value); 
+        }, 
+        message : '发动机型号无效(例：FG6H012345654584)'
+    }, 
+    email:{ 
+        validator : function(value){ 
+        return /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(value); 
+    }, 
+    message : '请输入有效的电子邮件账号(例：abc@126.com)'   
+    }, 
+    msn:{ 
+        validator : function(value){ 
+        return /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(value); 
+    }, 
+    message : '请输入有效的msn账号(例：abc@hotnail(msn/live).com)'
+    },
+    same:{ 
+        validator : function(value, param){ 
+            if($("#"+param[0]).val() != "" && value != ""){ 
+                return $("#"+param[0]).val() == value; 
+            }else{ 
+                return true; 
+            } 
+        }, 
+        message : '两次输入的密码不一致！'   
+    },
+    warnmintime : { // 判断告警的值只能一级一级的增加，最小值
+        validator : function(value, param) { 
+            value = $.trim(value); //去空格 
+            if( value !="")
+            for(var i=0;i<param.length; i++){
+                $(param[i]).val();
+                if($(param[i]).combobox('getValue')){
+                    var temp=$.trim($(param[i]).combobox('getValue'));
+                    if(temp !="" && !isNaN(temp) && parseInt(value) <= parseInt(temp))
+                        return false;
+                   }
+            }
+            return true;
+        }, 
+        message : '不能小于当前告警的前一级的告警时间'
+    },
+    warnmaxtime : { // 判断告警的值只能一级一级的增加，最大值
+        validator : function(value, param) { 
+            value = $.trim(value); //去空格 
+            if( value !="")
+            for(var i=0;i<param.length; i++){
+                $(param[i]).val();
+                if($(param[i]).combobox('getValue')){
+                    var temp=$.trim($(param[i]).combobox('getValue'));
+                    if(temp !="" && !isNaN(temp) && parseInt(value) >= parseInt(temp))
+                        return false;
+                   }
+            }
+            return true;
+        }, 
+        message : '不能大于当前告警的后一级的告警时间'
+    },
+    compareDate: {
+        validator: function (value, param) {
+        return dateCompare($(param[0]).datetimebox('getValue'), value); //注意easyui 时间控制获取值的方式
+        },
+        message: '开始日期不能大于结束日期'
+        },
 });

@@ -9,16 +9,23 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.chaoxing.oa.config.SysConfig;
 import com.chaoxing.oa.dao.BaseDaoI;
 import com.chaoxing.oa.entity.page.PComboBox;
 import com.chaoxing.oa.entity.page.PCompany;
 import com.chaoxing.oa.entity.page.PLevel;
 import com.chaoxing.oa.entity.page.POStructs;
 import com.chaoxing.oa.entity.page.PRenshiEmployee;
+import com.chaoxing.oa.entity.page.PShebao;
+import com.chaoxing.oa.entity.page.PShebaoType;
+import com.chaoxing.oa.entity.page.Pwages;
 import com.chaoxing.oa.entity.page.QueryForm;
 import com.chaoxing.oa.entity.po.Company;
 import com.chaoxing.oa.entity.po.Level;
 import com.chaoxing.oa.entity.po.OrganizationStructure;
+import com.chaoxing.oa.entity.po.Shebao;
+import com.chaoxing.oa.entity.po.ShebaoType;
+import com.chaoxing.oa.entity.po.WageDistribution;
 import com.chaoxing.oa.entity.po.view.RenshiUserName;
 import com.chaoxing.oa.service.EmployeeInfoServiceI;
 
@@ -30,10 +37,33 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 	private BaseDaoI<Company> companyDao;
 	private BaseDaoI<Level> levelDao;//级别
 	private BaseDaoI<OrganizationStructure> organizationStructureDao;//组织结构
-
+	private BaseDaoI<WageDistribution> wageDistributionDao;
+	private BaseDaoI<Shebao> sheBaoDao;
+	private BaseDaoI<ShebaoType> sheBaoTypeDao;
 
 	
-	
+	public BaseDaoI<ShebaoType> getSheBaoTypeDao() {
+		return sheBaoTypeDao;
+	}
+	@Autowired
+	public void setSheBaoTypeDao(BaseDaoI<ShebaoType> sheBaoTypeDao) {
+		this.sheBaoTypeDao = sheBaoTypeDao;
+	}
+	public BaseDaoI<Shebao> getSheBaoDao() {
+		return sheBaoDao;
+	}
+	@Autowired
+	public void setSheBaoDao(BaseDaoI<Shebao> sheBaoDao) {
+		this.sheBaoDao = sheBaoDao;
+	}
+	public BaseDaoI<WageDistribution> getWageDistributionDao() {
+		return wageDistributionDao;
+	}
+	@Autowired
+	public void setWageDistributionDao(BaseDaoI<WageDistribution> wageDistributionDao) {
+		this.wageDistributionDao = wageDistributionDao;
+	}
+
 	public BaseDaoI<Object> getObjectDao() {
 		return objectDao;
 	}
@@ -107,7 +137,15 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		Map<String, Object> params = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer("from RenshiUserName t where 1=1 ");
 		addCondition(hql, queryForm, params);
-		hql.append(" order by t.id asc");
+		String sort = "id";
+		String order = SysConfig.ASC;
+		if(queryForm.getSort() != null){
+			sort = queryForm.getSort();
+			if(queryForm.getOrder() != null){
+				order = queryForm.getOrder();
+			}
+		}
+		hql.append(" order by t." + sort + " " + order);
 		int intPage = 0;
 		int pageSize = 30000;//最多导出30000条数据
 		if(isExport == 0){
@@ -164,6 +202,13 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 			if(queryForm.getZhuanzhengTime() != null && queryForm.getZhuanzhengTime() != ""){
 				hql.append(" and t.zhuanzhengTime like :zhuanzhengTime ");
 				params.put("zhuanzhengTime", "%" + queryForm.getZhuanzhengTime() + "%");
+			}if(queryForm.getLevelc() != null ){
+				if(queryForm.getLevelc().equals("实习生")){
+					hql.append(" and t.level like :level ");
+					params.put("level", "%" + queryForm.getLevelc() + "%");
+				}else{
+					hql.append(" and t.level <> '实习生' ");
+				}
 			}
 		}
 	}
@@ -172,8 +217,14 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 	public long getRenshiUserNameCount(String hql, Map<String, Object> params) {
 		StringBuffer hqll = new StringBuffer("select count(*) from RenshiUserName t where ");
 		hqll.append(hql.split("where")[1]);
-		System.out.println("+++++++hqll+++++employeeInfoServiceImpl.getRenshiusernameCount" + hqll.toString());
+		System.out.println("+++++++hqll+++++employeeInfoServiceImpl.getRenshiusernameCount " + hqll.toString());
 		return userNameDao.count(hqll.toString(), params);
+	}
+
+	public long getShebaoCount(String hql, Map<String, Object> params) {
+		StringBuffer hqll = new StringBuffer("select count(*) from Shebao t where ");
+		hqll.append(hql.split("where")[1]);
+		return sheBaoDao.count(hqll.toString(), params);
 	}
 
 	@Override
@@ -199,6 +250,8 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 	public List<PCompany> getCompany() {
 		List<Company> cmopanys = companyDao.find("from Company");
 		List<PCompany> pcompanys = new ArrayList<PCompany>();
+		PCompany pcompany0 = new PCompany();
+		pcompanys.add(pcompany0);
 		for (Company company : cmopanys) {
 			PCompany pcompany = new PCompany();
 			BeanUtils.copyProperties(company, pcompany);
@@ -237,6 +290,8 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 	public List<PComboBox> getInsuranceCompany() {
 		List<Object> lists = objectDao.find("select distinct(u.insuranceCompany) from UserName u");
 		List<PComboBox> pcbs = new ArrayList<PComboBox>();
+		PComboBox pcb0 = new PComboBox();
+		pcbs.add(pcb0);
 		for (Object renshiUserName : lists) {
 			PComboBox pcb = new PComboBox();
 			pcb.setText((String)renshiUserName);
@@ -245,4 +300,134 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		}
 		return pcbs;
 	}
+
+	@Override
+	public List<Pwages> getWagesList(int id) {
+		Map<String,Object> params = new HashMap<String, Object>();
+		params.put("employeeId", id);
+		List<Pwages> pwages = new ArrayList<Pwages>();
+		List<WageDistribution> wages = wageDistributionDao.find("from WageDistribution w where w.employeeId = :employeeId", params);
+		for (WageDistribution wageDistribution : wages) {
+			Pwages p = new Pwages();
+			BeanUtils.copyProperties(wageDistribution, p);
+			pwages.add(p);
+		}
+		return pwages;
+	}
+	@Override
+	public Pwages getWages(int id) {
+		Map<String,Object> params = new HashMap<String, Object>();
+		params.put("employeeId", id);
+		WageDistribution wage = wageDistributionDao.get(WageDistribution.class, id);
+		Pwages pwage = new Pwages();
+		BeanUtils.copyProperties(wage, pwage);
+		return pwage;
+	}
+	@Override
+	public int updateWages(Pwages pwages) {
+		WageDistribution wage = new WageDistribution();
+		BeanUtils.copyProperties(pwages, wage);
+		try {
+			wageDistributionDao.update(wage);
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	@Override
+	public Map<String, Object> getAllShebaoRadio(QueryForm queryForm) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		List<PShebao> pshebaos = new ArrayList<PShebao>();
+		Map<String, Object> result = new HashMap<String, Object>();
+		StringBuffer hql = new StringBuffer("from Shebao t where 1=1");
+		if(queryForm.getCompany()!=null){
+			hql.append(" t.company like :company");
+			params.put("company", "%" + queryForm.getCompany() + "%");
+		}
+		if(queryForm.getHouseholdType()!=null){
+			hql.append(" t.householdType like :householdType");
+			params.put("householdType", "%" + queryForm.getHouseholdType() + "%");
+		}
+		String sort = "sid";
+		String order = SysConfig.DESC;
+		if(queryForm.getSort() != null){
+			sort = queryForm.getSort();
+			if(queryForm.getOrder() != null){
+				order = queryForm.getOrder();
+			}
+		}
+		hql.append(" order by t." + sort + " " + order);
+		int	intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
+		int	pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+		
+		List<Shebao> shebaos = sheBaoDao.find(hql.toString(), params, intPage, pageSize);
+		long total = getShebaoCount(hql.toString(), params);
+		for (Shebao shebao : shebaos) {
+			PShebao pshebao = new PShebao();
+			BeanUtils.copyProperties(shebao, pshebao);
+			pshebaos.add(pshebao);
+		}
+			
+		
+		result.put("total", total);
+		result.put("rows", pshebaos);
+	
+		return result;
+	}
+	@Override
+	public List<PShebao> getShebaoRadioByCompany(String company) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("company", "江西幕课信息技术有限公司");
+//		String c = "成都超星数图信息技术有限公司";
+//		params.put("companyName", company);
+		List<PShebao> pshebaos = new ArrayList<PShebao>();
+		List<Shebao> shebaos = sheBaoDao.find("from Shebao s where s.company = :company", params);
+		for (Shebao shebao : shebaos) {
+			PShebao pshebao = new PShebao();
+			BeanUtils.copyProperties(shebao, pshebao);
+			pshebaos.add(pshebao);
+		}
+		return pshebaos;
+	}
+	@Override
+	public List<PShebaoType> getShebaoType() {
+//		return null;
+		List<PShebaoType> pshebaoTypes = new ArrayList<PShebaoType>();
+		List<ShebaoType> typeList = sheBaoTypeDao.find("from ShebaoType");
+		for (ShebaoType shebaoType : typeList) {
+			PShebaoType pshebao = new PShebaoType();
+			BeanUtils.copyProperties(shebaoType, pshebao);
+			pshebaoTypes.add(pshebao);
+		}
+		return pshebaoTypes;
+	}
+	
+	@Override
+	public int addWages(Pwages pwages) {
+		WageDistribution wage = new WageDistribution();
+		BeanUtils.copyProperties(pwages, wage);
+		try {
+			wageDistributionDao.save(wage);
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	@Override
+	public int deleteWages(Pwages pwages) {
+		WageDistribution wage = new WageDistribution();
+		BeanUtils.copyProperties(pwages, wage);
+		try {
+			wageDistributionDao.delete(wage);
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	
 }

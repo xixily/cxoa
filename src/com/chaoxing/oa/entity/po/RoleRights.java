@@ -25,6 +25,7 @@ public class RoleRights {
 	private int menuLevel;
 	private RoleRights preMenuId;
 	private String url;
+//	private String iconCls;  iconCls字段不加了
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@GenericGenerator(name ="roleRightstableGenerator", strategy = "native" )
@@ -54,6 +55,7 @@ public class RoleRights {
 	public String getUrl() {
 		return url;
 	}
+	
 	public void setMenuLevel(int menuLevel) {
 		this.menuLevel = menuLevel;
 	}

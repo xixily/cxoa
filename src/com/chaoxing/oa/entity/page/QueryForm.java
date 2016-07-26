@@ -7,8 +7,8 @@ public class QueryForm {
 	 */
 	private int page;
 	private int rows;
-	private String sortName;
-	private String sortOrder;
+	private String sort;
+	private String order;
 	/**
 	 * 信息项
 	 */
@@ -72,24 +72,34 @@ public class QueryForm {
 	private String fourthLevel;//四级（小组）
 	/**
 	 * 可配置项
-	 * @return
 	 */
 	private String configurable;
 	private String configurable_value;
+	/**
+	 * 前台请求下载文件的名字
+	 */
+	private String downLoadFileName;
+	private String levelc;
+	public String getLevelc() {
+		return levelc;
+	}
 	public int getPage() {
 		return page;
 	}
 	public int getRows() {
 		return rows;
 	}
-	public String getSortName() {
-		return sortName;
+	public String getSort() {
+		return sort;
 	}
-	public String getSortOrder() {
-		return sortOrder;
+	public String getOrder() {
+		return order;
 	}
 	public String getIp() {
 		return ip;
+	}
+	public int getId() {
+		return id;
 	}
 	public String getEmail() {
 		return email;
@@ -244,23 +254,41 @@ public class QueryForm {
 	public int getIfSecret() {
 		return ifSecret;
 	}
+	public String getFirstLevel() {
+		return firstLevel;
+	}
+	public String getSecondLevel() {
+		return secondLevel;
+	}
+	public String getThirdLevel() {
+		return thirdLevel;
+	}
+	public String getFourthLevel() {
+		return fourthLevel;
+	}
+	public String getConfigurable() {
+		return configurable;
+	}
+	public String getConfigurable_value() {
+		return configurable_value;
+	}
+	public String getDownLoadFileName() {
+		return downLoadFileName;
+	}
 	public void setPage(int page) {
 		this.page = page;
 	}
 	public void setRows(int rows) {
 		this.rows = rows;
 	}
-	public void setSortName(String sortName) {
-		this.sortName = sortName;
+	public void setSort(String sort) {
+		this.sort = sort;
 	}
-	public void setSortOrder(String sortOrder) {
-		this.sortOrder = sortOrder;
+	public void setOrder(String order) {
+		this.order = order;
 	}
 	public void setIp(String ip) {
 		this.ip = ip;
-	}
-	public int getId() {
-		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
@@ -418,32 +446,6 @@ public class QueryForm {
 	public void setIfSecret(int ifSecret) {
 		this.ifSecret = ifSecret;
 	}
-	
-	public String getConfigurable() {
-		return configurable;
-	}
-	public String getConfigurable_value() {
-		return configurable_value;
-	}
-	public void setConfigurable(String configurable) {
-		this.configurable = configurable;
-	}
-	public void setConfigurable_value(String configurable_value) {
-		this.configurable_value = configurable_value;
-	}
-	
-	public String getFirstLevel() {
-		return firstLevel;
-	}
-	public String getSecondLevel() {
-		return secondLevel;
-	}
-	public String getThirdLevel() {
-		return thirdLevel;
-	}
-	public String getFourthLevel() {
-		return fourthLevel;
-	}
 	public void setFirstLevel(String firstLevel) {
 		this.firstLevel = firstLevel;
 	}
@@ -456,11 +458,23 @@ public class QueryForm {
 	public void setFourthLevel(String fourthLevel) {
 		this.fourthLevel = fourthLevel;
 	}
+	public void setConfigurable(String configurable) {
+		this.configurable = configurable;
+	}
+	public void setConfigurable_value(String configurable_value) {
+		this.configurable_value = configurable_value;
+	}
+	public void setDownLoadFileName(String downLoadFileName) {
+		this.downLoadFileName = downLoadFileName;
+	}
+	public void setLevelc(String levelc) {
+		this.levelc = levelc;
+	}
 	@Override
 	public String toString() {
-		return "UserInfo [page=" + page + ", rows=" + rows + ", sortName=" + sortName + ", sortOrder=" + sortOrder
-				+ ", ip=" + ip + ", id=" + id + ", email=" + email + ", username=" + username + ", password=" + password
-				+ ", rights=" + rights + ", departmentId=" + departmentId + ", position=" + position + ", sex=" + sex
+		return "QueryForm [page=" + page + ", rows=" + rows + ", sort=" + sort + ", order=" + order + ", ip=" + ip
+				+ ", id=" + id + ", email=" + email + ", username=" + username + ", password=" + password + ", rights="
+				+ rights + ", departmentId=" + departmentId + ", position=" + position + ", sex=" + sex
 				+ ", identityCard=" + identityCard + ", borthDay=" + borthDay + ", nation=" + nation + ", degree="
 				+ degree + ", graduatedSchool=" + graduatedSchool + ", major=" + major + ", phoneNumber=" + phoneNumber
 				+ ", homeAddress=" + homeAddress + ", homeNumber=" + homeNumber + ", hiredate=" + hiredate
@@ -476,7 +490,10 @@ public class QueryForm {
 				+ ", level=" + level + ", recruitmentSources=" + recruitmentSources + ", contractRenewal="
 				+ contractRenewal + ", originalNumber=" + originalNumber + ", secrecyAgreement=" + secrecyAgreement
 				+ ", reportForm=" + reportForm + ", panCard=" + panCard + ", leaveTime=" + leaveTime + ", workPlace="
-				+ workPlace + ", ifSecret=" + ifSecret + "]";
+				+ workPlace + ", ifSecret=" + ifSecret + ", firstLevel=" + firstLevel + ", secondLevel=" + secondLevel
+				+ ", thirdLevel=" + thirdLevel + ", fourthLevel=" + fourthLevel + ", configurable=" + configurable
+				+ ", configurable_value=" + configurable_value + ", downLoadFileName=" + downLoadFileName + ", levelc="
+				+ levelc + "]";
 	}
 
 }

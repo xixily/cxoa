@@ -13,8 +13,8 @@
 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="center.deleteEmployee()">删除</a>
 <!-- <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true">变更</a> -->
 <span class="btn-separator"></span>
-<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-excel',plain:true" onclick="center.exportExcel()">导出报表</a>
-<span class="btn-separator"></span>
+<!-- <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-excel',plain:true" onclick="center.exportExcel()">导出报表</a>
+<span class="btn-separator"></span> -->
 <a href="#" class="easyui-menubutton" data-options="menu:'#menu_employee_export',iconCls:'icon-excel'">导出报表</a>
 <!-- <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-copy',plain:true">复制</a> -->
 </div>

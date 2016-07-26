@@ -71,7 +71,8 @@ public class UserServiceImpl implements UserServiceI {
 			OrganizationStructure ogs = ogsDao.get("from OrganizationStructure o where o.id=" + username.getDepartmentId());
 			pusername = new PUserName();
 			BeanUtils.copyProperties(username, pusername);
-			BeanUtils.copyProperties(ogs, pusername);
+			BeanUtils.copyProperties(ogs, pusername);//这里部门ID传入pusername了
+			pusername.setId(username.getId());
 		}
 		return pusername;
 	}

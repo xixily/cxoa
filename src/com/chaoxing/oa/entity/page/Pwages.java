@@ -1,29 +1,9 @@
-package com.chaoxing.oa.entity.po;
+package com.chaoxing.oa.entity.page;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.GenericGenerator;
-
-/**
- * entity 职员工资分布表
- * @author Administrator
- *
- */
-@Entity
-@Table(name = "职员工资分布表", schema = "")
-@DynamicInsert(true)
-@DynamicUpdate(true)
-public class WageDistribution {
+public class Pwages {
 	private Integer id;//职员工资分布表id
 	private Integer employeeId;//职员编号
-//	private UserName userName;
+//	private String name;//姓名
 	private String username;//姓名
 	private Double salary;//工资总额
 	private String identityCard;//身份证号码
@@ -55,149 +35,110 @@ public class WageDistribution {
 	private String workPhone;//办公电话
 	private Integer IntegerernalNumber;//内部编号
 	private Double sickLleaveTotal;//病假累计
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@GenericGenerator(name = "wagesTableGenerator", strategy = "native")
 	public Integer getId() {
 		return id;
+	}
+	public Integer getEmployeeId() {
+		return employeeId;
+	}
+	public Double getSalary() {
+		return salary;
+	}
+	public String getIdentityCard() {
+		return identityCard;
+	}
+	public Double getSecrecySubsidy() {
+		return secrecySubsidy;
+	}
+	public Double getCommunicationSubsidy() {
+		return communicationSubsidy;
+	}
+	public Double getLunchSubsidy() {
+		return lunchSubsidy;
+	}
+	public String getRemarks() {
+		return remarks;
+	}
+	public String getCompany() {
+		return company;
+	}
+	public Double getRadix() {
+		return radix;
+	}
+	public String getHouseholdType() {
+		return householdType;
+	}
+	public Double getBasicWage() {
+		return basicWage;
+	}
+	public Double getPostSalary() {
+		return postSalary;
+	}
+	public Double getPerformanceRelatedPay() {
+		return performanceRelatedPay;
+	}
+	public String getAccountBank() {
+		return accountBank;
+	}
+	public String getAccount() {
+		return account;
+	}
+	public String getSalaryCode() {
+		return salaryCode;
+	}
+	public Double getSubEndowmentIinsurance() {
+		return subEndowmentIinsurance;
+	}
+	public Double getSubMedicare() {
+		return subMedicare;
+	}
+	public Double getSubUnemployedInsurance() {
+		return subUnemployedInsurance;
+	}
+	public Double getSubHouseIinsurance() {
+		return subHouseIinsurance;
+	}
+	public Double getcEndowmentIinsurance() {
+		return cEndowmentIinsurance;
+	}
+	public Double getcMedicare() {
+		return cMedicare;
+	}
+	public Double getcUnemployedInsurance() {
+		return cUnemployedInsurance;
+	}
+	public Double getcHouseIinsurance() {
+		return cHouseIinsurance;
+	}
+	public Double getcSickPayTotal() {
+		return cSickPayTotal;
+	}
+	public Double getcInjuryInsurance() {
+		return cInjuryInsurance;
+	}
+	public Double getcBirthIinsurance() {
+		return cBirthIinsurance;
+	}
+	public Double getAnnualLleave() {
+		return annualLleave;
+	}
+	public String getWorkPhone() {
+		return workPhone;
+	}
+	public Integer getInternalNumber() {
+		return IntegerernalNumber;
+	}
+	public Double getSickLleaveTotal() {
+		return sickLleaveTotal;
 	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	@Column(name="职员编号")
-	public Integer getEmployeeId() {
-		return employeeId;
-	}
-	@Column(name="姓名")
-	public String getUsername() {
-		return username;
-	}
-	@Column(name="工资总额")
-	public Double getSalary() {
-		return salary;
-	}
-	
-	@Column(name="身份证号码")
-	public String getIdentityCard() {
-		return identityCard;
-	}
-	@Column(name="保密补贴")
-	public Double getSecrecySubsidy() {
-		return secrecySubsidy;
-	}
-	@Column(name="通讯补贴")
-	public Double getCommunicationSubsidy() {
-		return communicationSubsidy;
-	}
-	@Column(name="午餐补贴")
-	public Double getLunchSubsidy() {
-		return lunchSubsidy;
-	}
-	@Column(name="备注")
-	public String getRemarks() {
-		return remarks;
-	}
-	@Column(name="公司名称")
-	public String getCompany() {
-		return company;
-	}
-	@Column(name="基数")
-	public Double getRadix() {
-		return radix;
-	}
-	@Column(name="户口性质")
-	public String getHouseholdType() {
-		return householdType;
-	}
-	@Column(name="基本工资")
-	public Double getBasicWage() {
-		return basicWage;
-	}
-	@Column(name="岗位工资")
-	public Double getPostSalary() {
-		return postSalary;
-	}
-	@Column(name="绩效工资")
-	public Double getPerformanceRelatedPay() {
-		return performanceRelatedPay;
-	}
-	@Column(name="开户行")
-	public String getAccountBank() {
-		return accountBank;
-	}
-	@Column(name="职工帐号")
-	public String getAccount() {
-		return account;
-	}
-	@Column(name="工资编号")
-	public String getSalaryCode() {
-		return salaryCode;
-	}
-	@Column(name="代扣养老保险")
-	public Double getSubEndowmentIinsurance() {
-		return subEndowmentIinsurance;
-	}
-	@Column(name="代扣医疗保险")
-	public Double getSubMedicare() {
-		return subMedicare;
-	}
-	@Column(name="代扣失业保险")
-	public Double getSubUnemployedInsurance() {
-		return subUnemployedInsurance;
-	}
-	@Column(name="代扣住房保险")
-	public Double getSubHouseIinsurance() {
-		return subHouseIinsurance;
-	}
-	@Column(name="公司养老保险")
-	public Double getcEndowmentIinsurance() {
-		return cEndowmentIinsurance;
-	}
-	@Column(name="公司医疗保险")
-	public Double getcMedicare() {
-		return cMedicare;
-	}
-	@Column(name="公司失业保险")
-	public Double getcUnemployedInsurance() {
-		return cUnemployedInsurance;
-	}
-	@Column(name="公司住房保险")
-	public Double getcHouseIinsurance() {
-		return cHouseIinsurance;
-	}
-	@Column(name="累计带薪病假")
-	public Double getcSickPayTotal() {
-		return cSickPayTotal;
-	}
-	@Column(name="公司工伤保险")
-	public Double getcInjuryInsurance() {
-		return cInjuryInsurance;
-	}
-	@Column(name="公司生育保险")
-	public Double getcBirthIinsurance() {
-		return cBirthIinsurance;
-	}
-	@Column(name="年假累计")
-	public Double getAnnualLleave() {
-		return annualLleave;
-	}
-	@Column(name="办公电话")
-	public String getWorkPhone() {
-		return workPhone;
-	}
-	@Column(name="内部编号")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@GenericGenerator(name = "paymentable_codeGenerator", strategy = "native")
-	public Integer getInternalNumber() {
-		return IntegerernalNumber;
-	}
-	@Column(name="病假累计")
-	public Double getSickLleaveTotal() {
-		return sickLleaveTotal;
-	}
 	public void setEmployeeId(Integer employeeId) {
 		this.employeeId = employeeId;
+	}
+	public String getUsername() {
+		return username;
 	}
 	public void setUsername(String username) {
 		this.username = username;
@@ -293,4 +234,4 @@ public class WageDistribution {
 		this.sickLleaveTotal = sickLleaveTotal;
 	}
 	
-	}
+}

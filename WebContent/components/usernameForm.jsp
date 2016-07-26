@@ -6,13 +6,13 @@
 </style><!-- 768 -->
 <div class="easyui-panel" style="width:960px;overflow: hidden" >
     <div style="padding:2px">
-        <form id="updateUsesrname_form" class="easyui-form"  method="post"  data-options="novalidate:true">
+        <form id="updateUsesrname_form" class="easyui-form"  method="post">
             <table cellpadding="2">
                 <tr>
                     <td>姓名:</td>
                     <td>
-					<input id="form_hidden_ID" type="hidden" name="id"/>
-                    <input class="easyui-textbox" type="text" name="username" /></td>
+					<input id="form_hidden_ID" type="hidden" name="id" />
+                    <input class="easyui-textbox" type="text" name="username"  data-options="required:true" /></td>
                     <td>家庭住址:</td>
                     <td><input id="textbox_addrss" class="easyui-textbox" type="text" name="homeAddress" /></td>
                     <td>毕业时间:</td>
@@ -23,11 +23,12 @@
                 <tr>
                     <td>公司:</td>
                     <td>
-                    <input id="input_firlevel" class="easyui-textbox" type="text" name="firstLevel"  readonly="true"/>
+                    <input id="input_firlevel" class="easyui-textbox" type="text" name="firstLevel" data-options="required:true" readonly="true"/>
                     <!-- <input class="easyui-textbox" type="text" name="company"  readonly="true"/> -->
                     </td>
                     <td>联系电话:</td>
-                    <td><input class="easyui-textbox" type="text" name="phoneNumber" /></td>
+                    <td><input class="easyui-textbox" type="text" name="phoneNumber" data-options="prompt:'请输入11位手机号码...',validType:'mobile'
+                    " /></td>
                     <td>身份证复印件:</td>
                     <td><input class="easyui-textbox" type="text" name="identityCardCopy" /></td>
                     <td>邮编:</td>
@@ -35,7 +36,7 @@
                 </tr>
                 <tr>
                     <td>部门:</td><!-- 部门ID下拉 -->
-                    <td><input id="input_secondLevel" class="easyui-textbox" type="text" name="secondLevel"  readonly="true"/></td>
+                    <td><input id="input_secondLevel" class="easyui-textbox" type="text" name="secondLevel" data-options="required:true"  readonly="true"/></td>
                     <td>家庭电话:</td>
                     <td><input class="easyui-textbox" type="text" name="homeNumber" /></td>
                     <td>户口本:</td>
@@ -45,7 +46,7 @@
                 </tr>
                 <tr>
                     <td>岗位:</td><!-- 三级 -->
-                    <td><input id="input_thirdLevel" class="easyui-textbox" type="text" name="thirdLevel"  readonly="true"/></td>
+                    <td><input id="input_thirdLevel" class="easyui-textbox" type="text" name="thirdLevel" data-options="required:true" readonly="true"/></td>
                     <td>入职时间:</td>
                     <td><input id="date_hiredate" class="easyui-datebox" type="text" name="hiredate" /></td>
                     <td>离职证明:</td>
@@ -83,7 +84,7 @@
                     <td><input class="easyui-datebox" type="text" name="zhuanzhengTime" /></td>
                     <td>合同:</td>
                     <td><input class="easyui-textbox" type="text" name="contract" /></td>
-                    <td>计划入保时间:</td>
+                    <td>投保时间:</td>
                     <td><input class="easyui-textbox" type="text" name="dueSocialSecurity" /></td>
                 </tr>
                 <tr>
@@ -119,7 +120,7 @@
                 </tr>
                 <tr>
                     <td>身份证号:</td>
-                    <td><input id="textbox_id" class="easyui-textbox" type="text" name="identityCard" data-options="
+                    <td><input id="textbox_id" class="easyui-textbox" name="identityCard" data-options="prompt:'请输入18位身份证号...',required:true,validType:'idcard'
                     "/></td>
                     <td>户口性质:</td>
                     <td>
@@ -142,7 +143,7 @@
                     <td>终止时间:</td>
                     <td><input class="easyui-datebox" type="text" name="terminationTime" /></td>
                     <td>邮箱:</td>
-                    <td><input id="vie_mail" class="easyui-textbox" type="email" name="email" /></td>
+                    <td><input id="vie_mail" class="easyui-textbox" type="email" name="email" data-options="required:true, validType:'email'" /></td>
                 </tr>
                 <tr>
                     <td>民族:</td>
@@ -213,7 +214,9 @@
                         <div style="text-align:center;padding:5px">
                             <a id="btn_employeeSave" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="submitForm($(this))">保存</a>
                             <a id="btn_employeeRest" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="clearForm($(this))">重置</a>
-                            <a id="btn_employeeEdit" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="center.editEmployee()">编辑</a>
+                            <a id="btn_employeeEdit" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="center.editEmployee()">编辑</a><br/>
+                            <a id="btn_wagesInfo" href="javascript:void(0)" class="easyui-linkbutton" style="width:60px;" onclick="center.wages.openWages(this)">工资信息</a>
+                            <!-- <a id="btn_wagesInfo" href="javascript:void(0)" class="easyui-linkbutton" style="width:60px;" onclick="$('#dialog_wagesInfo').dialog('open')">工资信息</a>  -->
                             <a id="btn_employeeMailto" href="mailto:dengxuefeng@chaoxing.com?cc=dengxuefeng@chaoxing.com&bcc=dengxuefeng@chaoxing.com" style="width:60px;"  class="easyui-linkbutton">发送邮件</a>
                             <a href="javascript:void(0)" class="easyui-linkbutton" style="width:60px;" onclick="closeDialog($(this))">关闭</a>
                         </div>

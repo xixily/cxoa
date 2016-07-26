@@ -20,9 +20,9 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 			//文件绝对路径
 			String filePath = SXSSFWriter.DEFAULT_FOLDER + sxffWriter.getFileName();
 			sxffWriter.createNewSheet("查询结果excel表");
-			if(renshiEmployees==null || renshiEmployees.size()==0){
-				return null;
-			}
+//			if(renshiEmployees==null || renshiEmployees.size()<=0){
+//				return null;
+//			}
 			createHeader(sxffWriter);
 			for (PRenshiEmployee pRenshiEmployee : renshiEmployees) {
 				sxffWriter.createRow();

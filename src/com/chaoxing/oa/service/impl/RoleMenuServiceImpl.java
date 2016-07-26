@@ -8,8 +8,6 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.chaoxing.oa.dao.BaseDaoI;
 import com.chaoxing.oa.entity.page.PMenu;
@@ -45,7 +43,7 @@ public class RoleMenuServiceImpl implements RoleMenuServiceI {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("roleId", roleId);
 		//TODO 如果是系统管理员的话，后面就没有条件，直接取所有菜单
-		roleMenus = rolerightsDao.find("from RoleRights r where r.roleId.roleId=:roleId and r.menuLevel = 1",params);
+		roleMenus = rolerightsDao.find("from RoleRights r where r.roleId.roleId=:roleId and r.menuLevel = 1 order by r.menuId",params);
 		ulMenus = rolerightsDao.find("from RoleRights r where r.roleId.roleId=:roleId and r.menuLevel = 2",params);
 		for (RoleRights roleMenu : roleMenus) {
 				PMenu menuInfo = new PMenu(); 
@@ -75,8 +73,8 @@ public class RoleMenuServiceImpl implements RoleMenuServiceI {
 		List<PMenu> l_menuInfos = new ArrayList<PMenu>();
 		List<RoleRights> roleMenus;
 		List<RoleRights> ulMenus;
-		roleMenus = rolerightsDao.find("from RoleRights r where r.menuLevel = 1");
-		ulMenus = rolerightsDao.find("from RoleRights r where r.menuLevel = 2");
+		roleMenus = rolerightsDao.find("from RoleRights r where r.menuLevel = 1 order by r.menuId");
+		ulMenus = rolerightsDao.find("from RoleRights r where r.menuLevel = 2 ");
 		for (RoleRights roleMenu : roleMenus) {
 				PMenu menuInfo = new PMenu(); 
 				menuInfo.setUserId(roleMenu.getRoleId().getRoleId());

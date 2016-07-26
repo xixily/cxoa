@@ -1,12 +1,12 @@
 package com.chaoxing.oa.entity.page;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
-public class PMenu {
+public class PMenu{
 	private int userId;
 	private int menuId;
 	private String menuName;
-	private Set<PUlList> uls = new HashSet<PUlList>();;
+	private Set<PUlList> uls = new TreeSet<PUlList>();//treeSet有序的
 	public int getUserId() {
 		return userId;
 	}
@@ -35,6 +35,5 @@ public class PMenu {
 	public String toString() {
 		return "MenuInfo [userId=" + userId + ", menuId=" + menuId + ", menuName=" + menuName + ", uls=" + uls + "]";
 	}
-	
 	
 }

@@ -1,12 +1,12 @@
 package com.chaoxing.oa.entity.page;
 
 
-public class PUlList {
+public class PUlList implements Comparable<PUlList>{
 	private String text;//li名字
 	private String url;//tab页
 	private String iconCls = "icon-man";//设置图标
 	private int preMenuId;//前置menu
-	private int domId;//映射menuid
+	private Integer domId;//映射menuid
 	/*private List<UlList> children;*/
 //	private String state;//ul的开启状态
 	public int getPreMenuId() {
@@ -38,6 +38,11 @@ public class PUlList {
 	}
 	public void setIconCls(String iconCls) {
 		this.iconCls = iconCls;
+	}
+	@Override
+	public int compareTo(PUlList o) {
+		return this.domId.compareTo(o.getDomId());
+//		return this.text.compareTo(o.getText());
 	}
 	
 }

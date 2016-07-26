@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -32,12 +33,12 @@ public class BaseDaoImpl<T> implements BaseDaoI<T> {
 	}
 
 	@Override
-	public Serializable save(T o) throws Exception {
-		try {
-			return this.getCurrentSession().save(o);
-		} catch (Exception e) {
-			throw e;
-		}
+	public Serializable save(T o) throws HibernateException{
+			try {
+				return this.getCurrentSession().save(o);
+			} catch (HibernateException e) {
+				throw e;
+			}
 	}
 
 	@Override
@@ -72,28 +73,42 @@ public class BaseDaoImpl<T> implements BaseDaoI<T> {
 	}
 
 	@Override
-	public void delete(T o) {
-		this.getCurrentSession().delete(o);
-	}
-
-	@Override
-	public void update(T o) throws Exception {
+	public void delete(T o) throws HibernateException{
 		try {
-			this.getCurrentSession().update(o);
-		} catch (Exception e) {
+			this.getCurrentSession().delete(o);
+		} catch (HibernateException e) {
 			throw e;
 		}
 	}
 
 	@Override
-	public void saveOrUpdate(T o) {
-		this.getCurrentSession().saveOrUpdate(o);
+	public void update(T o) throws HibernateException {
+		try {
+			this.getCurrentSession().update(o);
+		} catch (HibernateException e) {
+			throw e;
+		}
 	}
 
 	@Override
-	public List<T> find(String hql) {
+	public void saveOrUpdate(T o) throws HibernateException {
+		try {
+			this.getCurrentSession().saveOrUpdate(o);
+		} catch (HibernateException e) {
+			throw e;
+		}
+		
+	}
+
+	@Override
+	public List<T> find(String hql) throws HibernateException{
 		Query q = this.getCurrentSession().createQuery(hql);
-		return q.list();
+		
+		try {
+			return q.list();
+		} catch (HibernateException e) {
+			throw e;
+		}
 	}
 
 	@Override
@@ -151,20 +166,28 @@ public class BaseDaoImpl<T> implements BaseDaoI<T> {
 	}
 
 	@Override
-	public int executeHql(String hql) {
+	public int executeHql(String hql) throws HibernateException {
 		Query q = this.getCurrentSession().createQuery(hql);
-		return q.executeUpdate();
+		try {
+			return q.executeUpdate();
+		} catch (HibernateException e) {
+			throw e;
+		}
 	}
 
 	@Override
-	public int executeHql(String hql, Map<String, Object> params) {
+	public int executeHql(String hql, Map<String, Object> params) throws HibernateException {
 		Query q = this.getCurrentSession().createQuery(hql);
 		if (params != null && !params.isEmpty()) {
 			for (String key : params.keySet()) {
 				q.setParameter(key, params.get(key));
 			}
 		}
-		return q.executeUpdate();
+		try {
+			return q.executeUpdate();
+		} catch (HibernateException e) {
+			throw e;
+		}
 	}
 	
 	public List<T> findSql(String sql){

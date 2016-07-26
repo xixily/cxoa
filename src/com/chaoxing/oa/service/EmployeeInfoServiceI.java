@@ -8,6 +8,9 @@ import com.chaoxing.oa.entity.page.PCompany;
 import com.chaoxing.oa.entity.page.PLevel;
 import com.chaoxing.oa.entity.page.POStructs;
 import com.chaoxing.oa.entity.page.PRenshiEmployee;
+import com.chaoxing.oa.entity.page.PShebao;
+import com.chaoxing.oa.entity.page.PShebaoType;
+import com.chaoxing.oa.entity.page.Pwages;
 import com.chaoxing.oa.entity.page.QueryForm;
 
 public interface EmployeeInfoServiceI {
@@ -30,4 +33,20 @@ public interface EmployeeInfoServiceI {
 	public List<PLevel> getLevel();
 
 	public List<PComboBox> getInsuranceCompany();
+
+	public List<Pwages> getWagesList(int id);
+
+	public Pwages getWages(int id);
+
+	public int updateWages(Pwages pwages);
+
+	public Map<String, Object> getAllShebaoRadio(QueryForm queryForm);
+
+	public List<PShebao> getShebaoRadioByCompany(String company);
+
+	public List<PShebaoType> getShebaoType();
+
+	public int addWages(Pwages pwages);
+
+	public int deleteWages(Pwages pwages);
 }

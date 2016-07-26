@@ -1,5 +1,6 @@
 package com.chaoxing.oa.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,9 @@ import com.chaoxing.oa.entity.page.PComboBox;
 import com.chaoxing.oa.entity.page.PCompany;
 import com.chaoxing.oa.entity.page.PLevel;
 import com.chaoxing.oa.entity.page.POStructs;
+import com.chaoxing.oa.entity.page.PShebao;
+import com.chaoxing.oa.entity.page.PShebaoType;
+import com.chaoxing.oa.entity.page.Pwages;
 import com.chaoxing.oa.entity.page.Json;
 import com.chaoxing.oa.entity.page.QueryForm;
 import com.chaoxing.oa.service.EmployeeInfoServiceI;
@@ -96,5 +100,102 @@ public class EmployeeInfoController {
 	@ResponseBody
 	public List<PComboBox> getInsuranceCompany(){
 		return employeeInfoService.getInsuranceCompany();
+	}
+	
+	@RequestMapping(value = "/getWagesList")
+	@ResponseBody
+	public List<Pwages> getWagesList(QueryForm queryForm){
+//		Map<String, Object> result = new HashMap<String, Object>();
+		List<Pwages> wagesList = employeeInfoService.getWagesList(queryForm.getId());
+//		result.put("total", wagesList.size());
+//		result.put("rows", wagesList);
+		return wagesList;
+	}
+	
+	@RequestMapping(value = "/getWages")
+	@ResponseBody
+	public Pwages getWages(QueryForm queryForm){
+		return employeeInfoService.getWages(queryForm.getId());
+	}
+	
+	@RequestMapping(value = "/updateWages")
+	@ResponseBody
+	public Json updateWages(Pwages pwages){
+		Json result = new Json();
+		if(employeeInfoService.updateWages(pwages)!=0){
+			result.setSuccess(true);
+			result.setMsg("更新成功！");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/addWages")
+	@ResponseBody
+	public Json addWages(Pwages pwages){
+		Json result = new Json();
+		if(employeeInfoService.addWages(pwages)!=0){
+			result.setSuccess(true);
+			result.setMsg("添加成功！");
+		}else{
+			result.setMsg("添加失败！");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/deleteWages")
+	@ResponseBody
+	public Json deleteWages(Pwages pwages){
+		Json result = new Json();
+		if(employeeInfoService.deleteWages(pwages)!=0){
+			result.setSuccess(true);
+			result.setMsg("删除成功！");
+		}else{
+			result.setMsg("删除失败！");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/getAllShebaoRadio")
+	@ResponseBody
+	public Map<String, Object>  getAllShebaoRadio(QueryForm queryform){
+		Map<String, Object> pshebaos = employeeInfoService.getAllShebaoRadio(queryform);
+		return pshebaos;
+	}
+	
+	@RequestMapping(value = "/getShebaoRadioByCompany")
+	@ResponseBody
+	public Json getShebaoRadioByCompany(QueryForm queryForm){
+		Json result = new Json();
+		List<PShebao> pshebaos = employeeInfoService.getShebaoRadioByCompany(queryForm.getCompany());
+		if(pshebaos.size() > 0){
+			result.setSuccess(true);
+			result.setObj(pshebaos);
+			result.setMsg("查询成功！");
+		}else{
+			result.setErrorCode(SysConfig.REQUEST_ERROR);
+			result.setMsg("没有数据或者查询失败！");
+		}
+		return result;
+	}
+	@RequestMapping(value = "/getShebaoRadioByType")
+	@ResponseBody
+	public Json getShebaoRadioByType(String shebaoType){
+		Json result = new Json();
+		List<PShebao> pshebaos = employeeInfoService.getShebaoRadioByCompany(shebaoType);
+		if(pshebaos.size() > 0){
+			result.setSuccess(true);
+			result.setObj(pshebaos);
+			result.setMsg("查询成功！");
+		}else{
+			result.setErrorCode(SysConfig.REQUEST_ERROR);
+			result.setMsg("没有数据或者查询失败！");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/getShebaoType")
+	@ResponseBody
+	public List<PShebaoType> getShebaoType(){
+		return employeeInfoService.getShebaoType();
 	}
 }

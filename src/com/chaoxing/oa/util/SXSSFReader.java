@@ -28,10 +28,15 @@ public class SXSSFReader {
 	private Sheet sheet = null;
 	private Row row = null;
 
+	/**
+	 * 
+	 * @param fileName  传入文件的绝对路径
+	 */
 	public SXSSFReader(String fileName) {
 		this.fileName = fileName;
 		try {
 			System.out.println("POIReader start read file." + fileName);
+			//放入bufferdInput流
 			is = new BufferedInputStream(new FileInputStream(fileName), 1024);
 			System.out.println("POIReader start open file." + fileName);
 			if (fileName.toLowerCase().endsWith("xls")) {

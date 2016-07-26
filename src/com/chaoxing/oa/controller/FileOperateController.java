@@ -107,15 +107,17 @@ public class FileOperateController {
     public ModelAndView exprotRenshiQuery(QueryForm queryForm, HttpServletRequest request, HttpServletResponse response){
     	Map<String, Object> res = employeeInfoService.getRenshiUserName(queryForm,1);
     	List<PRenshiEmployee> renshiEmployeeInfos = (List<PRenshiEmployee>) res.get("rows");
-    	String storeName = exportExcelService.getRenshiQueryExport(renshiEmployeeInfos);  
-        String realName = "导出查询结果表.xlsx";  
-        String contentType = "application/octet-stream";  
-    	try {
-			FileOperateUtil.download(request, response, storeName, contentType,realName);
-		} catch (Exception e) {
-			System.out.println("文件下载失败！");
-			e.printStackTrace();
-		} 
+    	if(renshiEmployeeInfos!=null){
+    		String storeName = exportExcelService.getRenshiQueryExport(renshiEmployeeInfos);  
+    		String realName = "导出查询结果表.xlsx";  
+    		String contentType = "application/octet-stream";  
+    		try {
+    			FileOperateUtil.download(request, response, storeName, contentType,realName);
+    		} catch (Exception e) {
+    			System.out.println("文件下载失败！");
+    			e.printStackTrace();
+    		} 
+    	}
     	
     	return null;
     }

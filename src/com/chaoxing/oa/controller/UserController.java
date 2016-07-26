@@ -71,7 +71,13 @@ public class UserController {
 	}
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public ModelAndView login(QueryForm queryForm, HttpServletRequest request, HttpSession session, Model model ){
-		ModelAndView modelView = new ModelAndView("redirect:/index.jsp");
+		ModelAndView modelView = new ModelAndView("login.jsp");
+		if(queryForm.getEmail() == null){
+//			if(queryForm.getUsername() == null || queryForm.getPassword() == null){
+			modelView.setViewName("login");
+			modelView.addObject("user_login_error", "请您输入用户名或者密码");
+			return modelView;
+		}
 		String password = queryForm.getPassword();
 		SessionInfo sessionInfo = userService.findUser(queryForm);
 		if(null != sessionInfo){
@@ -79,6 +85,7 @@ public class UserController {
 			if(password == sessionInfo.getPassword()){
 				sessionInfo.setIp(IpUtil.getIpAddr(request));
 				session.setAttribute(ResourceUtil.getSessionInfoName(), sessionInfo);
+				modelView.setViewName("redirect:/index.jsp");
 			}else{
 				modelView.setViewName("login");
 				modelView.addObject("password_login_error", "您输入的密码不正确！");
@@ -92,146 +99,69 @@ public class UserController {
 	
 	@RequestMapping(value = "/getUserName")
 	@ResponseBody
-	public Json getUserName(QueryForm queryForm, HttpSession session){
-//		public Json getUserName(QueryForm pu, HttpSession session){
-//		public Json getUserName(int id, HttpSession session){
+	public Json getUserName(QueryForm queryForm, HttpSession session) {
 		Json result = new Json();
-		SessionInfo sessionInfo = null;
-		if(session!=null){
-			sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
-		}else{
-			result.setErrorCode(SysConfig.SESSION_INVALIAD);
-			result.setMsg("您的登陆已失效！");
-			return result;
-		}
-		if(queryForm.getId() == 0){
+		PUserName pusername = userService.getUserName(queryForm.getId());
+		if (pusername != null) {
+			result.setSuccess(true);
+			result.setMsg("获取员工信息成功");
+			result.setObj(pusername);
+		} else {
 			result.setErrorCode(SysConfig.REQUEST_ERROR);
-			result.setMsg("您要查询的职员信息不存在！");
-			return result;
+			result.setMsg("获取员工编号：" + queryForm.getId() + " 职员信息失败！");
 		}
-		if(sessionInfo != null){
-			if(0 == sessionInfo.getRoleId()|| 1 == sessionInfo.getRoleId()){
-				PUserName pusername = userService.getUserName(queryForm.getId());
-				if(pusername!=null){
-					result.setSuccess(true);
-					result.setMsg("获取员工信息成功");
-					result.setObj(pusername);
-				}else{
-					result.setErrorCode(SysConfig.REQUEST_ERROR);
-					result.setMsg("获取员工编号：" + queryForm.getId() + " 职员信息失败！");
-				}
-				return result;
-			}else{
-				result.setErrorCode(SysConfig.NO_RIGHTS);
-				result.setMsg("您还没有权限！");
-			}
-		}else{
-			result.setErrorCode(SysConfig.SESSION_INVALIAD);
-			result.setMsg("您未登陆或者登陆失效！");
+		return result;
+	}
+
+	@RequestMapping(value = "/addUserName")
+	@ResponseBody
+	public Json addUserName(PUserName username, HttpSession session) {
+		Json result = new Json();
+		long r = userService.addUserName(username);
+		if (r != -1) {
+			result.setSuccess(true);
+			result.setMsg("添加成功！");
+		} else {
+			result.setErrorCode(SysConfig.REQUEST_ERROR);
+			result.setMsg("插入失败！");
 		}
 		return result;
 	}
 	
-	@RequestMapping(value = "/addUserName")
-	@ResponseBody
-	public Json addUserName(PUserName username, HttpSession session){
-		Json result = new Json();
-		SessionInfo sessionInfo = null;
-		
-		if(session!=null){
-			sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
-		}else{
-			result.setErrorCode(SysConfig.SESSION_INVALIAD);
-			result.setMsg("您的登陆已失效！");
-			return result;
-		}
-//		userinfo = null;
-		if(sessionInfo != null){
-			if(0 == sessionInfo.getRoleId()|| 1 == sessionInfo.getRoleId()){
-//				long r = 2;
-				long r = userService.addUserName(username);
-				if(r != -1){
-					result.setSuccess(true);
-					result.setMsg("添加成功！");
-				}else{
-					result.setErrorCode(SysConfig.REQUEST_ERROR);
-					result.setMsg("插入失败！");
-				}
-				return result;
-			}else{
-				result.setErrorCode(SysConfig.NO_RIGHTS);
-				result.setMsg("您还没有权限！");
-			}
-		}
-		return result;
-	}
 	@RequestMapping(value = "deleteUserName")
 	@ResponseBody
-	public Json deleteUserName(QueryForm pu, HttpSession session){
+	public Json deleteUserName(QueryForm pu, HttpSession session) {
 		Json result = new Json();
-		SessionInfo sessionInfo = null;
-		if(session!=null){
-			sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
-		}else{
-			result.setErrorCode(SysConfig.SESSION_INVALIAD);
-			result.setMsg("您的登陆已失效！");
-			return result;
-		}
-		if(pu.getId() == 0){
+		if (pu.getId() == 0) {
 			result.setErrorCode(SysConfig.REQUEST_ERROR);
 			result.setMsg("您要查询的职员信息不存在！");
 			return result;
 		}
-		if(sessionInfo != null){
-			if(0 == sessionInfo.getRoleId()|| 1 == sessionInfo.getRoleId()){
-				int r = 1;
-//				int r = userService.deleteUserName(pu.getId());
-				if(r != 0){
-					result.setSuccess(true);
-					result.setMsg("删除成功！");
-				}else{
-					result.setSuccess(false);
-					result.setErrorCode(SysConfig.REQUEST_ERROR);
-					result.setMsg("删除失败");
-				}
-				return result;
-			}else{
-				result.setMsg("您还没有权限！");
-			}
-		}else{
-			result.setMsg("您未登陆或者登陆失效！");
+		int r = 1;
+		// int r = userService.deleteUserName(pu.getId());
+		if (r != 0) {
+			result.setSuccess(true);
+			result.setMsg("删除成功！");
+		} else {
+			result.setSuccess(false);
+			result.setErrorCode(SysConfig.REQUEST_ERROR);
+			result.setMsg("删除失败");
 		}
 		return result;
 	}
 	
 	@RequestMapping(value = "/updateUserName")
 	@ResponseBody
-	public Json updateUserName(PUserName username, HttpSession session){
+	public Json updateUserName(PUserName username, HttpSession session) {
 		Json result = new Json();
-		SessionInfo sessionInfo = null;
-		if(session!=null){
-			sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
-		}else{
-			result.setErrorCode(SysConfig.SESSION_INVALIAD);
-			result.setMsg("您的登陆已失效！");
-			return result;
-		}
-		if(sessionInfo != null){
-			if(0 == sessionInfo.getRoleId()|| 1 == sessionInfo.getRoleId()){
-				long r = 2;
-//				long r = userService.updateUserName(username);
-				if(r != -1){
-					result.setSuccess(true);
-					result.setMsg("添加成功！");
-				}else{
-					result.setErrorCode(SysConfig.REQUEST_ERROR);
-					result.setMsg("插入失败！");
-				}
-				return result;
-			}else{
-				result.setErrorCode(SysConfig.NO_RIGHTS);
-				result.setMsg("您还没有权限！");
-			}
+		long r = 2;
+		// long r = userService.updateUserName(username);
+		if (r != -1) {
+			result.setSuccess(true);
+			result.setMsg("添加成功！");
+		} else {
+			result.setErrorCode(SysConfig.REQUEST_ERROR);
+			result.setMsg("插入失败！");
 		}
 		return result;
 	}
