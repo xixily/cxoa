@@ -70,7 +70,7 @@ public class RenshiUserName implements Serializable {
 	private String leaveTime;//离职时间
 	private String workPlace;//工作地点
 	private String email;//邮箱
-	private int ifSecret;//是否保密
+	private String ifSecret;//是否保密
 	private String maritalStatus;//婚姻状况
 	
 	@Column(name="人事权限")
@@ -498,10 +498,10 @@ public class RenshiUserName implements Serializable {
 		this.email = email;
 	}
 	@Column(name="工资保密")
-	public int getIfSecret() {
+	public String getIfSecret() {
 		return ifSecret;
 	}
-	public void setIfSecret(int ifSecret) {
+	public void setIfSecret(String ifSecret) {
 		this.ifSecret = ifSecret;
 	}
 	@Column(name="婚姻状况")

@@ -4,7 +4,7 @@
 <!-- 舍弃  -->
 <div id = "renshi_toolbar">
 <!-- <a href="javascript:void(0)" id="mb" class="easyui-menubutton" data-options="menu:'#mm',iconCls:'icon-edit'">编辑</a> -->
-<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="center.view()">查看</a>
+<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="center.view()">查看</a>
 <span class="btn-separator"></span>
 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="center.editEmployee()">编辑</a>
 <span class="btn-separator"></span>

@@ -28,7 +28,7 @@ function login(){
 		},
 		success: function(data_string){
 			var data = $.parseJSON(data_string);
-			console.log('o%', data);
+			console.log('登陆获取的data：o%', data);
 			$.messager.progress('close');	// hide progress bar while submit successfully
 			if(data.success){
 				session.logined = data.success;
@@ -220,13 +220,13 @@ function disabledForm(formId, isDisabled){
     $("#" + formId + ' input[class="easyui-combobox combobox-f combo-f textbox-f"]').each(function () {  
     	$(this).combobox(attr);
     });  
+    
+    $("#" + formId + ' input[class="easyui-switchbutton switchbutton-f"]').each(function () {  
+    	$(this).switchbutton(attr);
+    });  
       
     //禁用jquery easyui中的下拉选（使用select生成的combox）  
     $("#" + formId + " select[class='combobox-f combo-f']").each(function () {  
-//        if (this.id) {  
-////        alert(this.id);  
-//            $("#" + this.id).combobox(attr);  
-//        }
         $(this).combobox(attr);
     });  
     //禁用jquery easyui中的日期组件dataBox  
@@ -247,12 +247,7 @@ function clearForm(dom){
 
 function submitForm(dom, callback){
 	var form = dom.closest("form");
-	console.log(form);
-//	if(form.form('validate')){
-//		form.form('submit');
-//	}else{
-//		alert('您的输入有误，请您核查!');
-//	}
+//	console.log(form);
 	form.form('submit',{
          onSubmit:function(){
              return $(this).form('enableValidation').form('validate');
@@ -430,7 +425,7 @@ var confirmDialog = {
 			});
 			return confirmId;
 		},
-		createDialog : function(message, callback){
+		createDialog : function(message, callback, cancelCallback){
 			var confirmId = 'confirm_dialog';
 			var dialog = $('<div>');
 			dialog.attr("style","display:none");
@@ -455,6 +450,9 @@ var confirmDialog = {
 					text:'取消',
 					iconCls:'icon-cancel',
 					handler:function(){
+						if(cancelCallback){
+							cancelCallback(confirmId);
+						}
 						confirmDialog.destoryDialog(confirmId);
 					}
 				}]

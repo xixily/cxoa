@@ -25,6 +25,9 @@ public class RoleRights {
 	private int menuLevel;
 	private RoleRights preMenuId;
 	private String url;
+	private String iconCls;
+	private Integer greate;
+	private String contains;
 //	private String iconCls;  iconCls字段不加了
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -55,7 +58,27 @@ public class RoleRights {
 	public String getUrl() {
 		return url;
 	}
-	
+	@Column
+	public String getIconCls() {
+		return iconCls;
+	}
+	@Column
+	public Integer getGreate() {
+		return greate;
+	}
+	@Column
+	public String getContains() {
+		return contains;
+	}
+	public void setIconCls(String iconCls) {
+		this.iconCls = iconCls;
+	}
+	public void setGreate(Integer greate) {
+		this.greate = greate;
+	}
+	public void setContains(String contains) {
+		this.contains = contains;
+	}
 	public void setMenuLevel(int menuLevel) {
 		this.menuLevel = menuLevel;
 	}

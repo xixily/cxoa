@@ -73,7 +73,7 @@ public class UserName implements Serializable {
 	private String leaveTime;//离职时间
 	private String workPlace;//工作地点
 	private String email;//邮箱
-	private int ifSecret;//是否保密
+	private String ifSecret;//是否保密
 	private String maritalStatus;//婚姻状况
 	
 	@Id
@@ -101,7 +101,7 @@ public class UserName implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	@Column(name = "权限")
+	@Column(name = "权限", updatable = false)
 	public int getRoleId() {
 		return roleId;
 	}
@@ -452,11 +452,11 @@ public class UserName implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	@Column(name="工资保密")
-	public int getIfSecret() {
+	@Column(name="工资保密", updatable = false)
+	public String getIfSecret() {
 		return ifSecret;
 	}
-	public void setIfSecret(int ifSecret) {
+	public void setIfSecret(String ifSecret) {
 		this.ifSecret = ifSecret;
 	}
 	@Column(name="婚姻状况")

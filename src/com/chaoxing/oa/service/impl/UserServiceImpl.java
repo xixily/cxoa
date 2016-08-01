@@ -78,12 +78,16 @@ public class UserServiceImpl implements UserServiceI {
 	}
 
 	@Override
-	public int deleteUserName(int id) {
+	public int deleteUserName(QueryForm queryForm) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("id", id);
-		UserName username = usernameDao.get("from UserName u where u.id = :id", params);
+		int id = queryForm.getId();
+		UserName u = new UserName();
+		BeanUtils.copyProperties(queryForm, u);
+//		params.put("id", id);
+//		UserName username = usernameDao.get("from UserName u where u.id = :id", params);
 		try {
-			usernameDao.delete(username);
+			usernameDao.delete(u);
+//			usernameDao.delete(username);
 		} catch (Exception e) {
 			System.out.println("delete 失败！");
 			return 0;
@@ -95,6 +99,7 @@ public class UserServiceImpl implements UserServiceI {
 	public long addUserName(PUserName username) {
 		UserName u = new UserName();
 		BeanUtils.copyProperties(username, u);
+		username.setRoleId(99);
 		try {
 			Integer re = (Integer) usernameDao.save(u);
 			return re;
@@ -116,4 +121,16 @@ public class UserServiceImpl implements UserServiceI {
 		}
 		return 1;
 	}
+	@Override
+	public long updateUserRole(PUserName username) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		if(username.getRoleId()==0 || username.getId()==0){
+			return 0;
+		}
+		params.put("roleId", username.getRoleId());
+		params.put("id", username.getId());
+//		StringBuffer hql = new StringBuffer("update UserName t set t.roleId = :roleId");
+		return usernameDao.executeHql("update UserName t set t.roleId = :roleId where id = :id", params);
+	}
+	
 }

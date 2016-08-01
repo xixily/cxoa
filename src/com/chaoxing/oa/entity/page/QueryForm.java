@@ -56,6 +56,7 @@ public class QueryForm {
 	private String contractNumber;//合同编号
 	private String dueSocialSecurity;//终止时间
 	private String socialSecurityHospital;//社保医院
+	private String shebaoType;
 	private String level;//级别
 	private String recruitmentSources;//招聘来源
 	private String contractRenewal;//合同续签
@@ -65,7 +66,7 @@ public class QueryForm {
 	private String panCard;//办理工资卡
 	private String leaveTime;//离职时间
 	private String workPlace;//工作地点
-	private int ifSecret;//是否保密
+	private String ifSecret;//是否保密
 	private String firstLevel;//一级
 	private String secondLevel;//二级
 	private String thirdLevel;//三级
@@ -194,6 +195,12 @@ public class QueryForm {
 	public String getContract() {
 		return contract;
 	}
+	public String getShebaoType() {
+		return shebaoType;
+	}
+	public void setShebaoType(String shebaoType) {
+		this.shebaoType = shebaoType;
+	}
 	public String getManagementSystem() {
 		return managementSystem;
 	}
@@ -251,7 +258,7 @@ public class QueryForm {
 	public String getWorkPlace() {
 		return workPlace;
 	}
-	public int getIfSecret() {
+	public String getIfSecret() {
 		return ifSecret;
 	}
 	public String getFirstLevel() {
@@ -443,7 +450,7 @@ public class QueryForm {
 	public void setWorkPlace(String workPlace) {
 		this.workPlace = workPlace;
 	}
-	public void setIfSecret(int ifSecret) {
+	public void setIfSecret(String ifSecret) {
 		this.ifSecret = ifSecret;
 	}
 	public void setFirstLevel(String firstLevel) {

@@ -2,18 +2,18 @@ package com.chaoxing.oa.entity.page;
 
 public class PShebaoType {
 	private int id;
-	private String name;
+	private String shebaoType;
 	public int getId() {
 		return id;
-	}
-	public String getName() {
-		return name;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public String getShebaoType() {
+		return shebaoType;
+	}
+	public void setShebaoType(String shebaoType) {
+		this.shebaoType = shebaoType;
 	}
 	
 }

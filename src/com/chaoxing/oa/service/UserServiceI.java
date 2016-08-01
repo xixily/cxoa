@@ -11,10 +11,12 @@ public interface UserServiceI {
 	
 	public PUserName getUserName(int id);
 
-	public int deleteUserName(int id);
+	public int deleteUserName(QueryForm queryForm);
 
 	public long addUserName(PUserName username);
 
 	public long updateUserName(PUserName username);
+
+	public long updateUserRole(PUserName username);
 
 }

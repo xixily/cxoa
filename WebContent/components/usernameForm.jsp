@@ -1,4 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
     .form_width input{
         width: 100px;
@@ -200,8 +201,10 @@
                     <td><input class="easyui-textbox" type="text" name="reportForm" /></td>
                     <td>保密协议:</td>
                     <td><input class="easyui-textbox" type="text" name="secrecyAgreement" /></td>
-                    <td></td>
-                    <td></td>
+                    <c:if test="${sessionInfo.roleId <= 1}">
+                    <td>工资保密</td>
+                    <td><input name="ifSecret" class="easyui-switchbutton" data-options="onText:'Yes',offText:'No'" onclick="center.ifSecret"></td>
+                    </c:if>
                 </tr>
                 <tr>
                     <td>专业:</td>

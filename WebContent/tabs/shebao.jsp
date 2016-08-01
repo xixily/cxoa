@@ -9,9 +9,9 @@
 		style="width: 98%; padding: 10px; margin-bottom: 10px;">
 	</div>
 
-	<div id="datagrid_shebao" style="width: 98%">
-		<table class="easyui-datagrid" style="width: 100%;"
-			data-options="url:'employee/getAllShebaoRadio.action',
+	<div style="width: 98%">
+		<table id="datagrid_shebao" class="easyui-datagrid" style="width: 100%;"
+			data-options="url:'employee/getShebao.action',
 			title:'社保比例信息',
 			fitColumns:true,
 			singleSelect:true,
@@ -22,28 +22,65 @@
 			toolbar: [{
 			iconCls: 'icon-add',
 			text : '增加',
-			handler: function(){alert('add')}
+			handler: function(){center.shebao.append()}
 			},'-',{
 				iconCls: 'icon-remove',
 				text : '删除',
-				handler: function(){alert('add')}
+				handler: function(){center.shebao.remove()}
 			}],
-			onClickCell : center.shebao.onClickCell,
+			onDblClickCell : center.shebao.onDblClickCell,
+			onClickCell : center.shebao.endEditing,
 			onEndEdit: center.shebao.onEndEdit">
 			<thead>
 				<tr>
 					<!-- <th data-options="field:'sid',width:40">id</th> -->
-					<th data-options="field:'companyName',width:120">公司名称</th>
-					<th data-options="field:'shebaoType',width:100 ">社保类型</th>
-					<th data-options="field:'typeCode',width:100 ">类型编号</th>
+					<!-- <th data-options="field:'company',width:120">公司名称</th> -->
+					<th data-options="field:'company',width:120,
+                        editor:{
+                            type:'combobox',
+                            options:{
+                                valueField:'cmopany',
+                                textField:'cmopany',
+                                method:'get',
+                                url:'employee/getCompany.action',
+                                required:true
+                            }
+                        }">公司名称</th>
+					<!-- <th data-options="field:'shebaoType',width:100 ">社保类型</th> -->
+					<th data-options="field:'typeCode',width:100,
+					formatter:function(value,row){
+                            return row.shebaoType;
+                        },
+                        editor:{
+                            type:'combobox',
+                            options:{
+                                valueField:'id',
+                                textField:'shebaoType',
+                                method:'get',
+                                url:'employee/getShebaoType.action',
+                                required:true
+                            }
+                        }">社保类型</th>
+					<!-- <th data-options="field:'typeCode',width:100 ">类型编号</th> -->
 					<th data-options="field:'radixMin',width:100,editor:{type:'numberbox',options:{precision:2}}">基数下限</th>
 					<th data-options="field:'radixMax',width:100 ,editor:{type:'numberbox',options:{precision:2}}">基数上限</th>
-					<th data-options="field:'cRadio',width:100 ,editor:{type:'numberbox',options:{precision:2}}">单位比例</th>
-					<th data-options="field:'radio',width:100 ,editor:{type:'numberbox',options:{precision:2}}">个人比例</th>
+					<th data-options="field:'cRadio',width:100 ,editor:{type:'numberbox',options:{ min:0,max:1,precision:2}}">单位比例</th>
+					<th data-options="field:'radio',width:100 ,editor:{type:'numberbox',options:{ min:0,max:1,precision:2}}">个人比例</th>
 					<!-- <th data-options="field:'cFixedV,width:100 ,editor:{type:'numberbox',options:{precision:2}}">单位固定值</th> -->
-					<th data-options="field:'cFixedV',width:100 ,editor:{type:'numberbox',options:{precision:2}}">个人固定值</th>
+					<th data-options="field:'cFixedValue',width:100 ,editor:{type:'numberbox',options:{precision:2}}">单位固定值</th>
 					<th data-options="field:'fixedValue',width:100 ,editor:{type:'numberbox',options:{precision:2}}">个人固定值</th>
-					<th data-options="field:'householdType',width:100 ,editor:'textbox'">户口性质</th>
+					<!-- <th data-options="field:'householdType',width:100 ,editor:'textbox'">户口性质</th> -->
+					<th data-options="field:'householdType',width:100,
+                        editor:{
+                            type:'combobox',
+                            options:{
+                                valueField:'householdType',
+                                textField:'householdType',
+                                method:'get',
+                                url:'employee/getHouseholdType.action',
+                                required:true
+                            }
+                        }">户口性质</th>
 				</tr>
 			</thead>
 		</table>

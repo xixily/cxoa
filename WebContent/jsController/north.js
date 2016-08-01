@@ -4,7 +4,7 @@ var north = {
 		//			一个ajax请求(http get 请求)，url请求路径，data请求参数,success()回调
 		session = {};
 		$.getJSON('user/logout.action', function(result) {
-			console.log('======>>> o%', result);
+//			console.log('======>>> o%', result);
 			if (result.success) {
 				console.log('登出成功！');
 				location.replace('/cxoa');

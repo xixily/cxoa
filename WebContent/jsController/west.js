@@ -5,7 +5,7 @@ var west = {
 			dataType : "json",
 			url : 'menu/allMenu.action',
 			success : function(data) {
-				console.log('后台传过来的值o%', data);
+//				console.log('后台传过来的值o%', data);
 				$.each(data, function(i, n) {
 					if (n.uls) {
 						$('#menu').accordion('add', {
@@ -14,7 +14,7 @@ var west = {
 							selected : false,
 							content : '<ul id ="ulMenu_' + n.menuId + '"></ul>'
 						});
-						console.log('获取UL小菜单');
+//						console.log('获取UL小菜单');
 						west.getSmallMenus(n.uls, n.menuId);
 					} else {
 
@@ -28,15 +28,15 @@ var west = {
 		});
 	},
 	getSmallMenus : function(data, menuId, callback) {//获取ul小菜单
-		console.log('获取小UL____tree===> o%' , data);
+//		console.log('获取小UL____tree===> o%' , data);
 		$('#ulMenu_' + menuId).tree(
 				{
 					data : data,
 					onClick : function(node) {
 						if (node) {
-							console.log('UL onClick事件');
+//							console.log('UL onClick事件');
 							/*openTab(node.text, node.url);*/
-							console.log('======>>> o%', node);
+//							console.log('======>>> o%', node);
 							/*west.openTab(node.text,
 									"layout/components/employeeInfo.jsp");*/
 							west.openTab(node.text, node.url);

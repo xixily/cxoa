@@ -62,26 +62,26 @@ var wagesCalculate = {
 							}else if(data.radix > obj.radixMax){
 								radix = obj.radixMax;
 							}
-							if(obj.shebaoType == '养老基数'){
+							if(obj.shebaoType == '养老保险'){
 								if(obj.householdType == 'ALL' || (obj.householdType == data.householdType)){
 									data.subEndowmentIinsurance = radix * obj.radio + obj.fixedValue;
 									data.cEndowmentIinsurance = radix * obj.cRadio + obj.cFixedValue;
 								}
-							}else if(obj.shebaoType == '失业基数'){
+							}else if(obj.shebaoType == '失业保险'){
 								if(obj.householdType == 'ALL' || (obj.householdType == data.householdType)){
 									data.subUnemployedInsurance = radix * obj.radio + obj.fixedValue;
 									data.cUnemployedInsurance = radix * obj.cRadio + obj.cFixedValue;
 								}
 								
-							}else if(obj.shebaoType == '工伤基数'){
+							}else if(obj.shebaoType == '工伤保险'){
 								if(obj.householdType == 'ALL' || (obj.householdType == data.householdType)){
 									data.cInjuryInsurance = radix * obj.cRadio + obj.cFixedValue;
 								}
-							}else if(obj.shebaoType == '生育基数'){
+							}else if(obj.shebaoType == '生育保险'){
 								if(obj.householdType == 'ALL' || (obj.householdType == data.householdType)){
 									data.cBirthIinsurance = radix * obj.cRadio + obj.cFixedValue;
 								}
-							}else if(obj.shebaoType == '医疗基数'){
+							}else if(obj.shebaoType == '医疗保险'){
 								if(obj.householdType == 'ALL' || (obj.householdType == data.householdType)){
 									data.subMedicare = radix * obj.radio + obj.fixedValue;
 									data.cMedicare = radix * obj.cRadio + obj.cFixedValue;

@@ -2,7 +2,6 @@ package com.chaoxing.oa.entity.page;
 
 
 public class PUserName {
-//	private int ID;//ID
 	private int id;//ID
 	private String username;//用户姓名
 	private int roleId;//权限
@@ -55,7 +54,7 @@ public class PUserName {
 	private String leaveTime;//离职时间
 	private String workPlace;//工作地点
 	private String email;//邮箱
-	private int ifSecret;//是否保密
+	private String ifSecret;//是否保密
 	private String firstLevel;//一级
 	private String secondLevel;//二级
 	private String thirdLevel;//三级
@@ -211,7 +210,7 @@ public class PUserName {
 	public String getEmail() {
 		return email;
 	}
-	public int getIfSecret() {
+	public String getIfSecret() {
 		return ifSecret;
 	}
 	public int getId() {
@@ -376,7 +375,7 @@ public class PUserName {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public void setIfSecret(int ifSecret) {
+	public void setIfSecret(String ifSecret) {
 		this.ifSecret = ifSecret;
 	}
 	public String getFirstLevel() {

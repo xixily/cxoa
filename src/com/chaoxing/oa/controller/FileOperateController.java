@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -104,8 +105,8 @@ public class FileOperateController {
     }
     
     @RequestMapping(value = "/exportExcel")
-    public ModelAndView exprotRenshiQuery(QueryForm queryForm, HttpServletRequest request, HttpServletResponse response){
-    	Map<String, Object> res = employeeInfoService.getRenshiUserName(queryForm,1);
+    public ModelAndView exprotRenshiQuery(QueryForm queryForm, HttpServletRequest request, HttpServletResponse response, HttpSession session){
+    	Map<String, Object> res = employeeInfoService.getRenshiUserName(queryForm, session,1);
     	List<PRenshiEmployee> renshiEmployeeInfos = (List<PRenshiEmployee>) res.get("rows");
     	if(renshiEmployeeInfos!=null){
     		String storeName = exportExcelService.getRenshiQueryExport(renshiEmployeeInfos);  

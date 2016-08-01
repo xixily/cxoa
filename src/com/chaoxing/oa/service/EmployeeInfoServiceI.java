@@ -3,8 +3,11 @@ package com.chaoxing.oa.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import com.chaoxing.oa.entity.page.PComboBox;
 import com.chaoxing.oa.entity.page.PCompany;
+import com.chaoxing.oa.entity.page.PHouseholdType;
 import com.chaoxing.oa.entity.page.PLevel;
 import com.chaoxing.oa.entity.page.POStructs;
 import com.chaoxing.oa.entity.page.PRenshiEmployee;
@@ -16,9 +19,9 @@ import com.chaoxing.oa.entity.page.QueryForm;
 public interface EmployeeInfoServiceI {
 	public List<PRenshiEmployee> getRenshiUserName();
 
-	public Map<String, Object> getRenshiUserName(QueryForm queryForm);
+	public Map<String, Object> getRenshiUserName(QueryForm queryForm, HttpSession session);
 	
-	public Map<String, Object> getRenshiUserName(QueryForm queryForm, int isExport);
+	public Map<String, Object> getRenshiUserName(QueryForm queryForm, HttpSession session, int isExport);
 
 	public long getRenshiUserNameCount(String hql, Map<String, Object> params);
 
@@ -49,4 +52,13 @@ public interface EmployeeInfoServiceI {
 	public int addWages(Pwages pwages);
 
 	public int deleteWages(Pwages pwages);
+
+	public int updateShebao(PShebao pshebao);
+
+	public List<PHouseholdType> getHouseholdType();
+
+	public int addShebao(PShebao pshebao);
+
+	public int deleteShebao(PShebao pshebao);
+
 }

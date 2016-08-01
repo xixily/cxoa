@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import com.chaoxing.oa.config.SysConfig;
 import com.chaoxing.oa.dao.BaseDaoI;
 import com.chaoxing.oa.entity.page.PComboBox;
 import com.chaoxing.oa.entity.page.PCompany;
+import com.chaoxing.oa.entity.page.PHouseholdType;
 import com.chaoxing.oa.entity.page.PLevel;
 import com.chaoxing.oa.entity.page.POStructs;
 import com.chaoxing.oa.entity.page.PRenshiEmployee;
@@ -20,7 +23,9 @@ import com.chaoxing.oa.entity.page.PShebao;
 import com.chaoxing.oa.entity.page.PShebaoType;
 import com.chaoxing.oa.entity.page.Pwages;
 import com.chaoxing.oa.entity.page.QueryForm;
+import com.chaoxing.oa.entity.page.SessionInfo;
 import com.chaoxing.oa.entity.po.Company;
+import com.chaoxing.oa.entity.po.HouseholdType;
 import com.chaoxing.oa.entity.po.Level;
 import com.chaoxing.oa.entity.po.OrganizationStructure;
 import com.chaoxing.oa.entity.po.Shebao;
@@ -28,6 +33,9 @@ import com.chaoxing.oa.entity.po.ShebaoType;
 import com.chaoxing.oa.entity.po.WageDistribution;
 import com.chaoxing.oa.entity.po.view.RenshiUserName;
 import com.chaoxing.oa.service.EmployeeInfoServiceI;
+import com.chaoxing.oa.util.ResourceUtil;
+
+import sun.util.logging.resources.logging;
 
 @Service("employeeInfoService")
 public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
@@ -40,8 +48,16 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 	private BaseDaoI<WageDistribution> wageDistributionDao;
 	private BaseDaoI<Shebao> sheBaoDao;
 	private BaseDaoI<ShebaoType> sheBaoTypeDao;
+	private BaseDaoI<HouseholdType> househodlType;
 
 	
+	public BaseDaoI<HouseholdType> getHousehodlType() {
+		return househodlType;
+	}
+	@Autowired
+	public void setHousehodlType(BaseDaoI<HouseholdType> househodlType) {
+		this.househodlType = househodlType;
+	}
 	public BaseDaoI<ShebaoType> getSheBaoTypeDao() {
 		return sheBaoTypeDao;
 	}
@@ -125,20 +141,26 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 	}
 
 	@Override
-	public Map<String, Object> getRenshiUserName(QueryForm queryForm) {
-		return getRenshiUserName(queryForm, 0);
+	public Map<String, Object> getRenshiUserName(QueryForm queryForm, HttpSession session) {
+		return getRenshiUserName(queryForm, session, 0);
 	}
 	
 	@Override
-	public Map<String, Object> getRenshiUserName(QueryForm queryForm, int isExport) {
+	public Map<String, Object> getRenshiUserName(QueryForm queryForm, HttpSession session, int isExport) {
 		System.out.println(queryForm);
 		List<PRenshiEmployee> renshiEmployeeInfos = new ArrayList<PRenshiEmployee>();
 		Map<String, Object> userInfos = new HashMap<String, Object>();
 		Map<String, Object> params = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer("from RenshiUserName t where 1=1 ");
 		addCondition(hql, queryForm, params);
+		SessionInfo userInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
+		if(userInfo.getRoleId() > 1){
+			hql.append(" and t.renshiRight like :renshiRight ");
+			params.put("renshiRight", "%" + userInfo.getUsername() + "%");
+		}
 		String sort = "id";
-		String order = SysConfig.ASC;
+		String order = SysConfig.DESC;
+//		String order = SysConfig.ASC;
 		if(queryForm.getSort() != null){
 			sort = queryForm.getSort();
 			if(queryForm.getOrder() != null){
@@ -341,13 +363,13 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		List<PShebao> pshebaos = new ArrayList<PShebao>();
 		Map<String, Object> result = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer("from Shebao t where 1=1");
-		if(queryForm.getCompany()!=null){
-			hql.append(" t.company like :company");
+		if(queryForm.getCompany()!=null && queryForm.getCompany()!=""){
+			hql.append(" and t.company like :company");
 			params.put("company", "%" + queryForm.getCompany() + "%");
 		}
-		if(queryForm.getHouseholdType()!=null){
-			hql.append(" t.householdType like :householdType");
-			params.put("householdType", "%" + queryForm.getHouseholdType() + "%");
+		if(queryForm.getShebaoType()!=null && queryForm.getShebaoType()!=""){
+			hql.append(" and t.shebaoType like :shebaoType");
+			params.put("shebaoType", "%" + queryForm.getShebaoType() + "%");
 		}
 		String sort = "sid";
 		String order = SysConfig.DESC;
@@ -368,8 +390,6 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 			BeanUtils.copyProperties(shebao, pshebao);
 			pshebaos.add(pshebao);
 		}
-			
-		
 		result.put("total", total);
 		result.put("rows", pshebaos);
 	
@@ -378,7 +398,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 	@Override
 	public List<PShebao> getShebaoRadioByCompany(String company) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("company", "江西幕课信息技术有限公司");
+		params.put("company", "江西慕课信息技术有限公司");
 //		String c = "成都超星数图信息技术有限公司";
 //		params.put("companyName", company);
 		List<PShebao> pshebaos = new ArrayList<PShebao>();
@@ -429,5 +449,53 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		}
 	}
 	
+	@Override
+	public int updateShebao(PShebao pshebao) {
+		Shebao shebao = new Shebao();
+		BeanUtils.copyProperties(pshebao, shebao);
+		try {
+			sheBaoDao.update(shebao);
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	@Override
+	public List<PHouseholdType> getHouseholdType() {
+		List<PHouseholdType> phouseTypes = new ArrayList<PHouseholdType>();
+		List<HouseholdType> houseTypes = househodlType.find("from HouseholdType");
+		for (HouseholdType householdType : houseTypes) {
+			PHouseholdType phouseholdeType = new PHouseholdType();
+			BeanUtils.copyProperties(householdType, phouseholdeType);
+			phouseTypes.add(phouseholdeType);
+		}
+		return phouseTypes;
+	}
+	
+	@Override
+	public int addShebao(PShebao pshebao) {
+		Shebao shebao = new Shebao();
+		BeanUtils.copyProperties(pshebao, shebao);
+		try {
+			sheBaoDao.save(shebao);
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	@Override
+	public int deleteShebao(PShebao pshebao) {
+		Shebao shebao = new Shebao();
+		BeanUtils.copyProperties(pshebao, shebao);
+		try {
+			sheBaoDao.delete(shebao);
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 	
 }

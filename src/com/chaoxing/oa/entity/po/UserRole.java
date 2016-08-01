@@ -27,6 +27,7 @@ public class UserRole implements Serializable {
 	private static final long serialVersionUID = -7906680425187234920L;
 	private int roleId;
 	private String roleName;
+	private int roleLevel;
 //	private Set<RoleMenu> roleMenus = new HashSet<RoleMenu>();
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,6 +38,13 @@ public class UserRole implements Serializable {
 	@Column(name = "roleName")
 	public String getRoleName() {
 		return roleName;
+	}
+	@Column(name = "rolevel")
+	public int getRoleLevel() {
+		return roleLevel;
+	}
+	public void setRoleLevel(int roleLevel) {
+		this.roleLevel = roleLevel;
 	}
 	public void setRoleId(int roleId) {
 		this.roleId = roleId;

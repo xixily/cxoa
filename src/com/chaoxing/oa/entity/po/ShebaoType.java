@@ -17,21 +17,21 @@ import org.hibernate.annotations.DynamicUpdate;
 public class ShebaoType implements Serializable{
 	private static final long serialVersionUID = 1941867794985573282L;
 	private int id;
-	private String name;
+	private String shebaoType;
 	@Id
 	@Column
 	public int getId() {
 		return id;
 	}
-	@Column
-	public String getName() {
-		return name;
+	@Column(name = "name")
+	public String getShebaoType() {
+		return shebaoType;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setShebaoType(String shebaoType) {
+		this.shebaoType = shebaoType;
 	}
 	
 }

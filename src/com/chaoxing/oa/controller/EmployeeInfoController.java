@@ -1,6 +1,5 @@
 package com.chaoxing.oa.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.chaoxing.oa.config.SysConfig;
 import com.chaoxing.oa.entity.page.PComboBox;
 import com.chaoxing.oa.entity.page.PCompany;
+import com.chaoxing.oa.entity.page.PHouseholdType;
 import com.chaoxing.oa.entity.page.PLevel;
 import com.chaoxing.oa.entity.page.POStructs;
 import com.chaoxing.oa.entity.page.PShebao;
@@ -41,8 +41,8 @@ public class EmployeeInfoController {
 
 	@RequestMapping(value = "/renshiUser")
 	@ResponseBody
-	public Map<String, Object> getRenshiUserName(QueryForm queryForm){
-		Map<String, Object> userInfos = employeeInfoService.getRenshiUserName(queryForm);
+	public Map<String, Object> getRenshiUserName(QueryForm queryForm, HttpSession session){
+		Map<String, Object> userInfos = employeeInfoService.getRenshiUserName(queryForm, session);
 		return userInfos;
 	}
 	
@@ -155,7 +155,7 @@ public class EmployeeInfoController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/getAllShebaoRadio")
+	@RequestMapping(value = "/getShebao")
 	@ResponseBody
 	public Map<String, Object>  getAllShebaoRadio(QueryForm queryform){
 		Map<String, Object> pshebaos = employeeInfoService.getAllShebaoRadio(queryform);
@@ -197,5 +197,58 @@ public class EmployeeInfoController {
 	@ResponseBody
 	public List<PShebaoType> getShebaoType(){
 		return employeeInfoService.getShebaoType();
+	}
+	
+	@RequestMapping(value = "/updateShebao")
+	@ResponseBody
+	public Json updateShebao(PShebao pshebao){
+//		System.out.println("company: " + pshebao.getCompany() + ";shebaoType: " + pshebao.getShebaoType() + ";householdType: " + pshebao.getHouseholdType());
+		Json result = new Json();
+//		try {
+//			String company = new String(pshebao.getCompany().getBytes("ISO8859-1"), "utf-8");
+//			String shebaoType = new String(pshebao.getShebaoType().getBytes("ISO8859-1"),"utf-8");
+//			String householdType = new String(pshebao.getHouseholdType().getBytes("ISO8859-1"),"utf-8");
+//			System.out.println(company);
+//			System.out.println(shebaoType);
+//			pshebao.setCompany(company);
+//			pshebao.setShebaoType(shebaoType);
+//			pshebao.setHouseholdType(householdType);
+//		} catch (UnsupportedEncodingException e) {
+//			e.printStackTrace();
+//		}  
+		if(employeeInfoService.updateShebao(pshebao) != 0){
+			
+		}
+		return result;
+	}
+	@RequestMapping(value = "/getHouseholdType")
+	@ResponseBody
+	public List<PHouseholdType> getHouseholdType(){
+		return employeeInfoService.getHouseholdType();
+	}
+	
+	@RequestMapping(value = "/addShebao")
+	@ResponseBody
+	public Json addShebao(PShebao pshebao){
+		Json result = new Json();
+		if(employeeInfoService.addShebao(pshebao)!=0){
+			result.setSuccess(true);
+			result.setMsg("增加成功！");
+		}else{
+			result.setMsg("添加失败！");
+		}
+		return result;
+	}
+	@RequestMapping(value = "/deleteShebao")
+	@ResponseBody
+	public Json deleteShebao(PShebao pshebao){
+		Json result = new Json();
+		if(employeeInfoService.deleteShebao(pshebao)!=0){
+			result.setSuccess(true);
+			result.setMsg("删除成功！");
+		}else{
+			result.setMsg("删除失败！");
+		}
+		return result;
 	}
 }

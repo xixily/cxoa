@@ -137,8 +137,8 @@ public class UserController {
 			result.setMsg("您要查询的职员信息不存在！");
 			return result;
 		}
-		int r = 1;
-		// int r = userService.deleteUserName(pu.getId());
+		int r = 0;
+		r = userService.deleteUserName(pu);
 		if (r != 0) {
 			result.setSuccess(true);
 			result.setMsg("删除成功！");
@@ -154,14 +154,29 @@ public class UserController {
 	@ResponseBody
 	public Json updateUserName(PUserName username, HttpSession session) {
 		Json result = new Json();
-		long r = 2;
-		// long r = userService.updateUserName(username);
+//		long r = 2;
+		long r = userService.updateUserName(username);
 		if (r != -1) {
 			result.setSuccess(true);
-			result.setMsg("添加成功！");
+			result.setMsg("更新成功！");
 		} else {
 			result.setErrorCode(SysConfig.REQUEST_ERROR);
-			result.setMsg("插入失败！");
+			result.setMsg("更新失败！");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/updateUserRole")
+	@ResponseBody
+	public Json updateUserRole(PUserName username, HttpSession session) {
+		Json result = new Json();
+		long r = userService.updateUserRole(username);
+		if (r != 0) {
+			result.setSuccess(true);
+			result.setMsg("更新成功！");
+		} else {
+			result.setErrorCode(SysConfig.REQUEST_ERROR);
+			result.setMsg("更新失败！");
 		}
 		return result;
 	}

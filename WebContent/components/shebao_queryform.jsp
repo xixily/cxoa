@@ -12,16 +12,16 @@
             </td>
 			<td>社保类型:</td>
 			<td>
-                     <input class="easyui-combobox" name="householdType" data-options="
+                     <input class="easyui-combobox" name="shebaoType" data-options="
                     url: 'employee/getShebaoType.action',
-                    valueField:'name',
-                    textField:'name',
+                    valueField:'shebaoType',
+                    textField:'shebaoType',
                     " />
             </td>
             <td></td>
             <td>
-            <input class="easyui-linkbutton"  type="button" value="查找"
-				onclick="" style="width:46px;height:26px;" />
+            <input class="easyui-linkbutton do_action" appaction="center.shebao.queryShebao"  type="button" value="查找"
+				style="width:46px;height:26px;" />
             </td>
             <td></td>
             <td>
