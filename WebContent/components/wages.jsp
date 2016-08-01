@@ -188,11 +188,11 @@
                     
                     <td colspan="8">
                     <div align="right" style="margin-right:10px;">
-                      <a id="wages_save" href="javascript:void(0)" style="width:60px;display:none;" class="easyui-linkbutton" onclick="center.wages.updateWages($(this));">保存</a>
-                      <a id="wages_add" href="javascript:void(0)" style="width:60px;display:none;" class="easyui-linkbutton" onclick="center.wages.addWages($(this));">新增</a>
+                      <a id="wages_save" href="javascript:void(0)" style="width:60px;display:none;" class="easyui-linkbutton" onclick="employee.wages.updateWages($(this));">保存</a>
+                      <a id="wages_add" href="javascript:void(0)" style="width:60px;display:none;" class="easyui-linkbutton" onclick="employee.wages.addWages($(this));">新增</a>
 <!--                       <a id="wages_add" href="javascript:void(0)" style="width:60px;display:none;" class="easyui-linkbutton" onclick="$('#updatewages_form').form({url:'employee/addWages.action'});submitForm($(this))">新增</a> -->
                       <a href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="clearForm($(this))">重置</a>
-                      <a id="wages_edit" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="center.wages.editWages()">编辑</a>
+                      <a id="wages_edit" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="employee.wages.editWages()">编辑</a>
                      <!--  <a href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="confirmDialog.createDialog()">删除</a> -->
                       <a href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="closeDialog($(this))">关闭</a>
                     </div>

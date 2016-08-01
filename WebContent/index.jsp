@@ -9,7 +9,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsController/app.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsController/north.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsController/west.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jsController/center.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsController/employee.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsController/system.js"></script>
 <!-- 登陆窗口  -->
 <c:if test="${sessionInfo == null }">
 		<c:redirect url="login.jsp"></c:redirect>
@@ -19,7 +20,7 @@
 		<script type="text/javascript">
 		window.handler = {};
 		var handler = window.handler;
-		handler = center;
+		handler = employee;
 		session.logined = true;
 		session.user.ID = '${sessionInfo.id }';
 		session.user.username = '${sessionInfo.username }';

@@ -99,7 +99,15 @@ public class UserServiceImpl implements UserServiceI {
 	public long addUserName(PUserName username) {
 		UserName u = new UserName();
 		BeanUtils.copyProperties(username, u);
-		username.setRoleId(99);
+		u.setRoleId(99);
+//		System.out.println(u);
+		String level = username.getLevel();
+		String depart = username.getFourthLevel();
+		if(level!=null){
+			if(depart==null){
+				username.setRoleId(99);
+			}
+		}
 		try {
 			Integer re = (Integer) usernameDao.save(u);
 			return re;

@@ -22,15 +22,15 @@
 			toolbar: [{
 			iconCls: 'icon-add',
 			text : '增加',
-			handler: function(){center.shebao.append()}
+			handler: function(){employee.shebao.append()}
 			},'-',{
 				iconCls: 'icon-remove',
 				text : '删除',
-				handler: function(){center.shebao.remove()}
+				handler: function(){employee.shebao.remove()}
 			}],
-			onDblClickCell : center.shebao.onDblClickCell,
-			onClickCell : center.shebao.endEditing,
-			onEndEdit: center.shebao.onEndEdit">
+			onDblClickCell : employee.shebao.onDblClickCell,
+			onClickCell : employee.shebao.endEditing,
+			onEndEdit: employee.shebao.onEndEdit">
 			<thead>
 				<tr>
 					<!-- <th data-options="field:'sid',width:40">id</th> -->

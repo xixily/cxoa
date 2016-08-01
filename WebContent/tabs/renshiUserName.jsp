@@ -3,7 +3,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	if(session.logined){
-		center.initEmployee();
+		employee.initEmployee();
 	}
 })
 </script>
@@ -18,7 +18,7 @@ $(document).ready(function() {
 	<jsp:include page="../components/toolbar.jsp"></jsp:include>
 	<div id="employee_datas" style="width: 98%"></div><!-- 780  -->
 	<div id="userName_info" class="easyui-dialog" title="查看修改职员信息"
-		style="width: 980px;overflow: hidden"
+		style="width: 1080px;overflow: hidden"
 		data-options="
                 iconCls : 'icon-edit',
               <!--   href : 'components/usernameForm.jsp', -->

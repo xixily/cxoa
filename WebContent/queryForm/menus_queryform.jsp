@@ -2,25 +2,17 @@
 <form id="renshiquery_form" method="post" enctype="multipart/form-data">
 	<table>
 		<tr>
-			<td>公司名称:</td>
+			<td>菜单名称:</td>
 			<td>
                      <input class="easyui-combobox" name="company" data-options="
-                    url: 'employee/getCompany.action',
-                    valueField:'cmopany',
-                    textField:'cmopany',
-                    " />
-            </td>
-			<td>社保类型:</td>
-			<td>
-                     <input class="easyui-combobox" name="shebaoType" data-options="
-                    url: 'employee/getShebaoType.action',
-                    valueField:'shebaoType',
-                    textField:'shebaoType',
+                    url: 'system/getMenus.action',
+                    valueField:'menuName',
+                    textField:'menuName',
                     " />
             </td>
             <td></td>
             <td>
-            <input class="easyui-linkbutton do_action" appaction="employee.shebao.queryShebao"  type="button" value="查找"
+            <input class="easyui-linkbutton do_action" appaction="system.menus.queryMenus"  type="button" value="查找"
 				style="width:46px;height:26px;" />
             </td>
             <td></td>

@@ -37,7 +37,7 @@ function login(){
 				$('#login_dlg').dialog('close');
 				initClickHandler();
 				west.initWestTree();
-				center.initEmployee();
+				employee.initEmployee();
 			}
 		}
 	});

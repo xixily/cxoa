@@ -1,13 +1,13 @@
-var center = {
+var employee = {
 	initEmployee : function(data, user) {
-//		console.log("center.initEmployee!");
+//		console.log("employee.initEmployee!");
 		$('#employee_datas')
 				.datagrid(
 						{
 							title : '职工信息列表',
 							iconCls : 'icon-edit',// 图标
 							height : 'auto',
-							fitColumns : true,
+//							fitColumns : true,
 							singleSelect : true,
 							url : 'employee/renshiUser.action',
 							singleSelect : true,// 是否单选
@@ -23,31 +23,33 @@ var center = {
 									return 'background-color:yellow;';
 								}	
 							},
-							columns : [ [ {
-								field : 'id',
-								title : '员工编号',
-								sortable : true,
-								width : 60
-							}, {
+							columns : [ [ 
+//							              {
+//								field : 'id',
+//								title : '员工编号',
+//								sortable : true,
+//								width : 60
+//							}, 
+							{
 								field : 'username',
 								title : '姓名',
 								sortable : true,
-								width : 80
+								width : 60
 							}, {
 								field : 'firstLevel',
 								title : '公司',
 								sortable : true,
-								width : 100
+								width : 40
 							}, {
 								field : 'secondLevel',
 								title : '部门',
 								sortable : true,
-								width : 100
+								width : 80
 							}, {
 								field : 'thirdLevel',
 								title : '岗位',
 								sortable : true,
-								width : 100
+								width : 80
 							}, {
 								field : 'fourthLevel',
 								title : '小组',
@@ -57,12 +59,27 @@ var center = {
 								field : 'position',
 								title : '职位',
 								sortable : true,
-								width : 100
+								width : 80
 							}, {
 								field : 'sex',
 								title : '性别',
 								sortable : true,
-								width : 60
+								width : 40
+							}, {
+								field : 'identityCard',
+								title : '身份证号',
+								sortable : true,
+								width : 125
+							}, {
+								field : 'borthDay',
+								title : '出生年月',
+								sortable : true,
+								width : 80
+							}, {
+								field : 'nation',
+								title : '民族',
+								sortable : true,
+								width : 40
 							}, {
 								field : 'company',
 								title : '公司名称',
@@ -87,67 +104,162 @@ var center = {
 								field : 'earlyEntryDate',
 								title : '早期入职时间',
 								sortable : true,
-								width : 100
+								width : 80
 							}, {
 								field : 'hiredate',
 								title : '入职时间',
 								sortable : true,
-								width : 100
+								width : 80
 							}, {
 								field : 'zhuanzhengTime',
 								title : '转正时间',
 								sortable : true,
-								width : 100
+								width : 80
 							}, {
 								field : 'leaveTime',
 								title : '离职时间',
 								sortable : true,
-								width : 100
+								width : 80
 							}, {
 								field : 'phoneNumber',
 								title : '联系方式',
 								sortable : true,
-								width : 120
+								width : 80
+							}, {
+								field : 'graduatedSchool',
+								title : '毕业学校',
+								sortable : true,
+								width : 100
+							}, {
+								field : 'major',
+								title : '专业',
+								sortable : true,
+								width : 100
+							}, {
+								field : 'homeAddress',
+								title : '家庭住址',
+								sortable : true,
+								width : 100
+							}, {
+								field : 'homeNumber',
+								title : '家庭电话',
+								sortable : true,
+								width : 80
+							}, {
+								field : 'pastLeaveTime',
+								title : '过去离职时间',
+								sortable : true,
+								width : 80
+							}, {
+								field : 'householdType',
+								title : '户口性质',
+								sortable : true,
+								width : 60
+							}, {
+								field : 'insurance',
+								title : '保险',
+								sortable : true,
+								width : 60
 							}, {
 								field : 'maritalStatus',
 								title : '婚姻状况',
 								sortable : true,
 								width : 60
+							}, {
+								field : 'cellCore',
+								title : '细胞核',
+								sortable : true,
+								width : 60
+							}, {
+								field : 'cellCoreEmail',
+								title : '细胞核邮箱',
+								sortable : true,
+								width : 100
+							}, {
+								field : 'guidance',
+								title : '指导',
+								sortable : true,
+								width : 60
+							}, {
+								field : 'guidanceEmail',
+								title : '指导邮箱',
+								sortable : true,
+								width : 100
+							}, {
+								field : 'managementSystem',
+								title : '管理制度',
+								sortable : true,
+								width : 100
+							}, {
+								field : 'signedTime',
+								title : '签定时间',
+								sortable : true,
+								width : 100
+							}, {
+								field : 'terminationTime',
+								title : '终止时间',
+								sortable : true,
+								width : 100
+							}, {
+								field : 'registeredAddress',
+								title : '户口地址',
+								sortable : true,
+								width : 100
+							}, {
+								field : 'Postcode',
+								title : '邮编',
+								sortable : true,
+								width : 80
+							}, {
+								field : 'socialSecurityHospital',
+								title : '社保医院',
+								sortable : true,
+								width : 100
+							}, {
+								field : 'level',
+								title : '级别',
+								sortable : true,
+								width : 80
+							}, {
+								field : 'email',
+								title : '邮箱',
+								sortable : true,
+								width : 100
 							} ] ],
 							toolbar : '#renshi_toolbar',
 							// toolbar: [{
 							// text:'查看',
 							// iconCls: 'icon-search',
 							// handler: function(){
-							// center.view();
+							// employee.view();
 							// }
 							// },'-',{
 							// text:'编辑',
 							// iconCls: 'icon-edit',
 							// handler: function(){
-							// center.editEmployee();
+							// employee.editEmployee();
 							// }
 							// },'-',{
 							// text:'新增',
 							// iconCls: 'icon-add',
 							// handler: function(){
-							// center.addEmployee();
+							// employee.addEmployee();
 							// }
 							// },'-',{
 							// text:'删除',
 							// iconCls: 'icon-cancel',
 							// handler: function(){
-							// center.deleteEmployee();
+							// employee.deleteEmployee();
 							// }
 							// },'-',{
 							// text:'导出报表',
 							// iconCls: 'icon-excel',
 							// handler: function(){
-							// center.exportExcel();
+							// employee.exportExcel();
 							// }
 							// }],
 							onDblClickCell : function(index, field, value) {
-								center.view();
+								employee.view();
 							}
 						});
 	},
@@ -282,10 +394,11 @@ var center = {
 			url : url,
 			success : function(result) {
 				var result = eval('(' + result + ')');
+				$('#employee_datas').datagrid('reload');
 				if (result.success) {
-					alert("添加成功！");
+					$.messager.alert("添加提示", result.msg);
 				} else {
-					alert("添加失败！")
+					$.messager.alert("添加提示", result.msg);
 				}
 			}
 		});
@@ -313,7 +426,7 @@ var center = {
 		})
 
 	},
-	deleteEmployee : function() {
+	deleteEmployee : function(confirmId) {
 //		console.log('deleteEmployee');
 		if (session.user.roleId != 0 && session.user.roleId != 1) {
 			alert('您没有删除权限！~');
@@ -322,6 +435,8 @@ var center = {
 		var userInfo = $('#employee_datas').datagrid('getSelected');
 		var url = "user/deleteUserName.action";
 		$.getJSON(url, userInfo, function(result) {
+			confirmDialog.destoryDialog(confirmId);
+			$('#employee_datas').datagrid('reload');
 			if (result.success) {
 				$.messager.alert(result.msg,result.msg);
 			} else {
@@ -535,22 +650,22 @@ var center = {
 								width : 100,
 								editor : 'textbox'
 							} ] ],
-							onClickCell : center.wages.onClickCell,
-							onEndEdit : center.wages.onEndEdit,
+							onClickCell : employee.wages.onClickCell,
+							onEndEdit : employee.wages.onEndEdit,
 							onDblClickCell : function(index, field, value) {
-								center.wages.endEditing();
+								employee.wages.endEditing();
 								session.append = false;
 								$('#wages_add').css('display', 'none');
 								$('#wages_save').css('display', '');
 								$('#wages_edit').css('display', '');
-								center.wages.eidtWages();
+								employee.wages.eidtWages();
 							},
 							toolbar : [
 									{
 										text : '新增',
 										iconCls : 'icon-add',
 										handler : function() {
-											center.wages.append();
+											employee.wages.append();
 											// alert('新增');
 										}
 									},
@@ -561,8 +676,8 @@ var center = {
 										handler : function() {
 											confirmDialog.createDialog(
 													"您确定要删除吗？",
-													center.wages.removeit);
-											// center.wages.removeit();
+													employee.wages.removeit);
+											// employee.wages.removeit();
 										}
 									} ]
 						})
@@ -589,7 +704,7 @@ var center = {
 			$('#wages_save').css('display', '');
 			$('#wages_edit').css('display', '');
 			if (editIndex != index) {
-				if (center.wages.endEditing()) {
+				if (employee.wages.endEditing()) {
 					$('#datagrid_wages').datagrid('selectRow', index).datagrid(
 							'beginEdit', index);
 					var ed = $('#datagrid_wages').datagrid('getEditor', {
@@ -652,7 +767,7 @@ var center = {
 			$('#wages_add').css('display', '');
 			$('#wages_save').css('display', 'none');
 			$('#wages_edit').css('display', 'none');
-			if (center.wages.endEditing()) {
+			if (employee.wages.endEditing()) {
 				$('#updatewages_form').form('clear');
 				$('#updatewages_form').form('load', session.formData);
 				$(
@@ -723,7 +838,7 @@ var center = {
 			}
 		},
 		accept : function() {
-			if (center.wages.endEditing()) {
+			if (employee.wages.endEditing()) {
 				$('#datagrid_wages').datagrid('acceptChanges');
 			}
 		},
@@ -748,7 +863,7 @@ var center = {
 			});
 			submitForm(dom, function(result) {
 				if (result.success) {
-					center.wages.openWages();
+					employee.wages.openWages();
 					$.messager.alert('消息', result.msg, 'info');
 				}
 			});
@@ -761,7 +876,7 @@ var center = {
 			});
 			submitForm(dom, function(result) {
 				if (result.success) {
-					center.wages.openWages();
+					employee.wages.openWages();
 					$.messager.alert('消息', result.msg, 'info');
 				}
 			});
@@ -771,7 +886,7 @@ var center = {
 	shebao : {
 		onDblClickCell : function(index, field, value) {
 			if (shebaoEdit != index) {
-				if (center.shebao.endEditing()) {
+				if (employee.shebao.endEditing()) {
 					$('#datagrid_shebao').datagrid('selectRow', index)
 							.datagrid('beginEdit', index);
 					var ed = $('#datagrid_shebao').datagrid('getEditor', {
@@ -821,7 +936,7 @@ var center = {
 							confirmDialog.destoryDialog(confirmId);
 							if (!result.success) {
 								if(shebaoAdd){
-									center.shebao.removeit(1);
+									employee.shebao.removeit(1);
 									shebaoAdd = undefined;
 									return;
 								}
@@ -839,7 +954,7 @@ var center = {
 						});
 					},function(){
 						if(shebaoAdd){
-							center.shebao.removeit(1);
+							employee.shebao.removeit(1);
 							shebaoAdd = undefined;
 							return;
 						}
@@ -850,7 +965,7 @@ var center = {
 					});
 		},
 		append : function() {
-			if (center.shebao.endEditing()) {
+			if (employee.shebao.endEditing()) {
 				shebaoAdd = 1;
 				var selectedData = $('#datagrid_shebao').datagrid('getSelected');
 				if(!selectedData){
@@ -897,7 +1012,7 @@ var center = {
 					});
 		},
 		accept : function() {
-			if (center.shebao.endEditing()) {
+			if (employee.shebao.endEditing()) {
 				$('#datagrid_shebao').datagrid('acceptChanges');
 			}
 		},

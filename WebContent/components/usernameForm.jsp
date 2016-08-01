@@ -5,7 +5,7 @@
         width: 100px;
     }
 </style><!-- 768 -->
-<div class="easyui-panel" style="width:960px;overflow: hidden" >
+<div class="easyui-panel" style="width:1060px;overflow: hidden" >
     <div style="padding:2px">
         <form id="updateUsesrname_form" class="easyui-form"  method="post">
             <table cellpadding="2">
@@ -31,7 +31,18 @@
                     <td><input class="easyui-textbox" type="text" name="phoneNumber" data-options="prompt:'请输入11位手机号码...',validType:'mobile'
                     " /></td>
                     <td>身份证复印件:</td>
-                    <td><input class="easyui-textbox" type="text" name="identityCardCopy" /></td>
+                    <td>
+                    	<input class="easyui-combobox" name="identityCardCopy" data-options="
+							valueField: 'value',
+							textField: 'text',
+							data: [{
+								text: '√',
+								value: '√'
+							},{
+								text: '╳',
+								value: '╳'
+							}]" />
+                    </td>
                     <td>邮编:</td>
                     <td><input class="easyui-textbox" type="text" name="postCode" /></td>
                 </tr>
@@ -41,7 +52,18 @@
                     <td>家庭电话:</td>
                     <td><input class="easyui-textbox" type="text" name="homeNumber" /></td>
                     <td>户口本:</td>
-                    <td><input class="easyui-textbox" type="text" name="familyRegister" /></td>
+                    <td>
+                    	<input class="easyui-combobox" name="familyRegister" data-options="
+							valueField: 'value',
+							textField: 'text',
+							data: [{
+								text: '√',
+								value: '√'
+							},{
+								text: '╳',
+								value: '╳'
+							}]" />
+                    </td>
                     <td>备注:</td>
                     <td><input class="easyui-textbox" type="text" name="remarks" /></td>
                 </tr>
@@ -51,7 +73,18 @@
                     <td>入职时间:</td>
                     <td><input id="date_hiredate" class="easyui-datebox" type="text" name="hiredate" /></td>
                     <td>离职证明:</td>
-                    <td><input class="easyui-textbox" type="text" name="leavingCertificate" /></td>
+                    <td>
+                    	<input class="easyui-combobox" name="leavingCertificate" data-options="
+							valueField: 'value',
+							textField: 'text',
+							data: [{
+								text: '√',
+								value: '√'
+							},{
+								text: '╳',
+								value: '╳'
+							}]" />
+                    </td>
                     <td>合同编号:</td>
                     <td><input class="easyui-textbox" type="text" name="contractNumber" /></td>
                 </tr>
@@ -59,7 +92,7 @@
                     <td>小组:</td><!-- 四级 -->
                     <td>
                     <input id="form_hidden_departmentId" type="hidden" name="departmentId" />
-                     <input id="combox" class="easyui-combobox" name="fourthLevel" style="width:103px;height:26px;" data-options="
+                     <input id="combox" class="easyui-combobox" name="fourthLevel" data-options="
                     url: 'employee/getOStruct.action',
                     valueField:'fourthLevel',
                     textField:'fourthLevel',
@@ -84,7 +117,18 @@
                     <td>转正时间:</td>
                     <td><input class="easyui-datebox" type="text" name="zhuanzhengTime" /></td>
                     <td>合同:</td>
-                    <td><input class="easyui-textbox" type="text" name="contract" /></td>
+                    <td>
+                    	<input class="easyui-combobox" name="contract" data-options="
+							valueField: 'value',
+							textField: 'text',
+							data: [{
+								text: '√',
+								value: '√'
+							},{
+								text: '╳',
+								value: '╳'
+							}]" />
+                    </td>
                     <td>投保时间:</td>
                     <td><input class="easyui-textbox" type="text" name="dueSocialSecurity" /></td>
                 </tr>
@@ -94,7 +138,18 @@
                     <td>过去离职日期:</td>
                     <td><input class="easyui-datebox" type="text" name="pastLeaveTime" /></td>
                     <td>入职表:</td>
-                    <td><input class="easyui-textbox" type="text" name="entryForm" /></td>
+                    <td>
+                    	<input class="easyui-combobox" name="entryForm" data-options="
+							valueField: 'value',
+							textField: 'text',
+							data: [{
+								text: '√',
+								value: '√'
+							},{
+								text: '╳',
+								value: '╳'
+							}]" />
+                    </td>
                     <td>社保医院:</td>
                     <td><input class="easyui-textbox" type="text" name="socialSecurityHospital" /></td>
                 </tr>
@@ -102,20 +157,31 @@
                     <td>性别:</td>
                     <td>
                     	<input id="combox_sex" class="easyui-combobox" name="sex" data-options="
-							valueField: 'label',
-							textField: 'value',
+							valueField: 'value',
+							textField: 'text',
 							data: [{
-								label: '男',
+								text: '男',
 								value: '男'
 							},{
-								label: '女',
+								text: '女',
 								value: '女'
 							}]" />
                     </td>
                     <td>早期入职时间:</td>
                     <td><input id="datebox_entry" class="easyui-datebox" type="text" name="earlyEntryDate" /></td>
-                    <td>未签原因:</td>
-                    <td><input class="easyui-textbox" type="text" name="noSignReason" /></td>
+                    <td>工资是否发放:</td>
+                    <td>
+                    	<input class="easyui-combobox" name="noSignReason" data-options="
+							valueField: 'value',
+							textField: 'text',
+							data: [{
+								text: '是',
+								value: '是'
+							},{
+								text: '否',
+								value: '否'
+							}]" />
+                    </td>
                     <td>现居地址:</td>
                     <td><input class="easyui-textbox" type="text" name="nowAddress" /></td>
                 </tr>
@@ -149,13 +215,18 @@
                 <tr>
                     <td>民族:</td>
                     <td><input id="text_nation" class="easyui-textbox" type="text" name="nation" ></td>
-                    <td>保险公司:</td>
-                    <td><!-- <input class="easyui-textbox" type="text" name="insuranceCompany" /> -->
-                    <input class="easyui-combobox" name="insuranceCompany" data-options="
-                    url: 'employee/getInsuranceCompany.action',
-                    valueField:'value',
-                    textField:'text',
-                    " />
+                 	<td>保险通知单:</td>
+                    <td>
+                    	<input class="easyui-combobox" name="baoxianTongzhidan" data-options="
+							valueField: 'value',
+							textField: 'text',
+							data: [{
+								text: '√',
+								value: '√'
+							},{
+								text: '╳',
+								value: '╳'
+							}]" />
                     </td>
                     <td>离职时间:</td>
                     <td><input class="easyui-datebox" type="text" name="leaveTime" /></td>
@@ -166,7 +237,7 @@
                     <td>学历:</td>
                     <td>
                    <!--  <input class="easyui-textbox" type="text" name="degree" /> -->
-                    	<input id="combox_degree" class="easyui-combobox" style="width:103px;" name="degree"  data-options="
+                    	<input id="combox_degree" class="easyui-combobox" name="degree"  data-options="
 							valueField: 'name',
 							textField: 'name',
 							data: [
@@ -181,14 +252,15 @@
 							{name : '其他'	}
 							]" />
                     </td>
-                    <td>公司名称:</td>
+                    <td>保险公司:</td>
                     <td>
-                     <input class="easyui-combobox" name="company" data-options="
-                    url: 'employee/getCompany.action',
-                    valueField:'cmopany',
-                    textField:'cmopany',
+                    <input class="easyui-combobox" name="insuranceCompany" data-options="
+                    url: 'employee/getInsuranceCompany.action',
+                    valueField:'value',
+                    textField:'text',
                     " />
                     </td>
+                  
                     <td>原编号:</td>
                     <td><input class="easyui-textbox" type="text" name="originalNumber" /></td>
                     <td>办理工资卡:</td>
@@ -197,49 +269,93 @@
                 <tr>
                     <td>毕业院校:</td>
                     <td><input class="easyui-textbox" type="text" name="graduatedSchool" /></td>
-                    <td>报表:</td>
-                    <td><input class="easyui-textbox" type="text" name="reportForm" /></td>
-                    <td>保密协议:</td>
-                    <td><input class="easyui-textbox" type="text" name="secrecyAgreement" /></td>
-                    <c:if test="${sessionInfo.roleId <= 1}">
-                    <td>工资保密</td>
-                    <td><input name="ifSecret" class="easyui-switchbutton" data-options="onText:'Yes',offText:'No'" onclick="center.ifSecret"></td>
-                    </c:if>
+                     <td>公司名称:</td>
+                    <td>
+                     <input class="easyui-combobox" name="company" data-options="
+                    url: 'employee/getCompany.action',
+                    valueField:'cmopany',
+                    textField:'cmopany',
+                    " />
+                    </td>
+<!--                     <td><input class="easyui-textbox" type="text" name="reportForm" /></td> -->
+                    <td>岗位说明书:</td>
+                    <td>
+                    	<input class="easyui-combobox" name="secrecyAgreement" data-options="
+							valueField: 'value',
+							textField: 'text',
+							data: [{
+								text: '√',
+								value: '√'
+							},{
+								text: '╳',
+								value: '╳'
+							}]" />
+                    </td>
+                    <td>关系:</td>
+                    <td><input class="easyui-textbox" type="text" name="managementSystem" /></td>
                 </tr>
                 <tr>
                     <td>专业:</td>
                     <td><input class="easyui-textbox" type="text" name="major" /></td>
-                    <td>照片:</td>
-                    <td><input class="easyui-textbox" type="text" name="photo" /></td>
-                    <td></td>
-                    <td></td>
-                    <td colspan="2" rowspan="4">
-                        <div style="text-align:center;padding:5px">
-                            <a id="btn_employeeSave" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="submitForm($(this))">保存</a>
-                            <a id="btn_employeeRest" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="clearForm($(this))">重置</a>
-                            <a id="btn_employeeEdit" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="center.editEmployee()">编辑</a><br/>
-                            <a id="btn_wagesInfo" href="javascript:void(0)" class="easyui-linkbutton" style="width:60px;" onclick="center.wages.openWages(this)">工资信息</a>
-                            <!-- <a id="btn_wagesInfo" href="javascript:void(0)" class="easyui-linkbutton" style="width:60px;" onclick="$('#dialog_wagesInfo').dialog('open')">工资信息</a>  -->
-                            <a id="btn_employeeMailto" href="mailto:dengxuefeng@chaoxing.com?cc=dengxuefeng@chaoxing.com&bcc=dengxuefeng@chaoxing.com" style="width:60px;"  class="easyui-linkbutton">发送邮件</a>
-                            <a href="javascript:void(0)" class="easyui-linkbutton" style="width:60px;" onclick="closeDialog($(this))">关闭</a>
-                        </div>
+                    <td>转入本公司时间:</td>
+                    <td><input class="easyui-textbox" type="text" name="zhuanruGongsiTime" /></td>
+                    <td>入职报表:</td>
+                    <td><input class="easyui-textbox" type="text" name="入职报表" /></td>
+                    <td>简历:</td>
+                    <td>
+                    	<input class="easyui-combobox" name="resume" data-options="
+							valueField: 'value',
+							textField: 'text',
+							data: [{
+								text: '√',
+								value: '√'
+							},{
+								text: '╳',
+								value: '╳'
+							}]" />
                     </td>
                 </tr>
                 <tr>
                     <td>负责人:</td>
                     <td><input class="easyui-textbox" type="text" name="cellCore" /></td>
-                    <td>招聘来源:</td>
-                    <td><input class="easyui-textbox" type="text" name="recruitmentSources" /></td>
-                    <td></td>
-                    <td></td>
+                    <td>照片:</td>
+                    <td>
+                    	<input class="easyui-combobox" name="photo" data-options="
+							valueField: 'value',
+							textField: 'text',
+							data: [{
+								text: '√',
+								value: '√'
+							},{
+								text: '╳',
+								value: '╳'
+							}]" />
+                    </td>
+                    <td>离职报表</td>
+                    <td><input class="easyui-textbox" type="text" name="lizhiReport" /></td>
+                    <c:if test="${sessionInfo.roleId <= 1}">
+                    <td>工资保密</td>
+                    <td><input name="ifSecret" class="easyui-switchbutton" data-options="onText:'Yes',offText:'No'" onclick="employee.ifSecret"></td>
+                    </c:if>
                 </tr>
                 <tr>
                     <td>签字人:</td>
                     <td><input class="easyui-textbox" type="text" name="cellCore" /></td>
-                    <td>关系:</td>
-                    <td><input class="easyui-textbox" type="text" name="managementSystem" /></td>
-                    <td></td>
-                    <td></td>
+                     <td>招聘来源:</td>
+                    <td><input class="easyui-textbox" type="text" name="recruitmentSources" /></td>
+                    <td>转正报表</td>
+                    <td><input class="easyui-textbox" type="text" name="zhuanzhengReport" /></td>
+                    <td colspan="2" rowspan="2">
+                        <div style="text-align:center;">
+                            <a id="btn_employeeSave" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="submitForm($(this))">保存</a>
+                            <a id="btn_employeeRest" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="clearForm($(this))">重置</a>
+                            <a id="btn_employeeEdit" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="employee.editEmployee()">编辑</a><br/>
+                            <a id="btn_wagesInfo" href="javascript:void(0)" class="easyui-linkbutton" style="width:60px;" onclick="employee.wages.openWages(this)">工资信息</a>
+                            <!-- <a id="btn_wagesInfo" href="javascript:void(0)" class="easyui-linkbutton" style="width:60px;" onclick="$('#dialog_wagesInfo').dialog('open')">工资信息</a>  -->
+                            <a id="btn_employeeMailto" href="mailto:dengxuefeng@chaoxing.com?cc=dengxuefeng@chaoxing.com&bcc=dengxuefeng@chaoxing.com" style="width:60px;"  class="easyui-linkbutton">发送邮件</a>
+                            <a href="javascript:void(0)" class="easyui-linkbutton" style="width:60px;" onclick="closeDialog($(this))">关闭</a>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>级别:</td>
@@ -255,8 +371,8 @@
                     </td>
                     <td>合同续签:</td>
                     <td><input class="easyui-textbox" type="text" name="contractRenewal" /></td>
-                    <td></td>
-                    <td></td>
+                    <td>部门调整报表</td>
+                    <td><input class="easyui-textbox" type="text" name="bumentiaozhengReport" /></td>
                 </tr>
 
                 </table>

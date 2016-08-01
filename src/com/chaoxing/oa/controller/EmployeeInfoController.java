@@ -251,4 +251,10 @@ public class EmployeeInfoController {
 		}
 		return result;
 	}
+	@RequestMapping(value = "/getShebaoSummary")
+	@ResponseBody
+	public Map<String, Object> getShebaoSummary(QueryForm queryForm, HttpSession session){
+		Map<String, Object> userInfos = employeeInfoService.getShebaoSummary(queryForm, session);
+		return userInfos;
+	}
 }

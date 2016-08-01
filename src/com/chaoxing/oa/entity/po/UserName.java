@@ -75,7 +75,12 @@ public class UserName implements Serializable {
 	private String email;//邮箱
 	private String ifSecret;//是否保密
 	private String maritalStatus;//婚姻状况
-	
+	private String zhuanruGongsiTime;//转入本公司时间
+	private String ruzhiReport;//入职报表
+	private String lizhiReport;//离职报表
+	private String zhuanzhengReport;//转正报表
+	private String bumentiaozhengReport;//部门调整报表
+	private String baoxianTongzhidan;//保险通知单
 	@Id
 	@Column(name="ID", nullable=false)
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -466,27 +471,47 @@ public class UserName implements Serializable {
 	public void setMaritalStatus(String maritalStatus) {
 		this.maritalStatus = maritalStatus;
 	}
-	@Override
-	public String toString() {
-		return "UserName [id=" + id + ", username=" + username + ", password=" + password + ", roleId=" + roleId
-				+ ", departmentId=" + departmentId + ", position=" + position + ", sex=" + sex + ", identityCard="
-				+ identityCard + ", borthDay=" + borthDay + ", nation=" + nation + ", degree=" + degree
-				+ ", graduatedSchool=" + graduatedSchool + ", major=" + major + ", phoneNumber=" + phoneNumber
-				+ ", homeAddress=" + homeAddress + ", homeNumber=" + homeNumber + ", hiredate=" + hiredate
-				+ ", zhuanzhengTime=" + zhuanzhengTime + ", pastLeaveTime=" + pastLeaveTime + ", earlyEntryDate="
-				+ earlyEntryDate + ", householdType=" + householdType + ", insurance=" + insurance
-				+ ", insuranceCompany=" + insuranceCompany + ", company=" + company + ", resume=" + resume + ", photo="
-				+ photo + ", degreeCertificate=" + degreeCertificate + ", identityCardCopy=" + identityCardCopy
-				+ ", familyRegister=" + familyRegister + ", leavingCertificate=" + leavingCertificate + ", contract="
-				+ contract + ", managementSystem=" + managementSystem + ", entryForm=" + entryForm + ", noSignReason="
-				+ noSignReason + ", signedTime=" + signedTime + ", terminationTime=" + terminationTime
-				+ ", registeredAddress=" + registeredAddress + ", postCode=" + postCode + ", remarks=" + remarks
-				+ ", contractNumber=" + contractNumber + ", dueSocialSecurity=" + dueSocialSecurity
-				+ ", socialSecurityHospital=" + socialSecurityHospital + ", level=" + level + ", recruitmentSources="
-				+ recruitmentSources + ", nowAddress=" + nowAddress + ", contractRenewal=" + contractRenewal
-				+ ", originalNumber=" + originalNumber + ", secrecyAgreement=" + secrecyAgreement + ", reportForm="
-				+ reportForm + ", panCard=" + panCard + ", leaveTime=" + leaveTime + ", workPlace=" + workPlace
-				+ ", email=" + email + ", ifSecret=" + ifSecret + ", maritalStatus=" + maritalStatus + "]";
+	@Column(name = "转入本公司时间")
+	public String getZhuanruGongsiTime() {
+		return zhuanruGongsiTime;
+	}
+	@Column(name = "入职报表")
+	public String getRuzhiReport() {
+		return ruzhiReport;
+	}
+	@Column(name = "离职报表")
+	public String getLizhiReport() {
+		return lizhiReport;
+	}
+	@Column(name = "转正报表")
+	public String getZhuanzhengReport() {
+		return zhuanzhengReport;
+	}
+	@Column(name = "部门调整报表")
+	public String getBumentiaozhengReport() {
+		return bumentiaozhengReport;
+	}
+	@Column(name = "保险通知单")
+	public String getBaoxianTongzhidan() {
+		return baoxianTongzhidan;
+	}
+	public void setZhuanruGongsiTime(String zhuanruGongsiTime) {
+		this.zhuanruGongsiTime = zhuanruGongsiTime;
+	}
+	public void setRuzhiReport(String ruzhiReport) {
+		this.ruzhiReport = ruzhiReport;
+	}
+	public void setLizhiReport(String lizhiReport) {
+		this.lizhiReport = lizhiReport;
+	}
+	public void setZhuanzhengReport(String zhuanzhengReport) {
+		this.zhuanzhengReport = zhuanzhengReport;
+	}
+	public void setBumentiaozhengReport(String bumentiaozhengReport) {
+		this.bumentiaozhengReport = bumentiaozhengReport;
+	}
+	public void setBaoxianTongzhidan(String baoxianTongzhidan) {
+		this.baoxianTongzhidan = baoxianTongzhidan;
 	}
 
 }

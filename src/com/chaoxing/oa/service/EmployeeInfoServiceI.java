@@ -61,4 +61,8 @@ public interface EmployeeInfoServiceI {
 
 	public int deleteShebao(PShebao pshebao);
 
+	public Map<String, Object> getShebaoSummary(QueryForm queryForm, HttpSession session);
+	
+	public Map<String, Object> getShebaoSummary(QueryForm queryForm, HttpSession session, int isExport);
+
 }

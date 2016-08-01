@@ -19,6 +19,7 @@ import com.chaoxing.oa.entity.page.PHouseholdType;
 import com.chaoxing.oa.entity.page.PLevel;
 import com.chaoxing.oa.entity.page.POStructs;
 import com.chaoxing.oa.entity.page.PRenshiEmployee;
+import com.chaoxing.oa.entity.page.PSheBaoSummary;
 import com.chaoxing.oa.entity.page.PShebao;
 import com.chaoxing.oa.entity.page.PShebaoType;
 import com.chaoxing.oa.entity.page.Pwages;
@@ -32,6 +33,7 @@ import com.chaoxing.oa.entity.po.Shebao;
 import com.chaoxing.oa.entity.po.ShebaoType;
 import com.chaoxing.oa.entity.po.WageDistribution;
 import com.chaoxing.oa.entity.po.view.RenshiUserName;
+import com.chaoxing.oa.entity.po.view.SheBaoSummary;
 import com.chaoxing.oa.service.EmployeeInfoServiceI;
 import com.chaoxing.oa.util.ResourceUtil;
 
@@ -49,8 +51,16 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 	private BaseDaoI<Shebao> sheBaoDao;
 	private BaseDaoI<ShebaoType> sheBaoTypeDao;
 	private BaseDaoI<HouseholdType> househodlType;
+	private BaseDaoI<SheBaoSummary> shebaoSummaryDao;
 
 	
+	public BaseDaoI<SheBaoSummary> getShebaoSummaryDao() {
+		return shebaoSummaryDao;
+	}
+	@Autowired
+	public void setShebaoSummaryDao(BaseDaoI<SheBaoSummary> shebaoSummaryDao) {
+		this.shebaoSummaryDao = shebaoSummaryDao;
+	}
 	public BaseDaoI<HouseholdType> getHousehodlType() {
 		return househodlType;
 	}
@@ -497,5 +507,45 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		}
 		return 0;
 	}
+	@Override
+	public Map<String, Object> getShebaoSummary(QueryForm queryForm, HttpSession session) {
+		return getShebaoSummary(queryForm, session, 0);
+	}
+	@Override
+	public Map<String, Object> getShebaoSummary(QueryForm queryForm, HttpSession session, int isExport) {
+
+		List<PSheBaoSummary> pshebaoSummaries = new ArrayList<PSheBaoSummary>();
+		Map<String, Object> summaryInfos = new HashMap<String, Object>();
+		Map<String, Object> params = new HashMap<String, Object>();
+		
+		StringBuffer hql = new StringBuffer("from SheBaoSummary t where 1=1 ");
+		if(queryForm.getCompany() != null){
+			hql.append(" and t.company like :company ");
+			params.put("renshiRight", "%" + queryForm.getCompany() + "%");
+		}
+		
+		int intPage = 0;
+		int pageSize = 30000;//最多导出30000条数据
+		if(isExport == 0){
+			intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
+			pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+		}
+		
+		List<SheBaoSummary> sheBaoSummaries = shebaoSummaryDao.find(hql.toString(), params, intPage, pageSize);
+		for (SheBaoSummary shebaoSummary : sheBaoSummaries) {
+			PSheBaoSummary pshebaoSummary = new PSheBaoSummary();
+			BeanUtils.copyProperties(shebaoSummary, pshebaoSummary);
+			pshebaoSummaries.add(pshebaoSummary);
+		}
+		long total = getSheBaoSummaryCount(hql.toString(),params);
+		summaryInfos.put("total", total);
+		summaryInfos.put("rows", pshebaoSummaries);
+		return summaryInfos;
+	}
 	
+	public long getSheBaoSummaryCount(String hql, Map<String, Object> params){
+		StringBuffer hqll = new StringBuffer("select count(*) from SheBaoSummary t where ");
+		hqll.append(hql.split("where")[1]);
+		return shebaoSummaryDao.count(hqll.toString(), params);
+	}
 }
