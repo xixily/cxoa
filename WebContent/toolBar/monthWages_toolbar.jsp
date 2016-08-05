@@ -12,6 +12,8 @@ onclick="confirmDialog.createDialog('您确定要删除吗？',employee.deleteEm
 <a href="#" class="easyui-menubutton" data-options="menu:'#menu_monthWages_export',iconCls:'icon-excel'">导出报表</a>
 <span class="btn-separator"></span>
 <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-databse_refresh',plain:true" onclick="employee.monthWages.generateMothWages()">批量生成工资表</a>
+<span class="btn-separator"></span>
+<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-coins',plain:true" onclick="">发放完毕</a>
 </div>
 <div id="menu_monthWages_export" >
 	 <div data-options="iconCls:'icon-excel'" onclick="">导出</div>
@@ -22,5 +24,5 @@ onclick="confirmDialog.createDialog('您确定要删除吗？',employee.deleteEm
      <div data-options="iconCls:'icon-excel'" onclick="">导出5</div>
      <div data-options="iconCls:'icon-excel'" onclick="">导出6</div>
     <div class="menu-sep"></div>
-    <div data-options="iconCls:'icon-excel'" onclick="">根据当前查询条件导出</div>
+    <div data-options="iconCls:'icon-excel'" onclick="employee.monthWages.exportMonthWagesExcel()">根据当前查询条件导出</div>
 </div>

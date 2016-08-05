@@ -24,12 +24,12 @@ var employee = {
 								}	
 							},
 							columns : [ [ 
-//							              {
-//								field : 'id',
-//								title : '员工编号',
-//								sortable : true,
-//								width : 60
-//							}, 
+							              {
+								field : 'id',
+								title : '员工编号',
+								sortable : true,
+								width : 60
+							}, 
 							{
 								field : 'username',
 								title : '姓名',
@@ -429,7 +429,24 @@ var employee = {
 				$('#textbox_hukou').textbox('setValue', newValue);
 			}
 		})
-
+//		$('#date_hiredate').datebox({
+//			onChange:function(newValue,oldValue){
+//				var date = new Date(newValue);
+//				date.setMonth(date.getMonth()+3);
+//				var newDate = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + date.getDate();
+//				$('#zhuangZheng_datebox').datebox('setValue',newDate);
+//				$('#signed_date').datebox('setValue',newDate);
+//				}
+//		})
+//		$('#signed_date').datebox({
+//			onChange:function(newValue,oldValue){
+//				var date = new Date(newValue);
+////				date.setMonth(date.getMonth()+3);
+//				date.setYear(date.getFullYear()+3);
+//				var newDate = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + date.getDate();
+//				$('#end_datebox').datebox('setValue',newDate);
+//			}
+//		})
 	},
 	deleteEmployee : function(confirmId) {
 //		console.log('deleteEmployee');
@@ -656,9 +673,7 @@ var employee = {
 								width : 100,
 								editor : 'textbox'
 							} ] ],
-							onClickCell : employee.wages.onClickCell,
-							onEndEdit : employee.wages.onEndEdit,
-							onDblClickCell : function(index, field, value) {
+							onClickCell : function(index, field, value) {
 								employee.wages.endEditing();
 								session.append = false;
 								$('#wages_add').css('display', 'none');
@@ -666,6 +681,17 @@ var employee = {
 								$('#wages_edit').css('display', '');
 								employee.wages.eidtWages();
 							},
+//							onClickCell : employee.wages.onClickCell,
+							onEndEdit : employee.wages.onEndEdit,
+							onDblClickCell : employee.wages.onClickCell,
+//							onDblClickCell : function(index, field, value) {
+//								employee.wages.endEditing();
+//								session.append = false;
+//								$('#wages_add').css('display', 'none');
+//								$('#wages_save').css('display', '');
+//								$('#wages_edit').css('display', '');
+//								employee.wages.eidtWages();
+//							},
 							toolbar : [
 									{
 										text : '新增',
@@ -760,6 +786,11 @@ var employee = {
 
 			var data = rowsData.rows[index];
 			// data.company = data.companyName;
+			data.radix = data.radix ? data.radix:0;
+			if(!data.company||data.company==''){
+				$.messager.alert('tips', '您没有输入公司名称，请重新填写！', 'info');
+				return false;
+			}
 			wagesCalculate.calculateShebao(data, function(result) {
 				if (result) {
 					$('#updatewages_form').form('load', data);
@@ -1249,6 +1280,57 @@ shebaoSummary : {
 					)
 //					$('#datagrid_shebaoCompany').datagrid('enableFilter', [{}]); 不能用
 	},
+	exportShebaoCompany : function(type){
+		console.log('exportExcel:' + type);
+		var exportParam = {};
+		var data = $('#datagrid_shebaoSummary').datagrid('getSelected');
+		downloadForm.createForm();
+		var url = "file/exportShebaoCompany.action";
+		exportParam.configurable = 'reportForm';
+		if (!type || type == 0) {
+			delete exportParam.configurable;
+			if (data.succeed) {
+				exportParam = data.data;
+			}
+		}
+		$("#export_query").form('submit', {
+			url : url,
+			queryParams : exportParam,
+			onSubmit : function() {
+				console.log("正在导出,请稍后");
+			},
+			onLoadSuccess : function() {
+				downloadForm.destoryForm();
+			}
+		});
+		
+	},
+	exportShebaoSummary : function(type){
+		console.log('exportExcel:' + type);
+		var exportParam = {};
+		var form = $('#shebaoSummary_queryform');
+		var data = getDataOfForm(form);
+		downloadForm.createForm();
+		var url = "file/exportShebaoSummary.action";
+		exportParam.configurable = 'reportForm';
+		if (!type || type == 0) {
+			delete exportParam.configurable;
+			if (data.succeed) {
+				exportParam = data.data;
+			}
+		}
+		$("#export_query").form('submit', {
+			url : url,
+			queryParams : exportParam,
+			onSubmit : function() {
+				console.log("正在导出,请稍后");
+			},
+			onLoadSuccess : function() {
+				downloadForm.destoryForm();
+			}
+		});
+		
+	},
 	onDblClickRow : function(index,row) {
 		if(!shebaoCompanyEdit){
 			session.editRow = $.extend({},row);
@@ -1562,7 +1644,7 @@ shebaoSummary : {
 						});
 					})
 		},
-		openGenerateWages : function(){
+		openGenerateKaoqin : function(){
 			var date = new Date();
 			var month = date.getMonth();
 			var message = "在批量生成考勤表前，是否检查一下(" + month + "月、" + (month - 1) + "月)工作日表？";
@@ -1572,10 +1654,10 @@ shebaoSummary : {
 							employee.kaoqin.openWagesDate();
 						},function(confirmId){
 							confirmDialog.destoryDialog(confirmId);
-							employee.kaoqin.generateWages();
+							employee.kaoqin.generateKaoqin();
 							});
 		},
-		generateWages : function(){
+		generateKaoqin : function(){
 			var message = "现有的考勤表将被清除，您确定要重新生成当月考勤表吗？";
 			confirmDialog.createDialog(
 					message,function(confirmId){
@@ -1588,6 +1670,31 @@ shebaoSummary : {
 								$.messager.alert('消息', result.msg, 'info');
 							})
 						},undefined,'confirmId2');
+		},
+		exportKaoqinExcel : function(type){
+			console.log('exportExcel:' + type);
+			var exportParam = {};
+			var form = $('#kaoqin_form');
+			var data = getDataOfForm(form);
+			downloadForm.createForm();
+			var url = "file/exportKaoqinExcel.action";
+			exportParam.configurable = 'reportForm';
+			if (!type || type == 0) {
+				delete exportParam.configurable;
+				if (data.succeed) {
+					exportParam = data.data;
+				}
+			}
+			$("#export_query").form('submit', {
+				url : url,
+				queryParams : exportParam,
+				onSubmit : function() {
+					console.log("正在导出,请稍后");
+				},
+				onLoadSuccess : function() {
+					downloadForm.destoryForm();
+				}
+			});
 		}
 	},
 	monthWages : {
@@ -1619,18 +1726,20 @@ shebaoSummary : {
 								if(wagesDateAdd){
 									removeIt('datagrid_monthWages');
 									wagesDateAdd = undefined;
+									$.messager.alert('消息', result.msg, 'info');
 									return;
 								}
 								$('#datagrid_monthWages').datagrid('getData').rows[index] = session.dEditRow;
 								$('#datagrid_monthWages').datagrid('refreshRow',index);
+								$.messager.alert('消息', result.msg, 'info');
 							}else{
 								if(wagesDateAdd){
 									$('#datagrid_monthWages').datagrid('reload');
 									shebaoAdd = undefined;
 									return;
 								}
+								$('#datagrid_monthWages').datagrid('reload');
 							}
-							$.messager.alert('消息', result.msg, 'info');
 						});
 //					},function(){
 //						if(wagesDateAdd){
@@ -1657,6 +1766,31 @@ shebaoSummary : {
 								$.messager.alert('消息', result.msg, 'info');
 							})
 						});
+		},
+		exportMonthWagesExcel : function(type){
+			console.log('exportExcel:' + type);
+			var exportParam = {};
+			var form = $('#monthWages_form');
+			var data = getDataOfForm(form);
+			downloadForm.createForm();
+			var url = "file/exportMonthWagesExcel.action";
+			exportParam.configurable = 'reportForm';
+			if (!type || type == 0) {
+				delete exportParam.configurable;
+				if (data.succeed) {
+					exportParam = data.data;
+				}
+			}
+			$("#export_query").form('submit', {
+				url : url,
+				queryParams : exportParam,
+				onSubmit : function() {
+					console.log("正在导出,请稍后");
+				},
+				onLoadSuccess : function() {
+					downloadForm.destoryForm();
+				}
+			});
 		}
 	},
 	

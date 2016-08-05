@@ -45,8 +45,10 @@ var west = {
 	openTab : function(text, url) {
 		if ($("#tabs").tabs('exists', text)) {
 			$("#tabs").tabs('select', text);
-		} else {
+		} else if(!opentTabs){
+			opentTabs = true;
 			$.get(url, function(data) {
+				opentTabs = undefined;
 				$("#tabs").tabs('add', {
 					title : text,
 					closable : true,
@@ -61,6 +63,7 @@ var west = {
 
 	}
 }
+var opentTabs = undefined;
 /*function initWestTree(){
  $.ajax({
  type: 'GET',

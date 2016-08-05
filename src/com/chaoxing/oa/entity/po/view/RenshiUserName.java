@@ -267,7 +267,7 @@ public class RenshiUserName implements Serializable {
 	public void setPastLeaveTime(String pastLeaveTime) {
 		this.pastLeaveTime = pastLeaveTime;
 	}
-	@Column(name="早期入职日期")
+	@Column(name="早期入职时间")
 	public String getEarlyEntryDate() {
 		return earlyEntryDate;
 	}

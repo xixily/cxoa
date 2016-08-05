@@ -263,8 +263,33 @@ function disabledForm(formId, isDisabled){
     $("#" + formId + " input[class='easyui-datebox datebox-f combo-f textbox-f']").each(function () {  
         $(this).datebox(attr);
     });  
+//    //禁用jquery easyui中的linkbutton组件
+//    $("#" + formId + " a[class~='easyui-linkbutton']").each(function () {  
+//    	$(this).linkbutton({disabled:isDisabled})
+//    });  
+//    //禁用jquery easyui中的menubutton组件
+//    $("#" + formId + " a[class~='easyui-menubutton']").each(function () {  
+//    	$(this).menubutton(attr);
+//    });  
 }
-
+function disabledButton(formId, isDisabled){
+	var attr="disable";  
+    if(!isDisabled){  
+       attr="enable"; 
+       isDisabled = false;
+    }else{
+    	attr="disable"; 
+    	isDisabled = true;
+    }
+    //禁用jquery easyui中的linkbutton组件
+    $("#" + formId + " a[class~='easyui-linkbutton']").each(function () {  
+    	$(this).linkbutton({disabled:isDisabled})
+    });
+    //禁用jquery easyui中的menubutton组件
+    $("#" + formId + " a[class~='easyui-menubutton']").each(function () {  
+    	$(this).menubutton(attr);
+    }); 
+    }
 function closeDialog(dom){
 	var dialog = dom.closest(".easyui-dialog");
 	dialog.dialog('close');
@@ -380,6 +405,10 @@ var downloadForm = {
 		 */
 	createForm : function(formId){
 		var rformId = formId? formId : 'export_query';
+		var dom = $('#' + rformId);
+		if(dom){
+			dom.remove();
+		}
 		var frm = $("<form>");
 		frm.attr("style","display:none");
 		frm.attr("target","");
@@ -387,6 +416,7 @@ var downloadForm = {
 		frm.attr("method","post");
 		$("body").append(frm);//将表单放置在web中
 		return rformId;
+		
 	},
 	/**
 	 * 销毁创建的临时form

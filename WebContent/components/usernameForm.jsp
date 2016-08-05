@@ -123,7 +123,7 @@
                     ">
                     </td>
                     <td>转正时间:</td>
-                    <td><input class="easyui-datebox" type="text" name="zhuanzhengTime" /></td>
+                    <td><input id="zhuangZheng_datebox" class="easyui-datebox" type="text" name="zhuanzhengTime" /></td>
                     <td>合同:</td>
                     <td>
                     	<input class="easyui-combobox" name="contract" data-options="
@@ -206,7 +206,14 @@
                     ">
                     </td>
                     <td>签定时间:</td>
-                    <td><input class="easyui-datebox" type="text" name="signedTime" /></td>
+                    <td><input id="signed_date" class="easyui-datebox" type="text" name="signedTime" data-options="
+                    onChange : function(newValue,oldValue){
+                    		var date = new Date(newValue);
+                    		date.setYear(date.getFullYear()+3);
+                    		var newDate = date.getFullYear()+ '.' + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + '.' + date.getDate();
+							$('end_datebox').datebox('setValue',newDate);
+                    	}
+                    "/></td>
                     <td>现工作地:</td>
                     <td><input class="easyui-textbox" type="text" name="workPlace" /></td>
                 </tr>
@@ -234,7 +241,7 @@
                    <!--  <input class="easyui-textbox" type="text" name="insurance" /> -->
                     </td>
                     <td>终止时间:</td>
-                    <td><input class="easyui-datebox" type="text" name="terminationTime" /></td>
+                    <td><input id="end_datebox" class="easyui-datebox" type="text" name="terminationTime" /></td>
                     <td>邮箱:</td>
                     <td><input id="vie_mail" class="easyui-textbox" type="email" name="email" data-options="required:true, validType:'email'" /></td>
                 </tr>
@@ -410,3 +417,23 @@
         </form>
     </div>
 </div>
+<script type="text/javascript">
+$('#date_hiredate').datebox({
+	onChange:function(newValue,oldValue){
+		var date = new Date(newValue);
+		date.setMonth(date.getMonth()+3);
+		var newDate = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + date.getDate();
+		$('#zhuangZheng_datebox').datebox('setValue',newDate);
+		$('#signed_date').datebox('setValue',newDate);
+		}
+})
+$('#signed_date').datebox({
+	onChange:function(newValue,oldValue){
+		var date = new Date(newValue);
+//		date.setMonth(date.getMonth()+3);
+		date.setYear(date.getFullYear()+3);
+		var newDate = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + date.getDate();
+		$('#end_datebox').datebox('setValue',newDate);
+	}
+})
+</script>

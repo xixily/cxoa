@@ -243,7 +243,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	public long getRenshiUserNameCount(String hql, Map<String, Object> params) {
 		StringBuffer hqll = new StringBuffer("select count(*) from RenshiUserName t where ");
 		hqll.append(hql.split("where")[1]);
-		System.out.println("+++++++hqll+++++employeeInfoServiceImpl.getRenshiusernameCount " + hqll.toString());
+//		System.out.println("+++++++hqll+++++employeeInfoServiceImpl.getRenshiusernameCount " + hqll.toString());
 		return userNameDao.count(hqll.toString(), params);
 	}
 
@@ -451,9 +451,9 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	@Override
 	public List<PShebao> getShebaoRadioByCompany(String company) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("company", "江西慕课信息技术有限公司");
+//		params.put("company", "江西慕课信息技术有限公司");
 //		String c = "成都超星数图信息技术有限公司";
-//		params.put("companyName", company);
+		params.put("company", company);
 		List<PShebao> pshebaos = new ArrayList<PShebao>();
 		List<Shebao> shebaos = sheBaoDao.find("from Shebao s where s.company = :company", params);
 		for (Shebao shebao : shebaos) {
@@ -593,6 +593,11 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	}
 	@Override
 	public Map<String, Object> getShebaoCompany(QueryForm queryForm, HttpSession session) {
+		return getShebaoCompany(queryForm, session, 0);
+	}
+	
+	@Override
+	public Map<String, Object> getShebaoCompany(QueryForm queryForm, HttpSession session,int isExport) {
 		Map<String, Object> shebaoCompanyInfos = new HashMap<String, Object>();
 		Map<String, Object> params = new HashMap<String, Object>();
 		List<WageDistribution> wageDistributions = new ArrayList<WageDistribution>();
@@ -601,8 +606,12 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		long total = 0;
 		if(queryForm.getCompany()!=null){
 			params.put("company", queryForm.getCompany());
-			int intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
-			int pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+			int intPage = 0;
+			int pageSize = 30000;//最多导出30000条数据
+			if(isExport == 0){
+				intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
+				pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+			}
 			String sort = "username";
 			String order = SysConfig.DESC;
 			if(queryForm.getSort() != null){
@@ -631,8 +640,13 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 			hqll.append(hql.split("where")[1]);
 			return wageDistributionDao.count(hqll.toString(), params);
 	 }
-	@Override
+	
 	public Map<String, Object> findKaoqin(QueryForm queryForm, HttpSession session) {
+		return findKaoqin(queryForm,session,0);
+	}
+	
+	@Override
+	public Map<String, Object> findKaoqin(QueryForm queryForm, HttpSession session,int isExport) {
 		Map<String, Object> kaoqinInfos = new HashMap<String, Object>();
 		Map<String, Object> params = new HashMap<String, Object>();
 		List<KaoQin> kaoqins = new ArrayList<KaoQin>();
@@ -640,8 +654,12 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		StringBuffer hql = new StringBuffer("from KaoQin t where 1=1 ");
 		long total = 0;
 		addCondition(hql, queryForm, params);
-		int intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
-		int pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+		int intPage = 0;
+		int pageSize = 30000;//最多导出30000条数据
+		if(isExport == 0){
+			intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
+			pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+		}
 		String sort = "userId";
 		String order = SysConfig.DESC;
 		if (queryForm.getSort() != null) {
@@ -691,6 +709,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	
 	@Override
 	public Map<String, Object> findMonthWages(QueryForm queryForm, HttpSession session, int isExport) {
+		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
 		List<PMonthWages> pMonthWages = new ArrayList<PMonthWages>();
 		Map<String, Object> monthWagesInfos = new HashMap<String, Object>();
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -712,10 +731,41 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 			pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
 		}
 		List<MonthWages> monthWages = monthWagesDao.find(hql.toString(), params, intPage, pageSize);
-		for (MonthWages monthWage : monthWages) {
-			PMonthWages pMonthWage = new PMonthWages();
-			BeanUtils.copyProperties(monthWage, pMonthWage);
-			pMonthWages.add(pMonthWage);
+		if(sessionInfo.getRoleId()<1 || sessionInfo.getRoleId()==100){
+			for (MonthWages monthWage : monthWages) {
+				PMonthWages pMonthWage = new PMonthWages();
+				BeanUtils.copyProperties(monthWage, pMonthWage);
+				pMonthWages.add(pMonthWage);
+			}
+		}else{
+			for (MonthWages monthWage : monthWages) {
+				PMonthWages pMonthWage = new PMonthWages();
+				pMonthWage.setUsername(monthWage.getUsername());
+				pMonthWage.setFirstLevel(monthWage.getFirstLevel());
+				pMonthWage.setSecondLevel(monthWage.getSecondLevel());
+				pMonthWage.setThirdLevel(monthWage.getThirdLevel());
+				pMonthWage.setFourthLevel(monthWage.getFourthLevel());
+				pMonthWage.setAccountBank(monthWage.getAccountBank());
+				pMonthWage.setAccount(monthWage.getAccount());
+				pMonthWage.setIdentityCard(monthWage.getIdentityCard());
+				pMonthWage.setChuqinDay(monthWage.getChuqinDay());
+				pMonthWage.setZhuanzhengChaeDay(monthWage.getZhuanzhengChaeDay());
+				pMonthWage.setFakuan(monthWage.getFakuan());
+				pMonthWage.setJiangjin(monthWage.getJiangjin());
+				pMonthWage.setBufaSalary(monthWage.getBufaSalary());
+				pMonthWage.setShiJiaHour(monthWage.getShiJiaHour());
+				pMonthWage.setBingJiaHour(monthWage.getBingJiaHour());
+				pMonthWage.setKuangGongHour(monthWage.getKuangGongHour());
+				pMonthWage.setChidaoYingkouDay(monthWage.getChidaoYingkouDay());
+				pMonthWage.setChanJiaDay(monthWage.getChanJiaDay());
+				pMonthWage.setAnnualLleave(monthWage.getAnnualLleave());
+				pMonthWage.setSickLleaveTotal(monthWage.getSickLleaveTotal());
+				pMonthWage.setHiredate(monthWage.getHiredate());
+				pMonthWage.setLeaveTime(monthWage.getLeaveTime());
+				pMonthWage.setZhuanzhengTime(monthWage.getZhuanzhengTime());
+				pMonthWage.setKaoQinremarks(monthWage.getKaoQinremarks());
+				pMonthWages.add(pMonthWage);
+			}
 		}
 		long total = getMonthWagesCount(hql.toString(),params);
 		monthWagesInfos.put("total", total);
@@ -731,7 +781,12 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	}
 	
 	@Override
-	public int updateMonthWages(PMonthWages pmonthWages) {
+	public int updateMonthWages(PMonthWages pmonthWages, SessionInfo sessionInfo) {
+//		int roleId = sessionInfo.getRoleId();
+//		MonthWages monthWages = monthWagesDao.get(MonthWages.class, pmonthWages.getId());
+//		if(monthWages!=null){
+//			
+//		}
 		MonthWages monthWages = new MonthWages();
 		BeanUtils.copyProperties(pmonthWages, monthWages);
 		try {
@@ -826,11 +881,12 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	}
 	
 	@Override
-	public int generateKaoqin(String date, String preDate) {
+	public int generateKaoqin(String date, String preDate, String afterDate) {
 		Map<String,Object> params = new HashMap<String, Object>();
 		params.put("date1", date);
 		params.put("date2", preDate);
-		String sql = "{CALL update_kaoqin_pr( :date1, :date2)}";
+		params.put("date3", afterDate);
+		String sql = "{CALL update_kaoqin_pr( :date1, :date2, :date3)}";
 		try {
 			objectDao.prepareCall(sql, params);
 			return 1;

@@ -194,6 +194,11 @@ public class EmployeeController {
 	@ResponseBody
 	public Json getShebaoRadioByCompany(QueryForm queryForm){
 		Json result = new Json();
+		if(queryForm.getCompany()==null){
+			result.setErrorCode(SysConfig.REQUEST_ERROR);
+			result.setMsg("没有公司名称！");
+			return result;
+		}
 		List<PShebao> pshebaos = employeeInfoService.getShebaoRadioByCompany(queryForm.getCompany());
 		if(pshebaos.size() > 0){
 			result.setSuccess(true);
@@ -325,15 +330,72 @@ public class EmployeeController {
 	
 	@RequestMapping(value = "/updateMonthWages")
 	@ResponseBody
-	public Json updateMonthWages(PMonthWages pmonthWages){
+	public Json updateMonthWages(PMonthWages pmonthWages, HttpSession session){
+		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
 		Json result = new Json();
-		if(employeeInfoService.updateMonthWages(pmonthWages)!=0){
+		caculateWages(pmonthWages);
+		if(employeeInfoService.updateMonthWages(pmonthWages, sessionInfo)!=0){
 			result.setSuccess(true);
 			result.setMsg("更新成功！");
 		}else{
 			result.setMsg("更新失败！");
 		}
 		return result;
+	}
+	private void caculateWages(PMonthWages pmonthWages) {
+		Double salary = pmonthWages.getSalary();
+		Float chuqin = pmonthWages.getChuqinDay();
+		double chaeDay = pmonthWages.getZhuanzhengChaeDay()!=null ? pmonthWages.getZhuanzhengChaeDay():0;
+		double zhuanzhengChae = 0.00;
+		double lishiSalary = pmonthWages.getLishiSalary()!=null ? pmonthWages.getLishiSalary():0;
+		double baomiSub = pmonthWages.getSecrecySubsidy()!=null?pmonthWages.getSecrecySubsidy():0;
+		double lunchSub = pmonthWages.getLunchSubsidy()!=null?pmonthWages.getLunchSubsidy():0;
+		double tongxunSub = pmonthWages.getCommunicationSubsidy()!=null?pmonthWages.getCommunicationSubsidy():0;
+		double jiangjin = pmonthWages.getJiangjin()!=null?pmonthWages.getJiangjin():0;
+		double bufaSalary = pmonthWages.getBufaSalary()!=null?pmonthWages.getBufaSalary():0;
+		double fakuan = pmonthWages.getFakuan()!=null?pmonthWages.getFakuan():0;
+		float shijia = (pmonthWages.getShiJiaHour()!=null)? pmonthWages.getShiJiaHour():0;
+		//计算考勤总额
+		Double bingjia =  ((pmonthWages.getBingJiaHour() + pmonthWages.getSickLleaveTotal())>24?(pmonthWages.getBingJiaHour() + pmonthWages.getSickLleaveTotal() -24):0);
+		Float kuanggong = pmonthWages.getKuangGongHour();
+		Float chidaoYingkou = pmonthWages.getChidaoYingkouDay();
+		if(chidaoYingkou<=3){
+			chidaoYingkou = chidaoYingkou * 20;
+		}else{
+			chidaoYingkou = chidaoYingkou * 50 - 150;
+		}
+		if(lishiSalary!=0){
+			zhuanzhengChae = (lishiSalary - salary) * (21 - chaeDay);
+		}
+		float kaoqinTotal = (float) (salary*shijia/168 + bingjia*salary/336 + kuanggong*salary/56 + chidaoYingkou + zhuanzhengChae) ;
+		//计算社保代扣总额
+		float subTotal = (float) (pmonthWages.getSubEndowmentIinsurance()+pmonthWages.getSubHouseIinsurance()+pmonthWages.getSubMedicare()+pmonthWages.getSubUnemployedInsurance());
+		//应发工资
+		float yingfa = (float) (salary*chuqin/21 -kaoqinTotal-subTotal + baomiSub + lunchSub + tongxunSub+jiangjin+bufaSalary-fakuan);
+		//个税
+		float selfTax = 0;
+		if((yingfa - 3500)<=0){
+			selfTax = 0;
+		}else if(0<(yingfa-3500)&&(yingfa-3500)<=1500){
+			selfTax = (float) ((yingfa-3500)*0.03);
+		}else if((yingfa-3500)<=4500){
+			selfTax = (float) ((yingfa-3500)*0.1 - 105);
+		}else if((yingfa - 3500)<=9000){
+			selfTax = (float) ((yingfa-3500)*0.2 - 555);
+		}else if((yingfa - 3500)<=35000){
+			selfTax = (float) ((yingfa-3500)*0.25 - 1005);
+		}else if((yingfa - 3500)<=55000){
+			selfTax = (float) ((yingfa-3500)*0.30 - 2755);
+		}else if((yingfa - 3500)<=80000){
+			selfTax = (float) ((yingfa-3500)*0.35 - 5505);
+		}else{
+			selfTax = (float) ((yingfa-3500)*0.45 - 13505);
+		}
+		pmonthWages.setSubTotal(subTotal);
+		pmonthWages.setKaoqinTotal(kaoqinTotal);
+		pmonthWages.setYingfaTotal(yingfa);
+		pmonthWages.setSelfTax(selfTax);
+		pmonthWages.setShifaTotal(yingfa-selfTax);
 	}
 	@RequestMapping(value = "/queryWagesDate")
 	@ResponseBody
@@ -388,6 +450,7 @@ public class EmployeeController {
 		Json result = new Json();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM");
 		Calendar cal = Calendar.getInstance();
+		String afterDate = df.format(cal.getTime());
 		cal.add(Calendar.MONTH, -1);
 		String date = df.format(cal.getTime());
 		cal.add(Calendar.MONTH, -1);
@@ -416,7 +479,8 @@ public class EmployeeController {
 //				}
 //			}
 //		}
-		int savaNum = employeeInfoService.generateKaoqin(date,preDate);
+		System.out.println(date);
+		int savaNum = employeeInfoService.generateKaoqin(date,preDate,afterDate);
 		if(savaNum>0){
 			result.setSuccess(true);
 			result.setMsg("更新成功！");

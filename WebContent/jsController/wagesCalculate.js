@@ -21,7 +21,8 @@ var wagesCalculate = {
 			if(session.shebaoRadio && (session.shebaoRadio.company == params.company)){
 				callback(session.shebaoRadio)
 			}else{
-				$.getJSON(url, params, function(result){
+				$.post(url, params, function(result){
+					var result =  eval("(" + result + ")");
 					if(result.success){
 						session.shebaoRadio = result.obj;
 						callback(result.obj);

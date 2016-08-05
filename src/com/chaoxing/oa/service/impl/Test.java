@@ -14,14 +14,31 @@ import com.chaoxing.oa.entity.page.PWagesDate;
 public class Test {
 
 	public static void main(String[] args) {
+//		float tax= 1.0650f;
+////		float tax= 1.01499f;
+//		float result = Math.round(tax*100);
+//		System.out.println(result/100);
+//		System.out.println(1016%10);
+		float ee = 1.06f;
+		System.out.println((ee -(float)0.01));
+//		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM");
+//		Calendar cal = Calendar.getInstance();
+//		String date = df.format(cal.getTime());
+//		System.out.println(date);
+//		cal.add(Calendar.MONTH, -1);
+//		date = df.format(cal.getTime());
+//		System.out.println(date);
+//		cal.add(Calendar.MONTH, -1);
+//		date = df.format(cal.getTime());
+//		System.out.println(date);
 		
 		  //递归显示C盘下所有文件夹及其中文件
-		  File root = new File("d:/测试用");
-		  try {
-			showAllFiles(root);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		  File root = new File("d:/测试用");
+//		  try {
+//			showAllFiles(root);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 //		int[] array = new int[10];
 //		for (int i = 0; i < array.length; i++) {
 //			System.out.println(array[i]);
@@ -30,6 +47,7 @@ public class Test {
 //		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
 //		Date day = new Date();
 //		Calendar cal = Calendar.getInstance();
+//		System.out.println(cal.getTime());
 //		System.out.println(cal.get(Calendar.DATE));
 //		List<PWagesDate> ps = getWagesDate(2016,6);
 //		for (PWagesDate pWagesDate : ps) {

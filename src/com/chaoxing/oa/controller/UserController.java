@@ -74,8 +74,6 @@ public class UserController {
 	@RequestMapping(value="/login")
 	public ModelAndView login(QueryForm queryForm, HttpServletRequest request, HttpSession session, Model model ){
 		ModelAndView modelView = new ModelAndView("login.jsp");
-//		if(queryForm.getEmail() == null){
-//		System.out.println(queryForm);
 		if(queryForm.getEmail() == null||queryForm.getEmail().equals("")|| queryForm.getPassword() == null||queryForm.getPassword().equals("")){
 			modelView.setViewName("login");
 			modelView.addObject("user_login_error", "请您输入用户名或者密码");

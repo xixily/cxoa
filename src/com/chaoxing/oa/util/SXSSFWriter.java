@@ -78,6 +78,7 @@ public class SXSSFWriter {
 	public void setData(String data){
 		this.cell.setCellValue(data);
 	}
+	
 	public void setStringData(String data) {
 		this.cell.setCellType(Cell.CELL_TYPE_STRING);
 		this.cell.setCellValue(data);
@@ -100,6 +101,10 @@ public class SXSSFWriter {
 		this.cell.setCellValue(inte);
 		//this.cell.setCellStyle(numbericStyle);
 		// this.cell.setCellValue(1234.34567);
+	}
+	
+	public void setDouble(Double dd) {
+		this.cell.setCellValue(dd);
 	}
 
 	public void setNextStringData(String data) {

@@ -8,7 +8,8 @@
 		<select onchange="$('#datagrid_shebaoCompany').datagrid({singleSelect:(this.value==0)})">
 			<option value="0">单选模式</option>
 			<option value="1">多选模式</option>
-</select><br/>
+</select>
+<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-excel" onclick="employee.shebaoSummary.exportShebaoCompany()">导出当前公司社保表</a>
 </div>
 
 

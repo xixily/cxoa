@@ -81,6 +81,7 @@ public class UserName implements Serializable {
 	private String zhuanzhengReport;//转正报表
 	private String bumentiaozhengReport;//部门调整报表
 	private String baoxianTongzhidan;//保险通知单
+	private String signedBy;//签字人
 	@Id
 	@Column(name="ID", nullable=false)
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -219,7 +220,7 @@ public class UserName implements Serializable {
 	public void setPastLeaveTime(String pastLeaveTime) {
 		this.pastLeaveTime = pastLeaveTime;
 	}
-	@Column(name="早期入职日期")
+	@Column(name="早期入职时间")
 	public String getEarlyEntryDate() {
 		return earlyEntryDate;
 	}
@@ -494,6 +495,13 @@ public class UserName implements Serializable {
 	@Column(name = "保险通知单")
 	public String getBaoxianTongzhidan() {
 		return baoxianTongzhidan;
+	}
+	@Column(name = "签字人")
+	public String getSignedBy() {
+		return signedBy;
+	}
+	public void setSignedBy(String signedBy) {
+		this.signedBy = signedBy;
 	}
 	public void setZhuanruGongsiTime(String zhuanruGongsiTime) {
 		this.zhuanruGongsiTime = zhuanruGongsiTime;

@@ -20,6 +20,11 @@
 			rownumbers:true,
 			pageSize:15,
 			pageList:[10,15,20,30,50],
+			toolbar: [{
+				iconCls: 'icon-excel',
+				text:'导出社保公司汇总表',
+				handler: employee.shebaoSummary.exportShebaoSummary
+			}],
 			loadFilter : function(data){
 				if (typeof(data.d)=='number'){
 					return data.d.toFixed(2);

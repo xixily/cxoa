@@ -14,7 +14,11 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.chaoxing.oa.entity.page.PKaoQin;
+import com.chaoxing.oa.entity.page.PMonthWages;
 import com.chaoxing.oa.entity.page.PRenshiEmployee;
+import com.chaoxing.oa.entity.page.PSheBaoSummary;
+import com.chaoxing.oa.entity.page.Pwages;
 import com.chaoxing.oa.entity.page.QueryForm;
 import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.service.ExportExcelService;
@@ -110,6 +114,81 @@ public class FileOperateController {
     	if(renshiEmployeeInfos!=null){
     		String storeName = exportExcelService.getRenshiQueryExport(renshiEmployeeInfos);  
     		String realName = "导出查询结果表.xlsx";  
+    		String contentType = "application/octet-stream";  
+    		try {
+    			FileOperateUtil.download(request, response, storeName, contentType,realName);
+    		} catch (Exception e) {
+    			System.out.println("文件下载失败！");
+    			e.printStackTrace();
+    		} 
+    	}
+    	
+    	return null;
+    }
+    
+    @RequestMapping(value = "/exportKaoqinExcel")
+    public ModelAndView exportKaoqinExcel(QueryForm queryForm, HttpServletRequest request, HttpServletResponse response, HttpSession session){
+    	Map<String, Object> res = employeeInfoService.findKaoqin(queryForm, session,1);
+    	List<PKaoQin> pkaoqins = (List<PKaoQin>) res.get("rows");
+    	if(pkaoqins!=null&&pkaoqins.size()>0){
+    		String storeName = exportExcelService.getKaoqinExportExcel(pkaoqins);  
+    		String realName = "考勤查询结果表.xlsx";  
+    		String contentType = "application/octet-stream";  
+    		try {
+    			FileOperateUtil.download(request, response, storeName, contentType,realName);
+    		} catch (Exception e) {
+    			System.out.println("文件下载失败！");
+    			e.printStackTrace();
+    		} 
+    	}
+    	
+    	return null;
+    }
+    
+    @RequestMapping(value = "/exportMonthWagesExcel")
+    public ModelAndView exportMonthWagesExcel(QueryForm queryForm, HttpServletRequest request, HttpServletResponse response, HttpSession session){
+    	Map<String, Object> res = employeeInfoService.findMonthWages(queryForm, session,1);
+    	List<PMonthWages> pMonthWages = (List<PMonthWages>) res.get("rows");
+    	if(pMonthWages!=null&&pMonthWages.size()>0){
+    		String storeName = exportExcelService.getMonthWagesExcel(pMonthWages);  
+    		String realName = "当月工资查询结果表.xlsx";  
+    		String contentType = "application/octet-stream";  
+    		try {
+    			FileOperateUtil.download(request, response, storeName, contentType,realName);
+    		} catch (Exception e) {
+    			System.out.println("文件下载失败！");
+    			e.printStackTrace();
+    		} 
+    	}
+    	
+    	return null;
+    }
+    @RequestMapping(value = "/exportShebaoCompany")
+    public ModelAndView exportShebaoCompany(QueryForm queryForm, HttpServletRequest request, HttpServletResponse response, HttpSession session){
+    	Map<String, Object> res = employeeInfoService.getShebaoCompany(queryForm, session,1);
+    	List<Pwages> pwages = (List<Pwages>) res.get("rows");
+    	if(pwages!=null&&pwages.size()>0){
+    		String storeName = exportExcelService.getShebaoCompany(pwages);  
+    		String realName = "公司社保汇总表.xlsx";  
+    		String contentType = "application/octet-stream";  
+    		try {
+    			FileOperateUtil.download(request, response, storeName, contentType,realName);
+    		} catch (Exception e) {
+    			System.out.println("文件下载失败！");
+    			e.printStackTrace();
+    		} 
+    	}
+    	
+    	return null;
+    }
+    
+    @RequestMapping(value = "/exportShebaoSummary")
+    public ModelAndView exportShebaoSummary(QueryForm queryForm, HttpServletRequest request, HttpServletResponse response, HttpSession session){
+    	Map<String, Object> res = employeeInfoService.getShebaoSummary(queryForm, session,1);
+    	List<PSheBaoSummary> pShebaoSummarys = (List<PSheBaoSummary>) res.get("rows");
+    	if(pShebaoSummarys!=null&&pShebaoSummarys.size()>0){
+    		String storeName = exportExcelService.getShebaoSummary(pShebaoSummarys);  
+    		String realName = "社保公司汇总表.xlsx";  
     		String contentType = "application/octet-stream";  
     		try {
     			FileOperateUtil.download(request, response, storeName, contentType,realName);

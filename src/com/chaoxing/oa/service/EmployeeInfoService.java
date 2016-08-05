@@ -18,6 +18,7 @@ import com.chaoxing.oa.entity.page.PShebaoType;
 import com.chaoxing.oa.entity.page.PWagesDate;
 import com.chaoxing.oa.entity.page.Pwages;
 import com.chaoxing.oa.entity.page.QueryForm;
+import com.chaoxing.oa.entity.page.SessionInfo;
 import com.chaoxing.oa.entity.po.UserName;
 
 public interface EmployeeInfoService {
@@ -71,11 +72,15 @@ public interface EmployeeInfoService {
 
 	public Map<String, Object> getShebaoCompany(QueryForm queryForm, HttpSession session);
 	
+	public Map<String, Object> getShebaoCompany(QueryForm queryForm, HttpSession session, int isExport);
+	
 	 public long getWageDistributionCount(String hql, Map<String, Object> params);
 
 	public int updateWagesRadix(Pwages pwages);
 
 	public Map<String, Object> findKaoqin(QueryForm queryForm, HttpSession session);
+	
+	public Map<String, Object> findKaoqin(QueryForm queryForm, HttpSession session, int isExport);
 	
 	public long getKaoQinCount(String hql, Map<String,Object> params);
 
@@ -85,7 +90,7 @@ public interface EmployeeInfoService {
 	
 	public Map<String, Object> findMonthWages(QueryForm queryForm, HttpSession session, int isExport);
 
-	public int updateMonthWages(PMonthWages pmonthWages);
+	public int updateMonthWages(PMonthWages pmonthWages, SessionInfo sessionInfo);
 	
 	public long getMonthWagesCount(String string, Map<String, Object> params);
 
@@ -97,7 +102,7 @@ public interface EmployeeInfoService {
 
 	public int deleteWagesDate(PWagesDate pwagesDate);
 
-	public int generateKaoqin(String date, String preDate);
+	public int generateKaoqin(String date, String preDate, String afterDate);
 
 	public int generateMonthWages();
 
