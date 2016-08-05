@@ -206,7 +206,25 @@
                     <td>出生年月:</td>
                     <td><input id="textbox_borth" class="easyui-textbox" type="text" name="borthDay" /></td>
                     <td>保险:</td>
-                    <td><input class="easyui-textbox" type="text" name="insurance" /></td>
+                    <td>
+                    <input class="easyui-combobox" name="insurance" data-options="
+							valueField: 'value',
+							textField: 'text',
+							data: [{
+								text: '是',
+								value: '是'
+							},{
+								text: '是（已缴）',
+								value: '是（已缴）'
+							},{
+								text: '外地报销',
+								value: '外地报销'
+							},{
+								text: '否',
+								value: '否'
+							}]" />
+                   <!--  <input class="easyui-textbox" type="text" name="insurance" /> -->
+                    </td>
                     <td>终止时间:</td>
                     <td><input class="easyui-datebox" type="text" name="terminationTime" /></td>
                     <td>邮箱:</td>
@@ -298,7 +316,7 @@
                     <td>专业:</td>
                     <td><input class="easyui-textbox" type="text" name="major" /></td>
                     <td>转入本公司时间:</td>
-                    <td><input class="easyui-textbox" type="text" name="zhuanruGongsiTime" /></td>
+                    <td><input class="easyui-datebox" type="text" name="zhuanruGongsiTime" /></td>
                     <td>入职报表:</td>
                     <td><input class="easyui-textbox" type="text" name="入职报表" /></td>
                     <td>简历:</td>

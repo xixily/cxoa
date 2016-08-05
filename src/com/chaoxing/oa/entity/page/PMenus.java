@@ -13,8 +13,8 @@ public class PMenus {
 	private RoleRights preMenuId;
 	private String url;
 	private String iconCls;
-	private Integer greate;
-	private String contains;
+//	private Integer greate;
+//	private String contains;
 	private List<PMenus> children;
 	public int getMenuId() {
 		return menuId;
@@ -37,12 +37,12 @@ public class PMenus {
 	public String getIconCls() {
 		return iconCls;
 	}
-	public Integer getGreate() {
-		return greate;
-	}
-	public String getContains() {
-		return contains;
-	}
+//	public Integer getGreate() {
+//		return greate;
+//	}
+//	public String getContains() {
+//		return contains;
+//	}
 	public List<PMenus> getChildren() {
 		return children;
 	}
@@ -67,12 +67,12 @@ public class PMenus {
 	public void setIconCls(String iconCls) {
 		this.iconCls = iconCls;
 	}
-	public void setGreate(Integer greate) {
-		this.greate = greate;
-	}
-	public void setContains(String contains) {
-		this.contains = contains;
-	}
+//	public void setGreate(Integer greate) {
+//		this.greate = greate;
+//	}
+//	public void setContains(String contains) {
+//		this.contains = contains;
+//	}
 	public void setChildren(List<PMenus> children) {
 		this.children = children;
 	}

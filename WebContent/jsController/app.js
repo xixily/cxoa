@@ -45,6 +45,7 @@ function login(){
 /**
  * @author dengxuefeng
  * @requires jquery.js easyui.js
+ * @callback [data.data]<strong>form表单的元素值</strong>、[src]<strong>当前元素dom</strong>
  * 初始化
  */
 function initClickHandler() {

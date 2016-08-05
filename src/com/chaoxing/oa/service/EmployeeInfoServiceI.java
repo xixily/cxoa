@@ -65,4 +65,10 @@ public interface EmployeeInfoServiceI {
 	
 	public Map<String, Object> getShebaoSummary(QueryForm queryForm, HttpSession session, int isExport);
 
+	public Map<String, Object> getShebaoCompany(QueryForm queryForm, HttpSession session);
+	
+	 public long getWageDistributionCount(String hql, Map<String, Object> params);
+
+	public int updateWagesRadix(Pwages pwages);
+
 }

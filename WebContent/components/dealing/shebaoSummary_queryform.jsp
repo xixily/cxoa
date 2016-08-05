@@ -1,18 +1,18 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
-<form id="menus_queryform" method="post" enctype="multipart/form-data">
+<form id="renshiquery_form" method="post" enctype="multipart/form-data">
 	<table>
 		<tr>
-			<td>菜单名称:</td>
+			<td>公司名称:</td>
 			<td>
                      <input class="easyui-combobox" name="company" data-options="
-                    url: 'system/getMenus.action',
-                    valueField:'menuName',
-                    textField:'menuName',
+                    url: 'employee/getCompany.action',
+                    valueField:'cmopany',
+                    textField:'cmopany',
                     " />
             </td>
             <td></td>
             <td>
-            <input class="easyui-linkbutton do_action" appaction="system.menus.queryMenus"  type="button" value="查找"
+            <input class="easyui-linkbutton do_action" appaction="employee.shebaoSummary.queryShebaoSummary"  type="button" value="查找"
 				style="width:46px;height:26px;" />
             </td>
             <td></td>

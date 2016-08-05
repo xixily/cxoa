@@ -121,10 +121,23 @@ public class EmployeeInfoController {
 	@RequestMapping(value = "/updateWages")
 	@ResponseBody
 	public Json updateWages(Pwages pwages){
+		//TODO 修改策略，更新的时候只更改部分字段。
 		Json result = new Json();
 		if(employeeInfoService.updateWages(pwages)!=0){
 			result.setSuccess(true);
 			result.setMsg("更新成功！");
+		}
+		return result;
+	}
+	@RequestMapping(value = "/updateWagesRadix")
+	@ResponseBody
+	public Json updateWagesRadix(Pwages pwages){
+		Json result = new Json();
+		if(employeeInfoService.updateWagesRadix(pwages)!=0){
+			result.setSuccess(true);
+			result.setMsg("更新成功！");
+		}else{
+			result.setMsg("更新失败！");
 		}
 		return result;
 	}
@@ -217,7 +230,10 @@ public class EmployeeInfoController {
 //			e.printStackTrace();
 //		}  
 		if(employeeInfoService.updateShebao(pshebao) != 0){
-			
+			result.setSuccess(true);
+			result.setMsg("更新成功！");
+		}else{
+			result.setMsg("更新失败！");
 		}
 		return result;
 	}
@@ -251,10 +267,17 @@ public class EmployeeInfoController {
 		}
 		return result;
 	}
-	@RequestMapping(value = "/getShebaoSummary")
+	@RequestMapping(value = "/queryShebaoSummary")
 	@ResponseBody
-	public Map<String, Object> getShebaoSummary(QueryForm queryForm, HttpSession session){
+	public Map<String, Object> queryShebaoSummary(QueryForm queryForm, HttpSession session){
 		Map<String, Object> userInfos = employeeInfoService.getShebaoSummary(queryForm, session);
 		return userInfos;
+	}
+	
+	@RequestMapping(value = "/getShebaoCompany")
+	@ResponseBody
+	public Map<String, Object> getShebaoCompany(QueryForm queryForm, HttpSession session){
+		Map<String, Object> shebaoCompanys = employeeInfoService.getShebaoCompany(queryForm, session);
+		return shebaoCompanys;
 	}
 }

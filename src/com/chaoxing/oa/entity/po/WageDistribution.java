@@ -53,8 +53,9 @@ public class WageDistribution {
 	private Double cBirthIinsurance;//公司生育保险
 	private Double annualLleave;//年假累计
 	private String workPhone;//办公电话
-	private Integer IntegerernalNumber;//内部编号
+	private Integer internalNumber;//内部编号
 	private Double sickLleaveTotal;//病假累计
+	private String rubaoTime;//入保时间
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -190,11 +191,18 @@ public class WageDistribution {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@GenericGenerator(name = "paymentable_codeGenerator", strategy = "native")
 	public Integer getInternalNumber() {
-		return IntegerernalNumber;
+		return internalNumber;
 	}
 	@Column(name="病假累计")
 	public Double getSickLleaveTotal() {
 		return sickLleaveTotal;
+	}
+	@Column(name = "入保时间")
+	public String getRubaoTime() {
+		return rubaoTime;
+	}
+	public void setRubaoTime(String rubaoTime) {
+		this.rubaoTime = rubaoTime;
 	}
 	public void setEmployeeId(Integer employeeId) {
 		this.employeeId = employeeId;
@@ -286,8 +294,8 @@ public class WageDistribution {
 	public void setWorkPhone(String workPhone) {
 		this.workPhone = workPhone;
 	}
-	public void setInternalNumber(Integer IntegerernalNumber) {
-		this.IntegerernalNumber = IntegerernalNumber;
+	public void setInternalNumber(Integer internalNumber) {
+		this.internalNumber = internalNumber;
 	}
 	public void setSickLleaveTotal(Double sickLleaveTotal) {
 		this.sickLleaveTotal = sickLleaveTotal;

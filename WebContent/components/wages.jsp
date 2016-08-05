@@ -1,5 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jsController/wagesCalculate.js"></script>
+
 <style>
     .form_width input{
         width: 86px;
@@ -185,8 +185,11 @@
                     <td>
                     <input class="easyui-textbox" type="text" name="identityCard" />
                     </td>
-                    
-                    <td colspan="8">
+                 	<td>入保时间:</td>
+                    <td>
+                    <input class="easyui-textbox" type="text" name="rubaoTime" />
+                    </td>
+                    <td colspan="6">
                     <div align="right" style="margin-right:10px;">
                       <a id="wages_save" href="javascript:void(0)" style="width:60px;display:none;" class="easyui-linkbutton" onclick="employee.wages.updateWages($(this));">保存</a>
                       <a id="wages_add" href="javascript:void(0)" style="width:60px;display:none;" class="easyui-linkbutton" onclick="employee.wages.addWages($(this));">新增</a>

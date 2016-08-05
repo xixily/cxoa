@@ -11,6 +11,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsController/west.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsController/employee.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsController/system.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsController/wagesCalculate.js"></script>
 <!-- 登陆窗口  -->
 <c:if test="${sessionInfo == null }">
 		<c:redirect url="login.jsp"></c:redirect>

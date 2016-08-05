@@ -13,14 +13,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <jsp:include page="inc.jsp"></jsp:include>
 <script type="text/javascript">
 $(document).ready(function () {
-	$('#dlg').dialog({modal: true});
-/* 	$('#dlg').dialog('close');  */
-	
+	 if(!(/chrome/.test(window.navigator.userAgent.toLowerCase()))){
+		/* $.messager.alert("浏览器兼容提示"," 当前系统不支持该浏览器，请选择chrome浏览器登录！"); */
+		alert("当前系统不支持该浏览器，请选择chrome浏览器登录！");
+     }else{
+    	 $('#dlg').dialog({modal: true});
+     }	
 })
 </script>
 </head>
 <body>
-<div id="dlg" class="easyui-dialog" title="登陆窗口" data-options="iconCls:'icon-save'" style="width:400px;padding:10px">
+<div id="dlg" class="easyui-dialog" title="登陆窗口" data-options="iconCls:'icon-save',close:true" style="width:400px;padding:10px;">
     <div style="padding:10px 60px 20px 60px">
         <form id="login_frm" method="post" action="user/login.action">
             <table cellpadding="8">

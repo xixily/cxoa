@@ -18,7 +18,7 @@ var wagesCalculate = {
 //			var params = {};
 //			params.company = company;
 			var url = 'employee/getShebaoRadioByCompany.action';
-			if(session.shebaoRadio){
+			if(session.shebaoRadio && (session.shebaoRadio.company == params.company)){
 				callback(session.shebaoRadio)
 			}else{
 				$.getJSON(url, params, function(result){
@@ -39,6 +39,7 @@ var wagesCalculate = {
 		calculateShebao : function(data, callback){
 			var radix = data.radix ? data.radix : 0;
 			if(!data.company || data.company == ''){
+				data.success = false;
 				callback(false);
 //				return false;
 			}else{
@@ -57,6 +58,8 @@ var wagesCalculate = {
 //                		return data;
 					}else{
 						$.each(result,function(n,obj) {
+//							radix = radix < obj.radixMin ? obj.radixMin : radix;
+//							radix = radix < obj.radixMin || data.radix > obj.radixMax ? (radix < obj.radixMin ? obj.radixMin : obj.radixMax ): radix;
 							if(radix < obj.radixMin){
 								radix = obj.radixMin;
 							}else if(data.radix > obj.radixMax){
@@ -64,27 +67,27 @@ var wagesCalculate = {
 							}
 							if(obj.shebaoType == '养老保险'){
 								if(obj.householdType == 'ALL' || (obj.householdType == data.householdType)){
-									data.subEndowmentIinsurance = radix * obj.radio + obj.fixedValue;
-									data.cEndowmentIinsurance = radix * obj.cRadio + obj.cFixedValue;
+									data.subEndowmentIinsurance = Number((radix * obj.radio + obj.fixedValue).toFixed(2));
+									data.cEndowmentIinsurance = Number((radix * obj.cRadio + obj.cFixedValue).toFixed(2));
 								}
 							}else if(obj.shebaoType == '失业保险'){
 								if(obj.householdType == 'ALL' || (obj.householdType == data.householdType)){
-									data.subUnemployedInsurance = radix * obj.radio + obj.fixedValue;
-									data.cUnemployedInsurance = radix * obj.cRadio + obj.cFixedValue;
+									data.subUnemployedInsurance = Number((radix * obj.radio + obj.fixedValue).toFixed(2));
+									data.cUnemployedInsurance = Number((radix * obj.cRadio + obj.cFixedValue).toFixed(2));
 								}
 								
 							}else if(obj.shebaoType == '工伤保险'){
 								if(obj.householdType == 'ALL' || (obj.householdType == data.householdType)){
-									data.cInjuryInsurance = radix * obj.cRadio + obj.cFixedValue;
+									data.cInjuryInsurance = Number((radix * obj.cRadio + obj.cFixedValue).toFixed(2));
 								}
 							}else if(obj.shebaoType == '生育保险'){
 								if(obj.householdType == 'ALL' || (obj.householdType == data.householdType)){
-									data.cBirthIinsurance = radix * obj.cRadio + obj.cFixedValue;
+									data.cBirthIinsurance = Number((radix * obj.cRadio + obj.cFixedValue).toFixed(2));
 								}
 							}else if(obj.shebaoType == '医疗保险'){
 								if(obj.householdType == 'ALL' || (obj.householdType == data.householdType)){
-									data.subMedicare = radix * obj.radio + obj.fixedValue;
-									data.cMedicare = radix * obj.cRadio + obj.cFixedValue;
+									data.subMedicare = Number((radix * obj.radio + obj.fixedValue).toFixed(2));
+									data.cMedicare = Number((radix * obj.cRadio + obj.cFixedValue).toFixed(2));
 								}
 							}
 						})

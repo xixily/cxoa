@@ -4,7 +4,7 @@
 <div id="tab_shebao" title="社保维护" style="padding: 10px;overflow: hidden"	data-options="iconCls:'icon-edit',closable:true">
 <!-- 组合查询form表单 -->
 	<div id="form_shebao" title="组合查询" class="easyui-panel"
-		data-options="iconCls:'icon-search',href:'${pageContext.request.contextPath}/components/shebao_queryform.jsp',tools:[
+		data-options="iconCls:'icon-search',href:'${pageContext.request.contextPath}/queryForm/shebao_queryform.jsp',tools:[
 				{iconCls:'icon-reload',handler:function(){$('#form_shebao').panel('open').panel('refresh')}}]"
 		style="width: 98%; padding: 10px; margin-bottom: 10px;">
 	</div>
@@ -28,7 +28,7 @@
 				text : '删除',
 				handler: function(){employee.shebao.remove()}
 			}],
-			onDblClickCell : employee.shebao.onDblClickCell,
+			onDblClickRow : employee.shebao.onDblClickRow,
 			onClickCell : employee.shebao.endEditing,
 			onEndEdit: employee.shebao.onEndEdit">
 			<thead>
@@ -47,14 +47,15 @@
                             }
                         }">公司名称</th>
 					<!-- <th data-options="field:'shebaoType',width:100 ">社保类型</th> -->
-					<th data-options="field:'typeCode',width:100,
+					<th data-options="field:'shebaoType',width:100,
 					formatter:function(value,row){
                             return row.shebaoType;
                         },
                         editor:{
                             type:'combobox',
                             options:{
-                                valueField:'id',
+                               <!--  valueField:'id', -->
+                                valueField:'shebaoType',
                                 textField:'shebaoType',
                                 method:'get',
                                 url:'employee/getShebaoType.action',
@@ -64,8 +65,8 @@
 					<!-- <th data-options="field:'typeCode',width:100 ">类型编号</th> -->
 					<th data-options="field:'radixMin',width:100,editor:{type:'numberbox',options:{precision:2}}">基数下限</th>
 					<th data-options="field:'radixMax',width:100 ,editor:{type:'numberbox',options:{precision:2}}">基数上限</th>
-					<th data-options="field:'cRadio',width:100 ,editor:{type:'numberbox',options:{ min:0,max:1,precision:2}}">单位比例</th>
-					<th data-options="field:'radio',width:100 ,editor:{type:'numberbox',options:{ min:0,max:1,precision:2}}">个人比例</th>
+					<th data-options="field:'cRadio',width:100 ,editor:{type:'numberbox',options:{ min:0,max:1,precision:4}}">单位比例</th>
+					<th data-options="field:'radio',width:100 ,editor:{type:'numberbox',options:{ min:0,max:1,precision:4}}">个人比例</th>
 					<!-- <th data-options="field:'cFixedV,width:100 ,editor:{type:'numberbox',options:{precision:2}}">单位固定值</th> -->
 					<th data-options="field:'cFixedValue',width:100 ,editor:{type:'numberbox',options:{precision:2}}">单位固定值</th>
 					<th data-options="field:'fixedValue',width:100 ,editor:{type:'numberbox',options:{precision:2}}">个人固定值</th>

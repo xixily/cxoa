@@ -884,29 +884,21 @@ var employee = {
 		}
 	},
 	shebao : {
-		onDblClickCell : function(index, field, value) {
+		onDblClickRow : function(index,row) {
+			if(!shebaoEdit){
+				session.editRow = $.extend({},row);
+			}
 			if (shebaoEdit != index) {
 				if (employee.shebao.endEditing()) {
 					$('#datagrid_shebao').datagrid('selectRow', index)
 							.datagrid('beginEdit', index);
-					var ed = $('#datagrid_shebao').datagrid('getEditor', {
-						index : index,
-						field : field
-					});
-					if (ed) {
-						($(ed.target).data('textbox') ? $(ed.target).textbox(
-								'textbox') : $(ed.target)).focus();
-					}
 					shebaoEdit = index;
 				} else {
 					setTimeout(function() {$('#datagrid_shebao').datagrid('selectRow',shebaoEdit);
 							}, 0);
 				}
 			}
-			if(!shebaoEdit){
-				var selectedData = $('#datagrid_shebao').datagrid('getSelected');
-				session.editRow = $.extend({},selectedData);
-			}
+			
 		},
 		endEditing : function() {
 			if (shebaoEdit == undefined) {
@@ -942,14 +934,17 @@ var employee = {
 								}
 								$('#datagrid_shebao').datagrid('getData').rows[index] = session.editRow;
 								$('#datagrid_shebao').datagrid('refreshRow',index);
+							}else{
+								if(shebaoAdd){
+									$('#datagrid_shebao').datagrid('reload');
+									shebaoAdd = undefined;
+									return;
+								}
+//								else{
+//									$('#datagrid_shebao').datagrid('getData').rows[index] = session.editRow;
+//									$('#datagrid_shebao').datagrid('refreshRow',index);
+//								}
 							}
-							if(shebaoAdd){
-								$('#datagrid_shebao').datagrid('reload');
-								shebaoAdd = undefined;
-								return;
-							}
-							var selectedData = $('#datagrid_shebao').datagrid('getSelected');
-							session.editRow = $.extend({},selectedData);
 							$.messager.alert('消息', result.msg, 'info');
 						});
 					},function(){
@@ -1029,7 +1024,364 @@ var employee = {
 				queryParams : data
 			})
 		}
+	},
+shebaoSummary : {
+	queryShebaoSummary : function(data, src) {
+		$('#datagrid_shebaoSummary').datagrid({
+			queryParams : data
+		})
+	},
+	view : function(index, row){
+		
+		$('#shebaoCompany_detail').dialog({
+			title : '查看公司五险详情'
+		});
+		$('#shebaoCompany_detail').window('open').window(
+				'resize',
+				{
+					top : $(document).scrollTop()
+							+ ($(window).height() - 480) * 0.5
+				});
+		
+		var company = row.company;
+		$('#shebaoCompany_company').html(company);
+		employee.shebaoSummary.updateDom(row);
+		session.viewCompanyRow = row;
+		session.viewCompanyIndex = index;
+		var queryParam = {};
+		queryParam.company = company;
+		var url = "employee/getShebaoCompany.action";
+		$('#datagrid_shebaoCompany').datagrid(
+				{
+					height : 'auto',
+					fitColumns : true,
+					url : url,
+					queryParams : queryParam,
+					singleSelect : true,// 是否单选
+					rownumbers : true,// 行号
+					pagination : true,// 分页控件
+					pageSize : 15,
+					loadFilter : function(data){
+						if (typeof(data.d)=='number'){
+							return data.d.toFixed(2);
+						} else {
+							return data;
+						}
+					},
+					pageList : [ 10, 15, 20, 30, 50, 100 ],
+					columns : [ [ {
+						field : 'ck',
+						checkbox : true,
+						width : 30
+					}, {
+						field : 'username',
+						title : '职员姓名',
+						sortable : true,
+						width : 80
+					}, {
+						field : 'identityCard',
+						title : '身份证号',
+						sortable : true,
+						width : 100
+					}, {
+						field : 'rubaoTime',
+						title : '入保时间',
+						sortable : true,
+						width : 100,
+						editor : {
+							type : 'numberbox',
+							options : {
+								precision : 2
+							}
+						}
+					}, {
+						field : 'radix',
+						title : '基数',
+						sortable : true,
+						width : 100,
+//						editor : {
+//							type : 'numberbox',
+//							options : {
+//								precision : 2
+//							}
+//						}
+					}, {
+						field : 'subEndowmentIinsurance',
+						title : '代扣养老保险',
+						width : 100,
+						editor : {
+							type : 'numberbox',
+							options : {
+								precision : 2
+							}
+						}
+					}, {
+						field : 'subMedicare',
+						title : '代扣医疗保险',
+						width : 100,
+						editor : {
+							type : 'numberbox',
+							options : {
+								precision : 2
+							}
+						}
+					}, {
+						field : 'subUnemployedInsurance',
+						title : '代扣失业保险',
+						width : 100,
+						editor : {
+							type : 'numberbox',
+							options : {
+								precision : 2
+							}
+						}
+					}, {
+						field : 'subHouseIinsurance',
+						title : '代扣住房保险',
+						width : 100,
+						editor : {
+							type : 'numberbox',
+							options : {
+								precision : 2
+							}
+						}
+					}, {
+						field : 'cEndowmentIinsurance',
+						title : '公司养老保险',
+						width : 100,
+						editor : {
+							type : 'numberbox',
+							options : {
+								precision : 2
+							}
+						}
+					}, {
+						field : 'cMedicare',
+						title : '公司医疗保险',
+						width : 100,
+						editor : {
+							type : 'numberbox',
+							options : {
+								precision : 2
+							}
+						}
+					} , {
+						field : 'cUnemployedInsurance',
+						title : '公司失业保险',
+						width : 100,
+						editor : {
+							type : 'numberbox',
+							options : {
+								precision : 2
+							}
+						}
+					} , {
+						field : 'cHouseIinsurance',
+						title : '公司住房保险',
+						width : 100,
+						editor : {
+							type : 'numberbox',
+							options : {
+								precision : 2
+							}
+						}
+					} , {
+						field : 'cInjuryInsurance',
+						title : '公司工伤保险',
+						width : 100,
+						editor : {
+							type : 'numberbox',
+							options : {
+								precision : 2
+							}
+						}
+					} , {
+						field : 'cBirthIinsurance',
+						title : '公司生育保险',
+						width : 100,
+						editor : {
+							type : 'numberbox',
+							options : {
+								precision : 2
+							}
+						}
+					}] ],
+					toolbar : "#shebaoCompany_toolbar",
+					footer : "#shebaoComany_footerbar",
+//					toolbar: [{
+//						iconCls: 'icon-edit',
+//						text:'批量修改基数',
+//						handler: function(){alert('edit')}
+//					},'-',{
+//						iconCls: 'icon-help',
+//						handler: function(){alert('help')}
+//					}],
+					onDblClickRow : employee.shebaoSummary.onDblClickRow,
+					onClickCell : employee.shebaoSummary.endEditing,
+					onEndEdit: employee.shebaoSummary.onEndEdit}
+					)
+//					$('#datagrid_shebaoCompany').datagrid('enableFilter', [{}]); 不能用
+	},
+	onDblClickRow : function(index,row) {
+		if(!shebaoCompanyEdit){
+			session.editRow = $.extend({},row);
+		}
+		if (shebaoCompanyEdit != index) {
+			if (employee.shebaoSummary.endEditing()) {
+				$('#datagrid_shebaoCompany').datagrid('selectRow', index)
+						.datagrid('beginEdit', index);
+				shebaoCompanyEdit = index;
+			} else {
+				setTimeout(function() {$('#datagrid_shebaoCompany').datagrid('selectRow',shebaoCompanyEdit);
+						}, 0);
+			}
+		}
+		
+	},
+	endEditing : function() {
+		if (shebaoCompanyEdit == undefined) {
+			return true
+		}
+		if ($('#datagrid_shebaoCompany').datagrid('validateRow', shebaoCompanyEdit)) {
+			$('#datagrid_shebaoCompany').datagrid('endEdit', shebaoCompanyEdit);
+			shebaoCompanyEdit = undefined;
+			return true;
+		} else {
+			return false;
+		}
+	},
+	onEndEdit : function(index,row,changes) {
+		var message = "您确定要更新吗？";
+		var url = "employee/updateWages.action";
+		confirmDialog.createDialog(
+				message,
+				function(confirmId){
+					var data = row;
+					$.post(url, data, function(result){
+						var result =  eval("(" + result + ")");
+						confirmDialog.destoryDialog(confirmId);
+						if (!result.success) {
+							$('#datagrid_shebaoCompany').datagrid('getData').rows[index] = session.editRow;
+							$('#datagrid_shebaoCompany').datagrid('refreshRow',index);
+						}else{
+							session.viewCompanyRow.subEndowmentIinsurance += (row.subEndowmentIinsurance -session.editRow.subEndowmentIinsurance);
+							session.viewCompanyRow.subMedicare += ( row.subMedicare - session.editRow.subMedicare);
+							session.viewCompanyRow.subUnemployedInsurance += (row.subUnemployedInsurance - session.editRow.subUnemployedInsurance );
+							session.viewCompanyRow.subHouseIinsurance += (row.subHouseIinsurance - session.editRow.subHouseIinsurance);
+							session.viewCompanyRow.cEndowmentIinsurance += (row.cEndowmentIinsurance - session.editRow.cEndowmentIinsurance);
+							session.viewCompanyRow.cMedicare += ( row.cMedicare - session.editRow.cMedicare);
+							session.viewCompanyRow.cUnemployedInsurance += (row.cUnemployedInsurance - session.editRow.cUnemployedInsurance);
+							session.viewCompanyRow.cHouseIinsurance += (row.cHouseIinsurance - session.editRow.cHouseIinsurance);
+							session.viewCompanyRow.cBirthIinsurance += (row.cBirthIinsurance - session.editRow.cBirthIinsurance);
+							employee.shebaoSummary.updateDom(session.viewCompanyRow);
+							$('#datagrid_shebaoSummary').datagrid('refreshRow',session.viewCompanyIndex);
+						}
+						session.editRow = {};
+						$.messager.alert('消息', result.msg, 'info');
+					});
+				},function(){
+					$('#datagrid_shebaoCompany').datagrid('getData').rows[index] = session.editRow;
+					$('#datagrid_shebaoCompany').datagrid('refreshRow',index);
+				});
+	},
+	append : function() {
+	//TODO
+	},
+	removeit : function(confirmId) {
+		//TODO
+	},
+	remove : function() {
+		//TODO
+	},
+	accept : function() {
+		if (employee.shebaoSummaryendEditing()) {
+			$('#datagrid_shebaoCompany').datagrid('acceptChanges');
+		}
+	},
+	reject : function() {
+		$('#datagrid_shebaoCompany').datagrid('rejectChanges');
+		shebaoCompanyEdit = undefined;
+	},
+	getChanges : function() {
+		var rows = $('#datagrid_shebaoCompany').datagrid('getChanges');
+		alert(rows.length + ' rows are changed!');
+	},
+	queryShebao : function(data, src) {
+		$('#datagrid_shebaoCompany').datagrid({
+			queryParams : data
+		})
+	},
+	updateDom : function(row){
+		$('#shebaoCompany_dyangl').html(row.subEndowmentIinsurance);
+		$('#shebaoCompany_dyil').html(row.subMedicare);
+		$('#shebaoCompany_dshiy').html(row.subUnemployedInsurance);
+		$('#shebaoCompany_dzhuf').html(row.subHouseIinsurance);
+		$('#shebaoCompany_cyangl').html(row.cEndowmentIinsurance);
+		$('#shebaoCompany_cyil').html(row.cMedicare);
+		$('#shebaoCompany_cshiy').html(row.cUnemployedInsurance);
+		$('#shebaoCompany_czhuf').html(row.cHouseIinsurance);
+		$('#shebaoCompany_cgongs').html(row.cInjuryInsurance);
+		$('#shebaoCompany_cshengy').html(row.cBirthIinsurance);
+	},
+	updateRadix : function(){
+		var checkeds = $('#datagrid_shebaoCompany').datagrid('getChecked');
+		var newRadix = Number($('#shebaoCompany_updateRadix').val());
+		if(checkeds.length === 0){
+			$.messager.alert('提示', '您没有选择任何人');
+			return;
+		}
+		var usernames = "";
+		$.each(checkeds, function(n,obj){
+			if(n<7){
+				if(n === (checkeds.length -1)){
+					usernames += obj.username;
+				}else{
+					usernames += (obj.username + ",");
+				}
+			}else if(n === 7){
+				usernames += "..."
+			}
+		})
+		var message = "您确定要更新：[" + checkeds[0].company + "]:<br/>" + usernames + "<br/>的基数为: " + newRadix + " 吗？";
+		confirmDialog.createDialog(
+				message,
+				function(confirmId){
+					$.each(checkeds,function(n,obj) {
+						obj.radix = newRadix;
+						wagesCalculate.calculateShebao(obj, function(result) {
+							if (result) {
+								$.post('employee/updateWagesRadix.action', obj, function(result){
+									confirmDialog.destoryDialog(confirmId);
+									var result =  eval("(" + result + ")");
+									if(result.success){
+										var index = $('#datagrid_shebaoCompany').datagrid('getRowIndex',checkeds[n]);
+										$('#datagrid_shebaoCompany').datagrid('refreshRow',index);
+									}else{
+										$.messager.alert("更新结果", "[" + obj.username + "]" + result.msg + ",请您手动刷新页面。");
+									}
+								})
+							} else {
+								$.messager.alert('计算结果' , "[" + obj.username + ']计算失败');
+							}
+						})
+					})
+				}
+		);
+		$.each(checkeds,function(n,obj) {
+			obj.radix = newRadix;
+			wagesCalculate.calculateShebao(obj, function(result) {
+				if (result) {
+					var index = $('#datagrid_shebaoCompany').datagrid('getRowIndex',checkeds[n]);
+					$('#datagrid_shebaoCompany').datagrid('refreshRow',index);
+				} else {
+					alert('计算失败');
+				}
+			})
+		})
+
+	}
 	}
 }
 var shebaoAdd = undefined;
 var shebaoEdit = undefined;
+var shebaoCompanyEdit = undefined;

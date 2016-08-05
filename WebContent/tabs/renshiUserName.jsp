@@ -12,10 +12,11 @@ $(document).ready(function() {
 	data-options="iconCls:'icon-man',closable:true">
 	<!-- 组合查询form表单 -->
 	<div id="renshi_form" title="组合查询" class="easyui-panel"
-		data-options="iconCls:'icon-search',href:'${pageContext.request.contextPath}/components/renshi_queryform.jsp',tools:[
+		data-options="iconCls:'icon-search',href:'${pageContext.request.contextPath}/queryForm/renshi_queryform.jsp',tools:[
 				{iconCls:'icon-reload',handler:function(){$('#renshi_form').panel('open').panel('refresh')}}]"
 		style="width: 98%; padding: 10px; margin-bottom: 10px;"></div>
-	<jsp:include page="../components/toolbar.jsp"></jsp:include>
+	<jsp:include page="../toolBar/renshiUsername_toolbar.jsp"></jsp:include>
+<%-- 	<jsp:include page="../components/toolbar.jsp"></jsp:include> --%>
 	<div id="employee_datas" style="width: 98%"></div><!-- 780  -->
 	<div id="userName_info" class="easyui-dialog" title="查看修改职员信息"
 		style="width: 1080px;overflow: hidden"

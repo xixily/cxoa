@@ -33,8 +33,9 @@ public class Pwages {
 	private Double cBirthIinsurance;//公司生育保险
 	private Double annualLleave;//年假累计
 	private String workPhone;//办公电话
-	private Integer IntegerernalNumber;//内部编号
+	private Integer internalNumber;//内部编号
 	private Double sickLleaveTotal;//病假累计
+	private String rubaoTime;//计划入保时间
 	public Integer getId() {
 		return id;
 	}
@@ -124,9 +125,6 @@ public class Pwages {
 	}
 	public String getWorkPhone() {
 		return workPhone;
-	}
-	public Integer getInternalNumber() {
-		return IntegerernalNumber;
 	}
 	public Double getSickLleaveTotal() {
 		return sickLleaveTotal;
@@ -227,11 +225,20 @@ public class Pwages {
 	public void setWorkPhone(String workPhone) {
 		this.workPhone = workPhone;
 	}
-	public void setInternalNumber(Integer IntegerernalNumber) {
-		this.IntegerernalNumber = IntegerernalNumber;
-	}
 	public void setSickLleaveTotal(Double sickLleaveTotal) {
 		this.sickLleaveTotal = sickLleaveTotal;
+	}
+	public String getRubaoTime() {
+		return rubaoTime;
+	}
+	public void setRubaoTime(String rubaoTime) {
+		this.rubaoTime = rubaoTime;
+	}
+	public Integer getInternalNumber() {
+		return internalNumber;
+	}
+	public void setInternalNumber(Integer internalNumber) {
+		this.internalNumber = internalNumber;
 	}
 	
 }

@@ -36,6 +36,7 @@ import com.chaoxing.oa.entity.po.view.RenshiUserName;
 import com.chaoxing.oa.entity.po.view.SheBaoSummary;
 import com.chaoxing.oa.service.EmployeeInfoServiceI;
 import com.chaoxing.oa.util.ResourceUtil;
+import com.sun.accessibility.internal.resources.accessibility;
 
 import sun.util.logging.resources.logging;
 
@@ -367,6 +368,45 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 			return 0;
 		}
 	}
+	
+	@Override
+	public int updateWagesRadix(Pwages pwages) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		StringBuffer hql = new StringBuffer("update WageDistribution set "); 
+		hql.append(" radix = :radix,");
+		params.put("radix", pwages.getRadix());
+		hql.append("subEndowmentIinsurance = :subEndowmentIinsurance,");
+		params.put("subEndowmentIinsurance", pwages.getSubEndowmentIinsurance());
+		hql.append("subMedicare = :subMedicare,");
+		params.put("subMedicare", pwages.getSubMedicare());
+		hql.append("subUnemployedInsurance = :subUnemployedInsurance,");
+		params.put("subUnemployedInsurance", pwages.getSubUnemployedInsurance());
+		hql.append("subHouseIinsurance = :subHouseIinsurance,");
+		params.put("subHouseIinsurance", pwages.getSubHouseIinsurance());
+		hql.append("cEndowmentIinsurance = :cEndowmentIinsurance,");
+		params.put("cEndowmentIinsurance", pwages.getcEndowmentIinsurance());
+		hql.append("cMedicare = :cMedicare,");
+		params.put("cMedicare", pwages.getcMedicare());
+		hql.append("cUnemployedInsurance = :cUnemployedInsurance,");
+		params.put("cUnemployedInsurance", pwages.getcUnemployedInsurance());
+		hql.append("cHouseIinsurance = :cHouseIinsurance,");
+		params.put("cHouseIinsurance", pwages.getcHouseIinsurance());
+		hql.append("cInjuryInsurance = :cInjuryInsurance,");
+		params.put("cInjuryInsurance", pwages.getcInjuryInsurance());
+		hql.append("cBirthIinsurance = :cBirthIinsurance");
+		params.put("cBirthIinsurance", pwages.getcBirthIinsurance());
+		hql.append(" where id = :id");
+		params.put("id", pwages.getId());
+		String hhql = hql.toString();
+		try {
+			wageDistributionDao.executeHql(hhql, params);
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
 	@Override
 	public Map<String, Object> getAllShebaoRadio(QueryForm queryForm) {
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -521,7 +561,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		StringBuffer hql = new StringBuffer("from SheBaoSummary t where 1=1 ");
 		if(queryForm.getCompany() != null){
 			hql.append(" and t.company like :company ");
-			params.put("renshiRight", "%" + queryForm.getCompany() + "%");
+			params.put("company", "%" + queryForm.getCompany() + "%");
 		}
 		
 		int intPage = 0;
@@ -548,4 +588,44 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		hqll.append(hql.split("where")[1]);
 		return shebaoSummaryDao.count(hqll.toString(), params);
 	}
+	@Override
+	public Map<String, Object> getShebaoCompany(QueryForm queryForm, HttpSession session) {
+		Map<String, Object> shebaoCompanyInfos = new HashMap<String, Object>();
+		Map<String, Object> params = new HashMap<String, Object>();
+		List<WageDistribution> wageDistributions = new ArrayList<WageDistribution>();
+		List<Pwages> pwages = new ArrayList<Pwages>();
+		StringBuffer hql = new StringBuffer("from WageDistribution t where t.radix > 0 and t.company = :company");
+		long total = 0;
+		if(queryForm.getCompany()!=null){
+			params.put("company", queryForm.getCompany());
+			int intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
+			int pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+			String sort = "username";
+			String order = SysConfig.DESC;
+			if(queryForm.getSort() != null){
+				sort = queryForm.getSort();
+				if(queryForm.getOrder() != null){
+					order = queryForm.getOrder();
+				}
+			}
+			hql.append(" order by t." + sort + " " + order);
+			wageDistributions = wageDistributionDao.find(hql.toString(), params, intPage, pageSize);
+			for (WageDistribution wageDistribution : wageDistributions) {
+				Pwages pwage = new Pwages();
+				BeanUtils.copyProperties(wageDistribution, pwage);
+				pwages.add(pwage);
+			}
+			total = getWageDistributionCount(hql.toString(), params);
+		}
+		shebaoCompanyInfos.put("total", total);
+		shebaoCompanyInfos.put("rows", pwages);
+		return shebaoCompanyInfos;
+	}
+	
+	@Override
+	 public long getWageDistributionCount(String hql, Map<String, Object> params){
+			StringBuffer hqll = new StringBuffer("select count(*) from WageDistribution t where ");
+			hqll.append(hql.split("where")[1]);
+			return wageDistributionDao.count(hqll.toString(), params);
+	 }
 }

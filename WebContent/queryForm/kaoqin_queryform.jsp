@@ -1,5 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
-<form id="shebao_queryform" method="post" enctype="multipart/form-data">
+<form id="kaoqin_form" method="post" enctype="multipart/form-data">
 	<table>
 		<tr>
 			<td>公司名称:</td>
