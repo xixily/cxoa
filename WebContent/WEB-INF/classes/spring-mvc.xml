@@ -65,7 +65,8 @@
 					<list>
 						<value>/user/login.action</value>
 						<value>/user/logout.action</value>
-						<value>/druidController/druid.action</value>
+						<!-- <value>/employee/getCompany.action</value> -->
+						<!-- <value>/druidController/druid.action</value> -->
 					</list>
 				</property>
 			</bean>

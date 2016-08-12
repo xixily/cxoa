@@ -22,6 +22,7 @@ import org.hibernate.annotations.GenericGenerator;
 @DynamicInsert(true)
 @DynamicUpdate(true)
 public class RenshiRights implements Serializable {
+	private static final long serialVersionUID = 8832579790637183264L;
 	private int id;
 	private String firstLevel;// 一级
 	private String secondLevel;// 二级

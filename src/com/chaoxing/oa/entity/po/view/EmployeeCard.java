@@ -10,6 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "员工卡号")
 public class EmployeeCard implements Serializable {
+	private static final long serialVersionUID = 5266114739784733437L;
 	private int employeeId;//职员编号
 	private String accountBank;//开户行
 	private String account;//职工帐号

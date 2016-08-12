@@ -18,6 +18,7 @@ import org.hibernate.annotations.GenericGenerator;
 @DynamicUpdate(true)
 @DynamicInsert(true)
 public class KaoQin implements Serializable {
+	private static final long serialVersionUID = 5561946651214317397L;
 	private Integer id;
 	private Integer userId;
 	private String username;

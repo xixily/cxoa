@@ -580,6 +580,7 @@ var employee = {
 				session.wadgeData = result;
 				var dataGrid = {};
 				dataGrid.total = result.length;
+//				dataGrid.total = result.length >= 6? result.length:6;
 				dataGrid.rows = result;
 				if (result && result.length > 0) {
 					var salary = 0;
@@ -1380,8 +1381,82 @@ shebaoSummary : {
 		})
 
 	}
+	},
+	kaoqin : {
+		queryKaoqin : function(data, src) {
+			$('#datagrid_kaoqin').datagrid({
+				queryParams : data
+			})
+		},
+		view : function(){
+			//TODO  to do something useful
+			return;
+		},
+		onDblClickRow : function(index,row) {
+			if(!kaoqinEdit){
+				session.editKaoqinRow = $.extend({},row);
+			}
+			if (kaoqinEdit != index) {
+				if (employee.shebaoSummary.endEditing()) {
+					$('#datagrid_kaoqin').datagrid('selectRow', index)
+							.datagrid('beginEdit', index);
+					kaoqinEdit = index;
+				} else {
+					setTimeout(function() {$('#datagrid_kaoqin').datagrid('selectRow',kaoqinEdit);
+							}, 0);
+				}
+			}
+			
+		},
+		endEditing : function() {
+			if (kaoqinEdit == undefined) {
+				return true
+			}
+			if ($('#datagrid_kaoqin').datagrid('validateRow', kaoqinEdit)) {
+				$('#datagrid_kaoqin').datagrid('endEdit', kaoqinEdit);
+				kaoqinEdit = undefined;
+				return true;
+			} else {
+				return false;
+			}
+		},
+		onEndEdit : function(index,row,changes) {
+			var message = "您确定要更新吗？";
+			var url = "employee/updateKaoqin.action";
+			confirmDialog.createDialog(
+					message,
+					function(confirmId){
+						var data = row;
+						$.post(url, data, function(result){
+							var result =  eval("(" + result + ")");
+							confirmDialog.destoryDialog(confirmId);
+							if (!result.success) {
+								$('#datagrid_kaoqin').datagrid('getData').rows[index] = session.editKaoqinRow;
+								$('#datagrid_kaoqin').datagrid('refreshRow',index);
+							}
+							session.editKaoqinRow = {};
+							$.messager.alert('消息', result.msg, 'info');
+						});
+					},function(){
+						$('#datagrid_kaoqin').datagrid('getData').rows[index] = session.editKaoqinRow;
+						$('#datagrid_kaoqin').datagrid('refreshRow',index);
+						session.editKaoqinRow = {};
+					});
+		},
+	},
+	monthWages : {
+		onDblClickRow : function(){
+			
+		},
+		endEditing : function(){
+			
+		},
+		onEndEdit : function(){
+			
+		}
 	}
 }
 var shebaoAdd = undefined;
 var shebaoEdit = undefined;
 var shebaoCompanyEdit = undefined;
+var kaoqinEdit = undefined;

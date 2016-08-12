@@ -69,7 +69,8 @@ public class UserController {
 		json.setSuccess(true);
 		return json;
 	}
-	@RequestMapping(value="/login",method=RequestMethod.POST)
+//	@RequestMapping(value="/login",method=RequestMethod.POST)
+	@RequestMapping(value="/login")
 	public ModelAndView login(QueryForm queryForm, HttpServletRequest request, HttpSession session, Model model ){
 		ModelAndView modelView = new ModelAndView("login.jsp");
 		if(queryForm.getEmail() == null){

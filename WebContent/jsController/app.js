@@ -6,6 +6,14 @@ var session = {
     user : {},
 //    testText : '我在这里存放全局缓存数据'
 };
+function init(){
+	$.post('employee/getCompany.action',{},function(result){
+		var result =  eval("(" + result + ")");
+		if(result){
+			session.companys = result;
+		}
+	})
+}
 var editIndex = undefined;
 $(window).on('beforeunload', function (e) {
     if (session.logined){

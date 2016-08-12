@@ -10,6 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "人事username", schema = "")
 public class RenshiUserName implements Serializable {
+	private static final long serialVersionUID = -206738471078895098L;
 	private String renshiRight;// 人事权限
 	private String firstLevel;//一级
 	private String secondLevel;//二级

@@ -10,6 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "员工工资汇总表")
 public class EmployeeTotalWage implements Serializable {
+	private static final long serialVersionUID = 7342726064541945668L;
 	private int employeeId;//职员编号
 	private double totalSalary;//工资总额
 	private double selfInsurance;//保险自付金额

@@ -92,7 +92,7 @@
                     <td>小组:</td><!-- 四级 -->
                     <td>
                     <input id="form_hidden_departmentId" type="hidden" name="departmentId" />
-                     <input id="combox" class="easyui-combobox" name="fourthLevel" data-options="
+                    <input id="combox" class="easyui-combobox" name="fourthLevel" data-options="
                     url: 'employee/getOStruct.action',
                     valueField:'fourthLevel',
                     textField:'fourthLevel',
@@ -272,10 +272,18 @@
                     </td>
                     <td>保险公司:</td>
                     <td>
-                    <input class="easyui-combobox" name="insuranceCompany" data-options="
+                    <input id="combox_bxc1" class="easyui-combobox" name="insuranceCompany" data-options="
                     url: 'employee/getInsuranceCompany.action',
                     valueField:'value',
                     textField:'text',
+                    filter: function(q, row){
+							var opts = $(this).combobox('options');
+							return row[opts.textField].indexOf(q) == 0;f
+						},
+					formatter: function(row){
+						var opts = $(this).combobox('options');
+						return row[opts.textField];
+					}
                     " />
                     </td>
                   
@@ -287,9 +295,9 @@
                 <tr>
                     <td>毕业院校:</td>
                     <td><input class="easyui-textbox" type="text" name="graduatedSchool" /></td>
-                     <td>公司名称:</td>
+                    <td>公司名称:</td>
                     <td>
-                     <input class="easyui-combobox" name="company" data-options="
+                    <input id="combox_c1" class="easyui-combobox" name="company" data-options="
                     url: 'employee/getCompany.action',
                     valueField:'cmopany',
                     textField:'cmopany',
@@ -318,7 +326,7 @@
                     <td>转入本公司时间:</td>
                     <td><input class="easyui-datebox" type="text" name="zhuanruGongsiTime" /></td>
                     <td>入职报表:</td>
-                    <td><input class="easyui-textbox" type="text" name="入职报表" /></td>
+                    <td><input class="easyui-textbox" type="text" name="ruzhiReport" /></td>
                     <td>简历:</td>
                     <td>
                     	<input class="easyui-combobox" name="resume" data-options="
@@ -381,10 +389,7 @@
                     <input id="combox_level" class="easyui-combobox" name="level" data-options="
                     url: 'employee/getLevel.action',
                     valueField:'name',
-                    textField:'name',
-			        onLoadSuccess: function(res){
-			        session.level = res;
-			        }
+                    textField:'name'
                     ">
                     </td>
                     <td>合同续签:</td>

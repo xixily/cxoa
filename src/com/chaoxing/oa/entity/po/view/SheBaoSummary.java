@@ -15,6 +15,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicInsert(true)
 @DynamicUpdate(true)
 public class SheBaoSummary implements Serializable {
+	private static final long serialVersionUID = -7229522571583483206L;
 	private String company;
 	private Float subEndowmentIinsurance;
 	private Float subMedicare;

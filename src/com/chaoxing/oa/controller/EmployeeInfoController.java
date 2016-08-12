@@ -16,7 +16,9 @@ import com.chaoxing.oa.config.SysConfig;
 import com.chaoxing.oa.entity.page.PComboBox;
 import com.chaoxing.oa.entity.page.PCompany;
 import com.chaoxing.oa.entity.page.PHouseholdType;
+import com.chaoxing.oa.entity.page.PKaoQin;
 import com.chaoxing.oa.entity.page.PLevel;
+import com.chaoxing.oa.entity.page.PMonthWages;
 import com.chaoxing.oa.entity.page.POStructs;
 import com.chaoxing.oa.entity.page.PShebao;
 import com.chaoxing.oa.entity.page.PShebaoType;
@@ -279,5 +281,45 @@ public class EmployeeInfoController {
 	public Map<String, Object> getShebaoCompany(QueryForm queryForm, HttpSession session){
 		Map<String, Object> shebaoCompanys = employeeInfoService.getShebaoCompany(queryForm, session);
 		return shebaoCompanys;
+	}
+	
+	@RequestMapping(value = "/queryKaoqin")
+	@ResponseBody
+	public Map<String, Object> queryKaoqin(QueryForm queryForm, HttpSession session){
+		Map<String, Object> userInfos = employeeInfoService.findKaoqin(queryForm, session);
+		return userInfos;
+	}
+	
+	@RequestMapping(value = "/updateKaoqin")
+	@ResponseBody
+	public Json updateKaoqin(PKaoQin pkaoqin){
+		Json result = new Json();
+		if(employeeInfoService.updateKaoqin(pkaoqin)!=0){
+			result.setSuccess(true);
+			result.setMsg("更新成功！");
+		}else{
+			result.setMsg("更新失败！");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/queryMonthWages")
+	@ResponseBody
+	public Map<String, Object> queryMonthWages(QueryForm queryForm, HttpSession session){
+		Map<String, Object> userInfos = employeeInfoService.findMonthWages(queryForm, session);
+		return userInfos;
+	}
+	
+	@RequestMapping(value = "/updateMonthWages")
+	@ResponseBody
+	public Json updateMonthWages(PMonthWages pmonthWages){
+		Json result = new Json();
+		if(employeeInfoService.updateMonthWages(pmonthWages)!=0){
+			result.setSuccess(true);
+			result.setMsg("更新成功！");
+		}else{
+			result.setMsg("更新失败！");
+		}
+		return result;
 	}
 }

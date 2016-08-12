@@ -8,7 +8,9 @@ import javax.servlet.http.HttpSession;
 import com.chaoxing.oa.entity.page.PComboBox;
 import com.chaoxing.oa.entity.page.PCompany;
 import com.chaoxing.oa.entity.page.PHouseholdType;
+import com.chaoxing.oa.entity.page.PKaoQin;
 import com.chaoxing.oa.entity.page.PLevel;
+import com.chaoxing.oa.entity.page.PMonthWages;
 import com.chaoxing.oa.entity.page.POStructs;
 import com.chaoxing.oa.entity.page.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.PShebao;
@@ -70,5 +72,19 @@ public interface EmployeeInfoServiceI {
 	 public long getWageDistributionCount(String hql, Map<String, Object> params);
 
 	public int updateWagesRadix(Pwages pwages);
+
+	public Map<String, Object> findKaoqin(QueryForm queryForm, HttpSession session);
+	
+	public long getKaoQinCount(String hql, Map<String,Object> params);
+
+	public int updateKaoqin(PKaoQin pkaoqin);
+
+	public Map<String, Object> findMonthWages(QueryForm queryForm, HttpSession session);
+	
+	public Map<String, Object> findMonthWages(QueryForm queryForm, HttpSession session, int isExport);
+
+	public int updateMonthWages(PMonthWages pmonthWages);
+	
+	public long getMonthWagesCount(String string, Map<String, Object> params);
 
 }

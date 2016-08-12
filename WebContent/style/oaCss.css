@@ -56,3 +56,15 @@ td .comboxy .combtitle {
 .icon-excel{
 	background:url('images/extjs_icons/page/page_white_excel.png') no-repeat center center;
 }
+.icon-databse_set{
+	background:url('images/extjs_icons/database_gear.png') no-repeat center center;
+}
+.icon-databse_refresh{
+	background:url('images/extjs_icons/database_refresh.png') no-repeat center center;
+}
+.icon-databse_edit{
+	background:url('images/extjs_icons/database_edit.png') no-repeat center center;
+}
+.icon-databse_connect{
+	background:url('images/extjs_icons/database_connect.png') no-repeat center center;
+}

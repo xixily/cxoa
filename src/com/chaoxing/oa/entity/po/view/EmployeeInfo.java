@@ -10,6 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "员工查看信息表")
 public class EmployeeInfo implements Serializable {
+	private static final long serialVersionUID = 3248473467577798009L;
 	private String username;//用户姓名
 	private int userId;
 	private String position;//职位

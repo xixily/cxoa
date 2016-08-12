@@ -10,6 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "细胞核查看员工信息")
 public class CellCoreFindEmployee implements Serializable {
+	private static final long serialVersionUID = -5197690734783020005L;
 	private int ID;//ID
 	private String username;//用户姓名
 	private int departmentId;//部门ID

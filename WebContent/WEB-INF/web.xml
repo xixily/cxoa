@@ -22,7 +22,7 @@
     <!-- 经常需要排除一些不必要的url，比如.js,/jslib/等等。配置在init-param中 -->
     <init-param>
       <param-name>exclusions</param-name>
-      <param-value>/css/*,/style/*,/jslib/*,*.js,*.css,/druid*,/attached/*,*.jsp,*.ico</param-value>
+      <param-value>/css/*,/style/*,/jslib/*,*.js,*.css,/druid*,/attached/*,*.jsp,*.ico,*.json</param-value>
     </init-param>
     <init-param>
     <!-- 你可以配置principalSessionName，使得druid能够知道当前的session的用户是谁。 -->

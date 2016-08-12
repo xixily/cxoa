@@ -1,4 +1,4 @@
-package com.chaoxing.oa.controller.user;
+/*package com.chaoxing.oa.controller.user;
 
 public class Test {
 public static void main(String[] args) {
@@ -15,3 +15,4 @@ public static void main(String[] args) {
 	System.out.println("sum : " + sum);
 }
 }
+*/

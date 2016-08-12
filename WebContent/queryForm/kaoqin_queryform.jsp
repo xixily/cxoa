@@ -2,6 +2,8 @@
 <form id="kaoqin_form" method="post" enctype="multipart/form-data">
 	<table>
 		<tr>
+			<td>姓名:</td>
+			<td><input name="username" class="easyui-textbox" /></td>
 			<td>公司名称:</td>
 			<td>
                      <input class="easyui-combobox" name="company" data-options="
@@ -10,17 +12,37 @@
                     textField:'cmopany',
                     " />
             </td>
-			<td>社保类型:</td>
+            <td>入职时间:</td>
+			<td><input name="hiredate" class="easyui-datebox" style="width:160px" />
+			</td>
+
+			<td>离职时间:</td>
+			<td><input name="leaveTime" class="easyui-datebox" style="width:160px" /></td>
+
+			<td>转正时间:</td>
+			<td><input name="zhuanzhengTime" class="easyui-datebox" style="width:160px" /></td>
+		</tr>
+		<tr>
+			<td>公司名称:</td>
 			<td>
-                     <input class="easyui-combobox" name="shebaoType" data-options="
-                    url: 'employee/getShebaoType.action',
-                    valueField:'shebaoType',
-                    textField:'shebaoType',
+			<input class="easyui-combobox" name="language" data-options="
+				url: 'employee/getCompany.action',
+				method: 'get',
+				valueField: 'id',
+				textField: 'cmopany',
+				">
+			</td>
+			<td>公司名称:</td>
+                    <td>
+                    <input id="combox_ccc" class="easyui-combobox" name="company" data-options="
+                    data : session.companys,
+                    valueField:'cmopany',
+                    textField:'cmopany',
                     " />
-            </td>
+                    </td>
             <td></td>
             <td>
-            <input class="easyui-linkbutton do_action" appaction="employee.shebao.queryShebao"  type="button" value="查找"
+            <input class="easyui-linkbutton do_action" appaction="employee.kaoqin.queryKaoqin"  type="button" value="查找"
 				style="width:46px;height:26px;" />
             </td>
             <td></td>

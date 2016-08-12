@@ -10,6 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "在职人数")
 public class OnJobNumber implements Serializable {
+	private static final long serialVersionUID = -1259639201854748242L;
 	private int departmentId;
 	private int onJobNumber;
 	@Id

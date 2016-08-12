@@ -29,8 +29,8 @@ public class TestAspect {
                 + "." + jp.getSignature().getName() + " throw exception");  
         System.out.println(ex.getMessage());  
     }  
-  
+  /*
     private void sendEx(String ex) {  
         //TODO 发送短信或邮件提醒  
-    }  
+    }  */
 }

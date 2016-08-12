@@ -16,7 +16,9 @@ import com.chaoxing.oa.dao.BaseDaoI;
 import com.chaoxing.oa.entity.page.PComboBox;
 import com.chaoxing.oa.entity.page.PCompany;
 import com.chaoxing.oa.entity.page.PHouseholdType;
+import com.chaoxing.oa.entity.page.PKaoQin;
 import com.chaoxing.oa.entity.page.PLevel;
+import com.chaoxing.oa.entity.page.PMonthWages;
 import com.chaoxing.oa.entity.page.POStructs;
 import com.chaoxing.oa.entity.page.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.PSheBaoSummary;
@@ -27,7 +29,9 @@ import com.chaoxing.oa.entity.page.QueryForm;
 import com.chaoxing.oa.entity.page.SessionInfo;
 import com.chaoxing.oa.entity.po.Company;
 import com.chaoxing.oa.entity.po.HouseholdType;
+import com.chaoxing.oa.entity.po.KaoQin;
 import com.chaoxing.oa.entity.po.Level;
+import com.chaoxing.oa.entity.po.MonthWages;
 import com.chaoxing.oa.entity.po.OrganizationStructure;
 import com.chaoxing.oa.entity.po.Shebao;
 import com.chaoxing.oa.entity.po.ShebaoType;
@@ -53,8 +57,24 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 	private BaseDaoI<ShebaoType> sheBaoTypeDao;
 	private BaseDaoI<HouseholdType> househodlType;
 	private BaseDaoI<SheBaoSummary> shebaoSummaryDao;
+	private BaseDaoI<KaoQin> kaoqinDao;
+	private BaseDaoI<MonthWages> monthWagesDao;
 
 	
+	public BaseDaoI<MonthWages> getMonthWagesDao() {
+		return monthWagesDao;
+	}
+	@Autowired
+	public void setMonthWagesDao(BaseDaoI<MonthWages> monthWagesDao) {
+		this.monthWagesDao = monthWagesDao;
+	}
+	public BaseDaoI<KaoQin> getKaoqinDao() {
+		return kaoqinDao;
+	}
+	@Autowired
+	public void setKaoqinDao(BaseDaoI<KaoQin> kaoqinDao) {
+		this.kaoqinDao = kaoqinDao;
+	}
 	public BaseDaoI<SheBaoSummary> getShebaoSummaryDao() {
 		return shebaoSummaryDao;
 	}
@@ -197,55 +217,6 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		return userInfos;
 	}
 
-	protected void addCondition(StringBuffer hql, QueryForm queryForm, Map<String, Object> params) {
-		if(queryForm != null){
-			if(queryForm.getConfigurable() != null && queryForm.getConfigurable() != ""){
-				if(queryForm.getConfigurable_value() != null && queryForm.getConfigurable_value() != ""){
-					hql.append(" and t." + queryForm.getConfigurable() + " like '%" + queryForm.getConfigurable_value() + "%' ");
-				}
-			}
-			if(queryForm.getUsername() != null && queryForm.getUsername() != ""){
-				hql.append(" and t.username like :username ");
-				params.put("username", "%" + queryForm.getUsername() + "%");
-			}
-			if(queryForm.getFourthLevel() != null && queryForm.getFourthLevel() != ""){
-				hql.append(" and t.fourthLevel like :fourthLevel ");
-				params.put("fourthLevel", "%" + queryForm.getFourthLevel() + "%");
-			}
-			if(queryForm.getCompany() != null && queryForm.getCompany() != ""){
-				hql.append(" and t.company like :company ");
-				params.put("company", "%" + queryForm.getCompany() + "%");
-			}
-			if(queryForm.getInsuranceCompany() != null && queryForm.getInsuranceCompany() != ""){
-				hql.append(" and t.insuranceCompany like :insuranceCompany ");
-				params.put("insuranceCompany", "%" + queryForm.getInsuranceCompany() + "%");
-			}
-			if(queryForm.getDegree() != null && queryForm.getDegree() != ""){
-				hql.append(" and t.degree like :degree ");
-				params.put("degree", "%" + queryForm.getDegree() + "%");
-			}
-			if(queryForm.getEarlyEntryDate() != null && queryForm.getEarlyEntryDate() != ""){
-				hql.append(" and t.earlyEntryDate like :earlyEntryDate ");
-				params.put("earlyEntryDate", "%" + queryForm.getEarlyEntryDate() + "%");
-			}
-			if(queryForm.getLeaveTime() != null && queryForm.getLeaveTime() != ""){
-				hql.append(" and t.leaveTime like :leaveTime ");
-				params.put("leaveTime", "%" + queryForm.getLeaveTime() + "%");
-			}
-			if(queryForm.getZhuanzhengTime() != null && queryForm.getZhuanzhengTime() != ""){
-				hql.append(" and t.zhuanzhengTime like :zhuanzhengTime ");
-				params.put("zhuanzhengTime", "%" + queryForm.getZhuanzhengTime() + "%");
-			}if(queryForm.getLevelc() != null ){
-				if(queryForm.getLevelc().equals("实习生")){
-					hql.append(" and t.level like :level ");
-					params.put("level", "%" + queryForm.getLevelc() + "%");
-				}else{
-					hql.append(" and t.level <> '实习生' ");
-				}
-			}
-		}
-	}
-
 	@Override
 	public long getRenshiUserNameCount(String hql, Map<String, Object> params) {
 		StringBuffer hqll = new StringBuffer("select count(*) from RenshiUserName t where ");
@@ -284,6 +255,8 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		List<Company> cmopanys = companyDao.find("from Company");
 		List<PCompany> pcompanys = new ArrayList<PCompany>();
 		PCompany pcompany0 = new PCompany();
+		pcompany0.setCmopany("");
+		pcompany0.setId(0);
 		pcompanys.add(pcompany0);
 		for (Company company : cmopanys) {
 			PCompany pcompany = new PCompany();
@@ -312,6 +285,9 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		List<OrganizationStructure> lists = organizationStructureDao.find("from OrganizationStructure o");
 		for (OrganizationStructure organizationStructure : lists) {
 			POStructs postruct = new POStructs();
+			if(organizationStructure.getSecondLevel().equals("离职")){
+				organizationStructure.setFourthLevel("离职");
+			}
 			BeanUtils.copyProperties(organizationStructure, postruct);
 			postruct.setDepartmentId(organizationStructure.getId());
 			listComs.add(postruct);
@@ -324,8 +300,13 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		List<Object> lists = objectDao.find("select distinct(u.insuranceCompany) from UserName u");
 		List<PComboBox> pcbs = new ArrayList<PComboBox>();
 		PComboBox pcb0 = new PComboBox();
+		pcb0.setText("");
+		pcb0.setValue("");
 		pcbs.add(pcb0);
 		for (Object renshiUserName : lists) {
+			if(renshiUserName==null){
+				continue;
+			}
 			PComboBox pcb = new PComboBox();
 			pcb.setText((String)renshiUserName);
 			pcb.setValue((String)renshiUserName);
@@ -628,4 +609,167 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 			hqll.append(hql.split("where")[1]);
 			return wageDistributionDao.count(hqll.toString(), params);
 	 }
+	@Override
+	public Map<String, Object> findKaoqin(QueryForm queryForm, HttpSession session) {
+		Map<String, Object> kaoqinInfos = new HashMap<String, Object>();
+		Map<String, Object> params = new HashMap<String, Object>();
+		List<KaoQin> kaoqins = new ArrayList<KaoQin>();
+		List<PKaoQin> pkaoqins = new ArrayList<PKaoQin>();
+		StringBuffer hql = new StringBuffer("from KaoQin t where 1=1 ");
+		long total = 0;
+		addCondition(hql, queryForm, params);
+		int intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
+		int pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+		String sort = "userId";
+		String order = SysConfig.DESC;
+		if (queryForm.getSort() != null) {
+			sort = queryForm.getSort();
+			if (queryForm.getOrder() != null) {
+				order = queryForm.getOrder();
+			}
+		}
+		hql.append(" order by t." + sort + " " + order);
+		
+		kaoqins = kaoqinDao.find(hql.toString(), params, intPage, pageSize);
+		for (KaoQin kaoqin : kaoqins) {
+			PKaoQin pkaoqin = new PKaoQin();
+			BeanUtils.copyProperties(kaoqin, pkaoqin);
+			pkaoqins.add(pkaoqin);
+		}
+		total = getKaoQinCount(hql.toString(), params);
+		kaoqinInfos.put("total", total);
+		kaoqinInfos.put("rows", pkaoqins);
+		return kaoqinInfos;
+	}
+	
+	@Override
+	public long getKaoQinCount(String hql, Map<String, Object> params) {
+		StringBuffer hqll = new StringBuffer("select count(*) from KaoQin t where ");
+		hqll.append(hql.split("where")[1]);
+		return kaoqinDao.count(hqll.toString(), params);
+	}
+	
+	@Override
+	public int updateKaoqin(PKaoQin pkaoqin) {
+		KaoQin kaoqin = new KaoQin();
+		BeanUtils.copyProperties(pkaoqin, kaoqin);
+		try {
+			kaoqinDao.update(kaoqin);
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	@Override
+	public Map<String, Object> findMonthWages(QueryForm queryForm, HttpSession session) {
+		return findMonthWages(queryForm, session, 0);
+	}
+	
+	@Override
+	public Map<String, Object> findMonthWages(QueryForm queryForm, HttpSession session, int isExport) {
+		List<PMonthWages> pMonthWages = new ArrayList<PMonthWages>();
+		Map<String, Object> monthWagesInfos = new HashMap<String, Object>();
+		Map<String, Object> params = new HashMap<String, Object>();
+		StringBuffer hql = new StringBuffer("from MonthWages t where 1=1 ");
+		addCondition(hql, queryForm, params);
+		String sort = "employeeId";
+		String order = SysConfig.DESC;
+		if(queryForm.getSort() != null){
+			sort = queryForm.getSort();
+			if(queryForm.getOrder() != null){
+				order = queryForm.getOrder();
+			}
+		}
+		hql.append(" order by t." + sort + " " + order);
+		int intPage = 0;
+		int pageSize = 30000;//最多导出30000条数据
+		if(isExport == 0){
+			intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
+			pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+		}
+		List<MonthWages> monthWages = monthWagesDao.find(hql.toString(), params, intPage, pageSize);
+		for (MonthWages monthWage : monthWages) {
+			PMonthWages pMonthWage = new PMonthWages();
+			BeanUtils.copyProperties(monthWage, pMonthWage);
+			pMonthWages.add(pMonthWage);
+		}
+		long total = getMonthWagesCount(hql.toString(),params);
+		monthWagesInfos.put("total", total);
+		monthWagesInfos.put("rows", pMonthWages);
+		return monthWagesInfos;
+	}
+	
+	@Override
+	public long getMonthWagesCount(String hql, Map<String, Object> params) {
+		StringBuffer hqll = new StringBuffer("select count(*) from MonthWages t where ");
+		hqll.append(hql.split("where")[1]);
+		return monthWagesDao.count(hqll.toString(), params);
+	}
+	
+	@Override
+	public int updateMonthWages(PMonthWages pmonthWages) {
+		MonthWages monthWages = new MonthWages();
+		BeanUtils.copyProperties(pmonthWages, monthWages);
+		try {
+			monthWagesDao.update(monthWages);
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	protected void addCondition(StringBuffer hql, QueryForm queryForm, Map<String, Object> params) {
+		if(queryForm != null){
+			if(queryForm.getConfigurable() != null && queryForm.getConfigurable() != ""){
+				if(queryForm.getConfigurable_value() != null && queryForm.getConfigurable_value() != ""){
+					hql.append(" and t." + queryForm.getConfigurable() + " like '%" + queryForm.getConfigurable_value() + "%' ");
+				}
+			}
+			if(queryForm.getUsername() != null && queryForm.getUsername() != ""){
+				hql.append(" and t.username like :username ");
+				params.put("username", "%" + queryForm.getUsername() + "%");
+			}
+			if(queryForm.getFourthLevel() != null && queryForm.getFourthLevel() != ""){
+				hql.append(" and t.fourthLevel like :fourthLevel ");
+				params.put("fourthLevel", "%" + queryForm.getFourthLevel() + "%");
+			}
+			if(queryForm.getCompany() != null && queryForm.getCompany() != ""){
+				hql.append(" and t.company like :company ");
+				params.put("company", "%" + queryForm.getCompany() + "%");
+			}
+			if(queryForm.getInsuranceCompany() != null && queryForm.getInsuranceCompany() != ""){
+				hql.append(" and t.insuranceCompany like :insuranceCompany ");
+				params.put("insuranceCompany", "%" + queryForm.getInsuranceCompany() + "%");
+			}
+			if(queryForm.getDegree() != null && queryForm.getDegree() != ""){
+				hql.append(" and t.degree like :degree ");
+				params.put("degree", "%" + queryForm.getDegree() + "%");
+			}
+			if(queryForm.getEarlyEntryDate() != null && queryForm.getEarlyEntryDate() != ""){
+				hql.append(" and t.earlyEntryDate like :earlyEntryDate ");
+				params.put("earlyEntryDate", "%" + queryForm.getEarlyEntryDate() + "%");
+			}
+			if(queryForm.getLeaveTime() != null && queryForm.getLeaveTime() != ""){
+				hql.append(" and t.leaveTime like :leaveTime ");
+				params.put("leaveTime", "%" + queryForm.getLeaveTime() + "%");
+			}
+			if(queryForm.getZhuanzhengTime() != null && queryForm.getZhuanzhengTime() != ""){
+				hql.append(" and t.zhuanzhengTime like :zhuanzhengTime ");
+				params.put("zhuanzhengTime", "%" + queryForm.getZhuanzhengTime() + "%");
+			}if(queryForm.getHiredate() != null && queryForm.getHiredate() != ""){
+				hql.append(" and t.hiredate like :hiredate ");
+				params.put("hiredate", "%" + queryForm.getHiredate() + "%");
+			}if(queryForm.getLevelc() != null ){
+				if(queryForm.getLevelc().equals("实习生")){
+					hql.append(" and t.level like :level ");
+					params.put("level", "%" + queryForm.getLevelc() + "%");
+				}else{
+					hql.append(" and t.level <> '实习生' ");
+				}
+			}
+		}
+	}
 }
