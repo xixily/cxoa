@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.HibernateException;
+
 public interface BaseDaoI<T> {
 
 	public Serializable save(T o) throws Exception;
@@ -35,5 +37,7 @@ public interface BaseDaoI<T> {
 	public int executeHql(String hql);
 
 	public int executeHql(String hql, Map<String, Object> params);
+	
+	public void prepareCall(String sql, Map<String, Object> params) throws HibernateException;
 
 }

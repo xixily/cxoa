@@ -22,6 +22,8 @@ import com.chaoxing.oa.entity.po.UserName;
 public class JunitTestDao {
 	@Resource(name = "baseDao")
 	private BaseDaoI<UserName> ud;
+	@Resource(name = "baseDao")
+	private BaseDaoI<Object> od;
 	@Before
 	public void setUp() throws Exception{
 		
@@ -30,13 +32,23 @@ public class JunitTestDao {
 	public void testMyDao(){
 		try {
 			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("mail", "guoyu@chaoxing.com");
-			UserName t = ud.get("from TUserName t where t.email = :mail", params);
-			if(null != t){
-				System.out.println(t.toString());
-			}else{
-				System.out.println("找不着");
-			}
+			params.put("date1", "2016.06");
+			params.put("date2", "2016.05");
+//			params.put("out", "@p_out");
+			
+//			params.put("mail", "guoyu@chaoxing.com");
+//			UserName t = ud.get("from TUserName t where t.email = :mail", params);
+			String sql = "{CALL update_kaoqin_pr( :date1, :date2)}";
+//			String sql2 = "select @p_out";
+//			String sql = "{CALL update_monthWages_pr()}";
+			od.prepareCall(sql, params);
+//			Object rs = od.find(sql2);
+//			System.out.println(rs);
+//			if(null != t){
+//				System.out.println(t.toString());
+//			}else{
+//				System.out.println("找不着");
+//			}
 		} catch (Exception e) {
 			System.out.println("连接失败！" + e);
 		}

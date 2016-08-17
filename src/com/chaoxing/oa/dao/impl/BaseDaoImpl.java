@@ -194,4 +194,20 @@ public class BaseDaoImpl<T> implements BaseDaoI<T> {
 		SQLQuery sq = this.getCurrentSession().createSQLQuery(sql);
 		return sq.list();
 	}
+	
+	public void prepareCall(String sql, Map<String, Object> params) throws HibernateException{
+		Session session = this.getCurrentSession();
+		
+		SQLQuery sq = this.getCurrentSession().createSQLQuery(sql);
+		if (params != null && !params.isEmpty()) {
+			for (String key : params.keySet()) {
+				sq.setParameter(key, params.get(key));
+			}
+		}
+		try {
+			sq.executeUpdate();
+		} catch (HibernateException e) {
+			throw e;
+		}
+	}
 }

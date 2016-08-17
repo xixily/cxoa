@@ -1,5 +1,8 @@
 package com.chaoxing.oa.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -22,15 +25,17 @@ import com.chaoxing.oa.entity.page.PMonthWages;
 import com.chaoxing.oa.entity.page.POStructs;
 import com.chaoxing.oa.entity.page.PShebao;
 import com.chaoxing.oa.entity.page.PShebaoType;
+import com.chaoxing.oa.entity.page.PWagesDate;
 import com.chaoxing.oa.entity.page.Pwages;
 import com.chaoxing.oa.entity.page.Json;
 import com.chaoxing.oa.entity.page.QueryForm;
 import com.chaoxing.oa.service.EmployeeInfoServiceI;
+import com.chaoxing.oa.util.DateUtil;
 import com.chaoxing.oa.util.ResourceUtil;
 
 @Controller
 @RequestMapping("/employee")
-public class EmployeeInfoController {
+public class EmployeeController {
 	private EmployeeInfoServiceI employeeInfoService;
 	
 	public EmployeeInfoServiceI getEmployeeInfoService() {
@@ -322,4 +327,106 @@ public class EmployeeInfoController {
 		}
 		return result;
 	}
+	@RequestMapping(value = "/queryWagesDate")
+	@ResponseBody
+	public Map<String, Object> queryWagesDate(QueryForm queryForm, HttpSession session){
+		Map<String, Object> userInfos = employeeInfoService.queryWagesDate(queryForm);
+		return userInfos;
+	}
+	
+	@RequestMapping(value = "/updateWagesDate")
+	@ResponseBody
+	public Json updateWagesDates(PWagesDate pwagesDate){
+		Json result = new Json();
+		int savaNum = employeeInfoService.updateWagesDate(pwagesDate);
+		if(savaNum>0){
+			result.setSuccess(true);
+			result.setMsg(String.valueOf(savaNum));
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/generateWagesDates")
+	@ResponseBody
+	public Json generateWagesDates(Integer year,Integer month){
+		Json result = new Json();
+		if(year==null||year==0||month==null||month==0){
+			return result;
+		}
+		List<PWagesDate> pwagesDates = DateUtil.getWagesDate(year, month);
+		int savaNum = employeeInfoService.updateWagesDates(pwagesDates);
+		if(savaNum>0){
+			result.setSuccess(true);
+			result.setMsg(String.valueOf(savaNum));
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/deleteWagesDate")
+	@ResponseBody
+	public Json deleteWagesDate(PWagesDate pwagesDate){
+		Json result = new Json();
+		int savaNum = employeeInfoService.deleteWagesDate(pwagesDate);
+		if(savaNum>0){
+			result.setSuccess(true);
+			result.setMsg(String.valueOf(savaNum));
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/generateKaoqin")
+	@ResponseBody
+	public Json generateKaoqin(){
+		Json result = new Json();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM");
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1);
+		String date = df.format(cal.getTime());
+		cal.add(Calendar.MONTH, -1);
+		String preDate = df.format(cal.getTime());
+//		int year,month;
+//		List<PWagesDate> pwagesDates = null;
+//		for (int i = 0; i < 2; i++) {
+//			cal.add(Calendar.MONTH, -1);
+//			cal.set(Calendar.DATE, 1);  
+//			year = cal.get(Calendar.YEAR);
+//			month = cal.get(Calendar.MONTH)+1;
+//			String date = df.format(cal.getTime()).substring(0, 7);
+//			QueryForm queryForm = new QueryForm();
+//			queryForm.setWagesMonth(date);
+//			pwagesDates = (List<PWagesDate>) employeeInfoService.queryWagesDate(queryForm).get("rows");
+//			int j = 0;
+//			if(pwagesDates.size()<28){
+//				result.setMsg("请检查"+ date +"的工作日表");
+//				return result;
+//			}
+//			while(cal.get(Calendar.YEAR) == year &&     
+//	                cal.get(Calendar.MONTH) < month){
+//				if(df.format(cal.getTime())!= pwagesDates.get(j).getDate()){
+//					result.setMsg("请检查"+ date +"的工作日表");
+//					return result;
+//				}
+//			}
+//		}
+		int savaNum = employeeInfoService.generateKaoqin(date,preDate);
+		if(savaNum>0){
+			result.setSuccess(true);
+			result.setMsg("更新成功！");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/generateMonthWages")
+	@ResponseBody
+	public Json generateMonthWages(){
+		Json result = new Json();
+		int savaNum = employeeInfoService.generateMonthWages();
+		if(savaNum>0){
+			result.setSuccess(true);
+			result.setMsg("更新成功！");
+		}
+		return result;
+	}
+	
+	
 }

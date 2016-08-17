@@ -96,6 +96,7 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 			<tx:method name="remove*" propagation="REQUIRED" />
 			<tx:method name="repair" propagation="REQUIRED" />
 			<tx:method name="delAndRepair" propagation="REQUIRED" />
+			<tx:method name="generate*" propagation="REQUIRED" read-only="false"/>
 
 			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
 			<tx:method name="find*" propagation="REQUIRED" read-only="true" />

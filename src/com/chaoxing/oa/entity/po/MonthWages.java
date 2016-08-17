@@ -76,8 +76,11 @@ public class MonthWages {
 	private Float subTotal;//代扣五险总额
 	private Float yingfaTotal;//应发总额
 	private Float shifaTotal;//实发总额
-	private Float cTotal;//单位五险总额
-	
+	private Float cTotal;//公司五险总额
+	private Float selfTax;//个人所得税
+	private Float fakuan;//罚款
+	private Float jiangjin;//奖金
+	private Float bufaSalary;//补发工资
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -145,7 +148,7 @@ public class MonthWages {
 	public String getAccountBank() {
 		return accountBank;
 	}
-	@Column(name = "账号")
+	@Column(name = "帐号")
 	public String getAccount() {
 		return account;
 	}
@@ -169,19 +172,19 @@ public class MonthWages {
 	public Double getSubHouseIinsurance() {
 		return subHouseIinsurance;
 	}
-	@Column(name = "单位养老保险", columnDefinition = " double(10,2) default 0.00")
+	@Column(name = "公司养老保险", columnDefinition = " double(10,2) default 0.00")
 	public Double getcEndowmentIinsurance() {
 		return cEndowmentIinsurance;
 	}
-	@Column(name = "单位医疗保险", columnDefinition = " double(10,2) default 0.00")
+	@Column(name = "公司医疗保险", columnDefinition = " double(10,2) default 0.00")
 	public Double getcMedicare() {
 		return cMedicare;
 	}
-	@Column(name = "单位失业保险", columnDefinition = " double(10,2) default 0.00")
+	@Column(name = "公司失业保险", columnDefinition = " double(10,2) default 0.00")
 	public Double getcUnemployedInsurance() {
 		return cUnemployedInsurance;
 	}
-	@Column(name = "单位住房保险", columnDefinition = " double(10,2) default 0.00")
+	@Column(name = "公司住房保险", columnDefinition = " double(10,2) default 0.00")
 	public Double getcHouseIinsurance() {
 		return cHouseIinsurance;
 	}
@@ -189,11 +192,11 @@ public class MonthWages {
 	public Double getcSickPayTotal() {
 		return cSickPayTotal;
 	}
-	@Column(name = "单位工伤保险", columnDefinition = " double(10,2) default 0.00")
+	@Column(name = "公司工伤保险", columnDefinition = " double(10,2) default 0.00")
 	public Double getcInjuryInsurance() {
 		return cInjuryInsurance;
 	}
-	@Column(name = "单位生育保险", columnDefinition = " double(10,2) default 0.00")
+	@Column(name = "公司生育保险", columnDefinition = " double(10,2) default 0.00")
 	public Double getcBirthIinsurance() {
 		return cBirthIinsurance;
 	}
@@ -281,7 +284,7 @@ public class MonthWages {
 	public Float getBingJiaHour() {
 		return bingJiaHour;
 	}
-	@Column(name = "旷工天数", columnDefinition = "float(10,2) default 0.00")
+	@Column(name = "旷工小时数", columnDefinition = "float(10,2) default 0.00")
 	public Float getKuangGongHour() {
 		return kuangGongHour;
 	}
@@ -321,9 +324,37 @@ public class MonthWages {
 	public Float getShifaTotal() {
 		return shifaTotal;
 	}
-	@Column(name = "单位五险总额", columnDefinition = "float(10,2) default 0.00")
+	@Column(name = "公司五险总额", columnDefinition = "float(10,2) default 0.00")
 	public Float getcTotal() {
 		return cTotal;
+	}
+	@Column(name = "个人所得税", columnDefinition = "float(10,4) default 0.0000")
+	public Float getSelfTax() {
+		return selfTax;
+	}
+	@Column(name = "罚款", columnDefinition = "float(10,2) default 0.00")
+	public Float getFakuan() {
+		return fakuan;
+	}
+	@Column(name = "奖金", columnDefinition = "float(10,2) default 0.00")
+	public Float getJiangjin() {
+		return jiangjin;
+	}
+	@Column(name = "补发工资", columnDefinition = "float(10,2) default 0.00")
+	public Float getBufaSalary() {
+		return bufaSalary;
+	}
+	public void setFakuan(Float fakuan) {
+		this.fakuan = fakuan;
+	}
+	public void setJiangjin(Float jiangjin) {
+		this.jiangjin = jiangjin;
+	}
+	public void setBufaSalary(Float bufaSalary) {
+		this.bufaSalary = bufaSalary;
+	}
+	public void setSelfTax(Float selfTax) {
+		this.selfTax = selfTax;
 	}
 	public void setKaoqinTotal(Float kaoqinTotal) {
 		this.kaoqinTotal = kaoqinTotal;

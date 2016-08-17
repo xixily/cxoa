@@ -61,7 +61,11 @@ public class PMonthWages {
 	private Float subTotal;//代扣五险总额
 	private Float yingfaTotal;//应发总额
 	private Float shifaTotal;//实发总额
-	private Float cTotal;//单位五险总额
+	private Float cTotal;//公司五险总额
+	private Float selfTax;//个人所得税
+	private Float fakuan;//罚款
+	private Float jiangjin;//奖金
+	private Float bufaSalary;//补发工资
 	public Integer getId() {
 		return id;
 	}
@@ -427,6 +431,30 @@ public class PMonthWages {
 	}
 	public void setcTotal(Float cTotal) {
 		this.cTotal = cTotal;
+	}
+	public Float getSelfTax() {
+		return selfTax;
+	}
+	public void setSelfTax(Float selfTax) {
+		this.selfTax = selfTax;
+	}
+	public Float getFakuan() {
+		return fakuan;
+	}
+	public Float getJiangjin() {
+		return jiangjin;
+	}
+	public Float getBufaSalary() {
+		return bufaSalary;
+	}
+	public void setFakuan(Float fakuan) {
+		this.fakuan = fakuan;
+	}
+	public void setJiangjin(Float jiangjin) {
+		this.jiangjin = jiangjin;
+	}
+	public void setBufaSalary(Float bufaSalary) {
+		this.bufaSalary = bufaSalary;
 	}
 	
 }

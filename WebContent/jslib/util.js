@@ -334,3 +334,57 @@ $.ajaxSetup({
 		$.messager.alert('错误', XMLHttpRequest.responseText);
 	}
 });
+/**
+ * @param index 双击事件的行
+ * @param row 双击行的数据
+ * @param datagridDom 操作的datagrid Dom id
+ */
+var datagridIndex = undefined;
+var editDatagrid = undefined;
+function onDblClickRow(index,row,datagridDomId) {
+	if(!datagridIndex){
+		session.dEditRow = $.extend({},row);
+	}
+	if (datagridIndex != index || datagridDomId!=editDatagrid) {
+		if (endEditing(datagridDomId)) {
+			
+			$('#'+datagridDomId).datagrid('selectRow', index)
+					.datagrid('beginEdit', index);
+			datagridIndex = index;
+		} else {
+			setTimeout(function() {$('#'+datagridDomId).datagrid('selectRow',datagridIndex);
+					}, 0);
+		}
+	}
+	
+}
+function endEditing(datagridDomId){
+	if(datagridDomId!=editDatagrid){//编辑了不同的datagrid或者editDatagrid未赋值
+		if(editDatagrid!=undefined && datagridIndex!=undefined){//之前datagrid处于编辑状态
+				$('#'+editDatagrid).datagrid('cancelEdit', datagridIndex);
+				editDatagrid = datagridDomId;
+				datagridIndex = undefined;
+				return true;
+		}
+		editDatagrid = datagridDomId;
+		return true;
+	}
+	if (datagridIndex == undefined) {
+		return true
+	}
+	if ($('#'+datagridDomId).datagrid('validateRow', datagridIndex)) {
+		$('#'+datagridDomId).datagrid('endEdit', datagridIndex);
+		datagridIndex = undefined;
+		return true;
+	} else {
+		return false;
+	}
+}
+function removeIt(datagridDomId){
+	if (datagridIndex == undefined) {
+		return
+	}
+	$('#'+datagridDomId).datagrid('cancelEdit', datagridIndex).datagrid(
+			'deleteRow', datagridIndex);
+	shebaoEdit = undefined;
+}

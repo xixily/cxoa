@@ -21,6 +21,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsController/north.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsController/west.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsController/employee.js"></script>
- --%><%-- <script type="text/javascript" src="${pageContext.request.contextPath}/jslib/util.js" charset="utf-8"></script> --%>
-<!-- 动态加载js代码  -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/LAB.min.js"></script>
+ --%>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/util.js" charset="utf-8"></script>
+<%-- <!-- 动态加载js代码  -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/LAB.min.js"></script> --%>

@@ -23,7 +23,7 @@
 			<td><input name="zhuanzhengTime" class="easyui-datebox" style="width:160px" /></td>
             <td></td>
             <td>
-            <input class="easyui-linkbutton do_action" appaction="employee.kaoqin.queryKaoqin"  type="button" value="查找"
+            <input class="easyui-linkbutton do_action" appaction="employee.monthWages.queryMonthWages"  type="button" value="查找"
 				style="width:46px;height:26px;" />
             </td>
             <td></td>

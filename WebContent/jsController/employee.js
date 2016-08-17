@@ -1443,19 +1443,200 @@ shebaoSummary : {
 						session.editKaoqinRow = {};
 					});
 		},
+		openWagesDate : function(){
+			$('#dialog_wagesDate').window('open').window(
+					'resize',
+					{
+						top : $(document).scrollTop()
+								+ ($(window).height() - 480) * 0.5
+					});
+		},
+		selectMonth : function(dom){
+			var data = {};
+			data.wagesMonth = dom.val();
+			$('#datagrid_wagesDate').datagrid({queryParams : data});
+		},
+		generateWagesDate : function(){
+			  var calendar = $('#calendar_wagesDate').calendar('options');
+			    var data = {};
+			    data.year = calendar.year;
+			    data.month = calendar.month;
+			    $.post('employee/generateWagesDates.action', data, function(result){
+					var result =  eval("(" + result + ")");
+					var saveNums = 0;
+					if(result.success){
+						var query = "";
+						query = data.year + "." + (data.month<10?"0"+data.month:data.month);
+						$('#datagrid_wagesDate').datagrid({queryParams : {wagesMonth:query}});
+						saveNums = Number(result.msg);
+					}
+					$.messager.alert('消息', "成功更新/插入数据库" + saveNums + "条数据！");
+				});
+		},
+		wagesDateDblCickRow : function(index,row){
+			onDblClickRow(index,row,'datagrid_wagesDate');
+		},
+		wagesDateEndEditing : function(){
+			endEditing('datagrid_wagesDate');
+		},
+		wagesDateEndEdit : function(index,row,changes){
+			var message = "你确定要更新吗?";
+			var url = "employee/updateWagesDate.action";
+			if(wagesDateAdd){
+				message = "您确定要增加吗？";
+			}
+			confirmDialog.createDialog(
+					message,
+					function(confirmId){
+						var data = row;
+						$.post(url, data, function(result){
+							var result =  eval("(" + result + ")");
+							confirmDialog.destoryDialog(confirmId);
+							if (!result.success) {
+								if(wagesDateAdd){
+									removeIt('datagrid_wagesDate');
+									wagesDateAdd = undefined;
+									return;
+								}
+								$('#datagrid_wagesDate').datagrid('getData').rows[index] = session.dEditRow;
+								$('#datagrid_wagesDate').datagrid('refreshRow',index);
+							}else{
+								if(wagesDateAdd){
+									$('#datagrid_wagesDate').datagrid('reload');
+									shebaoAdd = undefined;
+									return;
+								}
+							}
+							$.messager.alert('消息', result.msg, 'info');
+						});
+					},function(){
+						if(wagesDateAdd){
+							removeIt('datagrid_wagesDate');
+							wagesDateAdd = undefined;
+							return;
+						}
+						$('#datagrid_wagesDate').datagrid('getData').rows[index] = session.dEditRow;
+						var selectedData = $('#datagrid_wagesDate').datagrid('getSelected');
+						session.dEditRow = $.extend({},selectedData);
+						$('#datagrid_wagesDate').datagrid('refreshRow',index);
+					});
+		},
+		wagesDateDelete : function(){
+			var selectedRow = $('#datagrid_wagesDate').datagrid('getSelected');
+			var message = "您确定要删除？";
+			confirmDialog.createDialog(
+					message,function(confirmId){
+						$.post('employee/deleteWagesDate.action',selectedRow,function(result){
+							var result =  eval("(" + result + ")");
+							confirmDialog.destoryDialog(confirmId);
+							if(result.success){
+								$('#datagrid_wagesDate').datagrid('reload');
+							}
+							$.messager.alert('消息', result.msg, 'info');
+						});
+					})
+		},
+		openGenerateWages : function(){
+			var date = new Date();
+			var month = date.getMonth();
+			var message = "在批量生成考勤表前，是否检查一下(" + month + "月、" + (month - 1) + "月)工作日表？";
+			confirmDialog.createDialog(
+					message,function(confirmId){
+							confirmDialog.destoryDialog(confirmId);
+							employee.kaoqin.openWagesDate();
+						},function(confirmId){
+							confirmDialog.destoryDialog(confirmId);
+							employee.kaoqin.generateWages();
+							});
+		},
+		generateWages : function(){
+			var message = "现有的考勤表将被清除，您确定要重新生成当月考勤表吗？";
+			confirmDialog.createDialog(
+					message,function(confirmId){
+							confirmDialog.destoryDialog(confirmId);
+							$.post('employee/generateKaoqin.action',{},function(result){
+								var result =  eval("(" + result + ")");
+								if(result.success){
+									$('#datagrid_kaoqin').datagrid('reload');
+								}
+								$.messager.alert('消息', result.msg, 'info');
+							})
+						},undefined,'confirmId2');
+		}
 	},
 	monthWages : {
-		onDblClickRow : function(){
-			
+		queryMonthWages : function(data, src) {
+			$('#datagrid_monthWages').datagrid({
+				queryParams : data
+			})
+		},
+		onDblClickRow : function(index,row){
+			onDblClickRow(index,row,'datagrid_monthWages');
 		},
 		endEditing : function(){
-			
+			endEditing('datagrid_monthWages');
 		},
-		onEndEdit : function(){
-			
+		onEndEdit : function(index,row,changes){
+			var message = "你确定要更新吗?";
+			var url = "employee/updateMonthWages.action";
+			if(monthWagesAdd){
+				message = "您确定要增加吗？";
+			}
+			confirmDialog.createDialog(
+					message,
+					function(confirmId){
+						var data = row;
+						$.post(url, data, function(result){
+							var result =  eval("(" + result + ")");
+							confirmDialog.destoryDialog(confirmId);
+							if (!result.success) {
+								if(wagesDateAdd){
+									removeIt('datagrid_monthWages');
+									wagesDateAdd = undefined;
+									return;
+								}
+								$('#datagrid_monthWages').datagrid('getData').rows[index] = session.dEditRow;
+								$('#datagrid_monthWages').datagrid('refreshRow',index);
+							}else{
+								if(wagesDateAdd){
+									$('#datagrid_monthWages').datagrid('reload');
+									shebaoAdd = undefined;
+									return;
+								}
+							}
+							$.messager.alert('消息', result.msg, 'info');
+						});
+					},function(){
+						if(wagesDateAdd){
+							removeIt('datagrid_monthWages');
+							wagesDateAdd = undefined;
+							return;
+						}
+						$('#datagrid_monthWages').datagrid('getData').rows[index] = session.dEditRow;
+						var selectedData = $('#datagrid_monthWages').datagrid('getSelected');
+						session.dEditRow = $.extend({},selectedData);
+						$('#datagrid_monthWages').datagrid('refreshRow',index);
+					});
+		},
+		generateMothWages : function(){
+			var message = "现有的当月工资表将被清除，您确定要重新生成当月工资表吗？";
+			confirmDialog.createDialog(
+					message,function(confirmId){
+							confirmDialog.destoryDialog(confirmId);
+							$.post('employee/generateMonthWages.action',{},function(result){
+								var result =  eval("(" + result + ")");
+								if(result.success){
+									$('#datagrid_monthWages').datagrid('reload');
+								}
+								$.messager.alert('消息', result.msg, 'info');
+							})
+						});
 		}
-	}
+	},
+	
 }
+var wagesDateAdd = undefined;
+var monthWagesAdd = undefined;
 var shebaoAdd = undefined;
 var shebaoEdit = undefined;
 var shebaoCompanyEdit = undefined;

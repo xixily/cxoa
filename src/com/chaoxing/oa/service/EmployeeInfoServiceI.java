@@ -15,6 +15,7 @@ import com.chaoxing.oa.entity.page.POStructs;
 import com.chaoxing.oa.entity.page.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.PShebao;
 import com.chaoxing.oa.entity.page.PShebaoType;
+import com.chaoxing.oa.entity.page.PWagesDate;
 import com.chaoxing.oa.entity.page.Pwages;
 import com.chaoxing.oa.entity.page.QueryForm;
 
@@ -87,4 +88,15 @@ public interface EmployeeInfoServiceI {
 	
 	public long getMonthWagesCount(String string, Map<String, Object> params);
 
+	public Map<String, Object> queryWagesDate(QueryForm queryForm);
+
+	public int updateWagesDates(List<PWagesDate> pwagesDates);
+
+	public int updateWagesDate(PWagesDate pwagesDate);
+
+	public int deleteWagesDate(PWagesDate pwagesDate);
+
+	public int generateKaoqin(String date, String preDate);
+
+	public int generateMonthWages();
 }

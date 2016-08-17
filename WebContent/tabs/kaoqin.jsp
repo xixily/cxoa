@@ -50,7 +50,7 @@
 					<th data-options="field:'chanJiaDay',width:40,sortable:true,editor:{type:'numberbox',options:{precision:2}}">产假天数</th>
 					<th data-options="field:'sangJiaDay',width:40,sortable:true,editor:{type:'numberbox',options:{precision:2}}">丧家天数</th>
 					<th data-options="field:'nianJiaDay',width:40,sortable:true,editor:{type:'numberbox',options:{precision:2}}">年假天数</th>
-					<th data-options="field:'hiredate',width:100,sortable:true,editor:{type:'numberbox',options:{precision:2}}">入职时间</th>
+					<th data-options="field:'hiredate',width:100,sortable:true">入职时间</th>
 					<th data-options="field:'leaveTime',width:100,sortable:true">离职时间</th>
 					<th data-options="field:'zhuanzhengTime',width:100,sortable:true">转正时间</th>
 					<th data-options="field:'ruzhiReport',width:100,sortable:true">入职报表</th>
@@ -61,5 +61,14 @@
 			</thead>
 		</table>
 		<jsp:include page="../toolBar/kaoqin_toolbar.jsp"></jsp:include>
+		<div id="dialog_wagesDate" class="easyui-dialog" title="维护工作日表"
+		style="width: 360px;overflow: hidden"
+		data-options="
+                iconCls : 'icon-edit',
+                modal : false,
+                closed : true
+            ">
+           	<jsp:include page="../components/wagesDate.jsp"></jsp:include>
+	</div>
 	</div>
 </div>

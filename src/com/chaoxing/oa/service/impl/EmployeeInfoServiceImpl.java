@@ -1,12 +1,17 @@
 package com.chaoxing.oa.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.AttributeOverride;
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.HibernateException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +29,7 @@ import com.chaoxing.oa.entity.page.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.PSheBaoSummary;
 import com.chaoxing.oa.entity.page.PShebao;
 import com.chaoxing.oa.entity.page.PShebaoType;
+import com.chaoxing.oa.entity.page.PWagesDate;
 import com.chaoxing.oa.entity.page.Pwages;
 import com.chaoxing.oa.entity.page.QueryForm;
 import com.chaoxing.oa.entity.page.SessionInfo;
@@ -36,13 +42,13 @@ import com.chaoxing.oa.entity.po.OrganizationStructure;
 import com.chaoxing.oa.entity.po.Shebao;
 import com.chaoxing.oa.entity.po.ShebaoType;
 import com.chaoxing.oa.entity.po.WageDistribution;
+import com.chaoxing.oa.entity.po.WagesDate;
 import com.chaoxing.oa.entity.po.view.RenshiUserName;
 import com.chaoxing.oa.entity.po.view.SheBaoSummary;
 import com.chaoxing.oa.service.EmployeeInfoServiceI;
 import com.chaoxing.oa.util.ResourceUtil;
-import com.sun.accessibility.internal.resources.accessibility;
 
-import sun.util.logging.resources.logging;
+import sun.net.www.content.audio.wav;
 
 @Service("employeeInfoService")
 public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
@@ -59,8 +65,16 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 	private BaseDaoI<SheBaoSummary> shebaoSummaryDao;
 	private BaseDaoI<KaoQin> kaoqinDao;
 	private BaseDaoI<MonthWages> monthWagesDao;
+	private BaseDaoI<WagesDate> wagesDateDao;
 
 	
+	public BaseDaoI<WagesDate> getWagesDateDao() {
+		return wagesDateDao;
+	}
+	@Autowired
+	public void setWagesDateDao(BaseDaoI<WagesDate> wagesDateDao) {
+		this.wagesDateDao = wagesDateDao;
+	}
 	public BaseDaoI<MonthWages> getMonthWagesDao() {
 		return monthWagesDao;
 	}
@@ -721,6 +735,114 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		}
 	}
 	
+	@Override
+	public Map<String, Object> queryWagesDate(QueryForm queryForm) {
+		List<PWagesDate> pWagesDates = new ArrayList<PWagesDate>();
+		Map<String, Object> wagesDateInfos = new HashMap<String, Object>();
+		Map<String, Object> params = new HashMap<String, Object>();
+		StringBuffer hql = new StringBuffer("from WagesDate t where 1=1 ");
+		Calendar calendar = Calendar.getInstance();
+//		calendar.add(Calendar.MONTH, -1);
+		if(queryForm.getWagesMonth()!=null && queryForm.getWagesMonth()!=""){
+			hql.append(" and date like :date ");
+			params.put("date",queryForm.getWagesMonth() + "%");
+		}else{
+			String month = (new SimpleDateFormat("yyyy.MM").format(calendar.getTime())).toString();
+			hql.append(" and date like :date ");
+			params.put("date",month + "%");
+		}
+		String sort = "date";
+		String order = SysConfig.ASC;
+		if(queryForm.getSort() != null){
+			sort = queryForm.getSort();
+			if(queryForm.getOrder() != null){
+				order = queryForm.getOrder();
+			}
+		}
+		hql.append(" order by t." + sort + " " + order);
+		int intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
+		int pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+		List<WagesDate> wagesDates = wagesDateDao.find(hql.toString(), params, intPage, pageSize);
+		for (WagesDate wagesDate : wagesDates) {
+			PWagesDate pWagesDate = new PWagesDate();
+			BeanUtils.copyProperties(wagesDate, pWagesDate);
+			pWagesDates.add(pWagesDate);
+		}
+		long total = getWagesDateCount(hql.toString(),params);
+		wagesDateInfos.put("total", total);
+		wagesDateInfos.put("rows", pWagesDates);
+		return wagesDateInfos;
+	}
+	
+	public long getWagesDateCount(String hql,Map<String,Object> params){
+		StringBuffer hqll = new StringBuffer("select count(*) from WagesDate t where ");
+		hqll.append(hql.split("where")[1]);
+		return wagesDateDao.count(hqll.toString(), params);
+	}
+	
+	
+	@Override
+	public int updateWagesDate(PWagesDate pwagesDate) {
+		WagesDate wagesDate = new WagesDate();
+		BeanUtils.copyProperties(pwagesDate, wagesDate);
+		try {
+			wagesDateDao.saveOrUpdate(wagesDate);
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	@Override
+	public int updateWagesDates(List<PWagesDate> pwagesDates) {
+		int saveNum = 0;
+		for (PWagesDate pWagesDate : pwagesDates) {
+			saveNum +=updateWagesDate(pWagesDate);
+		}
+		return saveNum;
+	}
+	
+	@Override
+	public int deleteWagesDate(PWagesDate pwagesDate) {
+		if(pwagesDate!=null&&pwagesDate.getDate()!=null){
+			WagesDate wagesDate = new WagesDate();
+			BeanUtils.copyProperties(pwagesDate, wagesDate);
+			try {
+				wagesDateDao.delete(wagesDate);
+				return 1;
+			} catch (Exception e) {
+				return 0;
+			}
+		}
+		return 0;
+	}
+	
+	@Override
+	public int generateKaoqin(String date, String preDate) {
+		Map<String,Object> params = new HashMap<String, Object>();
+		params.put("date1", date);
+		params.put("date2", preDate);
+		String sql = "{CALL update_kaoqin_pr( :date1, :date2)}";
+		try {
+			objectDao.prepareCall(sql, params);
+			return 1;
+		} catch (HibernateException e) {
+			return 0;
+		}
+	}
+	
+	
+	
+	@Override
+	public int generateMonthWages() {
+		String sql = "{CALL update_monthWages_pr()}";
+		try {
+			objectDao.prepareCall(sql, null);
+			return 1;
+		} catch (HibernateException e) {
+			return 0;
+		}
+	}
 	protected void addCondition(StringBuffer hql, QueryForm queryForm, Map<String, Object> params) {
 		if(queryForm != null){
 			if(queryForm.getConfigurable() != null && queryForm.getConfigurable() != ""){

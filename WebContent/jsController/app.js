@@ -6,6 +6,27 @@ var session = {
     user : {},
 //    testText : '我在这里存放全局缓存数据'
 };
+function generateWagesDate(){
+	  var calendar = $('#calendar_wagesDate').calendar('options');
+	    var year = calendar.year;
+	    var month = calendar.month;
+	    var lastDay = new Date(year,month,0);
+	    var dayLength = lastDay.getDate();
+	    var day = {};
+	    var monthDay = session.monthDay =  [];
+	    var lizhiDay = 0;
+	    for(var i = 1;i<=dayLength;i++){
+	        day = new Date(year,month - 1,i)
+	        if(day.getDay()!=6&&day.getDay()!=0){
+	        	lizhiDay ++;
+	        }
+	        var data = {};
+	        data.date = day.getFullYear() + "." + (day.getMonth()<9?'0'+(day.getMonth()+1):day.getMonth()+1) + "." + day.getDate();
+	        data.lizhiDay = lizhiDay;
+	        data.ruzhiDay = 21 - lizhiDay;
+	        monthDay.push(data);
+	    }
+}
 function init(){
 	$.post('employee/getCompany.action',{},function(result){
 		var result =  eval("(" + result + ")");
@@ -434,15 +455,15 @@ var confirmDialog = {
 			});
 			return confirmId;
 		},
-		createDialog : function(message, callback, cancelCallback){
-			var confirmId = 'confirm_dialog';
+		createDialog : function(message, callback, cancelCallback, confirmId){
+			var confirmId = confirmId?confirmId:'confirm_dialog';
 			var dialog = $('<div>');
 			dialog.attr("style","display:none");
 			dialog.attr("id",confirmId);
 			dialog.append('<div><h3 style="text-align: center;margin-top: 46px;">'+ message + '</h3></div>');
 			dialog.addClass('easyui-dialog');
 			$("body").append(dialog);//将dialog放置在web中
-			$('#confirm_dialog').dialog({
+			$('#' + confirmId).dialog({
 			    title: '消息提示',
 			    width: 400,
 			    height: 200,

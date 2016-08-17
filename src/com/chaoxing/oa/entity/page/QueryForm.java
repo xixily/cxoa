@@ -71,6 +71,7 @@ public class QueryForm {
 	private String secondLevel;//二级
 	private String thirdLevel;//三级
 	private String fourthLevel;//四级（小组）
+	private String wagesMonth;//工作日计算表月份
 	/**
 	 * 可配置项
 	 */
@@ -476,6 +477,12 @@ public class QueryForm {
 	}
 	public void setLevelc(String levelc) {
 		this.levelc = levelc;
+	}
+	public String getWagesMonth() {
+		return wagesMonth;
+	}
+	public void setWagesMonth(String wagesMonth) {
+		this.wagesMonth = wagesMonth;
 	}
 	@Override
 	public String toString() {
