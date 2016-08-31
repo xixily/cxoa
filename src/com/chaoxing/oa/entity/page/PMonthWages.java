@@ -66,6 +66,7 @@ public class PMonthWages {
 	private Float fakuan;//罚款
 	private Float jiangjin;//奖金
 	private Float bufaSalary;//补发工资
+	private Double lishiSalary;//历史工资
 	public Integer getId() {
 		return id;
 	}
@@ -233,6 +234,12 @@ public class PMonthWages {
 	}
 	public String getKaoQinremarks() {
 		return kaoQinremarks;
+	}
+	public Double getLishiSalary() {
+		return lishiSalary;
+	}
+	public void setLishiSalary(Double lishiSalary) {
+		this.lishiSalary = lishiSalary;
 	}
 	public void setId(Integer id) {
 		this.id = id;

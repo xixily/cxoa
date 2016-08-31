@@ -3,24 +3,26 @@
 	<table>
 		<tr>
 			<td>姓名:</td>
-			<td><input name="username" class="easyui-textbox" /></td>
+			<td><input name="username" class="easyui-textbox" style="width:100px;" /></td>
 			<td>公司名称:</td>
 			<td>
                      <input class="easyui-combobox" name="company" data-options="
                     url: 'employee/getCompany.action',
                     valueField:'cmopany',
                     textField:'cmopany',
-                    " />
+                    " style="width:100px;" />
             </td>
-            <td>入职时间:</td>
-			<td><input name="hiredate" class="easyui-datebox" style="width:160px" />
+            <td>小组:</td>
+			<td><input name="fourthLevel" class="f1 easyui-textbox" style="width:100px"/></td>
+            <td>入职报表:</td>
+			<td><input name="ruzhiReport" class="easyui-datebox" style="width:100px" />
 			</td>
 
-			<td>离职时间:</td>
-			<td><input name="leaveTime" class="easyui-datebox" style="width:160px" /></td>
+			<td>离职报表:</td>
+			<td><input name="lizhiReport" class="easyui-datebox" style="width:100px" /></td>
 
-			<td>转正时间:</td>
-			<td><input name="zhuanzhengTime" class="easyui-datebox" style="width:160px" /></td>
+			<td>转正报表:</td>
+			<td><input name="zhuanzhengReport" class="easyui-datebox" style="width:100px" /></td>
             <td></td>
             <td>
             <input class="easyui-linkbutton do_action" appaction="employee.kaoqin.queryKaoqin"  type="button" value="查找"

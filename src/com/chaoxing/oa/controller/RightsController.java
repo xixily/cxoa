@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chaoxing.oa.entity.page.PMenu;
 import com.chaoxing.oa.entity.page.SessionInfo;
-import com.chaoxing.oa.service.RoleMenuServiceI;
+import com.chaoxing.oa.service.RoleMenuService;
 import com.chaoxing.oa.util.ResourceUtil;
 
 @Controller
 @RequestMapping("/menu")
 public class RightsController {
-	private RoleMenuServiceI menuService;
+	private RoleMenuService menuService;
 	
-	public RoleMenuServiceI getMenuService() {
+	public RoleMenuService getMenuService() {
 		return menuService;
 	}
 	@Autowired
-	public void setMenuService(RoleMenuServiceI menuService) {
+	public void setMenuService(RoleMenuService menuService) {
 		this.menuService = menuService;
 	}
 
@@ -36,7 +36,8 @@ public class RightsController {
 		if(role==0){
 			return menuService.findAllMenu();
 		}
-		return menuService.findMenu(role);
+		return menuService.findMenuByRole(role,session);
+//		return menuService.findMenu(role,session);
 	}
 	
 }

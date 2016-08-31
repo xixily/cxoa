@@ -81,6 +81,7 @@ public class MonthWages {
 	private Float fakuan;//罚款
 	private Float jiangjin;//奖金
 	private Float bufaSalary;//补发工资
+	private Double lishiSalary;//历史工资
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -343,6 +344,13 @@ public class MonthWages {
 	@Column(name = "补发工资", columnDefinition = "float(10,2) default 0.00")
 	public Float getBufaSalary() {
 		return bufaSalary;
+	}
+	@Column(name = "历史工资")
+	public Double getLishiSalary() {
+		return lishiSalary;
+	}
+	public void setLishiSalary(Double lishiSalary) {
+		this.lishiSalary = lishiSalary;
 	}
 	public void setFakuan(Float fakuan) {
 		this.fakuan = fakuan;

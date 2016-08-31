@@ -36,6 +36,7 @@ public class Pwages {
 	private Integer internalNumber;//内部编号
 	private Double sickLleaveTotal;//病假累计
 	private String rubaoTime;//计划入保时间
+	private Double lishiSalary;//历史工资
 	public Integer getId() {
 		return id;
 	}
@@ -128,6 +129,13 @@ public class Pwages {
 	}
 	public Double getSickLleaveTotal() {
 		return sickLleaveTotal;
+	}
+	
+	public Double getLishiSalary() {
+		return lishiSalary;
+	}
+	public void setLishiSalary(Double lishiSalary) {
+		this.lishiSalary = lishiSalary;
 	}
 	public void setId(Integer id) {
 		this.id = id;

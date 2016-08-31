@@ -18,8 +18,9 @@ import com.chaoxing.oa.entity.page.PShebaoType;
 import com.chaoxing.oa.entity.page.PWagesDate;
 import com.chaoxing.oa.entity.page.Pwages;
 import com.chaoxing.oa.entity.page.QueryForm;
+import com.chaoxing.oa.entity.po.UserName;
 
-public interface EmployeeInfoServiceI {
+public interface EmployeeInfoService {
 	public List<PRenshiEmployee> getRenshiUserName();
 
 	public Map<String, Object> getRenshiUserName(QueryForm queryForm, HttpSession session);
@@ -99,4 +100,7 @@ public interface EmployeeInfoServiceI {
 	public int generateKaoqin(String date, String preDate);
 
 	public int generateMonthWages();
+
+	public UserName getUserInfo(QueryForm queryForm);
+
 }

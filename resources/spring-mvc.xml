@@ -80,10 +80,12 @@
 						<value>/user/login.action</value>
 						<value>/user/logout.action</value>
 						<value>/menu/allMenu.action</value>
+						<value>/system/allMenu.action</value>
 						<value>/employee/getFourThLevel.action</value>
 						<value>/employee/getOStruct.action</value>
 						<value>/employee/getCompany.action</value>
 						<value>/employee/getInsuranceCompany.action</value>
+						<value>/system/queryMenus.action</value>
 					</list>
 				</property>
 			</bean>

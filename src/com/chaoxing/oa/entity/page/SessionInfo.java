@@ -9,7 +9,9 @@ public class SessionInfo implements java.io.Serializable {
 	private String email;//邮箱
 	private String password;//用户密码
 	private String username;//用户姓名
+	private String sex;//性别
 	private int roleId;//权限
+	private int roleLevel;
 	private String position;//职位
 	private String company;//公司名称
 	private String identityCard;//身份号
@@ -17,9 +19,7 @@ public class SessionInfo implements java.io.Serializable {
 	private String nation;//民族
 	private String degree;//学历
 	private String phoneNumber;//电话号码
-	private String sex;//性别
 	private int departmentId;//部门ID
-	private int paySecrecy;//工资保密
 	private String graduatedSchool;//毕业学校
 	private String major;//专业
 	private String level;//级别
@@ -68,9 +68,6 @@ public class SessionInfo implements java.io.Serializable {
 	public int getDepartmentId() {
 		return departmentId;
 	}
-	public int getPaySecrecy() {
-		return paySecrecy;
-	}
 	public String getGraduatedSchool() {
 		return graduatedSchool;
 	}
@@ -107,6 +104,13 @@ public class SessionInfo implements java.io.Serializable {
 	public int getRoleId() {
 		return roleId;
 	}
+	
+	public int getRoleLevel() {
+		return roleLevel;
+	}
+	public void setRoleLevel(int roleLevel) {
+		this.roleLevel = roleLevel;
+	}
 	public void setRoleId(int roleId) {
 		this.roleId = roleId;
 	}
@@ -133,9 +137,6 @@ public class SessionInfo implements java.io.Serializable {
 	}
 	public void setDepartmentId(int departmentId) {
 		this.departmentId = departmentId;
-	}
-	public void setPaySecrecy(int paySecrecy) {
-		this.paySecrecy = paySecrecy;
 	}
 	public void setGraduatedSchool(String graduatedSchool) {
 		this.graduatedSchool = graduatedSchool;

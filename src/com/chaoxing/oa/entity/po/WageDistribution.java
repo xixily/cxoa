@@ -56,6 +56,7 @@ public class WageDistribution {
 	private Integer internalNumber;//内部编号
 	private Double sickLleaveTotal;//病假累计
 	private String rubaoTime;//入保时间
+	private Double lishiSalary;//历史工资
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -200,6 +201,13 @@ public class WageDistribution {
 	@Column(name = "入保时间")
 	public String getRubaoTime() {
 		return rubaoTime;
+	}
+	@Column(name = "历史工资")
+	public Double getLishiSalary() {
+		return lishiSalary;
+	}
+	public void setLishiSalary(Double lishiSalary) {
+		this.lishiSalary = lishiSalary;
 	}
 	public void setRubaoTime(String rubaoTime) {
 		this.rubaoTime = rubaoTime;

@@ -23,7 +23,6 @@ public class RenshiUserName implements Serializable {
 	private int id;//ID
 	private String username;//用户姓名
 	private String password;//用户密码
-	private int rights;//权限
 	private int departmentId;//部门ID
 	private String position;//职位
 	private String sex;//性别
@@ -73,6 +72,7 @@ public class RenshiUserName implements Serializable {
 	private String email;//邮箱
 	private String ifSecret;//是否保密
 	private String maritalStatus;//婚姻状况
+	private int roleId;//角色
 	
 	@Column(name="人事权限")
 	public String getRenshiRight() {
@@ -160,13 +160,6 @@ public class RenshiUserName implements Serializable {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	@Column(name="权限")
-	public int getRights() {
-		return rights;
-	}
-	public void setRights(int rights) {
-		this.rights = rights;
 	}
 	@Column(name="部门ID")
 	public int getDepartmentId() {
@@ -511,6 +504,13 @@ public class RenshiUserName implements Serializable {
 	}
 	public void setMaritalStatus(String maritalStatus) {
 		this.maritalStatus = maritalStatus;
+	}
+	@Column(name="角色")
+	public int getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 	
 }

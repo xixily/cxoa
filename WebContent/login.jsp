@@ -33,7 +33,7 @@ $(document).ready(function () {
                 </tr>
                 <tr>
                     <td>密码:</td>
-                    <td><input class="easyui-textbox" type="password" ><span color="red">${password_login_error }</span></td>
+                    <td><input name="password" class="easyui-textbox" type="password"><span style="color:red">${password_login_error }</span></td>
                 </tr>
             </table>
             <input style="margin-left:40px;"  type="submit" value="登陆">

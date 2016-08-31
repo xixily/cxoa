@@ -106,7 +106,7 @@ public class UserName implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	@Column(name = "权限", updatable = false)
+	@Column(name = "角色", updatable = false)
 	public int getRoleId() {
 		return roleId;
 	}

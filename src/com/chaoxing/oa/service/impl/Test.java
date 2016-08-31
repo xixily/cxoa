@@ -1,5 +1,6 @@
 package com.chaoxing.oa.service.impl;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,15 +14,32 @@ import com.chaoxing.oa.entity.page.PWagesDate;
 public class Test {
 
 	public static void main(String[] args) {
-		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM");
+		
+		  //递归显示C盘下所有文件夹及其中文件
+		  File root = new File("d:/测试用");
+		  try {
+			showAllFiles(root);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+//		int[] array = new int[10];
+//		for (int i = 0; i < array.length; i++) {
+//			System.out.println(array[i]);
+//		}
+//		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM");
 //		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
 //		Date day = new Date();
-		Calendar cal = Calendar.getInstance();
+//		Calendar cal = Calendar.getInstance();
+//		System.out.println(cal.get(Calendar.DATE));
+//		List<PWagesDate> ps = getWagesDate(2016,6);
+//		for (PWagesDate pWagesDate : ps) {
+//			System.out.println(pWagesDate);
+//		}
 //		System.out.println(cal.get(Calendar.MONTH)+1);
 //		System.out.println(cal.get(Calendar.YEAR));
-		cal.add(Calendar.MONTH, -1);
+//		cal.add(Calendar.MONTH, -1);
 //		System.out.println(df.format(new Date()));
-		System.out.println(df.format(cal.getTime()));
+//		System.out.println(df.format(cal.getTime()));
 //		String dd = "2016.08.01";
 //		System.out.println(dd.substring(0, 7));
 //		Calendar cal = Calendar.getInstance();
@@ -56,26 +74,56 @@ public class Test {
 //        }    	
 	}
 	 private static List<PWagesDate> getWagesDate(int year,int month){
-		 	List<PWagesDate> pwagesDates = new ArrayList<PWagesDate>();
+		 List<PWagesDate> pwagesDates = new ArrayList<PWagesDate>();
+		 	int[] days = new int[32];
 	        SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
 	        Calendar cal = Calendar.getInstance();    
 	        cal.set(Calendar.YEAR, year);    
 	        cal.set(Calendar.MONTH,  month - 1);    
 	        cal.set(Calendar.DATE, 1);    
 	        int i = 0;
-	        while(cal.get(Calendar.YEAR) == year &&     
-	                cal.get(Calendar.MONTH) < month){    
-	            int day = cal.get(Calendar.DAY_OF_WEEK);    
-	            PWagesDate pwagesDate = new PWagesDate();    
-	            if(!(day == Calendar.SUNDAY || day == Calendar.SATURDAY)){
-	            	i++;
-	            }
-	            pwagesDate.setDate(df.format(cal.getTime()));
-            	pwagesDate.setRuzhiDay(22-i > 0?22-i:1);
-            	pwagesDate.setLizhiDay(i-1>21?21:i-1);
-            	pwagesDates.add(pwagesDate);
-	            cal.add(Calendar.DATE, 1);    
-	        }    
-	        return pwagesDates;    
-	    }  
+	        while(cal.get(Calendar.YEAR) == year && cal.get(Calendar.MONTH) < month){
+	        	int day = cal.get(Calendar.DAY_OF_WEEK);
+	        	if(!(day == Calendar.SUNDAY || day == Calendar.SATURDAY)){
+	        		i++;
+	        		}
+	        	if(i==0){
+	        		days[cal.get(Calendar.DATE)] = 21;
+	        		}
+	        	else{
+	        		days[cal.get(Calendar.DATE)] = 22-i > 0?22-i:0;
+	        		}
+	        	cal.add(Calendar.DATE, 1);
+	        	}
+	        cal.add(Calendar.DATE, -1);
+	        i = 0;
+	        while(cal.get(Calendar.YEAR) == year && cal.get(Calendar.MONTH) == (month-1)){
+	        	PWagesDate pwagesDate = new PWagesDate();
+	        	int day = cal.get(Calendar.DAY_OF_WEEK);
+	        	if(!(day == Calendar.SUNDAY || day == Calendar.SATURDAY)){
+	        		i++;
+	        		}
+	        	pwagesDate.setDate(df.format(cal.getTime()));
+	        	if(i==0){
+	        		pwagesDate.setLizhiDay(21);
+	        		}else{
+	        			pwagesDate.setLizhiDay(22-i > 0?22-i:0);
+	        			}
+	        	pwagesDate.setRuzhiDay(days[cal.get(Calendar.DATE)]);
+	        	pwagesDates.add(pwagesDate);
+	        	cal.add(Calendar.DATE, -1);
+	        	}
+	        return pwagesDates; 
+	    }
+	 final static void showAllFiles(File dir) throws Exception{
+		  File[] fs = dir.listFiles();
+		  for(int i=0; i<fs.length; i++){
+		   System.out.println(fs[i].getAbsolutePath());
+		   if(fs[i].isDirectory()){
+		    try{
+		     showAllFiles(fs[i]);
+		    }catch(Exception e){}
+		   }
+		  }
+		 }
 }

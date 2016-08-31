@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -73,17 +74,20 @@ public class UserController {
 	@RequestMapping(value="/login")
 	public ModelAndView login(QueryForm queryForm, HttpServletRequest request, HttpSession session, Model model ){
 		ModelAndView modelView = new ModelAndView("login.jsp");
-		if(queryForm.getEmail() == null){
-//			if(queryForm.getUsername() == null || queryForm.getPassword() == null){
+//		if(queryForm.getEmail() == null){
+//		System.out.println(queryForm);
+		if(queryForm.getEmail() == null||queryForm.getEmail().equals("")|| queryForm.getPassword() == null||queryForm.getPassword().equals("")){
 			modelView.setViewName("login");
 			modelView.addObject("user_login_error", "请您输入用户名或者密码");
 			return modelView;
 		}
 		String password = queryForm.getPassword();
+		System.out.println("client password:" + password);
 		SessionInfo sessionInfo = userService.findUser(queryForm);
 		if(null != sessionInfo){
-			System.out.println(sessionInfo.getPassword());
-			if(password == sessionInfo.getPassword()){
+			System.out.println("database password:"+sessionInfo.getPassword());
+			if(password.equals(sessionInfo.getPassword())){
+				sessionInfo.setResourceUrls(userService.finRoleResoures(sessionInfo.getRoleId()));
 				sessionInfo.setIp(IpUtil.getIpAddr(request));
 				session.setAttribute(ResourceUtil.getSessionInfoName(), sessionInfo);
 				modelView.setViewName("redirect:/index.jsp");
@@ -156,6 +160,15 @@ public class UserController {
 	public Json updateUserName(PUserName username, HttpSession session) {
 		Json result = new Json();
 //		long r = 2;
+		System.out.println("是否保密:"+username.getIfSecret());
+		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
+		if(sessionInfo.getRoleId()<=1 || sessionInfo.getRoleId()==100){
+			System.out.println("是否保密：" + username.getIfSecret());
+			if(username.getIfSecret()==null){
+				username.setIfSecret("off");
+			}
+			userService.updateSecret(username);
+		}
 		long r = userService.updateUserName(username);
 		if (r != -1) {
 			result.setSuccess(true);

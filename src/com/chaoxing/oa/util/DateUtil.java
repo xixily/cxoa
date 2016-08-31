@@ -112,33 +112,93 @@ public class DateUtil {
 	 * @param month
 	 * @return
 	 */
-	public static List<PWagesDate> getWagesDate(int year,int month){
-	 	List<PWagesDate> pwagesDates = new ArrayList<PWagesDate>();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
-        Calendar cal = Calendar.getInstance();    
-        cal.set(Calendar.YEAR, year);    
-        cal.set(Calendar.MONTH,  month - 1);    
-        cal.set(Calendar.DATE, 1);    
-        int i = 0;
-        while(cal.get(Calendar.YEAR) == year &&     
-                cal.get(Calendar.MONTH) < month){    
-            int day = cal.get(Calendar.DAY_OF_WEEK);    
-            PWagesDate pwagesDate = new PWagesDate();    
-            if(!(day == Calendar.SUNDAY || day == Calendar.SATURDAY)){
-            	i++;
-            }
-            pwagesDate.setDate(df.format(cal.getTime()));
-            if(i==0){
-            	pwagesDate.setRuzhiDay(21);
-            	pwagesDate.setLizhiDay(0);
-            }else{
-            	pwagesDate.setRuzhiDay(22-i > 0?22-i:1);
-            	pwagesDate.setLizhiDay(i-1>21?21:i-1);
-            }
-        	pwagesDates.add(pwagesDate);
-            cal.add(Calendar.DATE, 1);    
-        }    
-        return pwagesDates;    
-    } 
-
+	 public static List<PWagesDate> getWagesDate(int year,int month){
+		 List<PWagesDate> pwagesDates = new ArrayList<PWagesDate>();
+		 	int[] days = new int[32];
+	        SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+	        Calendar cal = Calendar.getInstance();    
+	        cal.set(Calendar.YEAR, year);    
+	        cal.set(Calendar.MONTH,  month - 1);    
+	        cal.set(Calendar.DATE, 1);    
+	        int i = 0;
+	        while(cal.get(Calendar.YEAR) == year && cal.get(Calendar.MONTH) < month){
+	        	int day = cal.get(Calendar.DAY_OF_WEEK);
+	        	if(!(day == Calendar.SUNDAY || day == Calendar.SATURDAY)){
+	        		i++;
+	        		}
+	        	if(i==0){
+	        		days[cal.get(Calendar.DATE)] = 21;
+	        		}
+	        	else{
+	        		days[cal.get(Calendar.DATE)] = 22-i > 0?22-i:0;
+	        		}
+	        	cal.add(Calendar.DATE, 1);
+	        	}
+	        cal.add(Calendar.DATE, -1);
+	        i = 0;
+	        while(cal.get(Calendar.YEAR) == year && cal.get(Calendar.MONTH) == (month-1)){
+	        	PWagesDate pwagesDate = new PWagesDate();
+	        	int day = cal.get(Calendar.DAY_OF_WEEK);
+	        	if(!(day == Calendar.SUNDAY || day == Calendar.SATURDAY)){
+	        		i++;
+	        		}
+	        	pwagesDate.setDate(df.format(cal.getTime()));
+	        	if(i==0){
+	        		pwagesDate.setLizhiDay(21);
+	        		}else{
+	        			pwagesDate.setLizhiDay(22-i > 0?22-i:0);
+	        			}
+	        	pwagesDate.setRuzhiDay(days[cal.get(Calendar.DATE)]);
+	        	pwagesDates.add(pwagesDate);
+	        	cal.add(Calendar.DATE, -1);
+	        	}
+	        return pwagesDates; 
+	    }
+//	public static List<PWagesDate> getWagesDate(int year,int month){
+//	 	List<PWagesDate> pwagesDates = new ArrayList<PWagesDate>();
+//	 	int[] days = new int[31];
+//        SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+//        Calendar cal = Calendar.getInstance();    
+//        cal.set(Calendar.YEAR, year);    
+//        cal.set(Calendar.MONTH,  month - 1);    
+//        cal.set(Calendar.DATE, 1);    
+//        int i = 0;
+//        while(cal.get(Calendar.YEAR) == year && cal.get(Calendar.MONTH) < month){
+//        	int day = cal.get(Calendar.DAY_OF_WEEK);
+//        	PWagesDate pwagesDate = new PWagesDate();
+//        	if(!(day == Calendar.SUNDAY || day == Calendar.SATURDAY)){
+//        		i++;
+//        		}
+//        	pwagesDate.setDate(df.format(cal.getTime()));
+//        	if(i==0){
+//        		days[i] = 21;
+//        		pwagesDate.setRuzhiDay(21);
+//        		pwagesDate.setLizhiDay(0);
+//        		}else{
+//        			pwagesDate.setRuzhiDay(22-i > 0?22-i:0);
+//        			pwagesDate.setLizhiDay(i-1>21?21:i-1);
+//        			}
+//        	pwagesDates.add(pwagesDate);
+//        	cal.add(Calendar.DATE, 1);
+//        	}
+//        cal.add(Calendar.DATE, -1);
+//        while(cal.get(Calendar.YEAR) == year && cal.get(Calendar.MONTH) == (month-1)){
+//        	int day = cal.get(Calendar.DAY_OF_WEEK);
+//        	PWagesDate pwagesDate = new PWagesDate();
+//        	if(!(day == Calendar.SUNDAY || day == Calendar.SATURDAY)){
+//        		i++;
+//        		}
+//        	pwagesDate.setDate(df.format(cal.getTime()));
+//        	if(i==0){
+//        		pwagesDate.setRuzhiDay(21);
+//        		pwagesDate.setLizhiDay(0);
+//        		}else{
+//        			pwagesDate.setRuzhiDay(22-i > 0?22-i:0);
+//        			pwagesDate.setLizhiDay(i-1>21?21:i-1);
+//        			}
+//        	pwagesDates.add(pwagesDate);
+//        	cal.add(Calendar.DATE, 1);
+//        	}
+//        return pwagesDates;
+//        }
 }

@@ -3,6 +3,9 @@ package com.chaoxing.oa.service;
 
 import com.chaoxing.oa.entity.page.QueryForm;
 import com.chaoxing.oa.entity.page.SessionInfo;
+
+import java.util.List;
+
 import com.chaoxing.oa.entity.page.PUserName;
 
 public interface UserServiceI {
@@ -18,5 +21,9 @@ public interface UserServiceI {
 	public long updateUserName(PUserName username);
 
 	public long updateUserRole(PUserName username);
+
+	public int updateSecret(PUserName username);
+
+	public List<String> finRoleResoures(int roleId);
 
 }

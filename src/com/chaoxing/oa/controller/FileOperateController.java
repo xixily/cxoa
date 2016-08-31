@@ -16,14 +16,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.chaoxing.oa.entity.page.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.QueryForm;
-import com.chaoxing.oa.service.EmployeeInfoServiceI;
+import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.service.ExportExcelService;
 import com.chaoxing.oa.util.FileOperateUtil;
 
 @Controller
 @RequestMapping(value = "/file")
 public class FileOperateController {
-	private EmployeeInfoServiceI employeeInfoService;
+	private EmployeeInfoService employeeInfoService;
 	private ExportExcelService exportExcelService;
 	
 	
@@ -34,11 +34,11 @@ public class FileOperateController {
 	public void setExportDao(ExportExcelService exportExcelService) {
 		this.exportExcelService = exportExcelService;
 	}
-	public EmployeeInfoServiceI getEmployeeInfoService() {
+	public EmployeeInfoService getEmployeeInfoService() {
 		return employeeInfoService;
 	}
 	@Autowired
-	public void setEmployeeInfoServiceI(EmployeeInfoServiceI employeeInfoServiceI) {
+	public void setEmployeeInfoServiceI(EmployeeInfoService employeeInfoServiceI) {
 		this.employeeInfoService = employeeInfoServiceI;
 	}
 	

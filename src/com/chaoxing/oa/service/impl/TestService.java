@@ -17,9 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.chaoxing.oa.entity.page.PMenu;
 import com.chaoxing.oa.entity.page.PUlList;
 import com.chaoxing.oa.entity.page.QueryForm;
-import com.chaoxing.oa.entity.po.RoleRights;
+//import com.chaoxing.oa.entity.po.RoleRights;
 import com.chaoxing.oa.entity.po.UserName;
-import com.chaoxing.oa.service.RoleMenuServiceI;
+import com.chaoxing.oa.service.RoleMenuService;
 import com.chaoxing.oa.service.RoleRightsService;
 import com.chaoxing.oa.service.UserServiceI;
 
@@ -30,7 +30,7 @@ public class TestService {
 	@Resource(name = "userService")
 	private UserServiceI userService;
 	@Resource(name = "roleMenuService")
-	private RoleMenuServiceI roleMenuService;
+	private RoleMenuService roleMenuService;
 	@Resource(name = "roleRightsService")
 	private RoleRightsService roleRights;
 //	@Resource(name = "roleMenuService")
@@ -66,9 +66,9 @@ public class TestService {
 //					}
 //				}
 //			}
-			List<Object> lists = roleRights.getObjectList(1);
-			List<RoleRights> list = roleRights.getRightsbyId(1);
-			List<RoleRights> list3 = roleRights.getRightsbyRoleId(1);
+//			List<Object> lists = roleRights.getObjectList(1);
+//			List<RoleRights> list = roleRights.getRightsbyId(1);
+//			List<RoleRights> list3 = roleRights.getRightsbyRoleId(1);
 //			for (RoleRights roleRights : list) {
 //				System.out.println(roleRights.getMenuId());
 //				System.out.println(roleRights.getMenuName());
@@ -79,17 +79,17 @@ public class TestService {
 //				System.out.println(roleRights.getMenuName());
 //				System.out.println(roleRights.getRoleId().getRoleId());
 //			}
-			RoleRights roleRight = list3.get(8);
-			roleRight.setMenuName("为什么更新不成功呢！");
-			RoleRights newRolerights = new RoleRights();
-			BeanUtils.copyProperties(roleRight, newRolerights);
+//			RoleRights roleRight = list3.get(8);
+//			roleRight.setMenuName("为什么更新不成功呢！");
+//			RoleRights newRolerights = new RoleRights();
+//			BeanUtils.copyProperties(roleRight, newRolerights);
 //			RoleRights rn = new RoleRights();
 //			rn.setMenuId(roleRight.getMenuId());
 //			rn.setMenuLevel(3);
 //			rn.setMenuName("更新一次");
 //			BeanUtils.copyProperties(rn, roleRight);
 //			roleRights.updateRoleRight(roleRight);
-			roleRights.addRoleRight(newRolerights);
+//			roleRights.addRoleRight(newRolerights);
 		} catch (Exception e) {
 		}
 		fail("======Not yet implemented=======");

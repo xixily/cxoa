@@ -71,7 +71,12 @@ public class QueryForm {
 	private String secondLevel;//二级
 	private String thirdLevel;//三级
 	private String fourthLevel;//四级（小组）
+	private String ruzhiReport;//入职报表
+	private String lizhiReport;//离职报表
+	private String zhuanzhengReport;//转正报表
 	private String wagesMonth;//工作日计算表月份
+	private String accountBank;//职工账号
+	private String account;//职工账号
 	/**
 	 * 可配置项
 	 */
@@ -282,6 +287,36 @@ public class QueryForm {
 	}
 	public String getDownLoadFileName() {
 		return downLoadFileName;
+	}
+	public String getRuzhiReport() {
+		return ruzhiReport;
+	}
+	public String getLizhiReport() {
+		return lizhiReport;
+	}
+	public String getZhuanzhengReport() {
+		return zhuanzhengReport;
+	}
+	public String getAccountBank() {
+		return accountBank;
+	}
+	public String getAccount() {
+		return account;
+	}
+	public void setAccountBank(String accountBank) {
+		this.accountBank = accountBank;
+	}
+	public void setAccount(String account) {
+		this.account = account;
+	}
+	public void setRuzhiReport(String ruzhiReport) {
+		this.ruzhiReport = ruzhiReport;
+	}
+	public void setLizhiReport(String lizhiReport) {
+		this.lizhiReport = lizhiReport;
+	}
+	public void setZhuanzhengReport(String zhuanzhengReport) {
+		this.zhuanzhengReport = zhuanzhengReport;
 	}
 	public void setPage(int page) {
 		this.page = page;
@@ -501,13 +536,16 @@ public class QueryForm {
 				+ signedTime + ", terminationTime=" + terminationTime + ", registeredAddress=" + registeredAddress
 				+ ", Postcode=" + Postcode + ", remarks=" + remarks + ", contractNumber=" + contractNumber
 				+ ", dueSocialSecurity=" + dueSocialSecurity + ", socialSecurityHospital=" + socialSecurityHospital
-				+ ", level=" + level + ", recruitmentSources=" + recruitmentSources + ", contractRenewal="
-				+ contractRenewal + ", originalNumber=" + originalNumber + ", secrecyAgreement=" + secrecyAgreement
-				+ ", reportForm=" + reportForm + ", panCard=" + panCard + ", leaveTime=" + leaveTime + ", workPlace="
-				+ workPlace + ", ifSecret=" + ifSecret + ", firstLevel=" + firstLevel + ", secondLevel=" + secondLevel
-				+ ", thirdLevel=" + thirdLevel + ", fourthLevel=" + fourthLevel + ", configurable=" + configurable
+				+ ", shebaoType=" + shebaoType + ", level=" + level + ", recruitmentSources=" + recruitmentSources
+				+ ", contractRenewal=" + contractRenewal + ", originalNumber=" + originalNumber + ", secrecyAgreement="
+				+ secrecyAgreement + ", reportForm=" + reportForm + ", panCard=" + panCard + ", leaveTime=" + leaveTime
+				+ ", workPlace=" + workPlace + ", ifSecret=" + ifSecret + ", firstLevel=" + firstLevel
+				+ ", secondLevel=" + secondLevel + ", thirdLevel=" + thirdLevel + ", fourthLevel=" + fourthLevel
+				+ ", ruzhiReport=" + ruzhiReport + ", lizhiReport=" + lizhiReport + ", zhuanzhengReport="
+				+ zhuanzhengReport + ", wagesMonth=" + wagesMonth + ", configurable=" + configurable
 				+ ", configurable_value=" + configurable_value + ", downLoadFileName=" + downLoadFileName + ", levelc="
 				+ levelc + "]";
 	}
-
+	
+	
 }

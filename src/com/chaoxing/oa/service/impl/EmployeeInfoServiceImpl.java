@@ -41,17 +41,18 @@ import com.chaoxing.oa.entity.po.MonthWages;
 import com.chaoxing.oa.entity.po.OrganizationStructure;
 import com.chaoxing.oa.entity.po.Shebao;
 import com.chaoxing.oa.entity.po.ShebaoType;
+import com.chaoxing.oa.entity.po.UserName;
 import com.chaoxing.oa.entity.po.WageDistribution;
 import com.chaoxing.oa.entity.po.WagesDate;
 import com.chaoxing.oa.entity.po.view.RenshiUserName;
 import com.chaoxing.oa.entity.po.view.SheBaoSummary;
-import com.chaoxing.oa.service.EmployeeInfoServiceI;
+import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.util.ResourceUtil;
 
 import sun.net.www.content.audio.wav;
 
 @Service("employeeInfoService")
-public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
+public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 
 	private BaseDaoI<RenshiUserName> userNameDao;
 	private BaseDaoI<Object> objectDao;
@@ -66,8 +67,16 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 	private BaseDaoI<KaoQin> kaoqinDao;
 	private BaseDaoI<MonthWages> monthWagesDao;
 	private BaseDaoI<WagesDate> wagesDateDao;
-
+	private BaseDaoI<UserName> useDao;
 	
+	
+	public BaseDaoI<UserName> getUseDao() {
+		return useDao;
+	}
+	@Autowired
+	public void setUseDao(BaseDaoI<UserName> useDao) {
+		this.useDao = useDao;
+	}
 	public BaseDaoI<WagesDate> getWagesDateDao() {
 		return wagesDateDao;
 	}
@@ -199,13 +208,12 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		StringBuffer hql = new StringBuffer("from RenshiUserName t where 1=1 ");
 		addCondition(hql, queryForm, params);
 		SessionInfo userInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
-		if(userInfo.getRoleId() > 1){
+		if(userInfo.getRoleId() > 1 && !(userInfo.getRoleId()==100)){
 			hql.append(" and t.renshiRight like :renshiRight ");
 			params.put("renshiRight", "%" + userInfo.getUsername() + "%");
 		}
 		String sort = "id";
 		String order = SysConfig.DESC;
-//		String order = SysConfig.ASC;
 		if(queryForm.getSort() != null){
 			sort = queryForm.getSort();
 			if(queryForm.getOrder() != null){
@@ -831,8 +839,6 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 		}
 	}
 	
-	
-	
 	@Override
 	public int generateMonthWages() {
 		String sql = "{CALL update_monthWages_pr()}";
@@ -843,6 +849,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 			return 0;
 		}
 	}
+	
 	protected void addCondition(StringBuffer hql, QueryForm queryForm, Map<String, Object> params) {
 		if(queryForm != null){
 			if(queryForm.getConfigurable() != null && queryForm.getConfigurable() != ""){
@@ -884,6 +891,24 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 			}if(queryForm.getHiredate() != null && queryForm.getHiredate() != ""){
 				hql.append(" and t.hiredate like :hiredate ");
 				params.put("hiredate", "%" + queryForm.getHiredate() + "%");
+			}if(queryForm.getRuzhiReport() != null && queryForm.getRuzhiReport() != ""){
+				hql.append(" and t.ruzhiReport like :ruzhiReport ");
+				params.put("ruzhiReport", "%" + queryForm.getRuzhiReport() + "%");
+			}if(queryForm.getLizhiReport() != null && queryForm.getLizhiReport() != ""){
+				hql.append(" and t.lizhiReport like :lizhiReport ");
+				params.put("lizhiReport", "%" + queryForm.getLizhiReport() + "%");
+			}if(queryForm.getZhuanzhengReport() != null && queryForm.getZhuanzhengReport() != ""){
+				hql.append(" and t.zhuanzhengReport like :zhuanzhengReport ");
+				params.put("zhuanzhengReport", "%" + queryForm.getZhuanzhengReport() + "%");
+			}if(queryForm.getAccount() != null && queryForm.getAccount() != ""){
+				hql.append(" and t.account like :account ");
+				params.put("account", "%" + queryForm.getAccount() + "%");
+			}if(queryForm.getAccountBank() != null && queryForm.getAccountBank() != ""){
+				hql.append(" and t.accountBank like :accountBank ");
+				params.put("accountBank", "%" + queryForm.getAccountBank() + "%");
+			}if(queryForm.getIdentityCard() != null && queryForm.getIdentityCard() != ""){
+				hql.append(" and t.identityCard like :identityCard ");
+				params.put("identityCard", "%" + queryForm.getIdentityCard() + "%");
 			}if(queryForm.getLevelc() != null ){
 				if(queryForm.getLevelc().equals("实习生")){
 					hql.append(" and t.level like :level ");
@@ -893,5 +918,10 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoServiceI {
 				}
 			}
 		}
+	}
+	@Override
+	public UserName getUserInfo(QueryForm queryform) {
+		
+		return null;
 	}
 }

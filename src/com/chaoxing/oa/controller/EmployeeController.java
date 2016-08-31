@@ -1,6 +1,5 @@
 package com.chaoxing.oa.controller;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -29,20 +28,21 @@ import com.chaoxing.oa.entity.page.PWagesDate;
 import com.chaoxing.oa.entity.page.Pwages;
 import com.chaoxing.oa.entity.page.Json;
 import com.chaoxing.oa.entity.page.QueryForm;
-import com.chaoxing.oa.service.EmployeeInfoServiceI;
+import com.chaoxing.oa.entity.page.SessionInfo;
+import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.util.DateUtil;
 import com.chaoxing.oa.util.ResourceUtil;
 
 @Controller
 @RequestMapping("/employee")
 public class EmployeeController {
-	private EmployeeInfoServiceI employeeInfoService;
+	private EmployeeInfoService employeeInfoService;
 	
-	public EmployeeInfoServiceI getEmployeeInfoService() {
+	public EmployeeInfoService getEmployeeInfoService() {
 		return employeeInfoService;
 	}
 	@Autowired
-	public void setEmployeeInfoServiceI(EmployeeInfoServiceI employeeInfoServiceI) {
+	public void setEmployeeInfoServiceI(EmployeeInfoService employeeInfoServiceI) {
 		this.employeeInfoService = employeeInfoServiceI;
 	}
 
@@ -111,12 +111,20 @@ public class EmployeeController {
 	
 	@RequestMapping(value = "/getWagesList")
 	@ResponseBody
-	public List<Pwages> getWagesList(QueryForm queryForm){
+	public List<Pwages> getWagesList(QueryForm queryForm, HttpSession session){
 //		Map<String, Object> result = new HashMap<String, Object>();
-		List<Pwages> wagesList = employeeInfoService.getWagesList(queryForm.getId());
-//		result.put("total", wagesList.size());
-//		result.put("rows", wagesList);
-		return wagesList;
+		if(queryForm.getId()!=0){
+			SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());	
+		if(sessionInfo.getRoleId()>1 && employeeInfoService.getUserInfo(queryForm).getIfSecret().equals("on")){
+			return null;
+		}else{
+			List<Pwages> wagesList = employeeInfoService.getWagesList(queryForm.getId());
+	//		result.put("total", wagesList.size());
+	//		result.put("rows", wagesList);
+			return wagesList;
+		}
+		}
+		return null;
 	}
 	
 	@RequestMapping(value = "/getWages")

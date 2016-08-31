@@ -4,11 +4,12 @@
 		<tr>
 			<td>菜单名称:</td>
 			<td>
-                     <input class="easyui-combobox" name="company" data-options="
+			<input class="easyui-textbox" name="menuName" style="width:100%" data-options="prompt:'菜单名称...'">
+             <!--         <input class="easyui-combobox" name="company" data-options="
                     url: 'system/getMenus.action',
                     valueField:'menuName',
                     textField:'menuName',
-                    " />
+                    " /> -->
             </td>
             <td></td>
             <td>

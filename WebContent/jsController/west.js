@@ -14,31 +14,29 @@ var west = {
 							selected : false,
 							content : '<ul id ="ulMenu_' + n.menuId + '"></ul>'
 						});
-//						console.log('获取UL小菜单');
 						west.getSmallMenus(n.uls, n.menuId);
 					} else {
 
 					}
 				});
+				$('#menu').accordion({
+					autoHeight : false,
+					navigator : true
+				});
 			}
 		});
-		$('#menu').accordion({
+		/*$('#menu').accordion({
 			autoHeight : false,
 			navigator : true
-		});
+		});*/
 	},
 	getSmallMenus : function(data, menuId, callback) {//获取ul小菜单
-//		console.log('获取小UL____tree===> o%' , data);
+		console.log(data);
 		$('#ulMenu_' + menuId).tree(
 				{
 					data : data,
 					onClick : function(node) {
 						if (node) {
-//							console.log('UL onClick事件');
-							/*openTab(node.text, node.url);*/
-//							console.log('======>>> o%', node);
-							/*west.openTab(node.text,
-									"layout/components/employeeInfo.jsp");*/
 							west.openTab(node.text, node.url);
 						}
 					}

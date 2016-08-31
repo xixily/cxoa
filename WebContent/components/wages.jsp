@@ -42,7 +42,7 @@
                     </td>
                     <td>工资总额:</td>
                     <td>
-                    <input class="easyui-numberbox" data-options="min:0,precision:2" name="salary" />
+                    <input id="total_salary" class="easyui-numberbox" data-options="min:0,precision:2" name="salary" />
                     </td>
                    
                     <td>保密补贴:</td>

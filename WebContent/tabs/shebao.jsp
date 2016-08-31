@@ -35,7 +35,7 @@
 				<tr>
 					<!-- <th data-options="field:'sid',width:40">id</th> -->
 					<!-- <th data-options="field:'company',width:120">公司名称</th> -->
-					<th data-options="field:'company',width:120,
+					<th data-options="field:'company',width:120,sortable : true,
                         editor:{
                             type:'combobox',
                             options:{
@@ -47,7 +47,7 @@
                             }
                         }">公司名称</th>
 					<!-- <th data-options="field:'shebaoType',width:100 ">社保类型</th> -->
-					<th data-options="field:'shebaoType',width:100,
+					<th data-options="field:'shebaoType',width:100,sortable : true,
 					formatter:function(value,row){
                             return row.shebaoType;
                         },

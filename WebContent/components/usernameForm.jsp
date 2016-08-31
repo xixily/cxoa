@@ -71,7 +71,15 @@
                     <td>岗位:</td><!-- 三级 -->
                     <td><input id="input_thirdLevel" class="easyui-textbox" type="text" name="thirdLevel" data-options="required:true" readonly="true"/></td>
                     <td>入职时间:</td>
-                    <td><input id="date_hiredate" class="easyui-datebox" type="text" name="hiredate" /></td>
+                    <td><input id="date_hiredate" class="easyui-datebox" type="text" name="hiredate"
+                    data-options = "onChange:function(newValue,oldValue){
+                    var date = new Date(newValue);
+                    date.setMonth(date.getMonth + 3);
+					var data = {};
+					data.zhuanzhengTime = (date.getFullYear()+ '.' +((date.getMonth()+1)<10?('0'+(date.getMonth()+1)):(date.getMonth()+1)) + '.' + (date.getDate()<10?('0'+date.getDate()):date.getDate()));
+                    $('#updatewages_form').form('load',data);
+                    }"
+                     /></td>
                     <td>离职证明:</td>
                     <td>
                     	<input class="easyui-combobox" name="leavingCertificate" data-options="
@@ -359,9 +367,9 @@
                     </td>
                     <td>离职报表</td>
                     <td><input class="easyui-textbox" type="text" name="lizhiReport" /></td>
-                    <c:if test="${sessionInfo.roleId <= 1}">
+                    <c:if test="${sessionInfo.roleId <= 1 || sessionInfo.roleId == 100}">
                     <td>工资保密</td>
-                    <td><input name="ifSecret" class="easyui-switchbutton" data-options="onText:'Yes',offText:'No'" onclick="employee.ifSecret"></td>
+                    <td><input id="user_ifSecret" name="ifSecret" class="easyui-switchbutton" data-options="onText:'是',offText:'否'" onclick="employee.ifSecret"></td>
                     </c:if>
                 </tr>
                 <tr>

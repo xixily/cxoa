@@ -1,6 +1,8 @@
 package com.chaoxing.oa.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -13,6 +15,7 @@ import com.chaoxing.oa.entity.page.QueryForm;
 import com.chaoxing.oa.entity.page.SessionInfo;
 import com.chaoxing.oa.entity.page.PUserName;
 import com.chaoxing.oa.entity.po.OrganizationStructure;
+import com.chaoxing.oa.entity.po.RoleResources;
 import com.chaoxing.oa.entity.po.UserName;
 import com.chaoxing.oa.service.UserServiceI;
 
@@ -23,8 +26,15 @@ public class UserServiceImpl implements UserServiceI {
 
 	private BaseDaoI<UserName> usernameDao;
 	private BaseDaoI<OrganizationStructure> ogsDao;
-
+	private BaseDaoI<RoleResources> roleReDao;
 	
+	public BaseDaoI<RoleResources> getRoleReDao() {
+		return roleReDao;
+	}
+	@Autowired
+	public void setRoleReDao(BaseDaoI<RoleResources> roleReDao) {
+		this.roleReDao = roleReDao;
+	}
 	public BaseDaoI<OrganizationStructure> getOgsDao() {
 		return ogsDao;
 	}
@@ -121,6 +131,7 @@ public class UserServiceImpl implements UserServiceI {
 	public long updateUserName(PUserName username) {
 		UserName u = new UserName();
 		BeanUtils.copyProperties(username, u);
+		System.out.println(u.getIfSecret());
 		try {
 			usernameDao.update(u);
 		} catch (Exception e) {
@@ -139,6 +150,27 @@ public class UserServiceImpl implements UserServiceI {
 		params.put("id", username.getId());
 //		StringBuffer hql = new StringBuffer("update UserName t set t.roleId = :roleId");
 		return usernameDao.executeHql("update UserName t set t.roleId = :roleId where id = :id", params);
+	}
+	@Override
+	public int updateSecret(PUserName username) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("ifSecret", username.getIfSecret());
+		params.put("id", username.getId());
+		System.out.println(username.getIfSecret());
+		String hql = "update UserName t set t.ifSecret = :ifSecret where id = :id";
+		return usernameDao.executeHql(hql, params);
+	}
+	
+	@Override
+	public List<String> finRoleResoures(int roleId) {
+		Map<String,Object> params = new HashMap<String, Object>();
+		List<String> lists = new ArrayList<String>();
+		params.put("roleId", roleId);
+		List<RoleResources> roleRes = roleReDao.find("from RoleResources t where t.roleId.roleId=:roleId",params);
+		for (RoleResources roleResources : roleRes) {
+			lists.add(roleResources.getUrl());
+		}
+		return lists;
 	}
 	
 }

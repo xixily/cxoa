@@ -22,5 +22,9 @@ public class PWagesDate {
 	public void setLizhiDay(int lizhiDay) {
 		this.lizhiDay = lizhiDay;
 	}
+	@Override
+	public String toString() {
+		return "PWagesDate [date=" + date + ", ruzhiDay=" + ruzhiDay + ", lizhiDay=" + lizhiDay + "]";
+	}
 	
 }
