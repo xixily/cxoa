@@ -63,6 +63,9 @@ public class PRenshiEmployee implements Serializable{
 	private String panCard;//办理工资卡
 	private String email;//邮箱
 	private String ifSecret;//是否保密
+	private String ruzhiReport;//入职报表
+	private String lizhiReport;//离职报表
+	private String zhuanzhengReport;//转正报表
 	
 	public int getId() {
 		return id;
@@ -292,6 +295,25 @@ public class PRenshiEmployee implements Serializable{
 	}
 	public String getIfSecret() {
 		return ifSecret;
+	}
+	
+	public String getRuzhiReport() {
+		return ruzhiReport;
+	}
+	public String getLizhiReport() {
+		return lizhiReport;
+	}
+	public String getZhuanzhengReport() {
+		return zhuanzhengReport;
+	}
+	public void setRuzhiReport(String ruzhiReport) {
+		this.ruzhiReport = ruzhiReport;
+	}
+	public void setLizhiReport(String lizhiReport) {
+		this.lizhiReport = lizhiReport;
+	}
+	public void setZhuanzhengReport(String zhuanzhengReport) {
+		this.zhuanzhengReport = zhuanzhengReport;
 	}
 	public void setRenshiRight(String renshiRight) {
 		this.renshiRight = renshiRight;

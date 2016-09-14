@@ -111,6 +111,7 @@
 					<th data-options="field:'kaoQinremarks',width:100,sortable:true,editor:{type:'numberbox'}">考勤备注</th>
 					<c:if test="${sessionInfo.roleId <= 1 || sessionInfo.roleId == 100}">
 					<th data-options="field:'lishiSalary',width:100,sortable:true">历史工资</th>
+					<th data-options="field:'lishiSalary',width:100,sortable:true">其他扣款</th>
 					</c:if>
 				</tr>
 			</thead>

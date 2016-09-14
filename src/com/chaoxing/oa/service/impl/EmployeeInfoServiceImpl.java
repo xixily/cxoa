@@ -316,8 +316,49 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 
 	@Override
 	public List<POStructs> getOStruct() {
+		return getOStruct(null,0);
+//		List<POStructs> listComs = new ArrayList<POStructs>();
+//		List<OrganizationStructure> lists = organizationStructureDao.find("from OrganizationStructure o");
+//		for (OrganizationStructure organizationStructure : lists) {
+//			if(organizationStructure!=null){
+//				POStructs postruct = new POStructs();
+//				if(organizationStructure.getSecondLevel().equals("离职")){
+//					organizationStructure.setFourthLevel("离职");
+//				}
+//				BeanUtils.copyProperties(organizationStructure, postruct);
+//				postruct.setDepartmentId(organizationStructure.getId());
+//				listComs.add(postruct);
+//			}
+//		}
+//		return listComs;
+	}
+
+	
+	
+	@Override
+	public List<POStructs> getOStruct(QueryForm queryForm,int isExport) {
 		List<POStructs> listComs = new ArrayList<POStructs>();
-		List<OrganizationStructure> lists = organizationStructureDao.find("from OrganizationStructure o");
+		StringBuffer hql = new StringBuffer("from OrganizationStructure t where 1=1");
+		Map<String,Object> params = new HashMap<String, Object>();
+		String sort = "id";
+		String order = SysConfig.DESC;
+		int intPage = 0;
+		int pageSize = 30000;//最多导出30000条数据
+		if(queryForm!=null){
+			addCondition(hql, queryForm, params);
+			if(queryForm.getSort() != null){
+				sort = queryForm.getSort();
+				if(queryForm.getOrder() != null){
+					order = queryForm.getOrder();
+				}
+			}
+			if(isExport == 0){
+				intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
+				pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+			}
+		}
+		hql.append(" order by t." + sort + " " + order);
+		List<OrganizationStructure> lists = organizationStructureDao.find(hql.toString(), params, intPage, pageSize);
 		for (OrganizationStructure organizationStructure : lists) {
 			if(organizationStructure!=null){
 				POStructs postruct = new POStructs();
@@ -331,7 +372,6 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		}
 		return listComs;
 	}
-
 	@Override
 	public List<PComboBox> getInsuranceCompany() {
 		List<Object> lists = objectDao.find("select distinct(u.insuranceCompany) from UserName u");
@@ -1018,62 +1058,150 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		if(queryForm != null){
 			if(queryForm.getConfigurable() != null && queryForm.getConfigurable() != ""){
 				if(queryForm.getConfigurable_value() != null && queryForm.getConfigurable_value() != ""){
-					hql.append(" and t." + queryForm.getConfigurable() + " like '%" + queryForm.getConfigurable_value() + "%' ");
+					if(queryForm.getConfigurable_value().equalsIgnoreCase("null")){
+						hql.append(" and t." + queryForm.getConfigurable() + "is null");
+					}else{
+						hql.append(" and t." + queryForm.getConfigurable() + " like '%" + queryForm.getConfigurable_value() + "%' ");
+					}
 				}
 			}
 			if(queryForm.getUsername() != null && queryForm.getUsername() != ""){
-				hql.append(" and t.username like :username ");
-				params.put("username", "%" + queryForm.getUsername() + "%");
+				if(queryForm.getUsername().equalsIgnoreCase("null")){
+					hql.append(" and t.username is null ");
+				}else{
+					hql.append(" and t.username like :username ");
+					params.put("username", "%" + queryForm.getUsername() + "%");
+				}
+			}
+			if(queryForm.getFirstLevel() != null && queryForm.getFirstLevel() != ""){
+				if(queryForm.getFirstLevel().equalsIgnoreCase("null")){
+					hql.append(" and t.firstLevel is null ");
+				}else{
+					hql.append(" and t.firstLevel like :firstLevel ");
+					params.put("firstLevel", "%" + queryForm.getFirstLevel() + "%");
+				}
+			}
+			if(queryForm.getSecondLevel() != null && queryForm.getSecondLevel() != ""){
+				if(queryForm.getSecondLevel().equalsIgnoreCase("null")){
+					hql.append(" and t.secondLevel is null ");
+				}else{
+					hql.append(" and t.secondLevel like :secondLevel ");
+					params.put("secondLevel", "%" + queryForm.getSecondLevel() + "%");
+				}
+			}
+			if(queryForm.getThirdLevel() != null && queryForm.getThirdLevel() != ""){
+				if(queryForm.getThirdLevel().equalsIgnoreCase("null")){
+					hql.append(" and t.thirdLevel is null ");
+				}else{
+					hql.append(" and t.thirdLevel like :thirdLevel ");
+					params.put("thirdLevel", "%" + queryForm.getThirdLevel() + "%");
+				}
 			}
 			if(queryForm.getFourthLevel() != null && queryForm.getFourthLevel() != ""){
-				hql.append(" and t.fourthLevel like :fourthLevel ");
-				params.put("fourthLevel", "%" + queryForm.getFourthLevel() + "%");
+				if(queryForm.getSecondLevel().equalsIgnoreCase("null")){
+					hql.append(" and t.fourthLevel is null ");
+				}else{
+					hql.append(" and t.fourthLevel like :fourthLevel ");
+					params.put("fourthLevel", "%" + queryForm.getFourthLevel() + "%");
+				}
 			}
 			if(queryForm.getCompany() != null && queryForm.getCompany() != ""){
-				hql.append(" and t.company like :company ");
-				params.put("company", "%" + queryForm.getCompany() + "%");
+				if(queryForm.getCompany().equalsIgnoreCase("null")){
+					hql.append(" and t.company is null ");
+				}else{
+					hql.append(" and t.company like :company ");
+					params.put("company", "%" + queryForm.getCompany() + "%");
+				}
 			}
 			if(queryForm.getInsuranceCompany() != null && queryForm.getInsuranceCompany() != ""){
-				hql.append(" and t.insuranceCompany like :insuranceCompany ");
-				params.put("insuranceCompany", "%" + queryForm.getInsuranceCompany() + "%");
+				if(queryForm.getInsuranceCompany().equalsIgnoreCase("null")){
+					hql.append(" and t.insuranceCompany is null ");
+				}else{
+					hql.append(" and t.insuranceCompany like :insuranceCompany ");
+					params.put("insuranceCompany", "%" + queryForm.getInsuranceCompany() + "%");
+				}
 			}
 			if(queryForm.getDegree() != null && queryForm.getDegree() != ""){
-				hql.append(" and t.degree like :degree ");
-				params.put("degree", "%" + queryForm.getDegree() + "%");
+				if(queryForm.getDegree().equalsIgnoreCase("null")){
+					hql.append(" and t.degree is null ");
+				}else{
+					hql.append(" and t.degree like :degree ");
+					params.put("degree", "%" + queryForm.getDegree() + "%");
+				}
 			}
 			if(queryForm.getHiredate() != null && queryForm.getHiredate() != ""){
-				hql.append(" and t.hiredate like :hiredate ");
-				params.put("hiredate", "%" + queryForm.getHiredate() + "%");
+				if(queryForm.getHiredate().equalsIgnoreCase("null")){
+					hql.append(" and t.hiredate is null ");
+				}else{
+					hql.append(" and t.hiredate like :hiredate ");
+					params.put("hiredate", "%" + queryForm.getHiredate() + "%");
+				}
 			}
 			if(queryForm.getLeaveTime() != null && queryForm.getLeaveTime() != ""){
-				hql.append(" and t.leaveTime like :leaveTime ");
-				params.put("leaveTime", "%" + queryForm.getLeaveTime() + "%");
+				if(queryForm.getLeaveTime().equalsIgnoreCase("null")){
+					hql.append(" and t.leaveTime is null ");
+				}else{
+					hql.append(" and t.leaveTime like :leaveTime ");
+					params.put("leaveTime", "%" + queryForm.getLeaveTime() + "%");
+				}
 			}
 			if(queryForm.getZhuanzhengTime() != null && queryForm.getZhuanzhengTime() != ""){
-				hql.append(" and t.zhuanzhengTime like :zhuanzhengTime ");
-				params.put("zhuanzhengTime", "%" + queryForm.getZhuanzhengTime() + "%");
+				if(queryForm.getZhuanzhengTime().equalsIgnoreCase("null")){
+					hql.append(" and t.zhuanzhengTime is null ");
+				}else{
+					hql.append(" and t.zhuanzhengTime like :zhuanzhengTime ");
+					params.put("zhuanzhengTime", "%" + queryForm.getZhuanzhengTime() + "%");
+				}
 			}if(queryForm.getHiredate() != null && queryForm.getHiredate() != ""){
-				hql.append(" and t.hiredate like :hiredate ");
-				params.put("hiredate", "%" + queryForm.getHiredate() + "%");
+				if(queryForm.getHiredate().equalsIgnoreCase("null")){
+					hql.append(" and t.hiredate is null ");
+				}else{
+					hql.append(" and t.hiredate like :hiredate ");
+					params.put("hiredate", "%" + queryForm.getHiredate() + "%");
+				}
 			}if(queryForm.getRuzhiReport() != null && queryForm.getRuzhiReport() != ""){
-				hql.append(" and t.ruzhiReport like :ruzhiReport ");
-				params.put("ruzhiReport", "%" + queryForm.getRuzhiReport() + "%");
+				if(queryForm.getRuzhiReport().equalsIgnoreCase("null")){
+					hql.append(" and t.ruzhiReport is null ");
+				}else{
+					hql.append(" and t.ruzhiReport like :ruzhiReport ");
+					params.put("ruzhiReport", "%" + queryForm.getRuzhiReport() + "%");
+				}
 			}if(queryForm.getLizhiReport() != null && queryForm.getLizhiReport() != ""){
-				hql.append(" and t.lizhiReport like :lizhiReport ");
-				params.put("lizhiReport", "%" + queryForm.getLizhiReport() + "%");
+				if(queryForm.getLizhiReport().equalsIgnoreCase("null")){
+					hql.append(" and t.lizhiReport is null ");
+				}else{
+					hql.append(" and t.lizhiReport like :lizhiReport ");
+					params.put("lizhiReport", "%" + queryForm.getLizhiReport() + "%");
+				}
 			}if(queryForm.getZhuanzhengReport() != null && queryForm.getZhuanzhengReport() != ""){
-				hql.append(" and t.zhuanzhengReport like :zhuanzhengReport ");
-				params.put("zhuanzhengReport", "%" + queryForm.getZhuanzhengReport() + "%");
+				if(queryForm.getZhuanzhengReport().equalsIgnoreCase("null")){
+					hql.append(" and t.zhuanzhengReport is null ");
+				}else{
+					hql.append(" and t.zhuanzhengReport like :zhuanzhengReport ");
+					params.put("zhuanzhengReport", "%" + queryForm.getZhuanzhengReport() + "%");
+				}
 			}if(queryForm.getAccount() != null && queryForm.getAccount() != ""){
-				hql.append(" and t.account like :account ");
-				params.put("account", "%" + queryForm.getAccount() + "%");
+				if(queryForm.getAccount().equalsIgnoreCase("null")){
+					hql.append(" and t.account is null ");
+				}else{
+					hql.append(" and t.account like :account ");
+					params.put("account", "%" + queryForm.getAccount() + "%");
+				}
 			}if(queryForm.getAccountBank() != null && queryForm.getAccountBank() != ""){
-				hql.append(" and t.accountBank like :accountBank ");
-				params.put("accountBank", "%" + queryForm.getAccountBank() + "%");
+				if(queryForm.getAccountBank().equalsIgnoreCase("null")){
+					hql.append(" and t.accountBank is null ");
+				}else{
+					hql.append(" and t.accountBank like :accountBank ");
+					params.put("accountBank", "%" + queryForm.getAccountBank() + "%");
+				}
 			}if(queryForm.getIdentityCard() != null && queryForm.getIdentityCard() != ""){
-				hql.append(" and t.identityCard like :identityCard ");
-				params.put("identityCard", "%" + queryForm.getIdentityCard() + "%");
-			}if(queryForm.getLevelc() != null ){
+				if(queryForm.getIdentityCard().equalsIgnoreCase("null")){
+					hql.append(" and t.identityCard is null ");
+				}else{
+					hql.append(" and t.identityCard like :identityCard ");
+					params.put("identityCard", "%" + queryForm.getIdentityCard() + "%");
+				}
+			}if(queryForm.getLevelc() != null && queryForm.getLevelc() != ""){
 				if(queryForm.getLevelc().equals("实习生")){
 					hql.append(" and t.level like :level ");
 					params.put("level", "%" + queryForm.getLevelc() + "%");

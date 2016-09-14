@@ -76,6 +76,7 @@
                     var date = new Date(newValue);
                     date.setMonth(date.getMonth + 3);
 					var data = {};
+					alert(newValue);
 					data.zhuanzhengTime = (date.getFullYear()+ '.' +((date.getMonth()+1)<10?('0'+(date.getMonth()+1)):(date.getMonth()+1)) + '.' + (date.getDate()<10?('0'+date.getDate()):date.getDate()));
                     $('#updatewages_form').form('load',data);
                     }"
@@ -204,7 +205,6 @@
                     textField:'householdType',
                     method:'get',
                     url:'employee/getHouseholdType.action',
-                    required:true
                     "/>
                     <!-- <input id="combox_hoseholdType" class="easyui-combobox" name="householdType"  data-options="
                     valueField:'name',
@@ -215,6 +215,7 @@
                     <td>签定时间:</td>
                     <td><input id="signed_date" class="easyui-datebox" type="text" name="signedTime" data-options="
                     onChange : function(newValue,oldValue){
+                    		alert(newValue);
                     		var date = new Date(newValue);
                     		date.setYear(date.getFullYear()+3);
                     		var newDate = date.getFullYear()+ '.' + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + '.' + (date.getDate()-1);
@@ -250,7 +251,7 @@
                     <td>终止时间:</td>
                     <td><input id="end_datebox" class="easyui-datebox" type="text" name="terminationTime" /></td>
                     <td>邮箱:</td>
-                    <td><input id="vie_mail" class="easyui-textbox" type="email" name="email" data-options="required:true, validType:'email'" /></td>
+                    <td><input id="vie_mail" class="easyui-textbox" type="email" name="email" data-options="validType:'email'" /></td>
                 </tr>
                 <tr>
                     <td>民族:</td>

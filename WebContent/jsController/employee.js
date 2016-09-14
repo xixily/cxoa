@@ -386,9 +386,9 @@ var employee = {
 		$("#textbox_id").textbox(
 				{
 					onChange : function(newValue, oldValue) {
-						if (oldValue && oldValue.length > 0) {
-							return;
-						}
+//						if (oldValue && oldValue.length > 0) {
+//							return;
+//						}
 						borthday = newValue.substr(6, 4) + '.'
 								+ newValue.substr(10, 2) + '.'
 								+ newValue.substr(12, 2);
@@ -1902,7 +1902,11 @@ shebaoSummary : {
 			var monthInfo = ("");
 		}
 	},
-	
+	jiagou:{
+		queryJiagou : function(){
+			//TODO  查询组织架构  ，架构包括公司，在职人数，总人数 
+		}
+	}
 }
 var wagesDateAdd = undefined;
 var monthWagesAdd = undefined;

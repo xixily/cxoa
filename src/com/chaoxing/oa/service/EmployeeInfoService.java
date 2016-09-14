@@ -112,4 +112,6 @@ public interface EmployeeInfoService {
 
 	public PMonthWages getMonthWages(Integer id);
 
+	public List<POStructs> getOStruct(QueryForm queryform,int isExport);
+
 }

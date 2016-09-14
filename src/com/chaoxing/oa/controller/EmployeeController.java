@@ -94,6 +94,14 @@ public class EmployeeController {
 		return lists;
 	}
 	
+	@RequestMapping(value = "/queryJiagou")
+	@ResponseBody
+	public List<POStructs> queryJiagou(QueryForm queryform){
+		System.out.println(queryform);
+		List<POStructs> lists = employeeInfoService.getOStruct(queryform,0);
+		return lists;
+	}
+	
 	@RequestMapping(value = "/getLevel")
 	@ResponseBody
 	public List<PLevel> getLevel(){

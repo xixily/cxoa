@@ -238,6 +238,7 @@ public class PMonthWages {
 	public Double getLishiSalary() {
 		return lishiSalary;
 	}
+	
 	public void setLishiSalary(Double lishiSalary) {
 		this.lishiSalary = lishiSalary;
 	}
