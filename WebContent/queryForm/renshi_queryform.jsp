@@ -42,10 +42,11 @@ $(document).ready(function() {
 					<select class="easyui-combobox"	name="configurable" style="margin-bottom: 2px; height: 26px;width:120px;" >
 						<option value=""></option>
 						<option value="username">username</option>
-						<option value="firstLevel">一级</option>
-						<option value="secondLevel">二级</option>
-						<option value="thirdLevel">三级</option>
-						<option value="fourthLevel">四级</option>
+						<option value="identityCard">身份证号</option>
+						<option value="firstLevel">公司</option>
+						<option value="secondLevel">部门</option>
+						<option value="thirdLevel">岗位</option>
+						<option value="fourthLevel">小组</option>
 						<option value="cellCore">细胞核</option>
 						<option value="cellCoreEmail">细胞核邮箱</option>
 						<option value="guidance">指导</option>
@@ -68,7 +69,7 @@ $(document).ready(function() {
 						<option value="photo">照片</option>
 						<option value="degreeCertificate">学历证件</option>
 						<option value="pastLeaveTime">过去离职日期</option>
-						<option value="earlyEntryDate">早期入职日期</option>
+						<option value="earlyEntryDate">早期入职时间</option>
 						<option value="identityCardCopy">身份证复印件</option>
 						<option value="familyRegister">户口本</option>
 						<option value="leavingCertificate">离职证明</option>
@@ -100,8 +101,8 @@ $(document).ready(function() {
 			<td>学历:</td>
 			<td><input name="degree" class="easyui-textbox" style="width:160px" /></td>
 			
-			<td>早期入职时间:</td>
-			<td><input name="earlyEntryDate" class="easyui-datebox" style="width:160px" />
+			<td>入职时间:</td>
+			<td><input name="hiredate" class="easyui-datebox" style="width:160px" />
 			</td>
 
 			<td>离职时间:</td>

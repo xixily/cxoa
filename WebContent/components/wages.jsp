@@ -25,6 +25,7 @@
 	
 	<div style="margin:0 8px;">
 	<table id="datagrid_wages" class="easyui-datagrid" style="width:100%;height:250px;margin:5 20px;"> 
+	
 	</table>
 	</div>
     <div style="padding:2px;margin:10px auto;border: 1px dashed LightGrey;width:934px;">
@@ -47,7 +48,7 @@
                    
                     <td>保密补贴:</td>
                     <td>
-                    <input class="easyui-numberbox" data-options="min:0,precision:2" name="secrecySubsidy" />
+                    <input class="easyui-numberbox" data-options="precision:2" name="secrecySubsidy" />
                     </td>
                     <td>通讯补贴:</td>
                     <td>
@@ -59,9 +60,9 @@
                     <td>
                     <input class="easyui-numberbox" data-options="min:0,precision:2" name="lunchSubsidy" />
                     </td>
-                    <td>备注:</td>
+                    <td>历史工资:</td>
                     <td>
-                    <input class="easyui-textbox" type="text" name="remarks" />
+                    <input class="easyui-textbox" type="text" name="lishiSalary" />
                     </td>
                      <td>公司名称:</td>
                     <td  id="wages_company">
@@ -69,23 +70,25 @@
                     url: 'employee/getCompany.action',
                     valueField:'cmopany',
                     textField:'cmopany',
+                    required:true
                     " />
                     </td>
                     <!-- <td>公司名称:</td>
                     <td>
                     <input class="easyui-textbox" type="text" name="company" />
                     </td> -->
-                    <td>基数:</td>
-                    <td>
-                    <input id="wages_radix" class="easyui-numberbox" data-options="min:0,precision:2" name="radix" />
-                    </td>
                     <td>户口性质:</td>
                     <td id="wages_hoseholdType" >
                     <input class="easyui-combobox" name="householdType"  data-options="
-                    valueField:'name',
-                    textField:'name',
-                    data : [{name:'外埠城镇'},{name:'外埠农村'},{name:'本市城镇'},{name:'本市农村'},{name:'其他'}]
+                    valueField:'householdType',
+                    textField:'householdType',
+                    method:'get',
+                    url:'employee/getHouseholdType.action',
                     ">
+                    </td>
+                     <td>基数:</td>
+                    <td>
+                    <input id="wages_radix" class="easyui-numberbox" data-options="min:0,precision:2" name="radix" />
                     </td>
                     <!-- <td>户口性质:</td>
                     <td>
@@ -107,7 +110,41 @@
                     </td>
                     <td>开户行:</td>
                     <td>
-                    <input class="easyui-textbox" type="text" name="accountBank" />
+                    <!-- <input class="easyui-textbox" type="text" name="accountBank" /> -->
+                    <input class="easyui-combobox" name="accountBank" data-options="
+							valueField: 'value',
+							textField: 'text',
+							data: [{
+								text: '交行',
+								value: '交行'
+							},{
+								text: '招行',
+								value: '招行'
+							},{
+								text: '建行',
+								value: '建行'
+							},{
+								text: '光大',
+								value: '光大'
+							},{
+								text: '工行',
+								value: '工行'
+							},{
+								text: '南京银行',
+								value: '南京银行'
+							},{
+								text: '现金无卡号',
+								value: '现金无卡号'
+							},{
+								text: '现金离职 办理中',
+								value: '现金离职 办理中'
+							},{
+								text: '现金入职资料不全',
+								value: '现金入职资料不全'
+							},{
+								text: '现金 自取',
+								value: '现金 自取'
+							}]" />
                     </td>
                     <td>职工帐号:</td>
                     <td>
@@ -189,13 +226,21 @@
                     <td>
                     <input class="easyui-textbox" type="text" name="rubaoTime" />
                     </td>
-                    <td colspan="6">
+                 	<td>调薪报表:</td>
+                    <td>
+                    <input class="easyui-textbox" type="text" name="tiaoxinRecord" />
+                    </td>
+                 	<td>涨薪记录:</td>
+                    <td>
+                    <input class="easyui-textbox" type="text" name="remarks"/>
+                    </td>
+                    <td colspan="4">
                     <div align="right" style="margin-right:10px;">
                       <a id="wages_save" href="javascript:void(0)" style="width:60px;display:none;" class="easyui-linkbutton" onclick="employee.wages.updateWages($(this));">保存</a>
                       <a id="wages_add" href="javascript:void(0)" style="width:60px;display:none;" class="easyui-linkbutton" onclick="employee.wages.addWages($(this));">新增</a>
 <!--                       <a id="wages_add" href="javascript:void(0)" style="width:60px;display:none;" class="easyui-linkbutton" onclick="$('#updatewages_form').form({url:'employee/addWages.action'});submitForm($(this))">新增</a> -->
                       <a href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="clearForm($(this))">重置</a>
-                      <a id="wages_edit" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="employee.wages.editWages()">编辑</a>
+                 <!--      <a id="wages_edit" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="employee.wages.editWages()">编辑</a> -->
                      <!--  <a href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="confirmDialog.createDialog()">删除</a> -->
                       <a href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="closeDialog($(this))">关闭</a>
                     </div>

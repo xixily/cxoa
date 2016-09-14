@@ -9,8 +9,7 @@ var wagesCalculate = {
 				if(result.success){
 					callback(result.obj);
 				}else{
-					//TODO 在app.js里面做一个提示框
-//					dialogMsg(result.msg,result.errorCode)
+					$.messager.alert('获取社保比例：','获取社保比例失败！~');
 				}
 			});
 		},
@@ -18,9 +17,9 @@ var wagesCalculate = {
 //			var params = {};
 //			params.company = company;
 			var url = 'employee/getShebaoRadioByCompany.action';
-			if(session.shebaoRadio && (session.shebaoRadio.company == params.company)){
-				callback(session.shebaoRadio)
-			}else{
+//			if(session.shebaoRadio && (session.shebaoRadio[0].company == params.company)){
+//				callback(session.shebaoRadio)
+//			}else{
 				$.post(url, params, function(result){
 					var result =  eval("(" + result + ")");
 					if(result.success){
@@ -31,14 +30,15 @@ var wagesCalculate = {
 						callback(false);
 					}
 				});
-			}
+//			}
 		},
 		//TODO 社保  ps:所以在添加的时候一点要做下拉菜单 householdType 一定要正确控制
 		/**
 		 * @param data data一定包含company,householdType
 		 */
 		calculateShebao : function(data, callback){
-			var radix = data.radix ? data.radix : 0;
+//			var radix = data.radix ? data.radix : 0;
+			var oradix = data.radix ? data.radix : 0;
 			if(!data.company || data.company == ''){
 				data.success = false;
 				callback(false);
@@ -46,7 +46,7 @@ var wagesCalculate = {
 			}else{
 				wagesCalculate.getRadixByCompany(data, function(result){
 					if(!result) callback(false);
-					if(radix == 0){
+					if(oradix == 0){
 						data.subEndowmentIinsurance = 0;
 						data.cEndowmentIinsurance = 0;
 						data.subUnemployedInsurance = 0;
@@ -59,6 +59,7 @@ var wagesCalculate = {
 //                		return data;
 					}else{
 						$.each(result,function(n,obj) {
+							var radix = oradix;
 //							radix = radix < obj.radixMin ? obj.radixMin : radix;
 //							radix = radix < obj.radixMin || data.radix > obj.radixMax ? (radix < obj.radixMin ? obj.radixMin : obj.radixMax ): radix;
 							if(radix < obj.radixMin){
@@ -68,27 +69,42 @@ var wagesCalculate = {
 							}
 							if(obj.shebaoType == '养老保险'){
 								if(obj.householdType == 'ALL' || (obj.householdType == data.householdType)){
-									data.subEndowmentIinsurance = Number((radix * obj.radio + obj.fixedValue).toFixed(2));
-									data.cEndowmentIinsurance = Number((radix * obj.cRadio + obj.cFixedValue).toFixed(2));
+									data.subEndowmentIinsurance = round2((radix * obj.radio + obj.fixedValue),2);
+									data.cEndowmentIinsurance = round2((radix * obj.cRadio + obj.cFixedValue),2);
+//									data.subEndowmentIinsurance = Number((radix * obj.radio + obj.fixedValue).toFixed(2));
+//									data.cEndowmentIinsurance = Number((radix * obj.cRadio + obj.cFixedValue).toFixed(2));
 								}
 							}else if(obj.shebaoType == '失业保险'){
 								if(obj.householdType == 'ALL' || (obj.householdType == data.householdType)){
-									data.subUnemployedInsurance = Number((radix * obj.radio + obj.fixedValue).toFixed(2));
-									data.cUnemployedInsurance = Number((radix * obj.cRadio + obj.cFixedValue).toFixed(2));
+									data.subUnemployedInsurance = round2((radix * obj.radio + obj.fixedValue),2);
+									data.cUnemployedInsurance = round2((radix * obj.cRadio + obj.cFixedValue),2);
+//									data.subUnemployedInsurance = Number((radix * obj.radio + obj.fixedValue).toFixed(2));
+//									data.cUnemployedInsurance = Number((radix * obj.cRadio + obj.cFixedValue).toFixed(2));
 								}
 								
 							}else if(obj.shebaoType == '工伤保险'){
 								if(obj.householdType == 'ALL' || (obj.householdType == data.householdType)){
-									data.cInjuryInsurance = Number((radix * obj.cRadio + obj.cFixedValue).toFixed(2));
+									data.cInjuryInsurance = round2((radix * obj.cRadio + obj.cFixedValue),2);
+//									data.cInjuryInsurance = Number((radix * obj.cRadio + obj.cFixedValue).toFixed(2));
 								}
 							}else if(obj.shebaoType == '生育保险'){
 								if(obj.householdType == 'ALL' || (obj.householdType == data.householdType)){
-									data.cBirthIinsurance = Number((radix * obj.cRadio + obj.cFixedValue).toFixed(2));
+									data.cBirthIinsurance = round2((radix * obj.cRadio + obj.cFixedValue),2);
+//									data.cBirthIinsurance = Number((radix * obj.cRadio + obj.cFixedValue).toFixed(2));
 								}
 							}else if(obj.shebaoType == '医疗保险'){
 								if(obj.householdType == 'ALL' || (obj.householdType == data.householdType)){
-									data.subMedicare = Number((radix * obj.radio + obj.fixedValue).toFixed(2));
-									data.cMedicare = Number((radix * obj.cRadio + obj.cFixedValue).toFixed(2));
+									data.subMedicare = round2((radix * obj.radio + obj.fixedValue),2);
+									data.cMedicare = round2((radix * obj.cRadio + obj.cFixedValue),2);
+//									data.subMedicare = Number((radix * obj.radio + obj.fixedValue).toFixed(2));
+//									data.cMedicare = Number((radix * obj.cRadio + obj.cFixedValue).toFixed(2));
+								}
+							}else if(obj.shebaoType == '公积金'){
+								if(obj.householdType == 'ALL' || (obj.householdType == data.householdType)){
+									data.subHouseIinsurance = round2((radix * obj.radio + obj.fixedValue),2);
+									data.cHouseIinsurance = round2((radix * obj.cRadio + obj.cFixedValue),2);
+//									data.subMedicare = Number((radix * obj.radio + obj.fixedValue).toFixed(2));
+//									data.cMedicare = Number((radix * obj.cRadio + obj.cFixedValue).toFixed(2));
 								}
 							}
 						})
@@ -99,13 +115,13 @@ var wagesCalculate = {
 			}
 		},
 		calculateShebaoOnly : function(data, callback){
-			var radix = data.radix ? data.radix : 0;
+			var oradix = data.radix ? data.radix : 0;
 			if(!data.company || data.company == ''){
 				callback(false);
 			}else{
 				wagesCalculate.getRadixByCompany(data, function(result){
 					if(!result) callback(false);
-					if(radix == 0){
+					if(oradix == 0){
 						data.subEndowmentIinsurance = 0;
 						data.cEndowmentIinsurance = 0;
 						data.subUnemployedInsurance = 0;
@@ -118,6 +134,7 @@ var wagesCalculate = {
 //                		return data;
 					}else{
 						$.each(result,function(n,obj) {
+							var radix = oradix;
 							if(radix < obj.radixMin){
 								radix = obj.radixMin;
 							}else if(data.radix > obj.radixMax){

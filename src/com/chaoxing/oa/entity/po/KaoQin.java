@@ -45,6 +45,7 @@ public class KaoQin implements Serializable {
 	private Float sangJiaDay;//丧家天数
 	private Float nianJiaDay;//年假天数
 	private String kaoQinremarks;//考勤备注
+	private String level;//级别
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -140,7 +141,7 @@ public class KaoQin implements Serializable {
 	public Float getChanJiaDay() {
 		return chanJiaDay;
 	}
-	@Column(name = "丧家天数", columnDefinition = "float default 0")
+	@Column(name = "丧假天数", columnDefinition = "float default 0")
 	public Float getSangJiaDay() {
 		return sangJiaDay;
 	}
@@ -151,6 +152,13 @@ public class KaoQin implements Serializable {
 	@Column(name = "考勤备注", columnDefinition = "float default 0")
 	public String getKaoQinremarks() {
 		return kaoQinremarks;
+	}
+	@Column(name="级别")
+	public String getLevel() {
+		return level;
+	}
+	public void setLevel(String level) {
+		this.level = level;
 	}
 	public void setId(Integer id) {
 		this.id = id;

@@ -17,7 +17,7 @@ $(document).ready(function() {
 		style="width: 98%; padding: 10px; margin-bottom: 10px;"></div>
 	<jsp:include page="../toolBar/renshiUsername_toolbar.jsp"></jsp:include>
 <%-- 	<jsp:include page="../components/toolbar.jsp"></jsp:include> --%>
-	<div id="employee_datas" style="width: 98%"></div><!-- 780  -->
+	<div id="employee_datas" style="width:98%,height:489px;"></div><!-- 780  -->
 	<div id="userName_info" class="easyui-dialog" title="查看修改职员信息"
 		style="width: 1080px;overflow: hidden"
 		data-options="

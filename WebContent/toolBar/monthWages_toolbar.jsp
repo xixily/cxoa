@@ -7,7 +7,7 @@
 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="employee.addEmployee()">新增</a>
 <span class="btn-separator"></span>
 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true"
-onclick="confirmDialog.createDialog('您确定要删除吗？',employee.deleteEmployee);">删除</a>
+onclick="confirmDialog.createDialog('您确定要删除吗？',function(){$.messager.alert('删除功能未完成！~')});">删除</a>
 <span class="btn-separator"></span>
 <a href="#" class="easyui-menubutton" data-options="menu:'#menu_monthWages_export',iconCls:'icon-excel'">导出报表</a>
 <span class="btn-separator"></span>

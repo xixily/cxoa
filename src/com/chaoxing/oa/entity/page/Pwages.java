@@ -37,6 +37,7 @@ public class Pwages {
 	private Double sickLleaveTotal;//病假累计
 	private String rubaoTime;//计划入保时间
 	private Double lishiSalary;//历史工资
+	private String tiaoxinRecord;//调薪报表
 	public Integer getId() {
 		return id;
 	}
@@ -133,6 +134,12 @@ public class Pwages {
 	
 	public Double getLishiSalary() {
 		return lishiSalary;
+	}
+	public String getTiaoxinRecord() {
+		return tiaoxinRecord;
+	}
+	public void setTiaoxinRecord(String tiaoxinRecord) {
+		this.tiaoxinRecord = tiaoxinRecord;
 	}
 	public void setLishiSalary(Double lishiSalary) {
 		this.lishiSalary = lishiSalary;

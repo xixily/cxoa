@@ -1,10 +1,12 @@
 package com.chaoxing.oa.controller;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
+import javax.management.Query;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,8 @@ import com.chaoxing.oa.entity.page.SessionInfo;
 import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.util.DateUtil;
 import com.chaoxing.oa.util.ResourceUtil;
+
+import sun.print.resources.serviceui;
 
 @Controller
 @RequestMapping("/employee")
@@ -112,74 +116,209 @@ public class EmployeeController {
 	@RequestMapping(value = "/getWagesList")
 	@ResponseBody
 	public List<Pwages> getWagesList(QueryForm queryForm, HttpSession session){
-//		Map<String, Object> result = new HashMap<String, Object>();
+		List<Pwages> wagesList = null ;
 		if(queryForm.getId()!=0){
 			SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());	
-		if(sessionInfo.getRoleId()>1 && employeeInfoService.getUserInfo(queryForm).getIfSecret().equals("on")){
-			return null;
-		}else{
-			List<Pwages> wagesList = employeeInfoService.getWagesList(queryForm.getId());
-	//		result.put("total", wagesList.size());
-	//		result.put("rows", wagesList);
-			return wagesList;
+			String ifSecret = employeeInfoService.getUserInfo(queryForm).getIfSecret();
+			wagesList = employeeInfoService.getWagesList(queryForm.getId(),sessionInfo,ifSecret);
 		}
-		}
-		return null;
+		return wagesList;
 	}
 	
 	@RequestMapping(value = "/getWages")
 	@ResponseBody
 	public Pwages getWages(QueryForm queryForm){
-		return employeeInfoService.getWages(queryForm.getId());
+		Pwages pwages = null;
+		if(queryForm!=null&&queryForm.getId()!=0){
+			pwages = employeeInfoService.getWages(queryForm.getId());
+		}
+		return pwages;
+	}
+	
+	@RequestMapping(value = "/updateGridWages")
+	@ResponseBody
+	public Json updatePartWages(Pwages pwage){
+		Json result = new Json();
+		if(pwage!=null&&pwage.getId()!=null&&pwage.getId()!=0){
+			Pwages target = employeeInfoService.getWages(pwage.getId());
+			if(target!=null){
+				target.setRadix(pwage.getRadix());
+				target.setCompany(pwage.getCompany());
+				target.setHouseholdType(pwage.getHouseholdType());
+				target.setRubaoTime(pwage.getRubaoTime());
+				if(pwage.getIdentityCard()!=null){
+					target.setIdentityCard(pwage.getIdentityCard());
+				}
+				if(pwage.getAccountBank()!=null){
+					target.setAccountBank(pwage.getAccountBank());
+				}
+				if(pwage.getAccount()!=null){
+					target.setAccount(pwage.getAccount());
+				}
+				if(caculateWages(target)==1){
+					if(employeeInfoService.updateWages(target)!=0){
+						result.setSuccess(true);
+						result.setMsg("<strong>"+ target.getUsername() + ":" +target.getId() +"</strong>更新成功！");
+					}else{
+						result.setMsg("更新失败！");
+					}
+				}else{
+					result.setMsg("社保计算失败！");
+				}
+			}else{
+				result.setMsg("没有<strong>"+ pwage.getUsername() + ":" +pwage.getId() + "</strong>该条工资信息！");
+			}
+		}
+		return result;
+	}
+	
+	public int caculateWages(Pwages pwage){
+		if(pwage.getRadix()==null){
+			pwage.setRadix(0d);
+		}
+		Double oradix = pwage.getRadix();
+		String company = pwage.getCompany();
+		String houseHoldType = pwage.getHouseholdType();
+		List<PShebao> shebaoCompany = employeeInfoService.getShebaoRadioByCompany(company);
+		BigDecimal rRadix;
+		if(pwage.getRadix()==0){
+			pwage.setSubEndowmentIinsurance(0d);
+			pwage.setSubHouseIinsurance(0d);
+			pwage.setSubMedicare(0d);
+			pwage.setSubUnemployedInsurance(0d);
+			pwage.setcBirthIinsurance(0d);
+			pwage.setcEndowmentIinsurance(0d);
+			pwage.setcHouseIinsurance(0d);
+			pwage.setcInjuryInsurance(0d);
+			pwage.setcMedicare(0d);
+			pwage.setcUnemployedInsurance(0d);
+			return 1;
+		}else if(shebaoCompany!=null&&shebaoCompany.size()>0){
+			for (PShebao pShebao : shebaoCompany) {//社保计算
+				Double radix = oradix;
+				radix = radix<pShebao.getRadixMin()?pShebao.getRadixMin():(radix>pShebao.getRadixMax()?pShebao.getRadixMax():radix);
+				rRadix = new BigDecimal(radix.toString());
+				if(pShebao.getShebaoType().equals("养老保险")){
+					if(pShebao.getHouseholdType().equals("ALL") || pShebao.getHouseholdType().equals(houseHoldType)){
+						pwage.setSubEndowmentIinsurance(rRadix.multiply(new BigDecimal(pShebao.getRadio().toString())).add(new BigDecimal(pShebao.getFixedValue().toString())).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+						pwage.setcEndowmentIinsurance(rRadix.multiply(new BigDecimal(pShebao.getcRadio().toString())).add(new BigDecimal(pShebao.getcFixedValue().toString())).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+					}
+				}else if(pShebao.getShebaoType().equals("失业保险")){
+					if(pShebao.getHouseholdType().equals("ALL") || pShebao.getHouseholdType().equals(houseHoldType)){
+						pwage.setSubUnemployedInsurance(rRadix.multiply(new BigDecimal(pShebao.getRadio().toString())).add(new BigDecimal(pShebao.getFixedValue().toString())).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+						pwage.setcUnemployedInsurance(rRadix.multiply(new BigDecimal(pShebao.getcRadio().toString())).add(new BigDecimal(pShebao.getcFixedValue().toString())).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+					}
+				}else if(pShebao.getShebaoType().equals("工伤保险")){
+					if(pShebao.getHouseholdType().equals("ALL") || pShebao.getHouseholdType().equals(houseHoldType)){
+						pwage.setcInjuryInsurance(rRadix.multiply(new BigDecimal(pShebao.getcRadio().toString())).add(new BigDecimal(pShebao.getcFixedValue().toString())).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+					}
+				}else if(pShebao.getShebaoType().equals("生育保险")){
+					if(pShebao.getHouseholdType().equals("ALL") || pShebao.getHouseholdType().equals(houseHoldType)){
+						pwage.setcBirthIinsurance(rRadix.multiply(new BigDecimal(pShebao.getcRadio().toString())).add(new BigDecimal(pShebao.getcFixedValue().toString())).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+					}
+				}else if(pShebao.getShebaoType().equals("医疗保险")){
+					if(pShebao.getHouseholdType().equals("ALL") || pShebao.getHouseholdType().equals(houseHoldType)){
+						pwage.setSubMedicare(rRadix.multiply(new BigDecimal(pShebao.getRadio().toString())).add(new BigDecimal(pShebao.getFixedValue().toString())).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+						pwage.setcMedicare(rRadix.multiply(new BigDecimal(pShebao.getcRadio().toString())).add(new BigDecimal(pShebao.getcFixedValue().toString())).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+					}
+				}else if(pShebao.getShebaoType().equals("公积金")){
+					if(pShebao.getHouseholdType().equals("ALL") || pShebao.getHouseholdType().equals(houseHoldType)){
+						pwage.setSubHouseIinsurance(rRadix.multiply(new BigDecimal(pShebao.getRadio().toString())).add(new BigDecimal(pShebao.getFixedValue().toString())).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+						pwage.setcHouseIinsurance(rRadix.multiply(new BigDecimal(pShebao.getcRadio().toString())).add(new BigDecimal(pShebao.getcFixedValue().toString())).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+					}
+				}
+			}
+			return 1;
+		}
+		return 0;
 	}
 	
 	@RequestMapping(value = "/updateWages")
 	@ResponseBody
-	public Json updateWages(Pwages pwages){
+	public Json updateWages(Pwages pwages, HttpSession session){
 		//TODO 修改策略，更新的时候只更改部分字段。
 		Json result = new Json();
-		if(employeeInfoService.updateWages(pwages)!=0){
-			result.setSuccess(true);
-			result.setMsg("更新成功！");
+		if(pwages.getId()!=null&&pwages.getId()!=0){
+			QueryForm queryForm = new QueryForm();
+			queryForm.setId(pwages.getEmployeeId());
+			SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());	
+			String ifSecret = employeeInfoService.getUserInfo(queryForm).getIfSecret();
+			if(sessionInfo.getRoleId()<=1||sessionInfo.getRoleId()==100||ifSecret.equals("off")){
+				if(employeeInfoService.updateWages(pwages)!=0){
+					result.setSuccess(true);
+					result.setMsg("更新成功！");
+				}
+			}
+		}else{
+			result.setMsg("没有找到该条记录！");
 		}
 		return result;
 	}
+	
 	@RequestMapping(value = "/updateWagesRadix")
 	@ResponseBody
 	public Json updateWagesRadix(Pwages pwages){
 		Json result = new Json();
-		if(employeeInfoService.updateWagesRadix(pwages)!=0){
-			result.setSuccess(true);
-			result.setMsg("更新成功！");
-		}else{
-			result.setMsg("更新失败！");
+		if(pwages.getId()!=0){
+			if(employeeInfoService.updateWagesRadix(pwages)!=0){
+				result.setSuccess(true);
+				result.setMsg("更新成功！");
+			}else{
+				result.setMsg("更新失败！");
+			}
 		}
 		return result;
 	}
 	
 	@RequestMapping(value = "/addWages")
 	@ResponseBody
-	public Json addWages(Pwages pwages){
+	public Json addWages(Pwages pwages, HttpSession session){
 		Json result = new Json();
-		if(employeeInfoService.addWages(pwages)!=0){
-			result.setSuccess(true);
-			result.setMsg("添加成功！");
-		}else{
-			result.setMsg("添加失败！");
-		}
+//		if(pwages.getId()!=null&&pwages.getId()!=0){
+			QueryForm queryForm = new QueryForm();
+			queryForm.setId(pwages.getEmployeeId());
+			SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());	
+			String ifSecret = employeeInfoService.getUserInfo(queryForm).getIfSecret();
+			if(sessionInfo.getRoleId()<=1||sessionInfo.getRoleId()==100||ifSecret.equals("off")){
+				if(employeeInfoService.addWages(pwages)!=0){
+					result.setSuccess(true);
+					result.setMsg("添加成功！");
+				}else{
+					result.setMsg("添加失败！");
+				}
+			}else{
+				result.setMsg("对不起，您没有删除权限~！");
+			}
+//		}else{
+//			result.setMsg("没有找到该条记录！");
+//		}
+		
 		return result;
 	}
 	
 	@RequestMapping(value = "/deleteWages")
 	@ResponseBody
-	public Json deleteWages(Pwages pwages){
+	public Json deleteWages(Pwages pwages, HttpSession session ){
 		Json result = new Json();
-		if(employeeInfoService.deleteWages(pwages)!=0){
-			result.setSuccess(true);
-			result.setMsg("删除成功！");
+		if(pwages.getId()!=null&&pwages.getId()!=0){
+			QueryForm queryForm = new QueryForm();
+			queryForm.setId(pwages.getEmployeeId());
+			SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());	
+			String ifSecret = employeeInfoService.getUserInfo(queryForm).getIfSecret();
+			if(sessionInfo.getRoleId()<=1||sessionInfo.getRoleId()==100||ifSecret.equals("off")){
+				if(employeeInfoService.deleteWages(pwages)!=0){
+					result.setSuccess(true);
+					result.setMsg("删除成功！");
+				}else{
+					result.setMsg("删除失败！");
+				}
+			}else{
+				result.setMsg("对不起，您没有删除权限~！");
+			}
 		}else{
-			result.setMsg("删除失败！");
+			result.setMsg("没有找到该条记录！");
 		}
+		
 		return result;
 	}
 	
@@ -212,16 +351,20 @@ public class EmployeeController {
 	}
 	@RequestMapping(value = "/getShebaoRadioByType")
 	@ResponseBody
-	public Json getShebaoRadioByType(String shebaoType){
+	public Json getShebaoRadioByType(String company){
 		Json result = new Json();
-		List<PShebao> pshebaos = employeeInfoService.getShebaoRadioByCompany(shebaoType);
-		if(pshebaos.size() > 0){
-			result.setSuccess(true);
-			result.setObj(pshebaos);
-			result.setMsg("查询成功！");
+		if(company!=null&&!company.equals("")){
+			List<PShebao> pshebaos = employeeInfoService.getShebaoRadioByCompany(company);
+			if(pshebaos.size() > 0){
+				result.setSuccess(true);
+				result.setObj(pshebaos);
+				result.setMsg("查询成功！");
+			}else{
+				result.setErrorCode(SysConfig.REQUEST_ERROR);
+				result.setMsg("没有数据或者查询失败！");
+			}
 		}else{
-			result.setErrorCode(SysConfig.REQUEST_ERROR);
-			result.setMsg("没有数据或者查询失败！");
+			result.setMsg("公司名称为空！~");
 		}
 		return result;
 	}
@@ -249,11 +392,15 @@ public class EmployeeController {
 //		} catch (UnsupportedEncodingException e) {
 //			e.printStackTrace();
 //		}  
-		if(employeeInfoService.updateShebao(pshebao) != 0){
-			result.setSuccess(true);
-			result.setMsg("更新成功！");
+		if(pshebao.getSid()!=0){
+			if(employeeInfoService.updateShebao(pshebao) != 0){
+				result.setSuccess(true);
+				result.setMsg("更新成功！");
+			}else{
+				result.setMsg("更新失败！");
+			}
 		}else{
-			result.setMsg("更新失败！");
+			result.setMsg("没有id");
 		}
 		return result;
 	}
@@ -267,11 +414,15 @@ public class EmployeeController {
 	@ResponseBody
 	public Json addShebao(PShebao pshebao){
 		Json result = new Json();
-		if(employeeInfoService.addShebao(pshebao)!=0){
-			result.setSuccess(true);
-			result.setMsg("增加成功！");
+		if(pshebao.getCompany()!=null){
+			if(employeeInfoService.addShebao(pshebao)!=0){
+				result.setSuccess(true);
+				result.setMsg("增加成功！");
+			}else{
+				result.setMsg("添加失败！");
+			}
 		}else{
-			result.setMsg("添加失败！");
+			result.setMsg("添加社保比例，至少要有公司名称~！");
 		}
 		return result;
 	}
@@ -279,26 +430,34 @@ public class EmployeeController {
 	@ResponseBody
 	public Json deleteShebao(PShebao pshebao){
 		Json result = new Json();
-		if(employeeInfoService.deleteShebao(pshebao)!=0){
-			result.setSuccess(true);
-			result.setMsg("删除成功！");
+		if(pshebao.getSid()!=0){
+			if(employeeInfoService.deleteShebao(pshebao)!=0){
+				result.setSuccess(true);
+				result.setMsg("删除成功！");
+			}else{
+				result.setMsg("删除失败！");
+			}
 		}else{
-			result.setMsg("删除失败！");
+			result.setMsg("没有该条记录~~!");
 		}
 		return result;
 	}
+	
 	@RequestMapping(value = "/queryShebaoSummary")
 	@ResponseBody
 	public Map<String, Object> queryShebaoSummary(QueryForm queryForm, HttpSession session){
-		Map<String, Object> userInfos = employeeInfoService.getShebaoSummary(queryForm, session);
-		return userInfos;
+		Map<String, Object> shebaoSummaries = employeeInfoService.getShebaoSummary(queryForm, session);
+		return shebaoSummaries;
 	}
 	
 	@RequestMapping(value = "/getShebaoCompany")
 	@ResponseBody
 	public Map<String, Object> getShebaoCompany(QueryForm queryForm, HttpSession session){
-		Map<String, Object> shebaoCompanys = employeeInfoService.getShebaoCompany(queryForm, session);
-		return shebaoCompanys;
+		if(queryForm!=null&&queryForm.getCompany()!=null){
+			Map<String, Object> shebaoCompanys = employeeInfoService.getShebaoCompany(queryForm, session);
+			return shebaoCompanys;
+		}
+		return null;
 	}
 	
 	@RequestMapping(value = "/queryKaoqin")
@@ -321,6 +480,21 @@ public class EmployeeController {
 		return result;
 	}
 	
+	@RequestMapping(value = "/deleteKaoqin")
+	@ResponseBody
+	public Json deleteKaoqin(PKaoQin pkaoqin){
+		Json result = new Json();
+		if(pkaoqin.getId()!=0){
+			if(employeeInfoService.deleteKaoqin(pkaoqin)>0){
+				result.setSuccess(true);
+				result.setMsg("删除成功！~");
+			}else{
+				result.setMsg("删除失败！~");
+			}
+		}
+		return result;
+	}
+	
 	@RequestMapping(value = "/queryMonthWages")
 	@ResponseBody
 	public Map<String, Object> queryMonthWages(QueryForm queryForm, HttpSession session){
@@ -333,7 +507,22 @@ public class EmployeeController {
 	public Json updateMonthWages(PMonthWages pmonthWages, HttpSession session){
 		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
 		Json result = new Json();
-		caculateWages(pmonthWages);
+		PMonthWages target = employeeInfoService.getMonthWages(pmonthWages.getId());
+		if(sessionInfo.getRoleId()!=0&&sessionInfo.getRoleId()!=100){
+			target.setChuqinDay(pmonthWages.getChuqinDay());
+			target.setZhuanzhengChaeDay(pmonthWages.getZhuanzhengChaeDay());
+			target.setFakuan(pmonthWages.getFakuan());
+			target.setJiangjin(pmonthWages.getJiangjin());
+			target.setBufaSalary(pmonthWages.getBufaSalary());
+			target.setShiJiaHour(pmonthWages.getShiJiaHour());
+			target.setBingJiaHour(pmonthWages.getBingJiaHour());
+			target.setKuangGongHour(pmonthWages.getKuangGongHour());
+			target.setChidaoYingkouDay(pmonthWages.getChidaoYingkouDay());
+			target.setKaoQinremarks(pmonthWages.getKaoQinremarks());
+		}else{
+			target = pmonthWages;
+		}
+		caculateWages(target);
 		if(employeeInfoService.updateMonthWages(pmonthWages, sessionInfo)!=0){
 			result.setSuccess(true);
 			result.setMsg("更新成功！");
@@ -356,7 +545,12 @@ public class EmployeeController {
 		double fakuan = pmonthWages.getFakuan()!=null?pmonthWages.getFakuan():0;
 		float shijia = (pmonthWages.getShiJiaHour()!=null)? pmonthWages.getShiJiaHour():0;
 		//计算考勤总额
-		Double bingjia =  ((pmonthWages.getBingJiaHour() + pmonthWages.getSickLleaveTotal())>24?(pmonthWages.getBingJiaHour() + pmonthWages.getSickLleaveTotal() -24):0);
+		Double bingjia = 0.0;
+		if(pmonthWages.getSickLleaveTotal()<=24){
+			bingjia =  ((pmonthWages.getBingJiaHour() + pmonthWages.getSickLleaveTotal())>24?(pmonthWages.getBingJiaHour() + pmonthWages.getSickLleaveTotal() -24):0);
+		}else{
+			bingjia =(double)pmonthWages.getBingJiaHour();
+		}
 		Float kuanggong = pmonthWages.getKuangGongHour();
 		Float chidaoYingkou = pmonthWages.getChidaoYingkouDay();
 		if(chidaoYingkou<=3){
@@ -365,7 +559,7 @@ public class EmployeeController {
 			chidaoYingkou = chidaoYingkou * 50 - 150;
 		}
 		if(lishiSalary!=0){
-			zhuanzhengChae = (lishiSalary - salary) * (21 - chaeDay);
+			zhuanzhengChae = (salary - lishiSalary)/21 * (21 - chaeDay);
 		}
 		float kaoqinTotal = (float) (salary*shijia/168 + bingjia*salary/336 + kuanggong*salary/56 + chidaoYingkou + zhuanzhengChae) ;
 		//计算社保代扣总额
@@ -436,10 +630,12 @@ public class EmployeeController {
 	@ResponseBody
 	public Json deleteWagesDate(PWagesDate pwagesDate){
 		Json result = new Json();
-		int savaNum = employeeInfoService.deleteWagesDate(pwagesDate);
-		if(savaNum>0){
-			result.setSuccess(true);
-			result.setMsg(String.valueOf(savaNum));
+		if(pwagesDate.getDate()!=null){
+			int savaNum = employeeInfoService.deleteWagesDate(pwagesDate);
+			if(savaNum>0){
+				result.setSuccess(true);
+				result.setMsg(String.valueOf(savaNum));
+			}
 		}
 		return result;
 	}

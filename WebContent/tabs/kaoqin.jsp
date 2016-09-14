@@ -10,7 +10,7 @@
 	</div>
 
 	<div style="width: 98%">
-		<table id="datagrid_kaoqin" class="easyui-datagrid" style="width: 100%;"
+		<table id="datagrid_kaoqin" class="easyui-datagrid" style="width:100%;height:489px;"
 			data-options="
 			url:'employee/queryKaoqin.action',
 			title:'考勤表',
@@ -19,7 +19,22 @@
 			pagination:true,
 			rownumbers:true,
 			pageSize:15,
-			pageList:[10,15,20,30,50],
+			rowStyler : function(index, row) {
+								var date = new Date();
+								var dd = date.getFullYear() + ((date.getMonth())<10? ( '0' + (date.getMonth())):date.getMonth()); 
+								console.log(row.lizhiReport);
+								console.log(row.ruzhiReport);
+								if (row.lizhiReport&&row.lizhiReport.substring(0,6) == dd) {
+									return 'background-color:#E88282;color:#fff;font-weight:bold;';
+								}
+								if(row.level =='实习生'){
+									return 'background-color:yellow;';
+								}
+								if(row.ruzhiReport&&row.ruzhiReport.substring(0,6) == dd){
+									return 'background-color:#00FF00;';
+								}
+							},
+			pageList:[10,15,20,30,50,200],
 			loadFilter : function(data){
 				if (typeof(data.d)=='number'){
 					return data.d.toFixed(2);
@@ -56,6 +71,7 @@
 					<th data-options="field:'ruzhiReport',width:100,sortable:true">入职报表</th>
 					<th data-options="field:'lizhiReport',width:100,sortable:true">离职报表</th>
 					<th data-options="field:'zhuanzhengReport',width:100,sortable:true">转正报表</th>
+					<th data-options="field:'level',width:100,sortable:true">级别</th>
 					<th data-options="field:'kaoQinremarks',width:100,sortable:true,editor:{type:'textbox'}">考勤备注</th>
 				</tr>
 			</thead>
@@ -71,4 +87,15 @@
            	<jsp:include page="../components/wagesDate.jsp"></jsp:include>
 	</div>
 	</div>
+	
+	<div id="kaoqin_add_dialog" class="easyui-dialog" title="增加考勤记录"
+		style="width: 680px;overflow: hidden"
+		data-options="
+                iconCls : 'icon-edit',
+                modal : false,
+                closed : true
+            ">
+           	<jsp:include page="../components/kaoqinAdd.jsp"></jsp:include>
+	</div>
+
 </div>

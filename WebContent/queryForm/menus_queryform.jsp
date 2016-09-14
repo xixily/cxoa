@@ -1,4 +1,13 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#menus_queryform').keydown(function(e){
+		if(e.keyCode==13){
+		   $('#menus_search').trigger('click');
+		}
+		});
+})
+</script>
 <form id="menus_queryform" method="post" enctype="multipart/form-data">
 	<table>
 		<tr>
@@ -13,7 +22,7 @@
             </td>
             <td></td>
             <td>
-            <input class="easyui-linkbutton do_action" appaction="system.menus.queryMenus"  type="button" value="查找"
+            <input id="menus_search" class="easyui-linkbutton do_action" appaction="system.menus.queryMenus"  type="button" value="查找"
 				style="width:46px;height:26px;" />
             </td>
             <td></td>

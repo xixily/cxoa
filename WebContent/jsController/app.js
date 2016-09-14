@@ -429,6 +429,26 @@ var downloadForm = {
 		$("#"+formId).remove();
 	}
 }
+
+/**
+ * 创建progressbar，用于进度提示<br/>
+ * 		<strong>创建之后调用endProgress</strong> 
+ */
+var progressDialog = {
+		/**
+		 * 创建临时progressbar Dialog
+		 */
+		createProgressDialog : function(shape,time,modal){
+			$('#progress_dialog').remove();
+			var dialog = $("<div>");
+			var progress = $("<div>");
+			dialog.addClass("easyui-dialog");
+			dialog.attr("data-options","title:'',modal:true");
+			dialog.attr("id","progress_dialog");
+			progress.attr("id","dialog_progress");
+		}
+}
+ 
 /**
  * 创建销毁临时form表，用于提示框<br/>
  * <strong>创建之后记得用destoryForm删除临时表</strong>
@@ -1039,3 +1059,14 @@ $.extend($.fn.validatebox.defaults.rules, {
         message: '开始日期不能大于结束日期'
         },
 });
+/**
+ * 
+ * @param number 要计算的数
+ * @param fractiondigits 精确位
+ * @returns {Number}
+ */
+function round2(number,fractiondigits){   
+    with(Math){   
+        return round(number*pow(10,fractiondigits))/pow(10,fractiondigits);   
+    }   
+}   

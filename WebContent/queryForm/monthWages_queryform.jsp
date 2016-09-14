@@ -1,4 +1,13 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#monthWages_form').keydown(function(e){
+		if(e.keyCode==13){
+		   $('#monthWages_search').trigger('click');
+		}
+		});
+})
+</script>
 <form id="monthWages_form" method="post" enctype="multipart/form-data">
 	<table>
 		<tr>
@@ -30,8 +39,12 @@
 			<td>转正报表:</td>
 			<td><input name="zhuanzhengReport" class="easyui-datebox" style="width:100px" /></td>
             <td></td> -->
-            <td>
-            <input class="easyui-linkbutton do_action" appaction="employee.monthWages.queryMonthWages"  type="button" value="查找"
+            
+		</tr>
+		<tr>
+			<td colspan="4"></td>
+			<td>
+            <input id="monthWages_search" class="easyui-linkbutton do_action" appaction="employee.monthWages.queryMonthWages"  type="button" value="查找"
 				style="width:46px;height:26px;" />
             </td>
             <td></td>

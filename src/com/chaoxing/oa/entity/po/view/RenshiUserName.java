@@ -1,6 +1,7 @@
 package com.chaoxing.oa.entity.po.view;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -73,6 +74,9 @@ public class RenshiUserName implements Serializable {
 	private String ifSecret;//是否保密
 	private String maritalStatus;//婚姻状况
 	private int roleId;//角色
+	private String ruzhiReport;//入职报表
+	private String lizhiReport;//离职报表
+	private String zhuanzhengReport;//转正报表
 	
 	@Column(name="人事权限")
 	public String getRenshiRight() {
@@ -511,6 +515,27 @@ public class RenshiUserName implements Serializable {
 	}
 	public void setRoleId(int roleId) {
 		this.roleId = roleId;
+	}
+	@Column(name = "入职报表")
+	public String getRuzhiReport() {
+		return ruzhiReport;
+	}
+	@Column(name = "离职报表")
+	public String getLizhiReport() {
+		return lizhiReport;
+	}
+	@Column(name = "转正报表")
+	public String getZhuanzhengReport() {
+		return zhuanzhengReport;
+	}
+	public void setRuzhiReport(String ruzhiReport) {
+		this.ruzhiReport = ruzhiReport;
+	}
+	public void setLizhiReport(String lizhiReport) {
+		this.lizhiReport = lizhiReport;
+	}
+	public void setZhuanzhengReport(String zhuanzhengReport) {
+		this.zhuanzhengReport = zhuanzhengReport;
 	}
 	
 }

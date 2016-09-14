@@ -27,6 +27,7 @@ public class PKaoQin {
 	private String lizhiReport;//离职报表
 	private String zhuanzhengReport;//转正报表
 	private String kaoQinremarks;//考勤备注
+	private String level;//级别
 	public Integer getId() {
 		return id;
 	}
@@ -104,6 +105,12 @@ public class PKaoQin {
 	}
 	public String getKaoQinremarks() {
 		return kaoQinremarks;
+	}
+	public String getLevel() {
+		return level;
+	}
+	public void setLevel(String level) {
+		this.level = level;
 	}
 	public void setId(Integer id) {
 		this.id = id;

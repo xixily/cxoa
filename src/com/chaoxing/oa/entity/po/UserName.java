@@ -82,6 +82,8 @@ public class UserName implements Serializable {
 	private String bumentiaozhengReport;//部门调整报表
 	private String baoxianTongzhidan;//保险通知单
 	private String signedBy;//签字人
+	private String chargedBy;//负责人
+	
 	@Id
 	@Column(name="ID", nullable=false)
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -458,7 +460,7 @@ public class UserName implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	@Column(name="工资保密", updatable = false)
+	@Column(name="工资保密", updatable = false, columnDefinition = " varchar(10) DEFAULT 'off'")
 	public String getIfSecret() {
 		return ifSecret;
 	}
@@ -499,6 +501,13 @@ public class UserName implements Serializable {
 	@Column(name = "签字人")
 	public String getSignedBy() {
 		return signedBy;
+	}
+	@Column(name = "负责人")
+	public String getChargedBy() {
+		return chargedBy;
+	}
+	public void setChargedBy(String chargedBy) {
+		this.chargedBy = chargedBy;
 	}
 	public void setSignedBy(String signedBy) {
 		this.signedBy = signedBy;

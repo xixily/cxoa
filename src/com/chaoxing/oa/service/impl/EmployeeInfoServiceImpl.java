@@ -1,5 +1,6 @@
 package com.chaoxing.oa.service.impl;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,8 +15,10 @@ import javax.servlet.http.HttpSession;
 import org.hibernate.HibernateException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.druid.support.spring.stat.BeanTypeAutoProxyCreator;
 import com.chaoxing.oa.config.SysConfig;
 import com.chaoxing.oa.dao.BaseDaoI;
 import com.chaoxing.oa.entity.page.PComboBox;
@@ -186,10 +189,12 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		List<RenshiUserName> renshiUsernames = userNameDao
 				.find("from RenshiUserName r where r.fourthLevel=:fourthLevel", params);
 		for (RenshiUserName renshiUserName : renshiUsernames) {
-			PRenshiEmployee renshiEmployeeInfo = new PRenshiEmployee();
-			BeanUtils.copyProperties(renshiUserName, renshiEmployeeInfo);
+			if(renshiUserName!=null){
+				PRenshiEmployee renshiEmployeeInfo = new PRenshiEmployee();
+				BeanUtils.copyProperties(renshiUserName, renshiEmployeeInfo);
 //			renshiEmployeeInfo.setId(renshiUserName.getID());
-			renshiEmployeeInfos.add(renshiEmployeeInfo);
+				renshiEmployeeInfos.add(renshiEmployeeInfo);
+			}
 		}
 		return renshiEmployeeInfos;
 	}
@@ -201,7 +206,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	
 	@Override
 	public Map<String, Object> getRenshiUserName(QueryForm queryForm, HttpSession session, int isExport) {
-		System.out.println(queryForm);
+//		System.out.println(queryForm);
 		List<PRenshiEmployee> renshiEmployeeInfos = new ArrayList<PRenshiEmployee>();
 		Map<String, Object> userInfos = new HashMap<String, Object>();
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -229,9 +234,11 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		}
 		List<RenshiUserName> renshiUsernames = userNameDao.find(hql.toString(), params, intPage, pageSize);
 		for (RenshiUserName renshiUserName : renshiUsernames) {
-			PRenshiEmployee renshiEmployeeInfo = new PRenshiEmployee();
-			BeanUtils.copyProperties(renshiUserName, renshiEmployeeInfo);
-			renshiEmployeeInfos.add(renshiEmployeeInfo);
+			if(renshiUserName!=null){
+				PRenshiEmployee renshiEmployeeInfo = new PRenshiEmployee();
+				BeanUtils.copyProperties(renshiUserName, renshiEmployeeInfo);
+				renshiEmployeeInfos.add(renshiEmployeeInfo);
+			}
 		}
 		long total = getRenshiUserNameCount(hql.toString(),params);
 		userInfos.put("total", total);
@@ -266,9 +273,11 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		List<Level> levels = levelDao.find("from Level");
 		List<PLevel> plevels = new ArrayList<PLevel>();
 		for (Level level : levels) {
-			PLevel plevel = new PLevel();
-			BeanUtils.copyProperties(level, plevel);
-			plevels.add(plevel);
+			if(level!=null){
+				PLevel plevel = new PLevel();
+				BeanUtils.copyProperties(level, plevel);
+				plevels.add(plevel);
+			}
 		}
 		return plevels;
 	}
@@ -281,9 +290,11 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		pcompany0.setId(0);
 		pcompanys.add(pcompany0);
 		for (Company company : cmopanys) {
-			PCompany pcompany = new PCompany();
-			BeanUtils.copyProperties(company, pcompany);
-			pcompanys.add(pcompany);
+			if(company!=null){
+				PCompany pcompany = new PCompany();
+				BeanUtils.copyProperties(company, pcompany);
+				pcompanys.add(pcompany);
+			}
 		}
 		return pcompanys;
 	}
@@ -293,10 +304,12 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		List<OrganizationStructure> lists = organizationStructureDao.find("SELECT distinct o.thirdLevel from OrganizationStructure o");
 		List<PComboBox> listComs = new ArrayList<PComboBox>();
 		for (OrganizationStructure organizationStructure : lists) {
-			PComboBox comb = new PComboBox();
-			comb.setValue(organizationStructure.getFourthLevel());
-			comb.setText(organizationStructure.getFourthLevel());
-			listComs.add(comb);
+			if(organizationStructure!=null){
+				PComboBox comb = new PComboBox();
+				comb.setValue(organizationStructure.getFourthLevel());
+				comb.setText(organizationStructure.getFourthLevel());
+				listComs.add(comb);
+			}
 		}
 		return listComs;
 	}
@@ -306,13 +319,15 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		List<POStructs> listComs = new ArrayList<POStructs>();
 		List<OrganizationStructure> lists = organizationStructureDao.find("from OrganizationStructure o");
 		for (OrganizationStructure organizationStructure : lists) {
-			POStructs postruct = new POStructs();
-			if(organizationStructure.getSecondLevel().equals("离职")){
-				organizationStructure.setFourthLevel("离职");
+			if(organizationStructure!=null){
+				POStructs postruct = new POStructs();
+				if(organizationStructure.getSecondLevel().equals("离职")){
+					organizationStructure.setFourthLevel("离职");
+				}
+				BeanUtils.copyProperties(organizationStructure, postruct);
+				postruct.setDepartmentId(organizationStructure.getId());
+				listComs.add(postruct);
 			}
-			BeanUtils.copyProperties(organizationStructure, postruct);
-			postruct.setDepartmentId(organizationStructure.getId());
-			listComs.add(postruct);
 		}
 		return listComs;
 	}
@@ -326,27 +341,36 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		pcb0.setValue("");
 		pcbs.add(pcb0);
 		for (Object renshiUserName : lists) {
-			if(renshiUserName==null){
-				continue;
+			if(renshiUserName!=null){
+				PComboBox pcb = new PComboBox();
+				pcb.setText((String)renshiUserName);
+				pcb.setValue((String)renshiUserName);
+				pcbs.add(pcb);
 			}
-			PComboBox pcb = new PComboBox();
-			pcb.setText((String)renshiUserName);
-			pcb.setValue((String)renshiUserName);
-			pcbs.add(pcb);
 		}
 		return pcbs;
 	}
 
 	@Override
-	public List<Pwages> getWagesList(int id) {
+	public List<Pwages> getWagesList(int id,SessionInfo sessionInfo, String ifSecret) {
 		Map<String,Object> params = new HashMap<String, Object>();
+		int roleId = sessionInfo.getRoleId();
 		params.put("employeeId", id);
 		List<Pwages> pwages = new ArrayList<Pwages>();
 		List<WageDistribution> wages = wageDistributionDao.find("from WageDistribution w where w.employeeId = :employeeId", params);
 		for (WageDistribution wageDistribution : wages) {
-			Pwages p = new Pwages();
-			BeanUtils.copyProperties(wageDistribution, p);
-			pwages.add(p);
+			if(wageDistribution!=null){
+				Pwages p = new Pwages();
+				BeanUtils.copyProperties(wageDistribution, p);
+				if(roleId!=100&&roleId!=0&&!(ifSecret.equals("off"))){
+					p.setSalary(null);
+					p.setBasicWage(null);
+					p.setPostSalary(null);
+					p.setPerformanceRelatedPay(null);
+					p.setRemarks("");
+				}
+				pwages.add(p);
+			}
 		}
 		return pwages;
 	}
@@ -378,6 +402,8 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		StringBuffer hql = new StringBuffer("update WageDistribution set "); 
 		hql.append(" radix = :radix,");
 		params.put("radix", pwages.getRadix());
+		hql.append(" householdType = :householdType,");
+		params.put("householdType", pwages.getHouseholdType());
 		hql.append("subEndowmentIinsurance = :subEndowmentIinsurance,");
 		params.put("subEndowmentIinsurance", pwages.getSubEndowmentIinsurance());
 		hql.append("subMedicare = :subMedicare,");
@@ -439,9 +465,11 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		List<Shebao> shebaos = sheBaoDao.find(hql.toString(), params, intPage, pageSize);
 		long total = getShebaoCount(hql.toString(), params);
 		for (Shebao shebao : shebaos) {
-			PShebao pshebao = new PShebao();
-			BeanUtils.copyProperties(shebao, pshebao);
-			pshebaos.add(pshebao);
+			if(shebao!=null){
+				PShebao pshebao = new PShebao();
+				BeanUtils.copyProperties(shebao, pshebao);
+				pshebaos.add(pshebao);
+			}
 		}
 		result.put("total", total);
 		result.put("rows", pshebaos);
@@ -451,15 +479,15 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	@Override
 	public List<PShebao> getShebaoRadioByCompany(String company) {
 		Map<String, Object> params = new HashMap<String, Object>();
-//		params.put("company", "江西慕课信息技术有限公司");
-//		String c = "成都超星数图信息技术有限公司";
 		params.put("company", company);
 		List<PShebao> pshebaos = new ArrayList<PShebao>();
 		List<Shebao> shebaos = sheBaoDao.find("from Shebao s where s.company = :company", params);
 		for (Shebao shebao : shebaos) {
-			PShebao pshebao = new PShebao();
-			BeanUtils.copyProperties(shebao, pshebao);
-			pshebaos.add(pshebao);
+			if(shebao!=null){
+				PShebao pshebao = new PShebao();
+				BeanUtils.copyProperties(shebao, pshebao);
+				pshebaos.add(pshebao);
+			}
 		}
 		return pshebaos;
 	}
@@ -469,9 +497,11 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		List<PShebaoType> pshebaoTypes = new ArrayList<PShebaoType>();
 		List<ShebaoType> typeList = sheBaoTypeDao.find("from ShebaoType");
 		for (ShebaoType shebaoType : typeList) {
-			PShebaoType pshebao = new PShebaoType();
-			BeanUtils.copyProperties(shebaoType, pshebao);
-			pshebaoTypes.add(pshebao);
+			if(shebaoType!=null){
+				PShebaoType pshebao = new PShebaoType();
+				BeanUtils.copyProperties(shebaoType, pshebao);
+				pshebaoTypes.add(pshebao);
+			}
 		}
 		return pshebaoTypes;
 	}
@@ -519,9 +549,11 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		List<PHouseholdType> phouseTypes = new ArrayList<PHouseholdType>();
 		List<HouseholdType> houseTypes = househodlType.find("from HouseholdType");
 		for (HouseholdType householdType : houseTypes) {
-			PHouseholdType phouseholdeType = new PHouseholdType();
-			BeanUtils.copyProperties(householdType, phouseholdeType);
-			phouseTypes.add(phouseholdeType);
+			if(householdType!=null){
+				PHouseholdType phouseholdeType = new PHouseholdType();
+				BeanUtils.copyProperties(householdType, phouseholdeType);
+				phouseTypes.add(phouseholdeType);
+			}
 		}
 		return phouseTypes;
 	}
@@ -566,6 +598,16 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 			hql.append(" and t.company like :company ");
 			params.put("company", "%" + queryForm.getCompany() + "%");
 		}
+//		String sort = "company";
+//		String order = SysConfig.DESC;
+//		if(queryForm.getSort() != null){
+//			String sort = queryForm.getSort();
+//			String order ="";
+//			if(queryForm.getOrder() != null){
+//				order = queryForm.getOrder();
+//			}
+//			hql.append(" order by t." + sort + " " + order);
+//		}
 		
 		int intPage = 0;
 		int pageSize = 30000;//最多导出30000条数据
@@ -576,9 +618,36 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		
 		List<SheBaoSummary> sheBaoSummaries = shebaoSummaryDao.find(hql.toString(), params, intPage, pageSize);
 		for (SheBaoSummary shebaoSummary : sheBaoSummaries) {
-			PSheBaoSummary pshebaoSummary = new PSheBaoSummary();
-			BeanUtils.copyProperties(shebaoSummary, pshebaoSummary);
+			if(shebaoSummary!=null){
+				StringBuffer hql2 = new StringBuffer("from WageDistribution t where t.radix > 0 and t.company ='" + shebaoSummary.getCompany() + "'");
+				long total = getWageDistributionCount(hql2.toString(), null);
+				PSheBaoSummary pshebaoSummary = new PSheBaoSummary();
+				pshebaoSummary.setCount(total);
+				pshebaoSummary.setCompany(shebaoSummary.getCompany());
+				BigDecimal subEndowment = new BigDecimal(shebaoSummary.getSubEndowmentIinsurance().toString());
+				pshebaoSummary.setSubEndowmentIinsurance(subEndowment.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue());
+				BigDecimal subHouse = new BigDecimal(shebaoSummary.getSubHouseIinsurance().toString());
+				pshebaoSummary.setSubHouseIinsurance(subHouse.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue());
+				BigDecimal subMedicare = new BigDecimal(shebaoSummary.getSubMedicare().toString());
+				pshebaoSummary.setSubMedicare(subMedicare.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue());
+				BigDecimal subUnemployed = new BigDecimal(shebaoSummary.getSubUnemployedInsurance().toString());
+				pshebaoSummary.setSubUnemployedInsurance(subUnemployed.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue());
+				BigDecimal cEndowment = new BigDecimal(shebaoSummary.getcEndowmentIinsurance().toString());
+				System.out.println("[公司养老BigDecimal:" + cEndowment + "][float:" + pshebaoSummary.getcEndowmentIinsurance());
+				pshebaoSummary.setcEndowmentIinsurance(cEndowment.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue());
+				BigDecimal cHouse = new BigDecimal(shebaoSummary.getcHouseIinsurance().toString());
+				pshebaoSummary.setcHouseIinsurance(cHouse.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue());
+				BigDecimal cMedicare = new BigDecimal(shebaoSummary.getcMedicare().toString());
+				pshebaoSummary.setcMedicare(cMedicare.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue());
+				BigDecimal cUnemployed = new BigDecimal(shebaoSummary.getcUnemployedInsurance().toString());
+				pshebaoSummary.setcUnemployedInsurance(cUnemployed.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue());
+				BigDecimal cBirth = new BigDecimal(shebaoSummary.getcBirthIinsurance().toString());
+				pshebaoSummary.setcBirthIinsurance(cBirth.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue());
+				BigDecimal cInjury = new BigDecimal(shebaoSummary.getcInjuryInsurance().toString());
+				pshebaoSummary.setcInjuryInsurance(cInjury.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue());
+				
 			pshebaoSummaries.add(pshebaoSummary);
+			}
 		}
 		long total = getSheBaoSummaryCount(hql.toString(),params);
 		summaryInfos.put("total", total);
@@ -603,9 +672,18 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		List<WageDistribution> wageDistributions = new ArrayList<WageDistribution>();
 		List<Pwages> pwages = new ArrayList<Pwages>();
 		StringBuffer hql = new StringBuffer("from WageDistribution t where t.radix > 0 and t.company = :company");
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMM");
+		Calendar cal = Calendar.getInstance();
+		String date = df.format(cal.getTime());
+		hql.append(" and t.rubaoTime < :rubaoTime ");
+		params.put("rubaoTime", date);
 		long total = 0;
 		if(queryForm.getCompany()!=null){
 			params.put("company", queryForm.getCompany());
+			if(queryForm.getUsername()!=null&&!queryForm.getUsername().equals("")){
+				hql.append(" and username like :username");
+				params.put("username", "%"+queryForm.getUsername()+"%");
+			}
 			int intPage = 0;
 			int pageSize = 30000;//最多导出30000条数据
 			if(isExport == 0){
@@ -623,9 +701,11 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 			hql.append(" order by t." + sort + " " + order);
 			wageDistributions = wageDistributionDao.find(hql.toString(), params, intPage, pageSize);
 			for (WageDistribution wageDistribution : wageDistributions) {
-				Pwages pwage = new Pwages();
-				BeanUtils.copyProperties(wageDistribution, pwage);
-				pwages.add(pwage);
+				if(wageDistribution!=null){
+					Pwages pwage = new Pwages();
+					BeanUtils.copyProperties(wageDistribution, pwage);
+					pwages.add(pwage);
+				}
 			}
 			total = getWageDistributionCount(hql.toString(), params);
 		}
@@ -672,9 +752,11 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		
 		kaoqins = kaoqinDao.find(hql.toString(), params, intPage, pageSize);
 		for (KaoQin kaoqin : kaoqins) {
-			PKaoQin pkaoqin = new PKaoQin();
-			BeanUtils.copyProperties(kaoqin, pkaoqin);
-			pkaoqins.add(pkaoqin);
+			if(kaoqin!=null){
+				PKaoQin pkaoqin = new PKaoQin();
+				BeanUtils.copyProperties(kaoqin, pkaoqin);
+				pkaoqins.add(pkaoqin);
+			}
 		}
 		total = getKaoQinCount(hql.toString(), params);
 		kaoqinInfos.put("total", total);
@@ -700,6 +782,20 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 			e.printStackTrace();
 			return 0;
 		}
+	}
+	
+	
+	@Override
+	public int deleteKaoqin(PKaoQin pkaoqin) {
+		KaoQin kaoqin = new KaoQin();
+		BeanUtils.copyProperties(pkaoqin, kaoqin);
+		try {
+			kaoqinDao.delete(kaoqin);
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 	
 	@Override
@@ -733,38 +829,42 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		List<MonthWages> monthWages = monthWagesDao.find(hql.toString(), params, intPage, pageSize);
 		if(sessionInfo.getRoleId()<1 || sessionInfo.getRoleId()==100){
 			for (MonthWages monthWage : monthWages) {
-				PMonthWages pMonthWage = new PMonthWages();
-				BeanUtils.copyProperties(monthWage, pMonthWage);
-				pMonthWages.add(pMonthWage);
+				if(monthWage!=null){
+					PMonthWages pMonthWage = new PMonthWages();
+					BeanUtils.copyProperties(monthWage, pMonthWage);
+					pMonthWages.add(pMonthWage);
+				}
 			}
 		}else{
 			for (MonthWages monthWage : monthWages) {
-				PMonthWages pMonthWage = new PMonthWages();
-				pMonthWage.setUsername(monthWage.getUsername());
-				pMonthWage.setFirstLevel(monthWage.getFirstLevel());
-				pMonthWage.setSecondLevel(monthWage.getSecondLevel());
-				pMonthWage.setThirdLevel(monthWage.getThirdLevel());
-				pMonthWage.setFourthLevel(monthWage.getFourthLevel());
-				pMonthWage.setAccountBank(monthWage.getAccountBank());
-				pMonthWage.setAccount(monthWage.getAccount());
-				pMonthWage.setIdentityCard(monthWage.getIdentityCard());
-				pMonthWage.setChuqinDay(monthWage.getChuqinDay());
-				pMonthWage.setZhuanzhengChaeDay(monthWage.getZhuanzhengChaeDay());
-				pMonthWage.setFakuan(monthWage.getFakuan());
-				pMonthWage.setJiangjin(monthWage.getJiangjin());
-				pMonthWage.setBufaSalary(monthWage.getBufaSalary());
-				pMonthWage.setShiJiaHour(monthWage.getShiJiaHour());
-				pMonthWage.setBingJiaHour(monthWage.getBingJiaHour());
-				pMonthWage.setKuangGongHour(monthWage.getKuangGongHour());
-				pMonthWage.setChidaoYingkouDay(monthWage.getChidaoYingkouDay());
-				pMonthWage.setChanJiaDay(monthWage.getChanJiaDay());
-				pMonthWage.setAnnualLleave(monthWage.getAnnualLleave());
-				pMonthWage.setSickLleaveTotal(monthWage.getSickLleaveTotal());
-				pMonthWage.setHiredate(monthWage.getHiredate());
-				pMonthWage.setLeaveTime(monthWage.getLeaveTime());
-				pMonthWage.setZhuanzhengTime(monthWage.getZhuanzhengTime());
-				pMonthWage.setKaoQinremarks(monthWage.getKaoQinremarks());
-				pMonthWages.add(pMonthWage);
+				if(monthWage!=null){
+					PMonthWages pMonthWage = new PMonthWages();
+					pMonthWage.setUsername(monthWage.getUsername());
+					pMonthWage.setFirstLevel(monthWage.getFirstLevel());
+					pMonthWage.setSecondLevel(monthWage.getSecondLevel());
+					pMonthWage.setThirdLevel(monthWage.getThirdLevel());
+					pMonthWage.setFourthLevel(monthWage.getFourthLevel());
+					pMonthWage.setAccountBank(monthWage.getAccountBank());
+					pMonthWage.setAccount(monthWage.getAccount());
+					pMonthWage.setIdentityCard(monthWage.getIdentityCard());
+					pMonthWage.setChuqinDay(monthWage.getChuqinDay());
+					pMonthWage.setZhuanzhengChaeDay(monthWage.getZhuanzhengChaeDay());
+					pMonthWage.setFakuan(monthWage.getFakuan());
+					pMonthWage.setJiangjin(monthWage.getJiangjin());
+					pMonthWage.setBufaSalary(monthWage.getBufaSalary());
+					pMonthWage.setShiJiaHour(monthWage.getShiJiaHour());
+					pMonthWage.setBingJiaHour(monthWage.getBingJiaHour());
+					pMonthWage.setKuangGongHour(monthWage.getKuangGongHour());
+					pMonthWage.setChidaoYingkouDay(monthWage.getChidaoYingkouDay());
+					pMonthWage.setChanJiaDay(monthWage.getChanJiaDay());
+					pMonthWage.setAnnualLleave(monthWage.getAnnualLleave());
+					pMonthWage.setSickLleaveTotal(monthWage.getSickLleaveTotal());
+					pMonthWage.setHiredate(monthWage.getHiredate());
+					pMonthWage.setLeaveTime(monthWage.getLeaveTime());
+					pMonthWage.setZhuanzhengTime(monthWage.getZhuanzhengTime());
+					pMonthWage.setKaoQinremarks(monthWage.getKaoQinremarks());
+					pMonthWages.add(pMonthWage);
+				}
 			}
 		}
 		long total = getMonthWagesCount(hql.toString(),params);
@@ -906,6 +1006,14 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		}
 	}
 	
+	@Override
+	public PMonthWages getMonthWages(Integer id) {
+		MonthWages monthWages = monthWagesDao.get(MonthWages.class, id);
+		PMonthWages pMonthWages = new PMonthWages();
+		BeanUtils.copyProperties(monthWages, pMonthWages);
+		return pMonthWages;
+	}
+	
 	protected void addCondition(StringBuffer hql, QueryForm queryForm, Map<String, Object> params) {
 		if(queryForm != null){
 			if(queryForm.getConfigurable() != null && queryForm.getConfigurable() != ""){
@@ -933,9 +1041,9 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 				hql.append(" and t.degree like :degree ");
 				params.put("degree", "%" + queryForm.getDegree() + "%");
 			}
-			if(queryForm.getEarlyEntryDate() != null && queryForm.getEarlyEntryDate() != ""){
-				hql.append(" and t.earlyEntryDate like :earlyEntryDate ");
-				params.put("earlyEntryDate", "%" + queryForm.getEarlyEntryDate() + "%");
+			if(queryForm.getHiredate() != null && queryForm.getHiredate() != ""){
+				hql.append(" and t.hiredate like :hiredate ");
+				params.put("hiredate", "%" + queryForm.getHiredate() + "%");
 			}
 			if(queryForm.getLeaveTime() != null && queryForm.getLeaveTime() != ""){
 				hql.append(" and t.leaveTime like :leaveTime ");
@@ -977,7 +1085,6 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	}
 	@Override
 	public UserName getUserInfo(QueryForm queryform) {
-		
-		return null;
+		return useDao.get(UserName.class, queryform.getId());
 	}
 }

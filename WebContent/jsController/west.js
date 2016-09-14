@@ -31,7 +31,7 @@ var west = {
 		});*/
 	},
 	getSmallMenus : function(data, menuId, callback) {//获取ul小菜单
-		console.log(data);
+//		console.log(data);
 		$('#ulMenu_' + menuId).tree(
 				{
 					data : data,

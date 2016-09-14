@@ -12,8 +12,8 @@ var employee = {
 							url : 'employee/renshiUser.action',
 							singleSelect : true,// 是否单选
 							pagination : true,// 分页控件
-							pageSize : 10,
-							pageList : [ 10, 15, 20, 30, 50, 100, 200, 500],
+							pageSize : 15,
+							pageList : [ 10, 15, 20, 30, 50, 100, 200],
 							rownumbers : true,// 行号
 							rowStyler : function(index, row) {
 								if (row.leaveTime && row.leaveTime != '') {
@@ -225,39 +225,23 @@ var employee = {
 								title : '邮箱',
 								sortable : true,
 								width : 100
+							}, {
+								field : 'ruzhiReport',
+								title : '入职报表',
+								sortable : true,
+								width : 100
+							}, {
+								field : 'lizhiReport',
+								title : '离职报表',
+								sortable : true,
+								width : 100
+							}, {
+								field : 'zhuanzhengReport',
+								title : '转正报表',
+								sortable : true,
+								width : 100
 							} ] ],
 							toolbar : '#renshi_toolbar',
-							// toolbar: [{
-							// text:'查看',
-							// iconCls: 'icon-search',
-							// handler: function(){
-							// employee.view();
-							// }
-							// },'-',{
-							// text:'编辑',
-							// iconCls: 'icon-edit',
-							// handler: function(){
-							// employee.editEmployee();
-							// }
-							// },'-',{
-							// text:'新增',
-							// iconCls: 'icon-add',
-							// handler: function(){
-							// employee.addEmployee();
-							// }
-							// },'-',{
-							// text:'删除',
-							// iconCls: 'icon-cancel',
-							// handler: function(){
-							// employee.deleteEmployee();
-							// }
-							// },'-',{
-							// text:'导出报表',
-							// iconCls: 'icon-excel',
-							// handler: function(){
-							// employee.exportExcel();
-							// }
-							// }],
 							onDblClickCell : function(index, field, value) {
 								employee.view();
 							}
@@ -287,11 +271,12 @@ var employee = {
 		var url = "user/getUserName.action";
 		$.getJSON(url, userInfo, function(result) {
 			if (result.success) {
-				if(result.obj.ifSecret == "on"){
-					$('#btn_wagesInfo').linkbutton({disabled:true});
-				}else{
-					$('#btn_wagesInfo').linkbutton({disabled:false});
-				}
+//				if(result.obj.ifSecret == "on"){
+//					$('#btn_wagesInfo').linkbutton({disabled:true});
+//				}else{
+//					$('#btn_wagesInfo').linkbutton({disabled:false});
+//				}
+				result.obj.sercret = result.obj.ifSecret;
 				$('#updateUsesrname_form').form('load', result.obj);
 				$('#btn_employeeMailto').attr('href', 'mailto:' + result.obj.email);
 				disabledForm('updateUsesrname_form', true);
@@ -305,15 +290,11 @@ var employee = {
 				$('#btn_employeeRest').linkbutton("disable");
 				$('#btn_employeeEdit').linkbutton("enable");
 			} else {
-				alert(result.msg);
+				$.messager.alert(result.msg);
 			}
 		})
 	},
 	editEmployee : function() {
-		if (session.user.roleId != 0 && session.user.roleId != 1) {
-			alert('您没有编辑权限！~');
-			return;
-		}
 		$('#userName_info').dialog({
 			title : '编辑职员信息'
 		});
@@ -335,14 +316,15 @@ var employee = {
 			success : function(result) {
 				var result = eval('(' + result + ')');
 				if (result.success) {
-					alert("更新成功！");
+					$.messager.alert("更新提示",result.msg);
 				} else {
-					alert("更新失败！")
+					$.messager.alert("更新提示",result.msg);
 				}
 			}
 		});
 		$.getJSON(url, userInfo, function(result) {
 			if (result.success) {
+				result.obj.sercret = result.obj.ifSecret;
 				$('#updateUsesrname_form').form('load', result.obj);
 				$('#btn_employeeMailto').attr('href', 'mailto:' + result.obj.email);
 				$('#userName_info').window('open').window(
@@ -356,15 +338,11 @@ var employee = {
 				$('#btn_employeeRest').linkbutton("enable");
 				$('#btn_employeeEdit').linkbutton("disable");
 			} else {
-				alert(result.msg);
+				$.messagr.alert('提示：',result.msg);
 			}
 		})
 	},
 	openAddEEmployee : function() {
-		if (session.user.roleId != 0 && session.user.roleId != 1) {
-			alert('您没有编辑权限！~');
-			return;
-		}
 		$('#updateUsesrname_form').form('clear');
 		$('#userName_info').window('open').window('resize', {
 			top : $(document).scrollTop() + ($(window).height() - 480) * 0.5
@@ -375,10 +353,6 @@ var employee = {
 		$('#btn_employeeEdit').linkbutton("disable");
 	},
 	addEmployee : function() {
-		if (session.user.roleId != 0 && session.user.roleId != 1) {
-			alert('您没有增加权限！~');
-			return;
-		}
 		$('#userName_info').dialog({
 			title : '增加职员'
 		});
@@ -450,20 +424,16 @@ var employee = {
 	},
 	deleteEmployee : function(confirmId) {
 //		console.log('deleteEmployee');
-		if (session.user.roleId != 0 && session.user.roleId != 1) {
-			alert('您没有删除权限！~');
-			return;
-		}
 		var userInfo = $('#employee_datas').datagrid('getSelected');
 		var url = "user/deleteUserName.action";
 		$.getJSON(url, userInfo, function(result) {
 			confirmDialog.destoryDialog(confirmId);
 			$('#employee_datas').datagrid('reload');
-			if (result.success) {
+//			if (result.success) {
+//				$.messager.alert(result.msg,result.msg);
+//			} else {
 				$.messager.alert(result.msg,result.msg);
-			} else {
-				$.messager.alert(result.msg,result.msg);
-			}
+//			}
 		})
 	},
 	exportExcel : function(type) {
@@ -586,6 +556,19 @@ var employee = {
 		alert(dom);
 	},
 	wages : {
+		refresh_wagesData : function(mesg){
+			$('#datagrid_wages').datagrid({
+				url:'employee/getWagesList.action',
+				queryParams:{page:1,rows:5,id:session.formData.id},
+				onLoadSuccess : function(){
+					$.messager.alert('提示：',mesg);
+				}
+			})
+			employee.wages.form_onchange(false);
+			employee.wages.updateHtml();
+			disabledForm('updatewages_form', true);
+			disabledButton('updatewages_form', true);
+		},
 		openWages : function(src) {
 			disabledForm('updatewages_form', true);
 			session.formData = getDataOfForm($('#updateUsesrname_form')).data;
@@ -594,159 +577,233 @@ var employee = {
 			$('#wages_company').html(session.formData.company);
 			var queryParam = {};
 			queryParam.id = session.formData.id;
-			// queryParam.id = $('#form_hidden_ID')[0].value;
-			// $('#wages_hidden_employeeid').val(queryParam.id);
-			session.wadgeData = {};
-			$.getJSON("employee/getWagesList.action", queryParam, function(
-					result) {
-				session.wadgeData = result;
-				var dataGrid = {};
-				dataGrid.total = result.length;
-//				dataGrid.total = result.length >= 6? result.length:6;
-				dataGrid.rows = result;
-				if (result && result.length > 0) {
-					var salary = 0;
-					$.each(result, function(n, obj) {
-						salary += obj.salary;
-					})
-					$('#wages_totalSalary').html(salary);
-				} else {
-					$('#wages_totalSalary').html(0);
-				}
-				$('#datagrid_wages').datagrid(
-						{
-							height : 'auto',
-							fitColumns : true,
-							data : dataGrid,
-							singleSelect : true,// 是否单选
-							rownumbers : true,// 行号
-							pagination : true,// 分页控件
-							pageSize : 5,
-							pageList : [ 5, 15, 20, 30, 50, 100 ],
-							columns : [ [ {
-								field : 'id',
-								title : '工资编号',
-								width : 80
-							}, {
-								field : 'salary',
-								title : '工资总额',
-								width : 100,
-								editor : {
-									type : 'numberbox',
-									options : {
-										precision : 2
-									}
+//			session.wadgeData = {};
+			$('#datagrid_wages').datagrid(
+					{
+						url : "employee/getWagesList.action",
+						queryParams : queryParam,
+						height : 'auto',
+						fitColumns : true,
+//						data : dataGrid,
+						singleSelect : true,// 是否单选
+						rownumbers : true,// 行号
+						pagination : true,// 分页控件
+						pageSize : 5,
+						pageList : [ 5, 15, 20, 30, 50, 100 ],
+						columns : [ [ {
+							field : 'id',
+							title : '工资编号',
+							width : 80
+						}, {
+							field : 'salary',
+							title : '工资总额',
+							width : 100
+						}, {
+							field : 'radix',
+							title : '基数',
+							width : 100,
+							editor : {
+								type : 'numberbox',
+								options : {
+									min : 0,
+									precision : 2
 								}
-							}, {
-								field : 'radix',
-								title : '基数',
-								width : 100,
-								editor : {
-									type : 'numberbox',
-									options : {
-										precision : 2
-									}
+							}
+						}, {
+							field : 'identityCard',
+							title : '身份证号码',
+							width : 120,
+							editor : 'textbox'
+						}, {
+							field : 'company',
+							title : '公司名称',
+							width : 100,
+							editor:{
+		                            type:'combobox',
+		                            options:{
+		                                valueField:'cmopany',
+		                                textField:'cmopany',
+		                                method:'get',
+		                                url:'employee/getCompany.action',
+		                                required:true
+		                            }
+		                        }
+						}, {
+							field : 'accountBank',
+							title : '开户行',
+							width : 100,
+							editor : 'textbox',
+							editor : {
+								type:'combobox',
+								options:{
+									valueField: 'value',
+									textField: 'text',
+									data: [{
+										text: '交行',
+										value: '交行'
+									},{
+										text: '招行',
+										value: '招行'
+									},{
+										text: '建行',
+										value: '建行'
+									},{
+										text: '光大',
+										value: '光大'
+									},{
+										text: '工行',
+										value: '工行'
+									},{
+										text: '南京银行',
+										value: '南京银行'
+									},{
+										text: '现金无卡号',
+										value: '现金无卡号'
+									},{
+										text: '现金离职 办理中',
+										value: '现金离职 办理中'
+									},{
+										text: '现金入职资料不全',
+										value: '现金入职资料不全'
+									},{
+										text: '现金 自取',
+										value: '现金 自取'
+									}]
 								}
-							}, {
-								field : 'identityCard',
-								title : '身份证号码',
-								width : 120,
-								editor : 'textbox'
-							}, {
-								field : 'company',
-								title : '公司名称',
-								width : 100,
-								editor : 'textbox'
-							}, {
-								field : 'accountBank',
-								title : '开户行',
-								width : 100,
-								editor : 'textbox'
-							}, {
-								field : 'account',
-								title : '职工帐号',
-								width : 180,
-								editor : 'textbox'
-							}, {
-								field : 'householdType',
-								title : '户口性质',
-								width : 100,
-								editor : 'textbox'
-							} ] ],
-							onClickCell : function(index, field, value) {
-								employee.wages.endEditing();
-								session.append = false;
-								$('#wages_add').css('display', 'none');
-								$('#wages_save').css('display', '');
-								$('#wages_edit').css('display', '');
-								employee.wages.eidtWages();
-							},
-//							onClickCell : employee.wages.onClickCell,
-							onEndEdit : employee.wages.onEndEdit,
-							onDblClickCell : employee.wages.onClickCell,
-//							onDblClickCell : function(index, field, value) {
-//								employee.wages.endEditing();
-//								session.append = false;
-//								$('#wages_add').css('display', 'none');
-//								$('#wages_save').css('display', '');
-//								$('#wages_edit').css('display', '');
-//								employee.wages.eidtWages();
-//							},
-							toolbar : [
-									{
-										text : '新增',
-										iconCls : 'icon-add',
-										handler : function() {
+							}
+								
+						}, {
+							field : 'account',
+							title : '职工帐号',
+							width : 180,
+							editor : 'textbox'
+						}, {
+							field : 'householdType',
+							title : '户口性质',
+							width : 100,
+							editor:{
+	                            type:'combobox',
+	                            options:{
+	                                valueField:'householdType',
+	                                textField:'householdType',
+	                                method:'get',
+	                                url:'employee/getHouseholdType.action',
+	                                required:true
+	                            }
+	                        },
+//							editor : 'textbox',
+						},{
+							field : 'rubaoTime',
+							title : '入保时间',
+							width : 100,
+							editor :{
+								type : 'textbox'
+							}
+						} ] ],
+						//TODO 结束编辑，form表单显示 工资信息
+						onClickRow : employee.wages.viewWages,
+						//TODO 双击进入编辑状态，并关闭之前状态
+						onDblClickRow : employee.wages.onDblClickRow,
+						//TODO 结束编辑,向后台直接请求
+						onEndEdit : employee.wages.onEndEdit,
+						onLoadSuccess : function(){
+							employee.wages.updateHtml();
+							$('#userName_info').dialog('close');
+							$('#updatewages_form').form('clear');
+							$('#updatewages_form').form({
+								url : 'employee/updateWages.action'
+							});
+							disabledForm('updatewages_form', true);
+							disabledButton('updatewages_form', true);
+							employee.wages.form_onchange(false);
+							$('#dialog_wagesInfo').dialog("open");
+						},
+						toolbar : [
+								{
+									text : '新增',
+									iconCls : 'icon-add',
+									handler : function(){
+										if(session.formData.sercret == 'on'){
+											if(session.user.roleId=='0'||session.user.roleId=='100'){
+												employee.wages.append();
+											}else{
+												$.messager.alert('提示','该员工工资保密，你没有增加权限~');
+											}
+										}else{
 											employee.wages.append();
-											// alert('新增');
 										}
-									},
-									'-',
-									{
-										text : '删除',
-										iconCls : 'icon-remove',
-										handler : function() {
-											confirmDialog.createDialog(
-													"您确定要删除吗？",
-													employee.wages.removeit);
-											// employee.wages.removeit();
+									}
+										
+								} ,
+								'-',
+								{
+									text : '编辑',
+									iconCls : 'icon-edit',
+									handler : function(){
+										if(session.formData.sercret == 'on'){
+											if(session.user.roleId=='0'||session.user.roleId=='100'){
+												employee.wages.editWages();
+											}else{
+												$.messager.alert('提示','该员工工资保密，你没有编辑权限~');
+											}
+										}else{
+											employee.wages.editWages();
 										}
-									} ]
-						})
-				$('#userName_info').dialog('close');
-				$('#updatewages_form').form('clear');
-				$('#updatewages_form').form({
-					url : 'employee/updateWages.action'
-				});
-				$('#dialog_wagesInfo').dialog("open");
-				// $('#dialog_wagesInfo').window('open').window('resize',{top:$(document).scrollTop()
-				// + ($(window).height()-480) * 0.5});
-			});
+									}
+								},
+								'-',
+								{
+									text : '删除',
+									iconCls : 'icon-remove',
+									handler : function() {
+										if(session.formData.sercret == 'on'){
+											if(session.user.roleId=='0'||session.user.roleId=='100'){
+												confirmDialog.createDialog("您确定要删除吗？",employee.wages.deleWages);
+											}else{
+												$.messager.alert('提示','该员工工资保密，你没有删除权限~');
+											}
+										}else{
+											confirmDialog.createDialog("您确定要删除吗？",employee.wages.deleWages);
+										}
+									}
+								} ]
+					})
+//				$('#userName_info').dialog('close');
+//				$('#updatewages_form').form('clear');
+//				$('#updatewages_form').form({
+//					url : 'employee/updateWages.action'
+//				});
+//				disabledForm('updatewages_form', true);
+//				disabledButton('updatewages_form', true);
+//				employee.wages.form_onchange(false);
+//				$('#dialog_wagesInfo').dialog("open");
+//				
+//			});
 		},
-		eidtWages : function(index, field, value) {
-			disabledForm('updatewages_form', true);
-			var userInfo = $('#datagrid_wages').datagrid('getSelected');
-			// $.getJSON("employee/getWages.action",userInfo,function(result){
-			$('#updatewages_form').form('load', userInfo);
-			// })
-		},
-		onClickCell : function(index, field) {
+		viewWages : function(index,row){//显示
 			session.append = false;
+			employee.wages.form_onchange(false);
 			$('#wages_add').css('display', 'none');
 			$('#wages_save').css('display', '');
 			$('#wages_edit').css('display', '');
+			disabledForm('updatewages_form', true);
+			disabledButton('updatewages_form', true);
+//			var userInfo = $('#datagrid_wages').datagrid('getSelected');
+			$('#updatewages_form').form('load', row);
+			employee.wages.endEditing();
+		},
+		onDblClickRow : function(index,row){
+			session.append = false;
+			employee.wages.form_onchange(false);
+			$('#wages_add').css('display', 'none');
+			$('#wages_save').css('display', '');
+			$('#wages_edit').css('display', '');
+			disabledForm('updatewages_form', true);
+			disabledButton('updatewages_form', true);
 			if (editIndex != index) {
 				if (employee.wages.endEditing()) {
 					$('#datagrid_wages').datagrid('selectRow', index).datagrid(
 							'beginEdit', index);
-					var ed = $('#datagrid_wages').datagrid('getEditor', {
-						index : index,
-						field : field
-					});
-					if (ed) {
-						($(ed.target).data('textbox') ? $(ed.target).textbox(
-								'textbox') : $(ed.target)).focus();
-					}
 					editIndex = index;
 				} else {
 					setTimeout(function() {
@@ -754,6 +811,18 @@ var employee = {
 					}, 0);
 				}
 			}
+		},
+		editWages : function(index, field, value) {
+			employee.wages.form_onchange(true);
+			$('#wages_add').css('display', 'none');
+			$('#wages_save').css('display', '');
+			$('#wages_edit').css('display', '');
+			disabledForm('updatewages_form', false);
+			disabledButton('updatewages_form', false);
+			var userInfo = $('#datagrid_wages').datagrid('getSelected');
+			$('#updatewages_form').form('load', userInfo);
+			$('#wages_id').textbox('enable');
+			$('#wages_id').textbox('readonly');
 		},
 		endEditing : function() {
 			if (editIndex == undefined) {
@@ -767,152 +836,79 @@ var employee = {
 				return false;
 			}
 		},
-		onEndEdit : function(index, row) {
+		onEndEdit : function(index, row,changes) {
 			if (session.append) {
 				return false
-			}
-			;
-			var rowsData = $('#datagrid_wages').datagrid('getData');
-			var salary = 0;
-			$.each(rowsData.rows, function(n, obj) {
-				if (n == 0) {
-					$('#wages_identity').html(obj.identityCard);
-					$('#wages_company').html(obj.company);
-					$('#wages_username').html(obj.username);
-				}
-				salary += Number(obj.salary);
-			})
-			$('#wages_totalSalary').html(salary);
-
-			var data = rowsData.rows[index];
-			// data.company = data.companyName;
-			data.radix = data.radix ? data.radix:0;
-			if(!data.company||data.company==''){
-				$.messager.alert('tips', '您没有输入公司名称，请重新填写！', 'info');
+			};
+			changes.id = row.id;
+			var data = row;
+			if(!data.company||data.company==''||!data.householdType||data.householdType==''){
+				$.messager.alert('tips', '您没有输入公司名称或户口性质，请重新填写！', 'info');
 				return false;
 			}
-			wagesCalculate.calculateShebao(data, function(result) {
-				if (result) {
-					$('#updatewages_form').form('load', data);
-				} else {
-					alert('计算失败');
-				}
-			})
+			if(changes.radix || changes.company || changes.accountBank || changes.account){
+				$.post("employee/updateGridWages.action",row,function(result){
+					var result =  eval("(" + result + ")");
+					if(result.success){
+						employee.wages.refresh_wagesData(result.msg);
+					}else{
+						$.messager.alert('更新提示',result.msg);
+					}
+				})
+			}
 		},
 		append : function() {
 			session.append = true;
 			$('#wages_add').css('display', '');
 			$('#wages_save').css('display', 'none');
-			$('#wages_edit').css('display', 'none');
+//			$('#wages_edit').css('display', 'none');
 			if (employee.wages.endEditing()) {
 				$('#updatewages_form').form('clear');
 				$('#updatewages_form').form('load', session.formData);
-				$(
-						'#updatewages_form input[class="easyui-numberbox numberbox-f textbox-f"]')
-						.each(function() {
-							$(this).numberbox({
-								value : 0
-							});
+				$('#updatewages_form input[class="easyui-numberbox numberbox-f textbox-f"]').each(function() {
+							$(this).numberbox({value : 0});
 						});
 				disabledForm('updatewages_form', false);
+				disabledButton('updatewages_form', false);
+				employee.wages.form_onchange(true);
+				$('#wages_id').textbox('enable');
 				$('#wages_id').textbox({
-					disabled : true,
+					readonly : true,
 					value : ''
 				});
 				$('#wages_hidden_employeeid').val(session.formData.id);
-				$("#wages_radix").textbox(
-						{
-							onChange : function(newValue, oldValue) {
-								var data = {};
-								data.radix = newValue;
-								data.company = $(
-										'#wages_company input[name="company"]')
-										.val();
-								wagesCalculate.calculateShebao(data, function(
-										result) {
-									if (result) {
-										$('#updatewages_form').form('load',
-												data);
-									}
-								})
-							}
-						})
-				$("#total_salary").numberbox(
-						{
-							onChange : function(newValue, oldValue) {
-								var data = {};
-								data.basicWage = 0;
-								data.performanceRelatedPay = 0;
-								data.postSalary = 0;
-								if(newValue>=2000){
-									data.basicWage = 1400;
-									data.performanceRelatedPay = newValue * 0.3;
-									data.postSalary = newValue - data.basicWage - data.performanceRelatedPay;
-								}else if(newValue >= 1400){
-									data.basicWage = 1400;
-									data.performanceRelatedPay = newValue - data.basicWage;
-								}else if(newValue > 0){
-									data.basicWage = newValue;					
-								}
-								$('#updatewages_form').form('load',
-										data);
-							}
-						})
 			}
 		},
-		removeit : function(confirmId) {
-			if (editIndex == undefined) {
-				return
-			}
+		deleWages : function(confirmId) {
 			var selected = $('#datagrid_wages').datagrid('getSelected');
 			if (selected && selected.id != '0') {
-				$.getJSON("employee/deleteWages.action", selected,
-						function(result) {
+				if(session.formData.sercret=='on'){// session.formData.ifSecret
+					if(session.user.roleId=='0'||session.user.roleId=='100'){
+						$.post("employee/deleteWages.action", selected,function(result) {
+							var result =  eval("(" + result + ")");
 							confirmDialog.destoryDialog(confirmId);
 							if (result.success) {
-								$('#datagrid_wages').datagrid('cancelEdit',
-										editIndex).datagrid('deleteRow',
-										editIndex);
-								editIndex = undefined;
-								var rowsData = $('#datagrid_wages').datagrid(
-										'getData');
-								var salary = 0;
-								$.each(rowsData.rows,
-										function(n, obj) {
-											if (n == 0) {
-												$('#wages_identity').html(
-														obj.identityCard);
-												$('#wages_company').html(
-														obj.company);
-												$('#wages_username').html(
-														obj.username);
-											}
-											salary += Number(obj.salary);
-										})
-								$('#wages_totalSalary').html(salary);
-							}
+								employee.wages.refresh_wagesData(result.msg);
+								}else{
+										$.messager.alert('消息', result.msg, 'info');
+									}
+								})
+					}else{
+						$.messager.alert('提示','你没有删除权限~');
+					}
+				}else{
+					$.post("employee/deleteWages.action", selected,function(result) {
+						var result =  eval("(" + result + ")");
+						confirmDialog.destoryDialog(confirmId);
+						if (result.success) {
+							employee.wages.refresh_wagesData(result.msg);
+							
+						}else{
 							$.messager.alert('消息', result.msg, 'info');
+						}
 						})
+				}
 			}
-		},
-		accept : function() {
-			if (employee.wages.endEditing()) {
-				$('#datagrid_wages').datagrid('acceptChanges');
-			}
-		},
-		reject : function() {
-			$('#datagrid_wages').datagrid('rejectChanges');
-			editIndex = undefined;
-		},
-		getChanges : function() {
-			var rows = $('#datagrid_wages').datagrid('getChanges');
-			alert(rows.length + ' rows are changed!');
-		},
-		editWages : function() {
-			$('#wages_add').css('display', 'none');
-			$('#wages_save').css('display', '');
-			$('#wages_edit').css('display', '');
-			disabledForm('updatewages_form', false);
 		},
 		updateWages : function(dom) {
 			$('#wages_hidden_employeeid').val(session.formData.id);
@@ -921,11 +917,22 @@ var employee = {
 			});
 			submitForm(dom, function(result) {
 				if (result.success) {
-					employee.wages.openWages();
-					$.messager.alert('消息', result.msg, 'info');
+//					employee.wages.openWages();
+//					$.messager.alert(result.msg);
+//					$('#datagrid_wages').datagrid({url:'employee/getWagesList.action',queryParams:{page:1,rows:5,id:session.formData.id}})
+//					employee.wages.updateHtml();
+//					disabledForm('updatewages_form', true);
+//					disabledButton('updatewages_form', true);
+					employee.wages.refresh_wagesData(result.msg);
+//					employee.wages.form_onchange(false);
+				}else{
+					employee.wages.refresh_wagesData(result.msg);
+//					$.messager.alert('消息', result.msg, 'info');
 				}
 			});
 			disabledForm('updatewages_form', true);
+			disabledButton('updatewages_form', true);
+//			disabledForm('updatewages_form', true);
 		},
 		addWages : function(dom) {
 			$('#wages_hidden_employeeid').val(session.formData.id);
@@ -934,11 +941,75 @@ var employee = {
 			});
 			submitForm(dom, function(result) {
 				if (result.success) {
-					employee.wages.openWages();
-					$.messager.alert('消息', result.msg, 'info');
+					employee.wages.refresh_wagesData(result.msg);
+				}else{
+					employee.wages.refresh_wagesData(result.msg);
 				}
 			});
 			disabledForm('updatewages_form', true);
+			disabledButton('updatewages_form', true);
+		},
+		form_onchange : function(ischange){
+			if(ischange){
+				$("#wages_radix").textbox(
+						{
+							onChange : function(newValue, oldValue) {
+								var data = {};
+								data.radix = newValue;
+								data.company = $('#wages_company input[name="company"]').val();
+								data.householdType = $('#wages_hoseholdType input[name="householdType"]').val();
+								if(!data.company || data.company == '' || data.newValue <= 0||!data.householdType){
+									$.messager.alert('提示：','基础不合法或者您未选择社保公司和户口性质！');
+									return;
+								}
+								wagesCalculate.calculateShebao(data, function(result) {
+									if (result) {
+										$('#updatewages_form').form('load',data);
+									}
+								})
+							}
+						})
+						$("#total_salary").numberbox(
+								{
+									onChange : function(newValue, oldValue) {
+										var data = {};
+										data.basicWage = 0;
+										data.performanceRelatedPay = 0;
+										data.postSalary = 0;
+										if(newValue>=2000){
+											data.basicWage = 1400;
+											data.performanceRelatedPay = newValue * 0.3;
+											data.postSalary = newValue - data.basicWage - data.performanceRelatedPay;
+										}else if(newValue >= 1400){
+											data.basicWage = 1400;
+											data.performanceRelatedPay = newValue - data.basicWage;
+										}else if(newValue > 0){
+											data.basicWage = newValue;					
+										}
+										$('#updatewages_form').form('load',
+												data);
+									}
+								})
+			}else{
+				$("#wages_radix").textbox({onChange:function(){}});
+				$("#total_salary").numberbox({onChange:function(){}});
+			}
+		},
+		updateHtml : function(){
+			var rowsData = $('#datagrid_wages').datagrid('getData');
+			var salary = 0;
+			$.each(rowsData.rows,function(n, obj) {
+				if (n == 0) {
+					$('#wages_identity').html(
+							obj.identityCard);
+					$('#wages_company').html(
+							obj.company);
+					$('#wages_username').html(
+							obj.username);
+				}
+				salary += Number(obj.salary);
+			})
+	$('#wages_totalSalary').html(salary);
 		}
 	},
 	shebao : {
@@ -1089,6 +1160,12 @@ shebaoSummary : {
 			queryParams : data
 		})
 	},
+	queryShebaoCompany : function(data, src) {
+		data.company = session.shebaoCompany.company;
+		$('#datagrid_shebaoCompany').datagrid({
+			queryParams : data
+		})
+	},
 	view : function(index, row){
 		
 		$('#shebaoCompany_detail').dialog({
@@ -1102,6 +1179,8 @@ shebaoSummary : {
 				});
 		
 		var company = row.company;
+		session.shebaoCompany = {};
+		session.shebaoCompany.company = company;
 		$('#shebaoCompany_company').html(company);
 		employee.shebaoSummary.updateDom(row);
 		session.viewCompanyRow = row;
@@ -1118,7 +1197,7 @@ shebaoSummary : {
 					singleSelect : true,// 是否单选
 					rownumbers : true,// 行号
 					pagination : true,// 分页控件
-					pageSize : 15,
+					pageSize : 10,
 					loadFilter : function(data){
 						if (typeof(data.d)=='number'){
 							return data.d.toFixed(2);
@@ -1152,6 +1231,21 @@ shebaoSummary : {
 								precision : 2
 							}
 						}
+					}, {
+						field : 'householdType',
+						title : '户口性质',
+						sortable : true,
+						width : 100,
+//						editor : {
+//							type : 'combobox',
+//							options:{
+//                                valueField:'householdType',
+//                                textField:'householdType',
+//                                method:'get',
+//                                url:'employee/getHouseholdType.action',
+//                                required:true
+//                            }
+//						}
 					}, {
 						field : 'radix',
 						title : '基数',
@@ -1266,14 +1360,6 @@ shebaoSummary : {
 					}] ],
 					toolbar : "#shebaoCompany_toolbar",
 					footer : "#shebaoComany_footerbar",
-//					toolbar: [{
-//						iconCls: 'icon-edit',
-//						text:'批量修改基数',
-//						handler: function(){alert('edit')}
-//					},'-',{
-//						iconCls: 'icon-help',
-//						handler: function(){alert('help')}
-//					}],
 					onDblClickRow : employee.shebaoSummary.onDblClickRow,
 					onClickCell : employee.shebaoSummary.endEditing,
 					onEndEdit: employee.shebaoSummary.onEndEdit}
@@ -1289,9 +1375,7 @@ shebaoSummary : {
 		exportParam.configurable = 'reportForm';
 		if (!type || type == 0) {
 			delete exportParam.configurable;
-			if (data.succeed) {
-				exportParam = data.data;
-			}
+			exportParam = data;
 		}
 		$("#export_query").form('submit', {
 			url : url,
@@ -1393,15 +1477,6 @@ shebaoSummary : {
 					$('#datagrid_shebaoCompany').datagrid('refreshRow',index);
 				});
 	},
-	append : function() {
-	//TODO
-	},
-	removeit : function(confirmId) {
-		//TODO
-	},
-	remove : function() {
-		//TODO
-	},
 	accept : function() {
 		if (employee.shebaoSummaryendEditing()) {
 			$('#datagrid_shebaoCompany').datagrid('acceptChanges');
@@ -1435,6 +1510,7 @@ shebaoSummary : {
 	updateRadix : function(){
 		var checkeds = $('#datagrid_shebaoCompany').datagrid('getChecked');
 		var newRadix = Number($('#shebaoCompany_updateRadix').val());
+		var newHouseHolde = $('#shebaoComany_company').combobox('getValue');
 		if(checkeds.length === 0){
 			$.messager.alert('提示', '您没有选择任何人');
 			return;
@@ -1457,6 +1533,7 @@ shebaoSummary : {
 				function(confirmId){
 					$.each(checkeds,function(n,obj) {
 						obj.radix = newRadix;
+						obj.householdType = newHouseHolde; 
 						wagesCalculate.calculateShebao(obj, function(result) {
 							if (result) {
 								$.post('employee/updateWagesRadix.action', obj, function(result){
@@ -1466,7 +1543,7 @@ shebaoSummary : {
 										var index = $('#datagrid_shebaoCompany').datagrid('getRowIndex',checkeds[n]);
 										$('#datagrid_shebaoCompany').datagrid('refreshRow',index);
 									}else{
-										$.messager.alert("更新结果", "[" + obj.username + "]" + result.msg + ",请您手动刷新页面。");
+										$.messager.alert("更新", "[" + obj.username + "]" + result.msg + "失败,请您手动刷新页面。");
 									}
 								})
 							} else {
@@ -1476,17 +1553,17 @@ shebaoSummary : {
 					})
 				}
 		);
-		$.each(checkeds,function(n,obj) {
-			obj.radix = newRadix;
-			wagesCalculate.calculateShebao(obj, function(result) {
-				if (result) {
-					var index = $('#datagrid_shebaoCompany').datagrid('getRowIndex',checkeds[n]);
-					$('#datagrid_shebaoCompany').datagrid('refreshRow',index);
-				} else {
-					alert('计算失败');
-				}
-			})
-		})
+//		$.each(checkeds,function(n,obj) {
+//			obj.radix = newRadix;
+//			wagesCalculate.calculateShebao(obj, function(result) {
+//				if (result) {
+//					var index = $('#datagrid_shebaoCompany').datagrid('getRowIndex',checkeds[n]);
+//					$('#datagrid_shebaoCompany').datagrid('refreshRow',index);
+//				} else {
+//					alert('计算失败');
+//				}
+//			})
+//		})
 
 	}
 	},
@@ -1497,7 +1574,6 @@ shebaoSummary : {
 			})
 		},
 		view : function(){
-			//TODO  to do something useful
 			return;
 		},
 		onDblClickRow : function(index,row) {
@@ -1695,6 +1771,36 @@ shebaoSummary : {
 					downloadForm.destoryForm();
 				}
 			});
+		},
+		deleteKaoqin : function(confirmId){
+			confirmDialog.destoryDialog(confirmId);
+			var kaoqinInfo = $('#datagrid_kaoqin').datagrid('getSelected');
+			var url = "employee/deleteKaoqin.action";
+			$.post(url, kaoqinInfo, function(result) {
+				var result =  eval("(" + result + ")");
+				if(result.success){
+					$('#datagrid_kaoqin').datagrid('reload');
+				}
+					$.messager.alert(result.msg,result.msg);
+			})
+			
+		},
+		openAddKaoqin : function(){
+			var rights = session.user.roleId;
+			$('#kaoqin_add_dialog').dialog({
+				title : '增加员工考勤'
+			});
+			$('#kaoqin_add_dialog').window('open').window(
+					'resize',
+					{top : $(document).scrollTop()+ ($(window).height() - 480) * 0.5});
+		},
+		addKaoqin : function(){
+			
+		},
+		queryUsername : function(data, src){
+			$('#datagrid_kaoqin_username').datagrid({
+				queryParams : data
+			})
 		}
 	},
 	monthWages : {
@@ -1791,6 +1897,9 @@ shebaoSummary : {
 					downloadForm.destoryForm();
 				}
 			});
+		},
+		deleteMonthWage : function(){
+			var monthInfo = ("");
 		}
 	},
 	

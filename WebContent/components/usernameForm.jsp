@@ -7,7 +7,7 @@
 </style><!-- 768 -->
 <div class="easyui-panel" style="width:1060px;overflow: hidden" >
     <div style="padding:2px">
-        <form id="updateUsesrname_form" class="easyui-form"  method="post">
+        <form id="updateUsesrname_form" class="easyui-form"  method="post" data-options="novalidate:true">
             <table cellpadding="2">
                 <tr>
                     <td>姓名:</td>
@@ -195,22 +195,29 @@
                 </tr>
                 <tr>
                     <td>身份证号:</td>
-                    <td><input id="textbox_id" class="easyui-textbox" name="identityCard" data-options="prompt:'请输入18位身份证号...',required:true,validType:'idcard'
+                    <td><input id="textbox_id" class="easyui-textbox" name="identityCard" data-options="prompt:'请输入18位身份证号...',validType:'idcard'
                     "/></td>
                     <td>户口性质:</td>
                     <td>
-                    <input id="combox_hoseholdType" class="easyui-combobox" name="householdType"  data-options="
+                    <input class="easyui-combobox" name="householdType"  data-options="
+                    valueField:'householdType',
+                    textField:'householdType',
+                    method:'get',
+                    url:'employee/getHouseholdType.action',
+                    required:true
+                    "/>
+                    <!-- <input id="combox_hoseholdType" class="easyui-combobox" name="householdType"  data-options="
                     valueField:'name',
                     textField:'name',
-                    data : [{name:'外埠城镇'},{name:'外埠农村'},{name:'本市城镇'},{name:'本市农村'},{name:'其他'}]
-                    ">
+                    data : [{name:'城镇'},{name:'农业'},{name:'深户'},{name:'非深户'},{name:'其他'}]
+                    "> -->
                     </td>
                     <td>签定时间:</td>
                     <td><input id="signed_date" class="easyui-datebox" type="text" name="signedTime" data-options="
                     onChange : function(newValue,oldValue){
                     		var date = new Date(newValue);
                     		date.setYear(date.getFullYear()+3);
-                    		var newDate = date.getFullYear()+ '.' + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + '.' + date.getDate();
+                    		var newDate = date.getFullYear()+ '.' + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + '.' + (date.getDate()-1);
 							$('end_datebox').datebox('setValue',newDate);
                     	}
                     "/></td>
@@ -287,7 +294,12 @@
                     </td>
                     <td>保险公司:</td>
                     <td>
-                    <input id="combox_bxc1" class="easyui-combobox" name="insuranceCompany" data-options="
+                    <input id="combox_c1" class="easyui-combobox" name="insuranceCompany" data-options="
+                    url: 'employee/getCompany.action',
+                    valueField:'cmopany',
+                    textField:'cmopany',
+                    " />
+                  <!--   <input id="combox_bxc1" class="easyui-combobox" name="insuranceCompany" data-options="
                     url: 'employee/getInsuranceCompany.action',
                     valueField:'value',
                     textField:'text',
@@ -299,7 +311,7 @@
 						var opts = $(this).combobox('options');
 						return row[opts.textField];
 					}
-                    " />
+                    " /> -->
                     </td>
                   
                     <td>原编号:</td>
@@ -358,7 +370,7 @@
                 </tr>
                 <tr>
                     <td>负责人:</td>
-                    <td><input class="easyui-textbox" type="text" name="cellCore" /></td>
+                    <td><input class="easyui-textbox" type="text" name="chargedBy" /></td>
                     <td>照片:</td>
                     <td>
                     	<input class="easyui-combobox" name="photo" data-options="
@@ -373,7 +385,9 @@
 							}]" />
                     </td>
                     <td>离职报表</td>
-                    <td><input class="easyui-textbox" type="text" name="lizhiReport" /></td>
+                    <td><input class="easyui-textbox" type="text" name="lizhiReport" />
+                    <input id="form_hidden_Sercret" type="hidden" name="sercret" />
+                    </td>
                     <c:if test="${sessionInfo.roleId <= 1 || sessionInfo.roleId == 100}">
                     <td>工资保密</td>
                     <td><input id="user_ifSecret" name="ifSecret" class="easyui-switchbutton" data-options="onText:'是',offText:'否'" onclick="employee.ifSecret"></td>
@@ -381,7 +395,7 @@
                 </tr>
                 <tr>
                     <td>签字人:</td>
-                    <td><input class="easyui-textbox" type="text" name="cellCore" /></td>
+                    <td><input class="easyui-textbox" type="text" name="signedBy" /></td>
                      <td>招聘来源:</td>
                     <td><input class="easyui-textbox" type="text" name="recruitmentSources" /></td>
                     <td>转正报表</td>

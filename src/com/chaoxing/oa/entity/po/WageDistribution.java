@@ -57,6 +57,7 @@ public class WageDistribution {
 	private Double sickLleaveTotal;//病假累计
 	private String rubaoTime;//入保时间
 	private Double lishiSalary;//历史工资
+	private String tiaoxinRecord;//调薪报表
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -205,6 +206,13 @@ public class WageDistribution {
 	@Column(name = "历史工资")
 	public Double getLishiSalary() {
 		return lishiSalary;
+	}
+	@Column(name = "调薪报表")
+	public String getTiaoxinRecord() {
+		return tiaoxinRecord;
+	}
+	public void setTiaoxinRecord(String tiaoxinRecord) {
+		this.tiaoxinRecord = tiaoxinRecord;
 	}
 	public void setLishiSalary(Double lishiSalary) {
 		this.lishiSalary = lishiSalary;

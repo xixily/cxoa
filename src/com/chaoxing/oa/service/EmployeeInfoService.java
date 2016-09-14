@@ -42,7 +42,7 @@ public interface EmployeeInfoService {
 
 	public List<PComboBox> getInsuranceCompany();
 
-	public List<Pwages> getWagesList(int id);
+	public List<Pwages> getWagesList(int id,SessionInfo sessionInfo, String ifSecret);
 
 	public Pwages getWages(int id);
 
@@ -100,12 +100,16 @@ public interface EmployeeInfoService {
 
 	public int updateWagesDate(PWagesDate pwagesDate);
 
-	public int deleteWagesDate(PWagesDate pwagesDate);
-
 	public int generateKaoqin(String date, String preDate, String afterDate);
 
 	public int generateMonthWages();
 
 	public UserName getUserInfo(QueryForm queryForm);
+
+	public int deleteKaoqin(PKaoQin pkaoqin);
+
+	public int deleteWagesDate(PWagesDate pwagesDate);
+
+	public PMonthWages getMonthWages(Integer id);
 
 }

@@ -10,7 +10,7 @@
 	</div>
 
 	<div style="width: 98%">
-		<table id="datagrid_shebao" class="easyui-datagrid" style="width: 100%;"
+		<table id="datagrid_shebao" class="easyui-datagrid" style="width: 100%;height:492px;"
 			data-options="url:'employee/getShebao.action',
 			title:'社保比例信息',
 			fitColumns:true,

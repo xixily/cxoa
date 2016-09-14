@@ -165,7 +165,9 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 			String filePath = SXSSFWriter.DEFAULT_FOLDER + sxffWriter.getFileName();
 			sxffWriter.createNewSheet("查询结果excel表");
 			createKaoqinHeader(sxffWriter, 1);
-			Float tax = 0f;
+			BigDecimal tax = new BigDecimal(0);
+			BigDecimal selfTax = new BigDecimal(0);
+			BigDecimal bd = new BigDecimal(0);
 			for (PMonthWages pMonthWage : pMonthWages) {
 				sxffWriter.createRow();
 				sxffWriter.createCell();
@@ -200,9 +202,9 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 				}
 				sxffWriter.createCell();
 				if(pMonthWage.getSelfTax()!=null){
-					float result = Math.round(pMonthWage.getSelfTax()*100);
-					tax = result/100;
-					sxffWriter.setData(String.valueOf(tax));
+					selfTax = new BigDecimal(pMonthWage.getSelfTax().toString());
+					tax = selfTax.setScale(2, BigDecimal.ROUND_HALF_UP);
+					sxffWriter.setData(tax.toString());
 				}
 				sxffWriter.createCell();
 				if(pMonthWage.getSubTotal()!=null){
@@ -226,9 +228,9 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 				}
 				sxffWriter.createCell();
 				if(pMonthWage.getShifaTotal()!=null){
-					BigDecimal bd = new BigDecimal(pMonthWage.getYingfaTotal().toString());
-					BigDecimal bdsub = new BigDecimal(tax.toString());
-					sxffWriter.setData(bd.subtract(bdsub).toString());
+					bd = new BigDecimal(pMonthWage.getYingfaTotal().toString());
+//					BigDecimal bdsub = new BigDecimal(tax.toString());
+					sxffWriter.setData(bd.subtract(tax).toString());
 				}
 				sxffWriter.createCell();
 				if(pMonthWage.getcTotal()!=null){
@@ -406,25 +408,27 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 				sxffWriter.createCell();
 				sxffWriter.setData(pSheBaoSummary.getCompany());
 				sxffWriter.createCell();
-				sxffWriter.setData(pSheBaoSummary.getSubEndowmentIinsurance().toString());
-				sxffWriter.createCell();
-				sxffWriter.setData(pSheBaoSummary.getSubMedicare().toString());
-				sxffWriter.createCell();
-				sxffWriter.setData(pSheBaoSummary.getSubUnemployedInsurance().toString());
-				sxffWriter.createCell();
-				sxffWriter.setData(pSheBaoSummary.getSubHouseIinsurance().toString());
+				sxffWriter.setNumbericData(new BigDecimal(pSheBaoSummary.getCount()));
 				sxffWriter.createCell();
 				sxffWriter.setData(pSheBaoSummary.getcEndowmentIinsurance().toString());
 				sxffWriter.createCell();
-				sxffWriter.setData(pSheBaoSummary.getcMedicare().toString());
+				sxffWriter.setData(pSheBaoSummary.getSubEndowmentIinsurance().toString());
 				sxffWriter.createCell();
 				sxffWriter.setData(pSheBaoSummary.getcUnemployedInsurance().toString());
 				sxffWriter.createCell();
-				sxffWriter.setData(pSheBaoSummary.getcHouseIinsurance().toString());
+				sxffWriter.setData(pSheBaoSummary.getSubUnemployedInsurance().toString());
 				sxffWriter.createCell();
 				sxffWriter.setData(pSheBaoSummary.getcInjuryInsurance().toString());
 				sxffWriter.createCell();
 				sxffWriter.setData(pSheBaoSummary.getcBirthIinsurance().toString());
+				sxffWriter.createCell();
+				sxffWriter.setData(pSheBaoSummary.getcMedicare().toString());
+				sxffWriter.createCell();
+				sxffWriter.setData(pSheBaoSummary.getSubMedicare().toString());
+				sxffWriter.createCell();
+				sxffWriter.setData(pSheBaoSummary.getcHouseIinsurance().toString());
+				sxffWriter.createCell();
+				sxffWriter.setData(pSheBaoSummary.getSubHouseIinsurance().toString());
 			}
 //			insertCell(PKaoQin.class,pKaoqins);
 			sxffWriter.flush();
@@ -447,25 +451,27 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 		sxffWriter.createCell();
 		sxffWriter.setStringData("公司名称");
 		sxffWriter.createCell();
-		sxffWriter.setStringData("代扣养老金总额");
-		sxffWriter.createCell();
-		sxffWriter.setStringData("代扣医疗保险总额");
-		sxffWriter.createCell();
-		sxffWriter.setStringData("代扣失业保险总额");
-		sxffWriter.createCell();
-		sxffWriter.setStringData("代扣住房保险总额");
+		sxffWriter.setStringData("总人数");
 		sxffWriter.createCell();
 		sxffWriter.setStringData("公司养老保险总额");
 		sxffWriter.createCell();
-		sxffWriter.setStringData("公司医疗保险总额");
+		sxffWriter.setStringData("代扣养老金总额");
 		sxffWriter.createCell();
 		sxffWriter.setStringData("公司失业保险总额");
 		sxffWriter.createCell();
-		sxffWriter.setStringData("公司住房保险总额");
+		sxffWriter.setStringData("代扣失业保险总额");
 		sxffWriter.createCell();
 		sxffWriter.setStringData("公司工伤保险总额");
 		sxffWriter.createCell();
 		sxffWriter.setStringData("公司生育保险总额");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("公司医疗保险总额");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("代扣医疗保险总额");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("公司住房保险总额");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("代扣住房保险总额");
 	}
 
 	private void createShebaoHeader(SXSSFWriter sxffWriter) {
@@ -500,10 +506,12 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 		sxffWriter.setStringData("公司生育保险");
 	}
 
-	private void createMonthWagesHeader(SXSSFWriter sxffWriter) {
-		sxffWriter.createRow();
-		sxffWriter.createCell();
-		sxffWriter.setStringData("姓名");
+	@SuppressWarnings("unused")
+	private void createMonthWagesHeader(SXSSFWriter sxffWriter, Class clazz) {
+		//TODO 自动生成头
+//		sxffWriter.createRow();
+//		sxffWriter.createCell();
+//		sxffWriter.setStringData("姓名");
 	}
 
 //	private void insertCell(Class<PKaoQin> class1, List<PKaoQin> pKaoqins, String... args) {

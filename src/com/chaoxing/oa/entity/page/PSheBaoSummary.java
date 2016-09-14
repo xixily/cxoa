@@ -13,6 +13,7 @@ public class PSheBaoSummary {
 	private Float cHouseIinsurance;
 	private Float cInjuryInsurance;
 	private Float cBirthIinsurance;
+	private long count;
 	public String getCompany() {
 		return company;
 	}
@@ -45,6 +46,12 @@ public class PSheBaoSummary {
 	}
 	public Float getcBirthIinsurance() {
 		return cBirthIinsurance;
+	}
+	public long getCount() {
+		return count;
+	}
+	public void setCount(long count) {
+		this.count = count;
 	}
 	public void setCompany(String company) {
 		this.company = company;

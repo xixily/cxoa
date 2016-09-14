@@ -65,6 +65,8 @@ public class PUserName {
 	private String zhuanzhengReport;//转正报表
 	private String bumentiaozhengReport;//部门调整报表
 	private String baoxianTongzhidan;//保险通知单
+	private String signedBy;//签字人
+	private String chargedBy;//负责人
 	
 	public String getUsername() {
 		return username;
@@ -425,6 +427,18 @@ public class PUserName {
 	}
 	public String getBaoxianTongzhidan() {
 		return baoxianTongzhidan;
+	}
+	public String getSignedBy() {
+		return signedBy;
+	}
+	public String getChargedBy() {
+		return chargedBy;
+	}
+	public void setSignedBy(String signedBy) {
+		this.signedBy = signedBy;
+	}
+	public void setChargedBy(String chargedBy) {
+		this.chargedBy = chargedBy;
 	}
 	public void setZhuanruGongsiTime(String zhuanruGongsiTime) {
 		this.zhuanruGongsiTime = zhuanruGongsiTime;

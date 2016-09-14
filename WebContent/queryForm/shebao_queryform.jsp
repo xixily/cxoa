@@ -1,4 +1,13 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#shebao_queryform').keydown(function(e){
+		if(e.keyCode==13){
+		   $('#shebao_search').trigger('click');
+		}
+		});
+})
+</script>
 <form id="shebao_queryform" method="post" enctype="multipart/form-data">
 	<table>
 		<tr>
@@ -20,7 +29,7 @@
             </td>
             <td></td>
             <td>
-            <input class="easyui-linkbutton do_action" appaction="employee.shebao.queryShebao"  type="button" value="查找"
+            <input id="shebao_search" class="easyui-linkbutton do_action" appaction="employee.shebao.queryShebao"  type="button" value="查找"
 				style="width:46px;height:26px;" />
             </td>
             <td></td>

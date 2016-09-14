@@ -23,7 +23,7 @@
 			pagination:true,
 			rownumbers:true,
 			pageSize:15,
-			pageList:[10,15,20,30,50],
+			pageList:[10,15,20,30,50,200],
 			loadFilter : function(data){
 				if (typeof(data.d)=='number'){
 					return data.d.toFixed(2);
@@ -108,7 +108,7 @@
 					<c:if test="${sessionInfo.roleId <= 1 || sessionInfo.roleId == 100}">
 					<th data-options="field:'remarks',width:100,sortable:true">工资备注</th>
 					</c:if>
-					<th data-options="field:'kaoQinremarks',width:100,sortable:true">考勤备注</th>
+					<th data-options="field:'kaoQinremarks',width:100,sortable:true,editor:{type:'numberbox'}">考勤备注</th>
 					<c:if test="${sessionInfo.roleId <= 1 || sessionInfo.roleId == 100}">
 					<th data-options="field:'lishiSalary',width:100,sortable:true">历史工资</th>
 					</c:if>

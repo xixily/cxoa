@@ -1,7 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div id="sessionInfoDiv" style="position: absolute;right: 5px;top:10px;">
-	<c:if test="${sessionInfo != null}">[<strong>${sessionInfo.username}</strong>]，欢迎你！您使用[<strong>${sessionInfo.ip}</strong>]IP登录！[<strong>${sessionInfo.roleId}</strong>]</c:if>
+	<c:if test="${sessionInfo != null}">[<strong>${sessionInfo.username}</strong>]，欢迎您！您使用[<strong>${sessionInfo.ip}</strong>]IP登录！</c:if>
 </div>
 <div style="position: absolute; right: 0px; bottom: 0px; ">
 	<a href="javascript:void(0);" class="easyui-menubutton" data-options="menu:'#layout_north_pfMenu',iconCls:'icon-ok'">更换皮肤</a>

@@ -10,7 +10,15 @@
 	</div>
 
 	<div style="width: 98%">
-		<table id="datagrid_shebaoSummary" class="easyui-datagrid" style="width: 100%;"
+		<!-- ,
+			loadFilter : function(data){
+				if (typeof(data.d)=='number'){
+					return data.d.toFixed(2);
+				} else {
+					return data;
+				}
+			} -->
+		<table id="datagrid_shebaoSummary" style="height:488px;"  class="easyui-datagrid" style="width: 100%;"
 			data-options="
 			url:'employee/queryShebaoSummary.action',
 			title:'社保公司汇总表',
@@ -18,20 +26,16 @@
 			singleSelect:true,
 			pagination:true,
 			rownumbers:true,
-			pageSize:15,
+			pageSize:50,
 			pageList:[10,15,20,30,50],
 			toolbar: [{
 				iconCls: 'icon-excel',
 				text:'导出社保公司汇总表',
-				handler: employee.shebaoSummary.exportShebaoSummary
-			}],
-			loadFilter : function(data){
-				if (typeof(data.d)=='number'){
-					return data.d.toFixed(2);
-				} else {
-					return data;
+				handler: function(){
+				employee.shebaoSummary.exportShebaoSummary(0);
 				}
-			},
+			}]
+			,
 			onDblClickRow : function(index, row) {
 								employee.shebaoSummary.view(index, row);
 							}">
@@ -39,16 +43,17 @@
 			<thead>
 				<tr>
 					<th data-options="field:'company',width:120">公司名称</th><br>
-					<th data-options="field:'subEndowmentIinsurance',width:100">代扣养老金总额</th>
-					<th data-options="field:'subMedicare',width:100">代扣医疗保险总额</th>
-					<th data-options="field:'subUnemployedInsurance'">代扣失业保险总额</th>
-					<th data-options="field:'subHouseIinsurance'">代扣住房保险总额</th>
+					<th data-options="field:'count',width:100">总人数</th>
 					<th data-options="field:'cEndowmentIinsurance'">公司养老保险总额</th>
-					<th data-options="field:'cMedicare',width:100">公司医疗保险总额</th>
+					<th data-options="field:'subEndowmentIinsurance',width:100">代扣养老金总额</th>
 					<th data-options="field:'cUnemployedInsurance',width:100">公司失业保险总额</th>
-					<th data-options="field:'cHouseIinsurance',width:100">公司住房保险总额</th>
+					<th data-options="field:'subUnemployedInsurance'">代扣失业保险总额</th>
 					<th data-options="field:'cInjuryInsurance',width:100">公司工伤保险总额</th>
 					<th data-options="field:'cBirthIinsurance',width:100">公司生育保险总额</th>
+					<th data-options="field:'cMedicare',width:100">公司医疗保险总额</th>
+					<th data-options="field:'subMedicare',width:100">代扣医疗保险总额</th>
+					<th data-options="field:'cHouseIinsurance',width:100">公司住房保险总额</th>
+					<th data-options="field:'subHouseIinsurance'">代扣住房保险总额</th>
 				</tr>
 			</thead>
 		</table>

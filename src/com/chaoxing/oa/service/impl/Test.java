@@ -1,6 +1,7 @@
 package com.chaoxing.oa.service.impl;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,13 +15,31 @@ import com.chaoxing.oa.entity.page.PWagesDate;
 public class Test {
 
 	public static void main(String[] args) {
+//		Float a = 12f;
+//		a = a < 18 ? 18 :(a>360?360:a);
+//		System.out.println(a);
+//		BigDecimal b = new BigDecimal("3");
+//		System.out.println(b.multiply(new BigDecimal("4")).add(new BigDecimal("3").setScale(2, BigDecimal.ROUND_HALF_UP)));
+		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM");
+		Calendar cal = Calendar.getInstance();
+		String afterDate = df.format(cal.getTime());
+		System.out.println(afterDate);
+		//		System.out.println(Math.round(a*100));
+//		System.out.println(Math.round(0.635*100));
+//		BigDecimal bd = new BigDecimal(a.toString());
+//		System.out.println(bd.setScale(2, BigDecimal.ROUND_HALF_UP));
+//		BigDecimal inte = new BigDecimal("100");
+//		System.out.println(Math.round(bd.multiply(inte).floatValue()));
+//		for (int i = 0; i < 1000; i++) {
+//			System.out.println(Math.round(a*100)/100.0);
+//		}
 //		float tax= 1.0650f;
 ////		float tax= 1.01499f;
 //		float result = Math.round(tax*100);
 //		System.out.println(result/100);
 //		System.out.println(1016%10);
-		float ee = 1.06f;
-		System.out.println((ee -(float)0.01));
+//		float ee = 1.06f;
+//		System.out.println((ee -(float)0.01));
 //		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM");
 //		Calendar cal = Calendar.getInstance();
 //		String date = df.format(cal.getTime());
