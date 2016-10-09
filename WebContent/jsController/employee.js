@@ -566,13 +566,14 @@ var employee = {
 				url:'employee/getWagesList.action',
 				queryParams:{page:1,rows:5,id:session.formData.id},
 				onLoadSuccess : function(){
+					employee.wages.updateHtml();
 					$.messager.alert('提示：',mesg);
 				}
 			})
 			employee.wages.form_onchange(false);
-			employee.wages.updateHtml();
 			disabledForm('updatewages_form', true);
 			disabledButton('updatewages_form', true);
+			employee.wages.canotEdit('updatewages_form');
 		},
 		openWages : function(src) {
 			disabledForm('updatewages_form', true);
@@ -722,9 +723,9 @@ var employee = {
 							$('#updatewages_form').form({
 								url : 'employee/updateWages.action'
 							});
+							employee.wages.form_onchange(false);
 							disabledForm('updatewages_form', true);
 							disabledButton('updatewages_form', true);
-							employee.wages.form_onchange(false);
 							$('#dialog_wagesInfo').dialog("open");
 						},
 						toolbar : [
@@ -797,6 +798,7 @@ var employee = {
 			$('#wages_edit').css('display', '');
 			disabledForm('updatewages_form', true);
 			disabledButton('updatewages_form', true);
+			employee.wages.canotEdit('updatewages_form');
 //			var userInfo = $('#datagrid_wages').datagrid('getSelected');
 			$('#updatewages_form').form('load', row);
 			employee.wages.endEditing();
@@ -828,6 +830,7 @@ var employee = {
 			$('#wages_edit').css('display', '');
 			disabledForm('updatewages_form', false);
 			disabledButton('updatewages_form', false);
+			employee.wages.canotEdit('updatewages_form');
 			var userInfo = $('#datagrid_wages').datagrid('getSelected');
 			$('#updatewages_form').form('load', userInfo);
 			$('#wages_id').textbox('enable');
@@ -879,6 +882,7 @@ var employee = {
 						});
 				disabledForm('updatewages_form', false);
 				disabledButton('updatewages_form', false);
+				employee.wages.canotEdit('updatewages_form');
 				employee.wages.form_onchange(true);
 				$('#wages_id').textbox('enable');
 				$('#wages_id').textbox({
@@ -1009,17 +1013,25 @@ var employee = {
 			var rowsData = $('#datagrid_wages').datagrid('getData');
 			var salary = 0;
 			$.each(rowsData.rows,function(n, obj) {
-				if (n == 0) {
-					$('#wages_identity').html(
-							obj.identityCard);
-					$('#wages_company').html(
-							obj.company);
-					$('#wages_username').html(
-							obj.username);
-				}
+//				if (n == 0) {
+//					$('#wages_identity').html(
+//							obj.identityCard);
+//					$('#wages_company').html(
+//							obj.company);
+//					$('#wages_username').html(
+//							obj.username);
+//				}
 				salary += Number(obj.salary);
 			})
 	$('#wages_totalSalary').html(salary);
+		},
+		canotEdit : function(formId){
+			return false;
+			if(!formId) return false;
+			//禁用jquery easyui中的linkbutton组件
+			$("#" + formId + " input[target~='_blank']").each(function () {
+				$(this).textbox({disabled:true})
+			});
 		}
 	},
 	shebao : {
