@@ -11,7 +11,7 @@
 </style>
 <div class="easyui-panel" style="width:960px;overflow: hidden" ><!-- height:560px; -->
 	<!-- 个人文本信息 -->
-	<div style="padding: 5px 20px;margin: 10 0px;">
+	<div style="padding: 5px 20px;margin: 10px 0px;">
 		<span class = "spanFont"><strong>姓名 ：</strong><span id="wages_username"></span></span> 
 		<span class="btn-separator" style="margin:0 30px;"></span>
 		<span class = "spanFont"><strong>身份证号：</strong><span id="wages_identity"></span></span> 
@@ -24,7 +24,7 @@
 	</div>
 	
 	<div style="margin:0 8px;">
-	<table id="datagrid_wages" class="easyui-datagrid" style="width:100%;height:250px;margin:5 20px;"> 
+	<table id="datagrid_wages" class="easyui-datagrid" style="width:100%;height:250px;margin:5px 20px;">
 	
 	</table>
 	</div>
@@ -69,7 +69,7 @@
                     <input class="easyui-textbox" type="text" name="lishiSalary" />
                     </td> -->
                      <td>公司名称:</td>
-                    <td  id="wages_company">
+                    <td >
                      <input class="easyui-combobox" name="company" data-options="
                     url: 'employee/getCompany.action',
                     valueField:'cmopany',
@@ -92,7 +92,7 @@
                     </td>
                      <td>基数:</td>
                     <td>
-                    <input id="wages_radix" class="easyui-numberbox" data-options="min:0,precision:2" name="radix" />
+                    <input id="wages_radix" target="_blank" class="easyui-numberbox" data-options="min:0,precision:2" name="radix" />
                     </td>
                     <!-- <td>户口性质:</td>
                     <td>
@@ -102,15 +102,15 @@
                 <tr>
                     <td>基本工资:</td>
                     <td>
-                    <input class="easyui-numberbox" data-options="min:0,precision:2" name="basicWage" />
+                    <input class="easyui-numberbox" target="_blank" data-options="min:0,precision:2" name="basicWage" />
                     </td>
                     <td>岗位工资:</td>
                     <td>
-                    <input class="easyui-numberbox" data-options="min:0,precision:2" name="postSalary" />
+                    <input class="easyui-numberbox" target="_blank" data-options="min:0,precision:2" name="postSalary" />
                     </td>
                     <td>绩效工资:</td>
                     <td>
-                    <input class="easyui-numberbox" data-options="min:0,precision:2" name="performanceRelatedPay" />
+                    <input class="easyui-numberbox" target="_blank" data-options="min:0,precision:2" name="performanceRelatedPay" />
                     </td>
                     <td>开户行:</td>
                     <td>
@@ -162,37 +162,37 @@
                     </td>
                     <td>代扣养老保险:</td>
                     <td>
-                    <input class="easyui-numberbox" data-options="min:0,precision:2" name="subEndowmentIinsurance" />
+                    <input class="easyui-numberbox" target="_blank" data-options="min:0,precision:2" name="subEndowmentIinsurance" />
                     </td>
                     <td>代扣医疗保险:</td>
                     <td>
-                    <input class="easyui-numberbox" data-options="min:0,precision:2" name="subMedicare" />
+                    <input class="easyui-numberbox" target="_blank" data-options="min:0,precision:2" name="subMedicare" />
                     </td>
                     <td>代扣失业保险:</td>
                     <td>
-                    <input class="easyui-numberbox" data-options="min:0,precision:2" name="subUnemployedInsurance" />
+                    <input class="easyui-numberbox" target="_blank" data-options="min:0,precision:2" name="subUnemployedInsurance" />
                     </td>
                     <td>代扣住房保险:</td>
                     <td>
-                    <input class="easyui-numberbox" data-options="min:0,precision:2" name="subHouseIinsurance" />
+                    <input class="easyui-numberbox" target="_blank" data-options="min:0,precision:2" name="subHouseIinsurance" />
                     </td>
                 </tr>
                 <tr>
                     <td>公司养老保险:</td>
                     <td>
-                    <input class="easyui-numberbox" data-options="min:0,precision:2" name="cEndowmentIinsurance" />
+                    <input class="easyui-numberbox" target="_blank" data-options="min:0,precision:2" name="cEndowmentIinsurance" />
                     </td>
                     <td>公司医疗保险:</td>
                     <td>
-                    <input class="easyui-numberbox" data-options="min:0,precision:2" name="cMedicare" />
+                    <input class="easyui-numberbox" target="_blank" data-options="min:0,precision:2" name="cMedicare" />
                     </td>
                     <td>公司失业保险:</td>
                     <td>
-                    <input class="easyui-numberbox" data-options="min:0,precision:2" name="cUnemployedInsurance" />
+                    <input class="easyui-numberbox" target="_blank" data-options="min:0,precision:2" name="cUnemployedInsurance" />
                     </td>
                     <td>公司住房保险:</td>
                     <td>
-                    <input class="easyui-numberbox" data-options="min:0,precision:2" name="cHouseIinsurance" />
+                    <input class="easyui-numberbox" target="_blank" data-options="min:0,precision:2" name="cHouseIinsurance" />
                     </td>
                     <td>累计带薪病假:</td>
                     <td>
@@ -202,11 +202,11 @@
                 <tr>
                     <td>公司工伤保险:</td>
                     <td>
-                    <input class="easyui-numberbox" data-options="min:0,precision:2" name="cInjuryInsurance" />
+                    <input class="easyui-numberbox" target="_blank" data-options="min:0,precision:2" name="cInjuryInsurance" />
                     </td>
                     <td>公司生育保险:</td>
                     <td>
-                    <input class="easyui-numberbox" data-options="min:0,precision:2" name="cBirthIinsurance" />
+                    <input class="easyui-numberbox" target="_blank" data-options="min:0,precision:2" name="cBirthIinsurance" />
                     </td>
                     <td>年假累计:</td>
                     <td>
@@ -247,10 +247,10 @@
                       <a id="wages_save" href="javascript:void(0)" style="width:60px;display:none;" class="easyui-linkbutton" onclick="employee.wages.updateWages($(this));">保存</a>
                       <a id="wages_add" href="javascript:void(0)" style="width:60px;display:none;" class="easyui-linkbutton" onclick="employee.wages.addWages($(this));">新增</a>
 <!--                       <a id="wages_add" href="javascript:void(0)" style="width:60px;display:none;" class="easyui-linkbutton" onclick="$('#updatewages_form').form({url:'employee/addWages.action'});submitForm($(this))">新增</a> -->
-                      <a href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="clearForm($(this))">重置</a>
+                      <a href="javascript:void(0)" style="width:60px;" class="easyui-linkbutton" onclick="clearForm($(this))">重置</a>
                  <!--      <a id="wages_edit" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="employee.wages.editWages()">编辑</a> -->
                      <!--  <a href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="confirmDialog.createDialog()">删除</a> -->
-                      <a href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="closeDialog($(this))">关闭</a>
+                      <a href="javascript:void(0)" style="width:60px;" class="easyui-linkbutton" onclick="closeDialog($(this))">关闭</a>
                     </div>
                     </td>
                 </tr>
