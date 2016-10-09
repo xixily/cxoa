@@ -28,6 +28,7 @@ import com.chaoxing.oa.entity.page.PShebaoType;
 import com.chaoxing.oa.entity.page.PSystemConfig;
 import com.chaoxing.oa.entity.page.PWagesDate;
 import com.chaoxing.oa.entity.page.PshebaoDetail;
+import com.chaoxing.oa.entity.page.Pwage_;
 import com.chaoxing.oa.entity.page.Pwages;
 import com.chaoxing.oa.entity.page.QueryForm;
 import com.chaoxing.oa.entity.page.SessionInfo;
@@ -255,25 +256,33 @@ public class EmployeeController {
 	
 	@RequestMapping(value = "/updateWages")
 	@ResponseBody
-	public Json updateWages(Pwages pwages, HttpSession session){
+	public Json updateWages(Pwage_ pwages, HttpSession session){
 		//TODO 修改策略，更新的时候只更改部分字段。
 		Json result = new Json();
-		if(pwages.getId()!=null&&pwages.getId()!=0){
-			QueryForm queryForm = new QueryForm();
-			queryForm.setId(pwages.getEmployeeId());
-			SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());	
-			String ifSecret = employeeInfoService.getUserInfo(queryForm).getIfSecret();
-			if(sessionInfo.getRoleId()<=1||sessionInfo.getRoleId()==100||ifSecret.equals("off")){
-				if(employeeInfoService.updateWages(pwages)!=0){
-					result.setSuccess(true);
-					result.setMsg("更新成功！");
-				}else{
-					result.setMsg("更新失败！");
+		PSystemConfig ps = employeeInfoService.getSysconfig(pwages.getCompany(), SysConfig.SHEBAO_SUMMARY);
+//		if(ps==null || ps.getLocked()==0){
+			if(pwages.getId()!=null&&pwages.getId()!=0){
+				QueryForm queryForm = new QueryForm();
+				queryForm.setId(pwages.getEmployeeId());
+				SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());	
+				String ifSecret = employeeInfoService.getUserInfo(queryForm).getIfSecret();
+				if(sessionInfo.getRoleId()<=1||sessionInfo.getRoleId()==100||ifSecret.equals("off")){
+					Pwages mw = employeeInfoService.getWages(pwages.getId());
+//					pwages.getSubEndowmentIinsurance(m);
+					BeanUtils.copyProperties(pwages, mw);
+					if(employeeInfoService.updateWages(mw)!=0){
+						result.setSuccess(true);
+						result.setMsg("更新成功！");
+					}else{
+						result.setMsg("更新失败！");
+					}
 				}
+			}else{
+				result.setMsg("没有找到该条记录！");
 			}
-		}else{
-			result.setMsg("没有找到该条记录！");
-		}
+//		}else{
+//			result.setMsg("社保公司[" + pwages.getCompany() +"]已被锁定，请您联系社保管理员解锁！~");
+//		}
 		return result;
 	}
 	
