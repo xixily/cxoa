@@ -1,5 +1,7 @@
 package com.chaoxing.oa.entity.po;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +17,8 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "当月工资表", schema = "")
 @DynamicUpdate(true)
 @DynamicInsert(true)
-public class MonthWages {
+public class MonthWages implements Serializable{
+	private static final long serialVersionUID = 1732928410052197996L;
 	private Integer id;//当月工资id
 	private Integer employeeId;//职员编号
 	private String username;//姓名
@@ -69,7 +72,7 @@ public class MonthWages {
 	private Float kuangGongHour;//旷工时数
 	private Float hunJiaDay;//婚假天数
 	private Float chanJiaDay;//产假天数
-	private Float sangJiaDay;//丧家天数
+	private Float sangJiaDay;//丧假天数
 	private Float nianJiaDay;//年假天数
 	private String kaoQinremarks;//考勤备注
 	private Float kaoqinTotal;//考勤总额
@@ -297,7 +300,7 @@ public class MonthWages {
 	public Float getChanJiaDay() {
 		return chanJiaDay;
 	}
-	@Column(name = "丧家天数", columnDefinition = "float(10,2) default 0.00")
+	@Column(name = "丧假天数", columnDefinition = "float(10,2) default 0.00")
 	public Float getSangJiaDay() {
 		return sangJiaDay;
 	}

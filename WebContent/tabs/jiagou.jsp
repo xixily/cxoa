@@ -1,7 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 
 <!-- 架构管理 -->
-<div id="tab_jiagou" title="架构管理" style="padding: 10px;overflow: hidden"	data-options="iconCls:'icon-edit',closable:true">
+<div id="tab_jiagou" class="easyui-panel" title="架构管理" style="padding: 10px;overflow: hidden"	data-options="iconCls:'icon-edit',closable:true">
 <!-- 组合查询form表单 -->
 	<div id="form_jiagou" title="组合查询" class="easyui-panel"
 		data-options="iconCls:'icon-search',href:'${pageContext.request.contextPath}/queryForm/jiagou_queryform.jsp',tools:[
@@ -10,16 +10,26 @@
 	</div>
 
 	<div style="width: 98%">
-		<table id="datagrid_jiagou" class="easyui-datagrid" style="width:100%;height:489px;"
+		<table id="datagrid_jiagou" class="easyui-treegrid" style="width:100%;"
 			data-options="
 			url:'employee/queryJiagou.action',
 			title:'考勤表',
-			fitColumns:true,
-			singleSelect:true,
-			pagination:true,
-			rownumbers:true,
-			pageSize:15,
-			pageList:[10,15,20,30,50,200],
+			rownumbers: true,
+			animate: true,
+			fitColumns: true,
+			checkbox:true,
+			method: 'get',
+			idField: 'id',
+			treeField: 'fourthLevel',
+			pagination: true,
+            pageSize: 15,
+            pageList: [10,15,20,30],
+            rowStyler : function(index, row) {
+								if(index%2 == 0)
+								{
+									return 'background-color:rgb(245,245,245);';
+								}
+							},
 			toolbar :  [{
 				iconCls: 'icon-add',
 				text : '增加',
@@ -51,16 +61,18 @@
 			
 			<thead>
 				<tr>
-					<th data-options="field:'firstLevel',width:80,sortable:true">一级</th>
-					<th data-options="field:'secondLevel',width:60,sortable:true">二级</th>
-					<th data-options="field:'thirdLevel',width:100,sortable:true">三级</th>
-					<th data-options="field:'fourthLevel',width:100,sortable:true">四级</th>
-					<th data-options="field:'guidance',width:140,sortable:true">指导</th>
-					<th data-options="field:'guidanceEmail',width:140,sortable:true">指导邮箱</th>
-					<th data-options="field:'cellCore',width:140,sortable:true">细胞核</th>
-					<th data-options="field:'cellCoreEmail',width:140,sortable:true">细胞核邮箱</th>
-					<th data-options="field:'taxStructure',width:140,sortable:true">报税架构</th>
-					<th data-options="field:'sortCode',width:140,sortable:true">排序代码</th>
+					<th data-options="field:'id',width:40,sortable:true">id</th>
+					<th data-options="field:'fourthLevel',width:180,sortable:true">name</th>
+					<th data-options="field:'level',width:40,sortable:true">级别</th>
+					<th data-options="field:'firstLevel',width:60,sortable:true">一级</th>
+					<th data-options="field:'secondLevel',width:80,sortable:true">二级</th>
+					<th data-options="field:'thirdLevel',width:80,sortable:true">三级</th>
+					<th data-options="field:'guidance',width:60,sortable:true">指导</th>
+					<th data-options="field:'guidanceEmail',width:100,sortable:true">指导邮箱</th>
+					<th data-options="field:'cellCore',width:60,sortable:true">细胞核</th>
+					<th data-options="field:'cellCoreEmail',width:100,sortable:true">细胞核邮箱</th>
+					<th data-options="field:'taxStructure',width:60,sortable:true">报税架构</th>
+					<th data-options="field:'sortCode',width:60,sortable:true">排序代码</th>
 				</tr>
 			</thead>
 		</table>

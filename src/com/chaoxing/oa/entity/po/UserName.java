@@ -102,7 +102,7 @@ public class UserName implements Serializable {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	@Column(name="密码")
+	@Column(name="密码", updatable = false)
 	public String getPassword() {
 		return password;
 	}

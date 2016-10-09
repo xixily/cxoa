@@ -6,17 +6,16 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-import javax.management.Query;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.chaoxing.oa.config.SysConfig;
+import com.chaoxing.oa.entity.page.Json;
 import com.chaoxing.oa.entity.page.PComboBox;
 import com.chaoxing.oa.entity.page.PCompany;
 import com.chaoxing.oa.entity.page.PHouseholdType;
@@ -26,16 +25,15 @@ import com.chaoxing.oa.entity.page.PMonthWages;
 import com.chaoxing.oa.entity.page.POStructs;
 import com.chaoxing.oa.entity.page.PShebao;
 import com.chaoxing.oa.entity.page.PShebaoType;
+import com.chaoxing.oa.entity.page.PSystemConfig;
 import com.chaoxing.oa.entity.page.PWagesDate;
+import com.chaoxing.oa.entity.page.PshebaoDetail;
 import com.chaoxing.oa.entity.page.Pwages;
-import com.chaoxing.oa.entity.page.Json;
 import com.chaoxing.oa.entity.page.QueryForm;
 import com.chaoxing.oa.entity.page.SessionInfo;
 import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.util.DateUtil;
 import com.chaoxing.oa.util.ResourceUtil;
-
-import sun.print.resources.serviceui;
 
 @Controller
 @RequestMapping("/employee")
@@ -57,7 +55,7 @@ public class EmployeeController {
 		return userInfos;
 	}
 	
-	//TODO 方法貌似弃用了,有时间整理一下删除掉
+	/*//TODO 方法貌似弃用了,有时间整理一下删除掉
 	@RequestMapping(value = "/getQueryForm")
 	public ModelAndView getQueryForm(HttpSession session, Model model){
 		if(session.getAttribute(ResourceUtil.getSessionInfoName()) != null){
@@ -70,7 +68,7 @@ public class EmployeeController {
 		}
 		return null;
 	}
-	
+	*/
 	@RequestMapping(value = "/getFourThLevel")
 	@ResponseBody
 	public Json getFourthLevel(){
@@ -96,10 +94,17 @@ public class EmployeeController {
 	
 	@RequestMapping(value = "/queryJiagou")
 	@ResponseBody
-	public List<POStructs> queryJiagou(QueryForm queryform){
-		System.out.println(queryform);
-		List<POStructs> lists = employeeInfoService.getOStruct(queryform,0);
-		return lists;
+	public Map<String,Object> queryJiagou(QueryForm queryform){
+		
+		Map<String,Object> osInfo = employeeInfoService.getOStruct(queryform,0);
+		return osInfo;
+	}
+	
+	@RequestMapping(value = "/queryStruct")
+	@ResponseBody
+	public Map<String,Object> queryStruct(QueryForm queryform){
+		Map<String,Object> structInfo = employeeInfoService.findStruct(queryform,0);
+		return structInfo;
 	}
 	
 	@RequestMapping(value = "/getLevel")
@@ -112,6 +117,8 @@ public class EmployeeController {
 	@RequestMapping(value = "/getCompany")
 	@ResponseBody
 	public List<PCompany> getCompany(){
+//			System.out.println("xml:" + xml);
+//			System.out.println("verifyCode:" + verifyCode);
 		return employeeInfoService.getCompany();
 	}
 	
@@ -125,7 +132,7 @@ public class EmployeeController {
 	@ResponseBody
 	public List<Pwages> getWagesList(QueryForm queryForm, HttpSession session){
 		List<Pwages> wagesList = null ;
-		if(queryForm.getId()!=0){
+		if(queryForm.getId()>0){
 			SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());	
 			String ifSecret = employeeInfoService.getUserInfo(queryForm).getIfSecret();
 			wagesList = employeeInfoService.getWagesList(queryForm.getId(),sessionInfo,ifSecret);
@@ -147,35 +154,40 @@ public class EmployeeController {
 	@ResponseBody
 	public Json updatePartWages(Pwages pwage){
 		Json result = new Json();
-		if(pwage!=null&&pwage.getId()!=null&&pwage.getId()!=0){
-			Pwages target = employeeInfoService.getWages(pwage.getId());
-			if(target!=null){
-				target.setRadix(pwage.getRadix());
-				target.setCompany(pwage.getCompany());
-				target.setHouseholdType(pwage.getHouseholdType());
-				target.setRubaoTime(pwage.getRubaoTime());
-				if(pwage.getIdentityCard()!=null){
-					target.setIdentityCard(pwage.getIdentityCard());
-				}
-				if(pwage.getAccountBank()!=null){
-					target.setAccountBank(pwage.getAccountBank());
-				}
-				if(pwage.getAccount()!=null){
-					target.setAccount(pwage.getAccount());
-				}
-				if(caculateWages(target)==1){
-					if(employeeInfoService.updateWages(target)!=0){
-						result.setSuccess(true);
-						result.setMsg("<strong>"+ target.getUsername() + ":" +target.getId() +"</strong>更新成功！");
+		PSystemConfig ps = employeeInfoService.getSysconfig(pwage.getCompany(), SysConfig.SHEBAO_SUMMARY);
+		if(ps==null || ps.getLocked()==0){
+			if(pwage!=null&&pwage.getId()!=null&&pwage.getId()!=0){
+				Pwages target = employeeInfoService.getWages(pwage.getId());
+				if(target!=null){
+					target.setRadix(pwage.getRadix());
+					target.setCompany(pwage.getCompany());
+					target.setHouseholdType(pwage.getHouseholdType());
+					target.setRubaoTime(pwage.getRubaoTime());
+					if(pwage.getIdentityCard()!=null){
+						target.setIdentityCard(pwage.getIdentityCard());
+					}
+					if(pwage.getAccountBank()!=null){
+						target.setAccountBank(pwage.getAccountBank());
+					}
+					if(pwage.getAccount()!=null){
+						target.setAccount(pwage.getAccount());
+					}
+					if(caculateWages(target)==1){
+						if(employeeInfoService.updateWages(target)!=0){
+							result.setSuccess(true);
+							result.setMsg("<strong>"+ target.getUsername() + ":" +target.getId() +"</strong>更新成功！");
+						}else{
+							result.setMsg("更新失败！");
+						}
 					}else{
-						result.setMsg("更新失败！");
+						result.setMsg("社保计算失败！");
 					}
 				}else{
-					result.setMsg("社保计算失败！");
+					result.setMsg("没有<strong>"+ pwage.getUsername() + ":" +pwage.getId() + "</strong>该条工资信息！");
 				}
-			}else{
-				result.setMsg("没有<strong>"+ pwage.getUsername() + ":" +pwage.getId() + "</strong>该条工资信息！");
 			}
+		}else{
+			result.setMsg("社保公司[" + pwage.getCompany() +"]已被锁定，请您联系社保管理员解锁！~");
 		}
 		return result;
 	}
@@ -255,6 +267,8 @@ public class EmployeeController {
 				if(employeeInfoService.updateWages(pwages)!=0){
 					result.setSuccess(true);
 					result.setMsg("更新成功！");
+				}else{
+					result.setMsg("更新失败！");
 				}
 			}
 		}else{
@@ -263,17 +277,53 @@ public class EmployeeController {
 		return result;
 	}
 	
+	@RequestMapping(value = "/updateShebaoDetail")
+	@ResponseBody
+	public Json updateShebaoDetail(PshebaoDetail pshebaoDetail, HttpSession session){
+		Json result = new Json();
+		PSystemConfig ps = employeeInfoService.getSysconfig(pshebaoDetail.getCompany(), SysConfig.SHEBAO_SUMMARY);
+		if(ps==null || ps.getLocked()==0){
+			if(pshebaoDetail.getId()!=null&&pshebaoDetail.getId()!=0){
+				QueryForm queryForm = new QueryForm();
+				queryForm.setId(pshebaoDetail.getEmployeeId());
+				Pwages pwages = new Pwages();
+				BeanUtils.copyProperties(employeeInfoService.getWages(pshebaoDetail.getId()), pwages);
+				String username = pwages.getUsername();
+				String idcard = pwages.getIdentityCard();
+				BeanUtils.copyProperties(pshebaoDetail, pwages);
+				pwages.setUsername(username);//username和idcard字段不更新
+				pwages.setIdentityCard(idcard);
+				if(employeeInfoService.updateWages(pwages)!=0){
+					result.setSuccess(true);
+					result.setMsg("更新成功！");
+				}else{
+					result.setMsg("更新失败！");
+				}
+			}else{
+				result.setMsg("没有找到该条记录！");
+			}
+		}else{
+			result.setMsg("社保公司[" + pshebaoDetail.getCompany() +"]已被锁定，请您联系社保管理员解锁！~");
+		}
+		return result;
+	}
+	
 	@RequestMapping(value = "/updateWagesRadix")
 	@ResponseBody
-	public Json updateWagesRadix(Pwages pwages){
+	public Json updateWagesRadix(PshebaoDetail pwages){
 		Json result = new Json();
-		if(pwages.getId()!=0){
-			if(employeeInfoService.updateWagesRadix(pwages)!=0){
-				result.setSuccess(true);
-				result.setMsg("更新成功！");
-			}else{
-				result.setMsg("更新失败！");
+		PSystemConfig ps = employeeInfoService.getSysconfig(pwages.getCompany(), SysConfig.SHEBAO_SUMMARY);
+		if(ps==null || ps.getLocked()==0){
+			if(pwages.getId()!=0){
+				if(employeeInfoService.updateWagesRadix(pwages)!=0){
+					result.setSuccess(true);
+					result.setMsg("更新成功！");
+				}else{
+					result.setMsg("更新失败！");
+				}
 			}
+		}else{
+			result.setMsg("社保公司[" + pwages.getCompany() +"]已被锁定，请您联系社保管理员解锁！~");
 		}
 		return result;
 	}
@@ -282,7 +332,11 @@ public class EmployeeController {
 	@ResponseBody
 	public Json addWages(Pwages pwages, HttpSession session){
 		Json result = new Json();
-//		if(pwages.getId()!=null&&pwages.getId()!=0){
+		PSystemConfig ps = employeeInfoService.getSysconfig(pwages.getCompany(), SysConfig.SHEBAO_SUMMARY);
+		if(ps!=null && ps.getLocked()==1&&(pwages.getRadix()!=0||pwages.getSubEndowmentIinsurance()!=0||pwages.getSubMedicare()!=0||
+				pwages.getSubUnemployedInsurance()!=0||pwages.getSubHouseIinsurance()!=0)){
+			result.setMsg("该社保公司已被社保管理员锁定，请您把社保基数置0，或者与社保管理员联系。");
+		}else{
 			QueryForm queryForm = new QueryForm();
 			queryForm.setId(pwages.getEmployeeId());
 			SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());	
@@ -297,10 +351,7 @@ public class EmployeeController {
 			}else{
 				result.setMsg("对不起，您没有删除权限~！");
 			}
-//		}else{
-//			result.setMsg("没有找到该条记录！");
-//		}
-		
+		}
 		return result;
 	}
 	
@@ -386,20 +437,7 @@ public class EmployeeController {
 	@RequestMapping(value = "/updateShebao")
 	@ResponseBody
 	public Json updateShebao(PShebao pshebao){
-//		System.out.println("company: " + pshebao.getCompany() + ";shebaoType: " + pshebao.getShebaoType() + ";householdType: " + pshebao.getHouseholdType());
 		Json result = new Json();
-//		try {
-//			String company = new String(pshebao.getCompany().getBytes("ISO8859-1"), "utf-8");
-//			String shebaoType = new String(pshebao.getShebaoType().getBytes("ISO8859-1"),"utf-8");
-//			String householdType = new String(pshebao.getHouseholdType().getBytes("ISO8859-1"),"utf-8");
-//			System.out.println(company);
-//			System.out.println(shebaoType);
-//			pshebao.setCompany(company);
-//			pshebao.setShebaoType(shebaoType);
-//			pshebao.setHouseholdType(householdType);
-//		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		}  
 		if(pshebao.getSid()!=0){
 			if(employeeInfoService.updateShebao(pshebao) != 0){
 				result.setSuccess(true);
@@ -456,6 +494,44 @@ public class EmployeeController {
 	public Map<String, Object> queryShebaoSummary(QueryForm queryForm, HttpSession session){
 		Map<String, Object> shebaoSummaries = employeeInfoService.getShebaoSummary(queryForm, session);
 		return shebaoSummaries;
+	}
+	
+	@RequestMapping(value = "/luckedShebaoSummary")
+	@ResponseBody
+	public Json luckedShebaoSummary(String company){
+		Json result = new Json();
+		if(company!=null&&!company.equals("")){
+			PSystemConfig ps = new PSystemConfig();
+			ps.setName(company);
+			ps.setLocked((byte) 1);
+			ps.setConfigType("shebaoSummary");
+			if(employeeInfoService.updateSysconfig(ps)>0){
+				result.setSuccess(true);
+				result.setMsg("更新成功！~");
+			}
+		}else{
+			result.setMsg("公司名称为空");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/unluckeShebaoSummary")
+	@ResponseBody
+	public Json unluckeShebaoSummary(String company){
+		Json result = new Json();
+		if(company!=null&&!company.equals("")){
+			PSystemConfig ps = new PSystemConfig();
+			ps.setName(company);
+			ps.setLocked((byte) 0);
+			ps.setConfigType("shebaoSummary");
+			if(employeeInfoService.updateSysconfig(ps)>0){
+				result.setSuccess(true);
+				result.setMsg("更新成功！~");
+			}
+		}else{
+			result.setMsg("公司名称为空");
+		}
+		return result;
 	}
 	
 	@RequestMapping(value = "/getShebaoCompany")
@@ -531,7 +607,7 @@ public class EmployeeController {
 			target = pmonthWages;
 		}
 		caculateWages(target);
-		if(employeeInfoService.updateMonthWages(pmonthWages, sessionInfo)!=0){
+		if(employeeInfoService.updateMonthWages(target, sessionInfo)!=0){
 			result.setSuccess(true);
 			result.setMsg("更新成功！");
 		}else{
@@ -541,17 +617,28 @@ public class EmployeeController {
 	}
 	private void caculateWages(PMonthWages pmonthWages) {
 		Double salary = pmonthWages.getSalary();
+		BigDecimal b_salary = new BigDecimal(salary.toString());
 		Float chuqin = pmonthWages.getChuqinDay();
+		BigDecimal b_chuqin = new BigDecimal(chuqin.toString());
 		double chaeDay = pmonthWages.getZhuanzhengChaeDay()!=null ? pmonthWages.getZhuanzhengChaeDay():0;
-		double zhuanzhengChae = 0.00;
+//		BigDecimal b_chaeDay = new BigDecimal(String.valueOf(chaeDay));
+//		double zhuanzhengChae = 0.00;
 		double lishiSalary = pmonthWages.getLishiSalary()!=null ? pmonthWages.getLishiSalary():0;
+		BigDecimal b_lishiSalary = new BigDecimal(String.valueOf(lishiSalary));
 		double baomiSub = pmonthWages.getSecrecySubsidy()!=null?pmonthWages.getSecrecySubsidy():0;
+		BigDecimal b_baomiSub = new BigDecimal(String.valueOf(baomiSub));
 		double lunchSub = pmonthWages.getLunchSubsidy()!=null?pmonthWages.getLunchSubsidy():0;
+		BigDecimal b_lunchSub = new BigDecimal(String.valueOf(lunchSub));
 		double tongxunSub = pmonthWages.getCommunicationSubsidy()!=null?pmonthWages.getCommunicationSubsidy():0;
+		BigDecimal b_tongxunSub = new BigDecimal(String.valueOf(tongxunSub));
 		double jiangjin = pmonthWages.getJiangjin()!=null?pmonthWages.getJiangjin():0;
+		BigDecimal b_jiangjin = new BigDecimal(String.valueOf(jiangjin));
 		double bufaSalary = pmonthWages.getBufaSalary()!=null?pmonthWages.getBufaSalary():0;
+		BigDecimal b_bufaSalary = new BigDecimal(String.valueOf(bufaSalary));
 		double fakuan = pmonthWages.getFakuan()!=null?pmonthWages.getFakuan():0;
+		BigDecimal b_fakuan = new BigDecimal(String.valueOf(fakuan));
 		float shijia = (pmonthWages.getShiJiaHour()!=null)? pmonthWages.getShiJiaHour():0;
+		BigDecimal b_shijia = new BigDecimal(String.valueOf(shijia));
 		//计算考勤总额
 		Double bingjia = 0.0;
 		if(pmonthWages.getSickLleaveTotal()<=24){
@@ -559,45 +646,93 @@ public class EmployeeController {
 		}else{
 			bingjia =(double)pmonthWages.getBingJiaHour();
 		}
+		BigDecimal b_bingjia = new BigDecimal(bingjia.toString());
 		Float kuanggong = pmonthWages.getKuangGongHour();
+		BigDecimal b_kuanggong = new BigDecimal(kuanggong.toString());
+		
+		//迟到应扣
 		Float chidaoYingkou = pmonthWages.getChidaoYingkouDay();
 		if(chidaoYingkou<=3){
 			chidaoYingkou = chidaoYingkou * 20;
 		}else{
 			chidaoYingkou = chidaoYingkou * 50 - 150;
 		}
+		BigDecimal b_chidaoYingkou = new BigDecimal(chidaoYingkou.toString());
+		
+		//转正差额
+		BigDecimal b_zhuanzhengChae = new BigDecimal("0");
 		if(lishiSalary!=0){
-			zhuanzhengChae = (salary - lishiSalary)/21 * (21 - chaeDay);
+			b_zhuanzhengChae = b_salary.subtract(b_lishiSalary).divide(new BigDecimal("21")).multiply(new BigDecimal(String.valueOf(21-chaeDay)));
+//			zhuanzhengChae = (salary - lishiSalary)/21 * (21 - chaeDay);
 		}
-		float kaoqinTotal = (float) (salary*shijia/168 + bingjia*salary/336 + kuanggong*salary/56 + chidaoYingkou + zhuanzhengChae) ;
+		
+		//计算考勤总额，包括转正差额
+		BigDecimal b_kaoqinTotal = b_salary.multiply(b_shijia).divide(new BigDecimal("168")).
+				add(b_bingjia.multiply(b_salary).divide(new BigDecimal("336"))).
+				add(b_kuanggong.multiply(b_salary).divide(new BigDecimal("56"))).
+				add(b_chidaoYingkou).
+				add(b_zhuanzhengChae);
+//		float kaoqinTotal = (float) (salary*shijia/168 + bingjia*salary/336 + kuanggong*salary/56 + chidaoYingkou + zhuanzhengChae) ;
+		
 		//计算社保代扣总额
-		float subTotal = (float) (pmonthWages.getSubEndowmentIinsurance()+pmonthWages.getSubHouseIinsurance()+pmonthWages.getSubMedicare()+pmonthWages.getSubUnemployedInsurance());
+//		float subTotal = (float) (pmonthWages.getSubEndowmentIinsurance()+pmonthWages.getSubHouseIinsurance()+pmonthWages.getSubMedicare()+pmonthWages.getSubUnemployedInsurance());
+		BigDecimal b_subTotal = (new BigDecimal(pmonthWages.getSubEndowmentIinsurance().toString())).
+				add(new BigDecimal(pmonthWages.getSubHouseIinsurance().toString())).
+				add(new BigDecimal(pmonthWages.getSubMedicare().toString())).
+				add(new BigDecimal(pmonthWages.getSubUnemployedInsurance().toString()));
+		
 		//应发工资
-		float yingfa = (float) (salary*chuqin/21 -kaoqinTotal-subTotal + baomiSub + lunchSub + tongxunSub+jiangjin+bufaSalary-fakuan);
+		BigDecimal b_yingfa = b_salary.multiply(b_chuqin).divide(new BigDecimal("21")).
+				subtract(b_kaoqinTotal).
+				subtract(b_subTotal).
+				add(b_baomiSub).
+				add(b_lunchSub).
+				add(b_tongxunSub).
+				add(b_jiangjin).
+				add(b_bufaSalary).
+				subtract(b_fakuan);
+//		float yingfa = (float) (salary*chuqin/21 -kaoqinTotal-subTotal + baomiSub + lunchSub + tongxunSub+jiangjin+bufaSalary-fakuan);
 		//个税
-		float selfTax = 0;
-		if((yingfa - 3500)<=0){
-			selfTax = 0;
-		}else if(0<(yingfa-3500)&&(yingfa-3500)<=1500){
-			selfTax = (float) ((yingfa-3500)*0.03);
-		}else if((yingfa-3500)<=4500){
-			selfTax = (float) ((yingfa-3500)*0.1 - 105);
-		}else if((yingfa - 3500)<=9000){
-			selfTax = (float) ((yingfa-3500)*0.2 - 555);
-		}else if((yingfa - 3500)<=35000){
-			selfTax = (float) ((yingfa-3500)*0.25 - 1005);
-		}else if((yingfa - 3500)<=55000){
-			selfTax = (float) ((yingfa-3500)*0.30 - 2755);
-		}else if((yingfa - 3500)<=80000){
-			selfTax = (float) ((yingfa-3500)*0.35 - 5505);
+		BigDecimal b_selfTax = new BigDecimal("0.00");
+		if(b_yingfa.subtract(new BigDecimal("3500")).floatValue()<=1500){
+			b_selfTax = b_yingfa.subtract(new BigDecimal("3500").multiply(new BigDecimal("0.03")));
+		}else if(b_yingfa.subtract(new BigDecimal("3500")).floatValue()<=4500){
+			b_selfTax = b_yingfa.subtract(new BigDecimal("3500").multiply(new BigDecimal("0.10")).subtract(new BigDecimal("105")));
+		}else if(b_yingfa.subtract(new BigDecimal("3500")).floatValue()<=9000){
+			b_selfTax = b_yingfa.subtract(new BigDecimal("3500").multiply(new BigDecimal("0.20")).subtract(new BigDecimal("555")));
+		}else if(b_yingfa.subtract(new BigDecimal("3500")).floatValue()<=35000){
+			b_selfTax = b_yingfa.subtract(new BigDecimal("3500").multiply(new BigDecimal("0.35")).subtract(new BigDecimal("1005")));
+		}else if(b_yingfa.subtract(new BigDecimal("3500")).floatValue()<=55000){
+			b_selfTax = b_yingfa.subtract(new BigDecimal("3500").multiply(new BigDecimal("0.30")).subtract(new BigDecimal("2755")));
+		}else if(b_yingfa.subtract(new BigDecimal("3500")).floatValue()<=80000){
+			b_selfTax = b_yingfa.subtract(new BigDecimal("3500").multiply(new BigDecimal("0.35")).subtract(new BigDecimal("5505")));
 		}else{
-			selfTax = (float) ((yingfa-3500)*0.45 - 13505);
+			b_selfTax = b_yingfa.subtract(new BigDecimal("3500").multiply(new BigDecimal("0.45")).subtract(new BigDecimal("13505")));
 		}
-		pmonthWages.setSubTotal(subTotal);
-		pmonthWages.setKaoqinTotal(kaoqinTotal);
-		pmonthWages.setYingfaTotal(yingfa);
-		pmonthWages.setSelfTax(selfTax);
-		pmonthWages.setShifaTotal(yingfa-selfTax);
+//		float selfTax = 0;
+//		if((yingfa - 3500)<=0){
+//			selfTax = 0;
+//		}else if(0<(yingfa-3500)&&(yingfa-3500)<=1500){
+//			selfTax = (float) ((yingfa-3500)*0.03);
+//		}else if((yingfa-3500)<=4500){
+//			selfTax = (float) ((yingfa-3500)*0.1 - 105);
+//		}else if((yingfa - 3500)<=9000){
+//			selfTax = (float) ((yingfa-3500)*0.2 - 555);
+//		}else if((yingfa - 3500)<=35000){
+//			selfTax = (float) ((yingfa-3500)*0.25 - 1005);
+//		}else if((yingfa - 3500)<=55000){
+//			selfTax = (float) ((yingfa-3500)*0.30 - 2755);
+//		}else if((yingfa - 3500)<=80000){
+//			selfTax = (float) ((yingfa-3500)*0.35 - 5505);
+//		}else{
+//			selfTax = (float) ((yingfa-3500)*0.45 - 13505);
+//		}
+		pmonthWages.setSubTotal(b_subTotal.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue());
+		pmonthWages.setKaoqinTotal(b_kaoqinTotal.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue());
+		pmonthWages.setYingfaTotal(b_yingfa.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue());
+		pmonthWages.setSelfTax(b_selfTax.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue());
+		pmonthWages.setShifaTotal(b_yingfa.subtract(b_selfTax).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue());
+//		pmonthWages.setShifaTotal(yingfa-selfTax);
 	}
 	@RequestMapping(value = "/queryWagesDate")
 	@ResponseBody
@@ -683,11 +818,27 @@ public class EmployeeController {
 //				}
 //			}
 //		}
-		System.out.println(date);
-		int savaNum = employeeInfoService.generateKaoqin(date,preDate,afterDate);
-		if(savaNum>0){
-			result.setSuccess(true);
-			result.setMsg("更新成功！");
+//		System.out.println(date);
+		QueryForm queryForm = new QueryForm();
+		queryForm.setWagesMonth(date);
+		PSystemConfig ps = employeeInfoService.findSysconfig(null, SysConfig.KAOQIN_BUTTON).get(0);
+		if(ps!=null&&ps.getLocked()==0){
+		if(((Long)employeeInfoService.queryWagesDate(queryForm).get("total"))>27){
+			queryForm.setWagesMonth(preDate);
+			if(((Long)employeeInfoService.queryWagesDate(queryForm).get("total"))>27){
+				int savaNum = employeeInfoService.generateKaoqin(date,preDate,afterDate);
+				if(savaNum>0){
+					result.setSuccess(true);
+					result.setMsg("更新成功！");
+				}
+			}else{
+				result.setMsg("请检查[" + preDate +"]的工作日~！");
+			}
+		}else{
+			result.setMsg("请检查[" + date +"]的工作日~！");
+		}
+		}else{
+			result.setMsg("生成考勤已加锁，请联系人事管理员解锁。");
 		}
 		return result;
 	}
@@ -700,6 +851,63 @@ public class EmployeeController {
 		if(savaNum>0){
 			result.setSuccess(true);
 			result.setMsg("更新成功！");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/getIfGenerateKaoqin")
+	@ResponseBody
+	public Json getIfGenerate(){
+		Json result = new Json();
+		List<PSystemConfig> rs = employeeInfoService.findSysconfig("ifGenerate", SysConfig.KAOQIN_BUTTON);
+		if(rs.size()>0){
+			result.setSuccess(true);
+			if(rs.get(0)!=null){
+				result.setObj(rs.get(0).getLocked());
+			}else{
+				result.setObj(0);
+			}
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/lockedKaoqin")
+	@ResponseBody
+	public Json lockedKaoqin(Boolean locked){
+		System.out.println(locked);
+		Json result = new Json();
+		PSystemConfig  ps = new PSystemConfig();
+		ps.setName("ifGenerate");
+		ps.setConfigType(SysConfig.KAOQIN_BUTTON);
+		if(locked){
+			ps.setLocked((byte) 1);
+		}else{
+			ps.setLocked((byte) 0);
+		}
+		if(employeeInfoService.updateSysconfig(ps)>0){
+			result.setSuccess(true);
+			result.setMsg("更新成功！~");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/fangfa")
+	@ResponseBody
+	public Json fangfa(Boolean locked){
+		System.out.println(locked);
+		Json result = new Json();
+		PSystemConfig  ps = new PSystemConfig();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM");
+		Calendar cal = Calendar.getInstance();
+		String date = df.format(cal.getTime());
+		ps.setName("wages_fafang_" + date);
+		ps.setConfigType(SysConfig.MONTHWAGE_FAFANG);
+		ps.setLocked((byte) 1);
+		if(employeeInfoService.updateSysconfig(ps)>0){
+			if(employeeInfoService.fafang()>0){
+				result.setSuccess(true);
+				result.setMsg("更新成功！~");
+			}
 		}
 		return result;
 	}

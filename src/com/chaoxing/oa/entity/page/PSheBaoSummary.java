@@ -14,6 +14,8 @@ public class PSheBaoSummary {
 	private Float cInjuryInsurance;
 	private Float cBirthIinsurance;
 	private long count;
+	private byte locked = 0;
+//	private String locked = "off";
 	public String getCompany() {
 		return company;
 	}
@@ -49,6 +51,12 @@ public class PSheBaoSummary {
 	}
 	public long getCount() {
 		return count;
+	}
+	public byte getLocked() {
+		return locked;
+	}
+	public void setLocked(byte locked) {
+		this.locked = locked;
 	}
 	public void setCount(long count) {
 		this.count = count;

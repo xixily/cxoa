@@ -1,4 +1,4 @@
-package com.chaoxing.oa.service.impl;
+package com.chaoxing.oa.test;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -11,19 +11,25 @@ import java.util.List;
 import org.apache.poi.util.SystemOutLogger;
 
 import com.chaoxing.oa.entity.page.PWagesDate;
+import com.chaoxing.oa.util.Md5AndBase64;
+import com.chaoxing.oa.util.XMLEncoder;
 
 public class Test {
 
 	public static void main(String[] args) {
+		
+		String xml = Md5AndBase64.loadFile(TestHttpProvider.class.getClass().getResource("/").getFile().toString() + "SFTemplate.xml");
 //		Float a = 12f;
 //		a = a < 18 ? 18 :(a>360?360:a);
 //		System.out.println(a);
 //		BigDecimal b = new BigDecimal("3");
 //		System.out.println(b.multiply(new BigDecimal("4")).add(new BigDecimal("3").setScale(2, BigDecimal.ROUND_HALF_UP)));
-		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM");
-		Calendar cal = Calendar.getInstance();
-		String afterDate = df.format(cal.getTime());
-		System.out.println(afterDate);
+//		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM");
+//		Calendar cal = Calendar.getInstance();
+//		String afterDate = df.format(cal.getTime());
+//		System.out.println(afterDate);
+//		System.out.println((new BigDecimal("25")).add(new BigDecimal("25")));
+//		System.out.println(XMLEncoder.encode("<request><order>这是一个请求</order><request>"));
 		//		System.out.println(Math.round(a*100));
 //		System.out.println(Math.round(0.635*100));
 //		BigDecimal bd = new BigDecimal(a.toString());

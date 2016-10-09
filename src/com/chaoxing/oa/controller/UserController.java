@@ -124,6 +124,7 @@ public class UserController {
 		if (r != -1) {
 			result.setSuccess(true);
 			result.setMsg("添加成功！");
+			result.setObj(r);
 		} else {
 			result.setErrorCode(SysConfig.REQUEST_ERROR);
 			result.setMsg("插入失败！");

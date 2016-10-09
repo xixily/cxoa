@@ -6,6 +6,32 @@ var session = {
     user : {},
 //    testText : '我在这里存放全局缓存数据'
 };
+function SFservice(){
+	var url1 = 'http://bspoisp.sit.sf-express.com:11080/bsp-oisp/sfexpressService';
+	var url2 = 'https://bspoisp.sit.sf-express.com:11443/bsp-oisp/sfexpressService';
+	var xmlHead = "<?xml version='1.0' encoding='UTF-8'?><Request service='服务名' lang='zh-CN'><Head>utf8</Head><Body>";
+	var xmlEnd = "</Body></Request>";
+	var xmlBody="<orderid>123456</orderid>"+"<mailno>755123456789,001123456789,002123456789</mailno>" + "<is_gen_bill_no>1</is_gen_bill_no>";
+	var xml = xmlHead + xmlBody + xmlEnd;
+	var checkword = 'j8DzkIFgmlomPt0aLuwU';
+	var params = {};
+	params.xml = xml;
+	/**
+	 * md5 加密 到 base64 加密
+	 */
+	var md5Ckey = $.md5(xml + checkword);
+	var verifyCode = $.base64encode(md5Ckey);
+	params.verifyCode = verifyCode;
+	var action = {};
+	action.url = url1;
+	action.data =  params;
+	sendActionE(action, function(result){
+		console.log("result:%o",result);
+	});
+//	$.post(url1,params,function(result){
+//	    console.log(result);
+//	})
+};
 function generateWagesDate(){
 	  var calendar = $('#calendar_wagesDate').calendar('options');
 	    var year = calendar.year;
@@ -202,6 +228,58 @@ function sendAction(action, callback, method, async, timeout) {
 }
 
 /**
+ * @author dengxuef
+ * 
+ * @requires jQuery
+ * 
+ * @param action : {url:'',data:data}
+ * @param callback 回调函数
+ * @param method 默认get 
+ * @param async 是否异步 
+ * @param timeout 超时时间
+ * 
+ * @description 发送do_action 请求 
+ */
+function sendActionE(action, callback, async, timeout) {
+	async = async ? true : false;
+	var method = "post";
+	timeout = timeout ? timeout : 20000;
+	if (!session.logined) {
+		alert('即将退出,请您先登陆！');
+		north.logoutFun();
+	}
+	if (!action.url) {
+		alert('您的请求不存在！');
+		return false;
+	}
+	$.ajax({
+		url : action.url,
+		type : 'post',
+		async : async,
+		data : action.data,
+		timeout : timeout,
+		dataType : "jsonp",
+		jsonp:'callback',
+//		jsonpCallback:'callback',
+		beforeSend:function(XMLHttpRequest){
+			console.log("XMLHttpRequest:%o",XMLHttpRequest);
+			return true;
+		},
+		complete: function(XMLHttpRequest, textStatus){
+			console.log("[complete]XMLHttpRequest:%o,textStatus:%o",XMLHttpRequest);
+		},
+		success : function(data, textStatus) {
+			if (data.succeed) {
+				callback(data.obj);
+			} else {
+				alert('请求失败！');
+			}
+			this;
+		}
+	})
+}
+
+/**
  * 
  * @param id
  */
@@ -300,12 +378,17 @@ function clearForm(dom){
 	form.form('clear');
 }
 
-function submitForm(dom, callback){
+function submitForm(dom, callback,disable){
 	var form = dom.closest("form");
 //	console.log(form);
 	form.form('submit',{
          onSubmit:function(){
-             return $(this).form('enableValidation').form('validate');
+        	 if($(this).form('enableValidation').form('validate')){
+        		 if(disable){
+        				dom.linkbutton('disable');
+        			}
+        		 return $(this).form('enableValidation').form('validate');
+        	 }
          },
          success:function(result){
         	 var result =  eval("(" + result + ")");
@@ -553,7 +636,7 @@ var confirmDialog = {
 }
 //弹出加载层
 function load(message) {  
-	var message = message ? message:"正在加载，请稍后";
+	var message = message ? message:"正在加载，请稍后...";
     $("<div class=\"datagrid-mask\"></div>").css({ display: "block", width: "100%", height: $(window).height() }).appendTo("body");  
     $("<div class=\"datagrid-mask-msg\"></div>").html(message).appendTo("body").css({ display: "block", left: ($(document.body).outerWidth(true) - 190) / 2, top: ($(window).height() - 45) / 2 });  
 }  
@@ -902,7 +985,7 @@ $.extend($.fn.validatebox.defaults.rules, {
     }, 
     mobile : {// 验证手机号码 
         validator : function(value) { 
-            return /^(13|15|17|18)\d{9}$/i.test(value); 
+            return /^(11|12|13|14|15|16|17|18|19)\d{9}$/i.test(value); 
         }, 
         message : '手机号码格式不正确'
     }, 

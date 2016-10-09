@@ -10,14 +10,25 @@
 	</div>
 <%-- url: '${pageContext.request.contextPath}/model/treegrid_data1.json', --%>
 	<div style="width: 98%">
-	<table id="datagrid_menus" title="Folder Browser" class="easyui-treegrid" 
+	<table id="datagrid_menus" title="Folder Browser" class="easyui-treegrid" style="height:510px;"
 			data-options="
-				url:'system/queryMenus.action',
-				method: 'get',
-				checkbox: true,
+				iconCls: 'icon-ok',
 				rownumbers: true,
+				animate: true,
+				collapsible: true,
+				fitColumns: true,
+				checkbox:true,
+				url: 'system/queryMenus.action',
+				method: 'get',
 				idField: 'menuId',
-				treeField: 'menuName'
+				treeField: 'menuName',
+				pagination: true,
+                pageSize: 15,
+                pageList: [10,15,20,30],
+				onLoadSuccess: function(row, data){
+					$('#datagrid_menus').treegrid('collapseAll');
+				}
+			
 			">
 		<thead>
 			<tr>

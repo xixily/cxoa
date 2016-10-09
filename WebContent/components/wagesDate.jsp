@@ -1,7 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
-<div class="easyui-panel" style="width:338px;overflow: hidden" >
-	<div id="calendar_wagesDate" class="easyui-calendar" style="width:326px;height:190px;" data-options = "firstDay:1"></div>
-	<table id="datagrid_wagesDate" class="easyui-datagrid" style="width: 98%;height:345px;"
+<div class="easyui-panel" style="width:342px;overflow: hidden" >
+	<div id="calendar_wagesDate" class="easyui-calendar" style="width:340px;height:190px;" data-options = "firstDay:1"></div>
+	<table id="datagrid_wagesDate" class="easyui-datagrid" style="width: 100%;height:345px;"
 			data-options="
 			url:'employee/queryWagesDate.action',
 			fitColumns:false,

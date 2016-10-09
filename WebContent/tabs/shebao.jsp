@@ -28,6 +28,12 @@
 				text : '删除',
 				handler: function(){employee.shebao.remove()}
 			}],
+			rowStyler : function(index, row) {
+								if(index%2 == 0)
+								{
+									return 'background-color:rgb(245,245,245);';
+								}
+							},
 			onDblClickRow : employee.shebao.onDblClickRow,
 			onClickCell : employee.shebao.endEditing,
 			onEndEdit: employee.shebao.onEndEdit">

@@ -1,5 +1,4 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
-
 <!-- 考勤管理 -->
 <div id="tab_shebaoSummary" title="社保汇总" style="padding: 10px;overflow: hidden"	data-options="iconCls:'icon-edit',closable:true">
 <!-- 组合查询form表单 -->
@@ -22,8 +21,6 @@
 			rowStyler : function(index, row) {
 								var date = new Date();
 								var dd = date.getFullYear() + ((date.getMonth())<10? ( '0' + (date.getMonth())):date.getMonth()); 
-								console.log(row.lizhiReport);
-								console.log(row.ruzhiReport);
 								if (row.lizhiReport&&row.lizhiReport.substring(0,6) == dd) {
 									return 'background-color:#E88282;color:#fff;font-weight:bold;';
 								}
@@ -33,6 +30,10 @@
 								if(row.ruzhiReport&&row.ruzhiReport.substring(0,6) == dd){
 									return 'background-color:#00FF00;';
 								}
+								if(index%2 == 0)
+								{
+									return 'background-color:rgb(245,245,245);';
+								}
 							},
 			pageList:[10,15,20,30,50,200],
 			loadFilter : function(data){
@@ -41,6 +42,18 @@
 				} else {
 					return data;
 				}
+			},
+			onBeforeLoad : function(param){
+				 $.get('employee/getIfGenerateKaoqin.action',null,function(result){
+				 	result = eval('('+result+')');
+					 if(result.success){
+						 if(result.obj == 1){
+							 $('#kaoqin_generate').switchbutton('check');
+						 }else{
+							 $('#kaoqin_generate').switchbutton('uncheck');
+						 }
+					 }
+				 })
 			},
 			toolbar : '#kaoqin_toolbar',
 			onDblClickRow : employee.kaoqin.onDblClickRow,
@@ -63,7 +76,7 @@
 					<th data-options="field:'kuangGongHour',width:40,sortable:true,editor:{type:'numberbox'}">旷工时数</th>
 					<th data-options="field:'hunJiaDay',width:40,sortable:true,editor:{type:'numberbox'}">婚假天数</th>
 					<th data-options="field:'chanJiaDay',width:40,sortable:true,editor:{type:'numberbox'}">产假天数</th>
-					<th data-options="field:'sangJiaDay',width:40,sortable:true,editor:{type:'numberbox'}">丧家天数</th>
+					<th data-options="field:'sangJiaDay',width:40,sortable:true,editor:{type:'numberbox'}">丧假天数</th>
 					<th data-options="field:'nianJiaDay',width:40,sortable:true,editor:{type:'numberbox'}">年假天数</th>
 					<th data-options="field:'hiredate',width:100,sortable:true">入职时间</th>
 					<th data-options="field:'leaveTime',width:100,sortable:true">离职时间</th>

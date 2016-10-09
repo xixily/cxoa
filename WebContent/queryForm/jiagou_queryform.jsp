@@ -1,9 +1,9 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <script type="text/javascript">
 $(document).ready(function() {
-	$('#kaoqin_form').keydown(function(e){
+	$('#jiagou_form').keydown(function(e){
 		if(e.keyCode==13){
-		   $('#kaoqin_serach').trigger('click');
+		   $('#jiagou_serach').trigger('click');
 		}
 		});
 })
@@ -11,16 +11,20 @@ $(document).ready(function() {
 <form id="jiagou_form" method="post" enctype="multipart/form-data">
 	<table>
 		<tr>
-			<td>一级:</td>
-			<td><input name="firstLevel" class="easyui-textbox" style="width:100px;" /></td>
-			<td>二级:</td>
-			<td><input name="secondLevel" class="easyui-textbox" style="width:100px;" /></td>
-            </td>
-            <td>三级:</td>
-			<td><input name="thirdLevel" class="f1 easyui-textbox" style="width:100px"/></td>
-            <td>四级:</td>
-			<td><input name="fourthLevel" class="easyui-textbox" style="width:100px" />
+			<td>级别:</td>
+			<td>
+			<select class="easyui-combobox"	name="level" style="margin-bottom: 2px; height: 26px;width:120px;" >
+				<option value=""></option>
+				<option value="1">一级</option>
+				<option value="2">二级</option>
+				<option value="3">三级</option>
+				<option value="4">四级</option>
+			</select>
+			<input name="firstLevel" class="easyui-textbox" style="width:100px;" />
 			</td>
+			<td></td>
+			<td></td>
+			<td></td>
 		</tr>
 		<tr>
             <td colspan="4"></td>

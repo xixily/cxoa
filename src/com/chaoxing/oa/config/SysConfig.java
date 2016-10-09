@@ -35,4 +35,16 @@ public class SysConfig {
 	 * excel文件目录
 	 */
 	public final static String DOWNLOAD_EXCEL = ResourceUtil.getDownloadDirectory();
+	/**
+	 * 系统配置类型 -- 社保汇总
+	 */
+	public final static String SHEBAO_SUMMARY = "shebaoSummary";
+	/**
+	 * 系统配置类型 -- 考勤开关
+	 */
+	public final static String KAOQIN_BUTTON = "kaoqin_button";
+	/**
+	 * 系统配置类型 -- 工资发放
+	 */
+	public final static String MONTHWAGE_FAFANG = "month_wages_fafang";
 }

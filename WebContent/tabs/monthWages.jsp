@@ -31,6 +31,12 @@
 					return data;
 				}
 			},
+			rowStyler : function(index, row) {
+								if(index%2 == 0)
+								{
+									return 'background-color:rgb(245,245,245);';
+								}
+							},
 			toolbar : '#monthWages_toolbar',
 			onDblClickRow : employee.monthWages.onDblClickRow,
 			onClickCell : employee.monthWages.endEditing,
@@ -108,7 +114,7 @@
 					<c:if test="${sessionInfo.roleId <= 1 || sessionInfo.roleId == 100}">
 					<th data-options="field:'remarks',width:100,sortable:true">工资备注</th>
 					</c:if>
-					<th data-options="field:'kaoQinremarks',width:100,sortable:true,editor:{type:'numberbox'}">考勤备注</th>
+					<th data-options="field:'kaoQinremarks',width:100,sortable:true,editor:{type:'textbox'}">考勤备注</th>
 					<c:if test="${sessionInfo.roleId <= 1 || sessionInfo.roleId == 100}">
 					<th data-options="field:'lishiSalary',width:100,sortable:true">历史工资</th>
 					<th data-options="field:'lishiSalary',width:100,sortable:true">其他扣款</th>

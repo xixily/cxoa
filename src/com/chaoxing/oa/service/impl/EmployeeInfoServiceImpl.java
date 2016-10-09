@@ -4,21 +4,19 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
-import javax.persistence.AttributeOverride;
 import javax.servlet.http.HttpSession;
 
 import org.hibernate.HibernateException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.druid.support.spring.stat.BeanTypeAutoProxyCreator;
 import com.chaoxing.oa.config.SysConfig;
 import com.chaoxing.oa.dao.BaseDaoI;
 import com.chaoxing.oa.entity.page.PComboBox;
@@ -32,7 +30,10 @@ import com.chaoxing.oa.entity.page.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.PSheBaoSummary;
 import com.chaoxing.oa.entity.page.PShebao;
 import com.chaoxing.oa.entity.page.PShebaoType;
+import com.chaoxing.oa.entity.page.PSystemConfig;
 import com.chaoxing.oa.entity.page.PWagesDate;
+import com.chaoxing.oa.entity.page.PshebaoDetail;
+import com.chaoxing.oa.entity.page.Pstruct;
 import com.chaoxing.oa.entity.page.Pwages;
 import com.chaoxing.oa.entity.page.QueryForm;
 import com.chaoxing.oa.entity.page.SessionInfo;
@@ -44,6 +45,8 @@ import com.chaoxing.oa.entity.po.MonthWages;
 import com.chaoxing.oa.entity.po.OrganizationStructure;
 import com.chaoxing.oa.entity.po.Shebao;
 import com.chaoxing.oa.entity.po.ShebaoType;
+import com.chaoxing.oa.entity.po.Struct;
+import com.chaoxing.oa.entity.po.SystemConfig;
 import com.chaoxing.oa.entity.po.UserName;
 import com.chaoxing.oa.entity.po.WageDistribution;
 import com.chaoxing.oa.entity.po.WagesDate;
@@ -51,8 +54,6 @@ import com.chaoxing.oa.entity.po.view.RenshiUserName;
 import com.chaoxing.oa.entity.po.view.SheBaoSummary;
 import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.util.ResourceUtil;
-
-import sun.net.www.content.audio.wav;
 
 @Service("employeeInfoService")
 public class EmployeeInfoServiceImpl implements EmployeeInfoService {
@@ -62,6 +63,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	private BaseDaoI<Company> companyDao;
 	private BaseDaoI<Level> levelDao;//级别
 	private BaseDaoI<OrganizationStructure> organizationStructureDao;//组织结构
+	private BaseDaoI<Struct> structDao;//组织结构
 	private BaseDaoI<WageDistribution> wageDistributionDao;
 	private BaseDaoI<Shebao> sheBaoDao;
 	private BaseDaoI<ShebaoType> sheBaoTypeDao;
@@ -71,8 +73,22 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	private BaseDaoI<MonthWages> monthWagesDao;
 	private BaseDaoI<WagesDate> wagesDateDao;
 	private BaseDaoI<UserName> useDao;
+	private BaseDaoI<SystemConfig> systemConfigDao;
 	
-	
+	public BaseDaoI<SystemConfig> getSystemConfigDao() {
+		return systemConfigDao;
+	}
+	@Autowired
+	public void setSystemConfigDao(BaseDaoI<SystemConfig> systemConfigDao) {
+		this.systemConfigDao = systemConfigDao;
+	}
+	public BaseDaoI<Struct> getStructDao() {
+		return structDao;
+	}
+	@Autowired
+	public void setStructDao(BaseDaoI<Struct> structDao) {
+		this.structDao = structDao;
+	}
 	public BaseDaoI<UserName> getUseDao() {
 		return useDao;
 	}
@@ -232,6 +248,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 			intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
 			pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
 		}
+		System.out.println(hql.toString());
 		List<RenshiUserName> renshiUsernames = userNameDao.find(hql.toString(), params, intPage, pageSize);
 		for (RenshiUserName renshiUserName : renshiUsernames) {
 			if(renshiUserName!=null){
@@ -316,62 +333,196 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 
 	@Override
 	public List<POStructs> getOStruct() {
-		return getOStruct(null,0);
-//		List<POStructs> listComs = new ArrayList<POStructs>();
-//		List<OrganizationStructure> lists = organizationStructureDao.find("from OrganizationStructure o");
-//		for (OrganizationStructure organizationStructure : lists) {
-//			if(organizationStructure!=null){
-//				POStructs postruct = new POStructs();
-//				if(organizationStructure.getSecondLevel().equals("离职")){
-//					organizationStructure.setFourthLevel("离职");
-//				}
-//				BeanUtils.copyProperties(organizationStructure, postruct);
+//		return getOStruct(null,0);
+		List<POStructs> listComs = new ArrayList<POStructs>();
+		List<OrganizationStructure> lists = organizationStructureDao.find("from OrganizationStructure t where t.level=4");
+		for (OrganizationStructure os : lists) {
+			if(os!=null){
+				POStructs pos = new POStructs();
+//				pos.setId(os.getId());
+//				pos.setCellCore(os.getCellCore());
+//				pos.setCellCoreEmail(os.getCellCoreEmail());
+//				pos.setGuidance(os.getGuidance());
+//				pos.setGuidanceEmail(os.getGuidanceEmail());
+//				pos.setChildren(null);
+//				pos.setFirstLevel(os.getFirstLevel());
+//				pos.setSecondLevel(os.getSecondLevel());
+//				pos.setThirdLevel(os.getThirdLevel());
+//				pos.setFourthLevel(os.getFourthLevel());
+//				pos.setLevel(os.getLevel());
+//				pos.setPreId(os.getPreId());
+//				pos.setTaxStructure(os.getTaxStructure());
+//				pos.setSortCode(os.getSortCode());
+				BeanUtils.copyProperties(os, pos);
 //				postruct.setDepartmentId(organizationStructure.getId());
-//				listComs.add(postruct);
-//			}
-//		}
-//		return listComs;
+				listComs.add(pos);
+			}
+		}
+		return listComs;
 	}
 
 	
 	
 	@Override
-	public List<POStructs> getOStruct(QueryForm queryForm,int isExport) {
-		List<POStructs> listComs = new ArrayList<POStructs>();
-		StringBuffer hql = new StringBuffer("from OrganizationStructure t where 1=1");
+		public Map<String,Object> getOStruct(QueryForm queryForm,int isExport) {
+		Map<String,Object> osInfo = new HashMap<String, Object>();
+		Set<POStructs> listComs = new TreeSet<POStructs>();
+		StringBuffer hql;
 		Map<String,Object> params = new HashMap<String, Object>();
-		String sort = "id";
-		String order = SysConfig.DESC;
+		String sort = "sortCode";
+		String order = SysConfig.ASC;
 		int intPage = 0;
 		int pageSize = 30000;//最多导出30000条数据
-		if(queryForm!=null){
-			addCondition(hql, queryForm, params);
-			if(queryForm.getSort() != null){
-				sort = queryForm.getSort();
-				if(queryForm.getOrder() != null){
-					order = queryForm.getOrder();
-				}
+		if(queryForm==null){
+			hql = new StringBuffer("from OrganizationStructure t where t.level=4");
+		}else{
+			hql = new StringBuffer("from OrganizationStructure t where t.level=1");
+		}
+//		if(queryForm.getFirstLevel()==null&&queryForm.getSecondLevel()==null&&queryForm.getThirdLevel()==null&&queryForm.getFourthLevel()==null){
+//			if(queryForm.getId()!=0){
+//				hql.append(" and t.preId=:id");
+//				params.put("id", queryForm.getId());
+//			}else{
+//				hql.append(" and t.level = 1 ");
+//			}
+//		}else{
+//			addCondition(hql, queryForm, params);
+//		}
+		if(queryForm.getSort() != null){
+			sort = queryForm.getSort();
+			if(queryForm.getOrder() != null){
+				order = queryForm.getOrder();
 			}
-			if(isExport == 0){
-				intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
-				pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
-			}
+		}
+		if(isExport == 0&&queryForm!=null){
+			intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
+			pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
 		}
 		hql.append(" order by t." + sort + " " + order);
 		List<OrganizationStructure> lists = organizationStructureDao.find(hql.toString(), params, intPage, pageSize);
-		for (OrganizationStructure organizationStructure : lists) {
-			if(organizationStructure!=null){
-				POStructs postruct = new POStructs();
-				if(organizationStructure.getSecondLevel().equals("离职")){
-					organizationStructure.setFourthLevel("离职");
+		listComs = copyos2t(lists);
+//		for (OrganizationStructure organizationStructure : lists) {
+//			if(organizationStructure!=null){
+//				POStructs postruct = new POStructs();
+////				if(organizationStructure.getSecondLevel().equals("离职")){
+////					organizationStructure.setFourthLevel("离职");
+////				}
+//				BeanUtils.copyProperties(organizationStructure, postruct);
+//				if(postruct.getLevel()==4){
+//					postruct.setState(null);
+//				}
+//				listComs.add(postruct);
+//			}
+//		}
+		long count = getOStructCount(hql.toString(), params);
+		osInfo.put("rows", listComs);
+		osInfo.put("total", count);
+		return osInfo;
+	}
+	
+	private Set<POStructs> copyos2t(List<OrganizationStructure> lists) {
+		Set<POStructs> pstructs = new TreeSet<POStructs>();
+		for (OrganizationStructure struct : lists) {
+			POStructs pstruct = new POStructs();
+			BeanUtils.copyProperties(struct, pstruct);
+			if(struct.getStructures().size()>0){
+				pstruct.setChildren(copyos2t(new ArrayList<OrganizationStructure>(struct.getStructures())));
+			}else{
+				pstruct.setState(null);
+			}
+			pstructs.add(pstruct);
+		}
+		return pstructs;
+	}
+	
+	@Override
+	public long getOStructCount(String hql, Map<String, Object> params) {
+		StringBuffer hqll = new StringBuffer("select count(*) from OrganizationStructure t where ");
+		hqll.append(hql.split("where")[1]);
+		return organizationStructureDao.count(hqll.toString(), params);
+	}
+	
+	@Override
+	public Map<String, Object> findStruct(QueryForm queryform, int isExport) {
+		Map<String,Object> structInfo = new HashMap<String, Object>();
+		Set<Pstruct> structs = new TreeSet<Pstruct>();
+		StringBuffer hql = new StringBuffer("from Struct t where 1=1");
+		Map<String,Object> params = new HashMap<String, Object>();
+		String sort = "sortCode";
+		String order = SysConfig.ASC;
+		int intPage = 0;
+		int pageSize = 30000;//最多导出30000条数据
+		if(queryform!=null){
+			if(queryform.getFirstLevel()==null&&queryform.getSecondLevel()==null&&queryform.getThirdLevel()==null&&queryform.getFourthLevel()==null){
+				hql.append(" and t.level = 1 ");
+			}else{
+				addCondition(hql, queryform, params);
+			}
+			if(queryform.getSort() != null){
+				sort = queryform.getSort();
+				if(queryform.getOrder() != null){
+					order = queryform.getOrder();
 				}
-				BeanUtils.copyProperties(organizationStructure, postruct);
-				postruct.setDepartmentId(organizationStructure.getId());
-				listComs.add(postruct);
+			}
+			if(isExport == 0){
+				intPage = (queryform == null || queryform.getPage() == 0) ? 1 : queryform.getPage();
+				pageSize = (queryform == null || queryform.getRows() == 0) ? 100 : queryform.getRows();
 			}
 		}
-		return listComs;
+		hql.append(" order by t." + sort + " " + order);
+		List<Struct> lists = structDao.find(hql.toString(), params, intPage, pageSize);
+		structs = copyo2t(lists);
+//		for (Struct struct : lists) {
+//			Pstruct pstruct = new Pstruct();
+//			pstruct.setId(struct.getId());
+//			pstruct.setName(struct.getName());
+//			pstruct.setLevel(struct.getLevel());
+//			pstruct.setLeader(struct.getLeader());
+//			pstruct.setEmail(struct.getEmail());
+//			pstruct.setSortCode(struct.getSortCode());
+//			pstruct.setFirstLevel(struct.getFirstLevel());
+//			pstruct.setSecondLevl(struct.getSecondLevl());
+//			pstruct.setThirdLevl(struct.getThirdLevl());
+//			for (Struct struct2 : struct.getChildren()) {
+//				
+//			}
+////			BeanUtils.copyProperties(struct, pstruct);
+//			structs.add(pstruct);
+//		}
+		long count = getStructCount(hql.toString(), params);
+		structInfo.put("rows", structs);
+		structInfo.put("total", count);
+		return structInfo;
 	}
+	
+	private Set<Pstruct> copyo2t(List<Struct> lists) {
+		Set<Pstruct> pstructs = new TreeSet<Pstruct>();
+		for (Struct struct : lists) {
+			Pstruct pstruct = new Pstruct();
+			pstruct.setId(struct.getId());
+			pstruct.setName(struct.getName());
+			pstruct.setLevel(struct.getLevel());
+			pstruct.setLeader(struct.getLeader());
+			pstruct.setEmail(struct.getEmail());
+			pstruct.setSortCode(struct.getSortCode());
+			pstruct.setFirstLevel(struct.getFirstLevel());
+			pstruct.setSecondLevel(struct.getSecondLevel());
+			pstruct.setThirdLevel(struct.getThirdLevel());
+			if(struct.getChildren().size()>0){
+				pstruct.setChildren(copyo2t(new ArrayList<Struct>(struct.getChildren())));
+			}else{
+				pstruct.setState(null);
+			}
+			pstructs.add(pstruct);
+		}
+		return pstructs;
+	}
+	public long getStructCount(String hql, Map<String,Object> params){
+		StringBuffer hqll = new StringBuffer("select count(*) from Struct t where ");
+		hqll.append(hql.split("where")[1]);
+		return structDao.count(hqll.toString(), params);
+	}
+	
 	@Override
 	public List<PComboBox> getInsuranceCompany() {
 		List<Object> lists = objectDao.find("select distinct(u.insuranceCompany) from UserName u");
@@ -408,6 +559,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 					p.setPostSalary(null);
 					p.setPerformanceRelatedPay(null);
 					p.setRemarks("");
+					p.setLishiSalary(null);
 				}
 				pwages.add(p);
 			}
@@ -437,7 +589,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	}
 	
 	@Override
-	public int updateWagesRadix(Pwages pwages) {
+	public int updateWagesRadix(PshebaoDetail pwages) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer("update WageDistribution set "); 
 		hql.append(" radix = :radix,");
@@ -657,11 +809,18 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		}
 		
 		List<SheBaoSummary> sheBaoSummaries = shebaoSummaryDao.find(hql.toString(), params, intPage, pageSize);
+		List<PSystemConfig> psystemConfig = findSysconfig(null, SysConfig.SHEBAO_SUMMARY);
 		for (SheBaoSummary shebaoSummary : sheBaoSummaries) {
 			if(shebaoSummary!=null){
-				StringBuffer hql2 = new StringBuffer("from WageDistribution t where t.radix > 0 and t.company ='" + shebaoSummary.getCompany() + "'");
+				String company = shebaoSummary.getCompany();
+				StringBuffer hql2 = new StringBuffer("from WageDistribution t where t.radix > 0 and t.company ='" + company + "'");
 				long total = getWageDistributionCount(hql2.toString(), null);
 				PSheBaoSummary pshebaoSummary = new PSheBaoSummary();
+				for (PSystemConfig pC : psystemConfig) {
+					if(pC.getName().equals(company)){
+						pshebaoSummary.setLocked(pC.getLocked());
+					}
+				}
 				pshebaoSummary.setCount(total);
 				pshebaoSummary.setCompany(shebaoSummary.getCompany());
 				BigDecimal subEndowment = new BigDecimal(shebaoSummary.getSubEndowmentIinsurance().toString());
@@ -673,7 +832,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 				BigDecimal subUnemployed = new BigDecimal(shebaoSummary.getSubUnemployedInsurance().toString());
 				pshebaoSummary.setSubUnemployedInsurance(subUnemployed.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue());
 				BigDecimal cEndowment = new BigDecimal(shebaoSummary.getcEndowmentIinsurance().toString());
-				System.out.println("[公司养老BigDecimal:" + cEndowment + "][float:" + pshebaoSummary.getcEndowmentIinsurance());
+//				System.out.println("[公司养老BigDecimal:" + cEndowment + "][float:" + pshebaoSummary.getcEndowmentIinsurance());
 				pshebaoSummary.setcEndowmentIinsurance(cEndowment.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue());
 				BigDecimal cHouse = new BigDecimal(shebaoSummary.getcHouseIinsurance().toString());
 				pshebaoSummary.setcHouseIinsurance(cHouse.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue());
@@ -695,11 +854,24 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		return summaryInfos;
 	}
 	
+//	@Override
+//	public List<PSystemConfig> findShebaoSumaryLock() {
+//		List<SystemConfig> syses = systemConfigDao.find("from SystemConfig t where t.configType='shebaoSummary'");
+//		List<PSystemConfig> psyses = new ArrayList<PSystemConfig>();
+//		for (SystemConfig systemConfig : syses) {
+//			PSystemConfig psysconfig = new PSystemConfig();
+//			BeanUtils.copyProperties(systemConfig, psysconfig);
+//			psyses.add(psysconfig);
+//		}
+//		return psyses;
+//	}
+	
 	public long getSheBaoSummaryCount(String hql, Map<String, Object> params){
 		StringBuffer hqll = new StringBuffer("select count(*) from SheBaoSummary t where ");
 		hqll.append(hql.split("where")[1]);
 		return shebaoSummaryDao.count(hqll.toString(), params);
 	}
+	
 	@Override
 	public Map<String, Object> getShebaoCompany(QueryForm queryForm, HttpSession session) {
 		return getShebaoCompany(queryForm, session, 0);
@@ -710,13 +882,13 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		Map<String, Object> shebaoCompanyInfos = new HashMap<String, Object>();
 		Map<String, Object> params = new HashMap<String, Object>();
 		List<WageDistribution> wageDistributions = new ArrayList<WageDistribution>();
-		List<Pwages> pwages = new ArrayList<Pwages>();
+		List<PshebaoDetail> pwages = new ArrayList<PshebaoDetail>();
 		StringBuffer hql = new StringBuffer("from WageDistribution t where t.radix > 0 and t.company = :company");
 		SimpleDateFormat df = new SimpleDateFormat("yyyyMM");
 		Calendar cal = Calendar.getInstance();
 		String date = df.format(cal.getTime());
-		hql.append(" and t.rubaoTime < :rubaoTime ");
-		params.put("rubaoTime", date);
+//		hql.append(" and t.rubaoTime < :rubaoTime ");
+//		params.put("rubaoTime", date);
 		long total = 0;
 		if(queryForm.getCompany()!=null){
 			params.put("company", queryForm.getCompany());
@@ -742,7 +914,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 			wageDistributions = wageDistributionDao.find(hql.toString(), params, intPage, pageSize);
 			for (WageDistribution wageDistribution : wageDistributions) {
 				if(wageDistribution!=null){
-					Pwages pwage = new Pwages();
+					PshebaoDetail pwage = new PshebaoDetail();
 					BeanUtils.copyProperties(wageDistribution, pwage);
 					pwages.add(pwage);
 				}
@@ -879,6 +1051,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 			for (MonthWages monthWage : monthWages) {
 				if(monthWage!=null){
 					PMonthWages pMonthWage = new PMonthWages();
+					pMonthWage.setId(monthWage.getId());
 					pMonthWage.setUsername(monthWage.getUsername());
 					pMonthWage.setFirstLevel(monthWage.getFirstLevel());
 					pMonthWage.setSecondLevel(monthWage.getSecondLevel());
@@ -903,6 +1076,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 					pMonthWage.setLeaveTime(monthWage.getLeaveTime());
 					pMonthWage.setZhuanzhengTime(monthWage.getZhuanzhengTime());
 					pMonthWage.setKaoQinremarks(monthWage.getKaoQinremarks());
+					pMonthWage.setCompany(monthWage.getCompany());
 					pMonthWages.add(pMonthWage);
 				}
 			}
@@ -1021,6 +1195,19 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	}
 	
 	@Override
+	public long updateSysconfig(PSystemConfig ps) {
+		SystemConfig sys = new SystemConfig();
+		BeanUtils.copyProperties(ps, sys);
+		try {
+			systemConfigDao.saveOrUpdate(sys);
+			return 1;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return 0;
+	}
+	
+	@Override
 	public int generateKaoqin(String date, String preDate, String afterDate) {
 		Map<String,Object> params = new HashMap<String, Object>();
 		params.put("date1", date);
@@ -1037,6 +1224,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	
 	@Override
 	public int generateMonthWages() {
+//		String sql = " CALL update_monthWages_pr(); ";
 		String sql = "{CALL update_monthWages_pr()}";
 		try {
 			objectDao.prepareCall(sql, null);
@@ -1054,18 +1242,68 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		return pMonthWages;
 	}
 	
+	@Override
+	public List<PSystemConfig> findSysconfig(String name, String type) {
+		if(type==null){
+			return null;
+		}
+		StringBuffer hql = new StringBuffer("from SystemConfig t where t.configType=:type");
+		Map<String,Object> params = new HashMap<String, Object>();
+		params.put("type", type);
+		if(name!=null){
+			hql.append(" and name=:name");
+			params.put("name", name);
+		}
+		List<SystemConfig> syses = systemConfigDao.find(hql.toString(),params);
+		List<PSystemConfig> psyses = new ArrayList<PSystemConfig>();
+		for (SystemConfig systemConfig : syses) {
+			PSystemConfig psysconfig = new PSystemConfig();
+			BeanUtils.copyProperties(systemConfig, psysconfig);
+			psyses.add(psysconfig);
+		}
+		return psyses;
+	}
+	
+	@Override
+	public PSystemConfig getSysconfig(String name, String type) {
+		if(type!=null&&name!=null){
+			StringBuffer hql = new StringBuffer("from SystemConfig t where t.configType=:type and name=:name");
+			Map<String,Object> params = new HashMap<String, Object>();
+			params.put("type", type);
+			params.put("name", name);
+			SystemConfig syse = systemConfigDao.get(hql.toString(),params);
+			PSystemConfig psysconfig = new PSystemConfig();
+			if(syse!=null){
+				BeanUtils.copyProperties(syse, psysconfig);
+				return psysconfig;
+			}
+		}
+		return null;
+	}
+	
+	@Override
+	public long fafang() {
+		try {
+			objectDao.prepareCall("UPDATE 职员工资分布表 z,当月工资表 m SET z.病假累计=(z.病假累计 + m.病假小时数),z.年假累计=(z.年假累计 + m.年假天数) WHERE z.职员编号=m.职工编号 AND (m.病假小时数>0 OR m.年假天数>0)", null);
+//			objectDao.executeHql("update WageDistribution,MonthWages m set t.sickLleaveTotal=(t.sickLleaveTotal + m.bingJiaHour),t.annualLleave=(t.annualLleave + m.nianJiaDay) where t.employeeId = m.employeeId");
+//			objectDao.executeHql("update WageDistribution t,MonthWages m set t.sickLleaveTotal=(t.sickLleaveTotal + m.bingJiaHour),t.annualLleave=(t.annualLleave + m.nianJiaDay) where t.employeeId = m.employeeId");
+			return 1;
+		} catch (Exception e) {
+		}
+		return 0;
+	}
 	protected void addCondition(StringBuffer hql, QueryForm queryForm, Map<String, Object> params) {
 		if(queryForm != null){
-			if(queryForm.getConfigurable() != null && queryForm.getConfigurable() != ""){
-				if(queryForm.getConfigurable_value() != null && queryForm.getConfigurable_value() != ""){
+			if(queryForm.getConfigurable() != null && !queryForm.getConfigurable().equals("")){
+				if(queryForm.getConfigurable_value() != null && !queryForm.getConfigurable_value().equals("")){
 					if(queryForm.getConfigurable_value().equalsIgnoreCase("null")){
-						hql.append(" and t." + queryForm.getConfigurable() + "is null");
+						hql.append(" and t." + queryForm.getConfigurable() + " is null");
 					}else{
 						hql.append(" and t." + queryForm.getConfigurable() + " like '%" + queryForm.getConfigurable_value() + "%' ");
 					}
 				}
 			}
-			if(queryForm.getUsername() != null && queryForm.getUsername() != ""){
+			if(queryForm.getUsername() != null && !queryForm.getUsername().equals("")){
 				if(queryForm.getUsername().equalsIgnoreCase("null")){
 					hql.append(" and t.username is null ");
 				}else{
@@ -1073,7 +1311,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 					params.put("username", "%" + queryForm.getUsername() + "%");
 				}
 			}
-			if(queryForm.getFirstLevel() != null && queryForm.getFirstLevel() != ""){
+			if(queryForm.getFirstLevel() != null && !queryForm.getFirstLevel().equals("")){
 				if(queryForm.getFirstLevel().equalsIgnoreCase("null")){
 					hql.append(" and t.firstLevel is null ");
 				}else{
@@ -1081,7 +1319,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 					params.put("firstLevel", "%" + queryForm.getFirstLevel() + "%");
 				}
 			}
-			if(queryForm.getSecondLevel() != null && queryForm.getSecondLevel() != ""){
+			if(queryForm.getSecondLevel() != null && !queryForm.getSecondLevel().equals("")){
 				if(queryForm.getSecondLevel().equalsIgnoreCase("null")){
 					hql.append(" and t.secondLevel is null ");
 				}else{
@@ -1089,7 +1327,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 					params.put("secondLevel", "%" + queryForm.getSecondLevel() + "%");
 				}
 			}
-			if(queryForm.getThirdLevel() != null && queryForm.getThirdLevel() != ""){
+			if(queryForm.getThirdLevel() != null && !queryForm.getThirdLevel().equals("")){
 				if(queryForm.getThirdLevel().equalsIgnoreCase("null")){
 					hql.append(" and t.thirdLevel is null ");
 				}else{
@@ -1097,15 +1335,15 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 					params.put("thirdLevel", "%" + queryForm.getThirdLevel() + "%");
 				}
 			}
-			if(queryForm.getFourthLevel() != null && queryForm.getFourthLevel() != ""){
-				if(queryForm.getSecondLevel().equalsIgnoreCase("null")){
+			if(queryForm.getFourthLevel() != null && !queryForm.getFourthLevel().equals("")){
+				if(queryForm.getFourthLevel().equalsIgnoreCase("null")){
 					hql.append(" and t.fourthLevel is null ");
 				}else{
 					hql.append(" and t.fourthLevel like :fourthLevel ");
 					params.put("fourthLevel", "%" + queryForm.getFourthLevel() + "%");
 				}
 			}
-			if(queryForm.getCompany() != null && queryForm.getCompany() != ""){
+			if(queryForm.getCompany() != null && !queryForm.getCompany().equals("")){
 				if(queryForm.getCompany().equalsIgnoreCase("null")){
 					hql.append(" and t.company is null ");
 				}else{
@@ -1113,7 +1351,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 					params.put("company", "%" + queryForm.getCompany() + "%");
 				}
 			}
-			if(queryForm.getInsuranceCompany() != null && queryForm.getInsuranceCompany() != ""){
+			if(queryForm.getInsuranceCompany() != null && !queryForm.getInsuranceCompany().equals("")){
 				if(queryForm.getInsuranceCompany().equalsIgnoreCase("null")){
 					hql.append(" and t.insuranceCompany is null ");
 				}else{
@@ -1121,7 +1359,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 					params.put("insuranceCompany", "%" + queryForm.getInsuranceCompany() + "%");
 				}
 			}
-			if(queryForm.getDegree() != null && queryForm.getDegree() != ""){
+			if(queryForm.getDegree() != null && !queryForm.getDegree().equals("")){
 				if(queryForm.getDegree().equalsIgnoreCase("null")){
 					hql.append(" and t.degree is null ");
 				}else{
@@ -1129,7 +1367,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 					params.put("degree", "%" + queryForm.getDegree() + "%");
 				}
 			}
-			if(queryForm.getHiredate() != null && queryForm.getHiredate() != ""){
+			if(queryForm.getHiredate() != null && !queryForm.getHiredate().equals("")){
 				if(queryForm.getHiredate().equalsIgnoreCase("null")){
 					hql.append(" and t.hiredate is null ");
 				}else{
@@ -1137,7 +1375,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 					params.put("hiredate", "%" + queryForm.getHiredate() + "%");
 				}
 			}
-			if(queryForm.getLeaveTime() != null && queryForm.getLeaveTime() != ""){
+			if(queryForm.getLeaveTime() != null && !queryForm.getLeaveTime().equals("")){
 				if(queryForm.getLeaveTime().equalsIgnoreCase("null")){
 					hql.append(" and t.leaveTime is null ");
 				}else{
@@ -1145,63 +1383,63 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 					params.put("leaveTime", "%" + queryForm.getLeaveTime() + "%");
 				}
 			}
-			if(queryForm.getZhuanzhengTime() != null && queryForm.getZhuanzhengTime() != ""){
+			if(queryForm.getZhuanzhengTime() != null && !queryForm.getZhuanzhengTime().equals("")){
 				if(queryForm.getZhuanzhengTime().equalsIgnoreCase("null")){
 					hql.append(" and t.zhuanzhengTime is null ");
 				}else{
 					hql.append(" and t.zhuanzhengTime like :zhuanzhengTime ");
 					params.put("zhuanzhengTime", "%" + queryForm.getZhuanzhengTime() + "%");
 				}
-			}if(queryForm.getHiredate() != null && queryForm.getHiredate() != ""){
+			}if(queryForm.getHiredate() != null && !queryForm.getHiredate().equals("")){
 				if(queryForm.getHiredate().equalsIgnoreCase("null")){
 					hql.append(" and t.hiredate is null ");
 				}else{
 					hql.append(" and t.hiredate like :hiredate ");
 					params.put("hiredate", "%" + queryForm.getHiredate() + "%");
 				}
-			}if(queryForm.getRuzhiReport() != null && queryForm.getRuzhiReport() != ""){
+			}if(queryForm.getRuzhiReport() != null && !queryForm.getRuzhiReport().equals("")){
 				if(queryForm.getRuzhiReport().equalsIgnoreCase("null")){
 					hql.append(" and t.ruzhiReport is null ");
 				}else{
 					hql.append(" and t.ruzhiReport like :ruzhiReport ");
 					params.put("ruzhiReport", "%" + queryForm.getRuzhiReport() + "%");
 				}
-			}if(queryForm.getLizhiReport() != null && queryForm.getLizhiReport() != ""){
+			}if(queryForm.getLizhiReport() != null && !queryForm.getLizhiReport().equals("")){
 				if(queryForm.getLizhiReport().equalsIgnoreCase("null")){
 					hql.append(" and t.lizhiReport is null ");
 				}else{
 					hql.append(" and t.lizhiReport like :lizhiReport ");
 					params.put("lizhiReport", "%" + queryForm.getLizhiReport() + "%");
 				}
-			}if(queryForm.getZhuanzhengReport() != null && queryForm.getZhuanzhengReport() != ""){
+			}if(queryForm.getZhuanzhengReport() != null && !queryForm.getZhuanzhengReport().equals("")){
 				if(queryForm.getZhuanzhengReport().equalsIgnoreCase("null")){
 					hql.append(" and t.zhuanzhengReport is null ");
 				}else{
 					hql.append(" and t.zhuanzhengReport like :zhuanzhengReport ");
 					params.put("zhuanzhengReport", "%" + queryForm.getZhuanzhengReport() + "%");
 				}
-			}if(queryForm.getAccount() != null && queryForm.getAccount() != ""){
+			}if(queryForm.getAccount() != null && !queryForm.getAccount().equals("")){
 				if(queryForm.getAccount().equalsIgnoreCase("null")){
 					hql.append(" and t.account is null ");
 				}else{
 					hql.append(" and t.account like :account ");
 					params.put("account", "%" + queryForm.getAccount() + "%");
 				}
-			}if(queryForm.getAccountBank() != null && queryForm.getAccountBank() != ""){
+			}if(queryForm.getAccountBank() != null && !queryForm.getAccountBank().equals("")){
 				if(queryForm.getAccountBank().equalsIgnoreCase("null")){
 					hql.append(" and t.accountBank is null ");
 				}else{
 					hql.append(" and t.accountBank like :accountBank ");
 					params.put("accountBank", "%" + queryForm.getAccountBank() + "%");
 				}
-			}if(queryForm.getIdentityCard() != null && queryForm.getIdentityCard() != ""){
+			}if(queryForm.getIdentityCard() != null && !queryForm.getIdentityCard().equals("")){
 				if(queryForm.getIdentityCard().equalsIgnoreCase("null")){
 					hql.append(" and t.identityCard is null ");
 				}else{
 					hql.append(" and t.identityCard like :identityCard ");
 					params.put("identityCard", "%" + queryForm.getIdentityCard() + "%");
 				}
-			}if(queryForm.getLevelc() != null && queryForm.getLevelc() != ""){
+			}if(queryForm.getLevelc() != null && !queryForm.getLevelc().equals("")){
 				if(queryForm.getLevelc().equals("实习生")){
 					hql.append(" and t.level like :level ");
 					params.put("level", "%" + queryForm.getLevelc() + "%");

@@ -45,17 +45,37 @@ var west = {
 	openTab : function(text, url) {
 		if ($("#tabs").tabs('exists', text)) {
 			$("#tabs").tabs('select', text);
-		} else if(!opentTabs){
+		} else if(!opentTabs && url){
 			opentTabs = true;
-			$.get(url, function(data) {
-				opentTabs = undefined;
-				$("#tabs").tabs('add', {
-					title : text,
-					closable : true,
-					content : data,
-					onAdd : west.getDataGrid()
-				});
+			$.ajax({
+				url:url,
+				type:'GET',
+				async : true,
+				timeout : 20000,
+				success : function(data) {
+					opentTabs = undefined;
+					$("#tabs").tabs('add', {
+						title : text,
+						closable : true,
+						content : data,
+						onAdd : west.getDataGrid()
+					});
+				},
+				error:function(xhr,status,statusText){
+					opentTabs = undefined;
+					$.messager.alert(xhr.status);
+				}
+				
 			});
+//			$.get(url, function(data) {
+//				opentTabs = undefined;
+//				$("#tabs").tabs('add', {
+//					title : text,
+//					closable : true,
+//					content : data,
+//					onAdd : west.getDataGrid()
+//				});
+//			});
 
 		}
 	},

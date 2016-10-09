@@ -15,7 +15,9 @@ import com.chaoxing.oa.entity.page.POStructs;
 import com.chaoxing.oa.entity.page.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.PShebao;
 import com.chaoxing.oa.entity.page.PShebaoType;
+import com.chaoxing.oa.entity.page.PSystemConfig;
 import com.chaoxing.oa.entity.page.PWagesDate;
+import com.chaoxing.oa.entity.page.PshebaoDetail;
 import com.chaoxing.oa.entity.page.Pwages;
 import com.chaoxing.oa.entity.page.QueryForm;
 import com.chaoxing.oa.entity.page.SessionInfo;
@@ -69,6 +71,8 @@ public interface EmployeeInfoService {
 	public Map<String, Object> getShebaoSummary(QueryForm queryForm, HttpSession session);
 	
 	public Map<String, Object> getShebaoSummary(QueryForm queryForm, HttpSession session, int isExport);
+	
+//	public List<PSystemConfig> findShebaoSumaryLock();
 
 	public Map<String, Object> getShebaoCompany(QueryForm queryForm, HttpSession session);
 	
@@ -76,7 +80,7 @@ public interface EmployeeInfoService {
 	
 	 public long getWageDistributionCount(String hql, Map<String, Object> params);
 
-	public int updateWagesRadix(Pwages pwages);
+	public int updateWagesRadix(PshebaoDetail pwages);
 
 	public Map<String, Object> findKaoqin(QueryForm queryForm, HttpSession session);
 	
@@ -112,6 +116,24 @@ public interface EmployeeInfoService {
 
 	public PMonthWages getMonthWages(Integer id);
 
-	public List<POStructs> getOStruct(QueryForm queryform,int isExport);
+	public Map<String,Object> getOStruct(QueryForm queryform,int isExport);
+	
+	public long getOStructCount(String hql, Map<String, Object> params);
+
+	public Map<String, Object> findStruct(QueryForm queryform, int isExport);
+
+	public long updateSysconfig(PSystemConfig ps);
+	
+	/**
+	 * 
+	 * @param name
+	 * @param type required
+	 * @return
+	 */
+	public List<PSystemConfig> findSysconfig(String name, String type);
+	
+	public PSystemConfig getSysconfig(String name, String type);
+
+	public long fafang();
 
 }

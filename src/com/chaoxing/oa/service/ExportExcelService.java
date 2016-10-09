@@ -6,7 +6,7 @@ import com.chaoxing.oa.entity.page.PKaoQin;
 import com.chaoxing.oa.entity.page.PMonthWages;
 import com.chaoxing.oa.entity.page.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.PSheBaoSummary;
-import com.chaoxing.oa.entity.page.Pwages;
+import com.chaoxing.oa.entity.page.PshebaoDetail;
 
 public interface ExportExcelService {
 
@@ -17,7 +17,7 @@ public interface ExportExcelService {
 
 	String getMonthWagesExcel(List<PMonthWages> pMonthWages);
 
-	public String getShebaoCompany(List<Pwages> pwages);
+	public String getShebaoCompany(List<PshebaoDetail> pShebaoDetails);
 
 	public String getShebaoSummary(List<PSheBaoSummary> pShebaoSummarys);
 }

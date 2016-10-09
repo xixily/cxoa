@@ -24,7 +24,7 @@ public class RenshiUserName implements Serializable {
 	private int id;//ID
 	private String username;//用户姓名
 	private String password;//用户密码
-	private int departmentId;//部门ID
+	private Integer departmentId;//部门ID
 	private String position;//职位
 	private String sex;//性别
 	private String identityCard;//身份号
@@ -73,10 +73,11 @@ public class RenshiUserName implements Serializable {
 	private String email;//邮箱
 	private String ifSecret;//是否保密
 	private String maritalStatus;//婚姻状况
-	private int roleId;//角色
+	private Integer roleId;//角色
 	private String ruzhiReport;//入职报表
 	private String lizhiReport;//离职报表
 	private String zhuanzhengReport;//转正报表
+	private String bumentiaozhengReport;//部门调整报表
 	
 	@Column(name="人事权限")
 	public String getRenshiRight() {
@@ -116,6 +117,13 @@ public class RenshiUserName implements Serializable {
 	@Column(name="指导邮箱")
 	public String getGuidanceEmail() {
 		return guidanceEmail;
+	}
+	@Column(name = "部门调整报表")
+	public String getBumentiaozhengReport() {
+		return bumentiaozhengReport;
+	}
+	public void setBumentiaozhengReport(String bumentiaozhengReport) {
+		this.bumentiaozhengReport = bumentiaozhengReport;
 	}
 	public void setFirstLevel(String firstLevel) {
 		this.firstLevel = firstLevel;
@@ -166,10 +174,10 @@ public class RenshiUserName implements Serializable {
 		this.password = password;
 	}
 	@Column(name="部门ID")
-	public int getDepartmentId() {
+	public Integer getDepartmentId() {
 		return departmentId;
 	}
-	public void setDepartmentId(int departmentId) {
+	public void setDepartmentId(Integer departmentId) {
 		this.departmentId = departmentId;
 	}
 	@Column(name="职位")
@@ -510,10 +518,10 @@ public class RenshiUserName implements Serializable {
 		this.maritalStatus = maritalStatus;
 	}
 	@Column(name="角色")
-	public int getRoleId() {
+	public Integer getRoleId() {
 		return roleId;
 	}
-	public void setRoleId(int roleId) {
+	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
 	}
 	@Column(name = "入职报表")

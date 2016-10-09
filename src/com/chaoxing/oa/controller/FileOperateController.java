@@ -18,6 +18,7 @@ import com.chaoxing.oa.entity.page.PKaoQin;
 import com.chaoxing.oa.entity.page.PMonthWages;
 import com.chaoxing.oa.entity.page.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.PSheBaoSummary;
+import com.chaoxing.oa.entity.page.PshebaoDetail;
 import com.chaoxing.oa.entity.page.Pwages;
 import com.chaoxing.oa.entity.page.QueryForm;
 import com.chaoxing.oa.service.EmployeeInfoService;
@@ -166,9 +167,9 @@ public class FileOperateController {
     @RequestMapping(value = "/exportShebaoCompany")
     public ModelAndView exportShebaoCompany(QueryForm queryForm, HttpServletRequest request, HttpServletResponse response, HttpSession session){
     	Map<String, Object> res = employeeInfoService.getShebaoCompany(queryForm, session,1);
-    	List<Pwages> pwages = (List<Pwages>) res.get("rows");
-    	if(pwages!=null&&pwages.size()>0){
-    		String storeName = exportExcelService.getShebaoCompany(pwages);  
+    	List<PshebaoDetail> pShebaoDetails = (List<PshebaoDetail>) res.get("rows");
+    	if(pShebaoDetails!=null&&pShebaoDetails.size()>0){
+    		String storeName = exportExcelService.getShebaoCompany(pShebaoDetails);  
     		String realName = "公司社保汇总表.xlsx";  
     		String contentType = "application/octet-stream";  
     		try {

@@ -1,5 +1,7 @@
 package com.chaoxing.oa.entity.po;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,24 +17,46 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="系统配置", schema = "")
 @DynamicInsert(true)
 @DynamicUpdate(true)
-public class SystemConfig {
-	private int id;
-	private String ifGenrate;
+public class SystemConfig implements Serializable {
+	private static final long serialVersionUID = 2716481175228661078L;
+//	private int id;
+	private String name;
+	private byte locked;
+//	private String locked;
+	private String configType;
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GenericGenerator(name = "sysTable",strategy = "native")
+//	public int getId() {
+//		return id;
+//	}
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@GenericGenerator(name = "sysTable",strategy = "native")
-	public int getId() {
-		return id;
+	@Column(columnDefinition = "varchar(32)")
+	public String getName() {
+		return name;
 	}
-	@Column(name = "考勤是否生成", updatable = false, columnDefinition = " varchar(10) DEFAULT 'off'")
-	public String getIfGenrate() {
-		return ifGenrate;
+	@Id
+	@Column(name = "类型",columnDefinition = "varchar(32)")
+	public String getConfigType() {
+		return configType;
 	}
-	public void setId(int id) {
-		this.id = id;
+	@Column(name = "开关")
+	public byte getLocked() {
+		return locked;
 	}
-	public void setIfGenrate(String ifGenrate) {
-		this.ifGenrate = ifGenrate;
+
+//	public void setId(int id) {
+//		this.id = id;
+//	}
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setLocked(byte locked) {
+		this.locked = locked;
+	}
+	public void setConfigType(String configType) {
+		this.configType = configType;
 	}
 	
 }

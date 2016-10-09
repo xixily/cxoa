@@ -26,6 +26,7 @@ public class RoleResources implements Serializable {
 	private UserRole roleId;
 	private Menu menuId;
 	private String url;
+	private String sortCode;
 	@Id
 	@Column
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -46,6 +47,13 @@ public class RoleResources implements Serializable {
 	@Column
 	public String getUrl() {
 		return url;
+	}
+	@Column
+	public String getSortCode() {
+		return sortCode;
+	}
+	public void setSortCode(String sortCode) {
+		this.sortCode = sortCode;
 	}
 	public void setId(int id) {
 		this.id = id;

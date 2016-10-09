@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Request service="OrderService" lang="zh-CN">
+  <Head>BSPdevelop</Head>
+  <Body>
+    <Order orderid="" d_company="" d_contact="" d_tel="" d_mobile="" d_address="">
+      <Cargo name="name"></Cargo>
+      <Cargo name="LV2" count="3" unit="a" weight="" amount="" currency="" source_area=""></Cargo>
+    </Order>
+  </Body>
+</Request>

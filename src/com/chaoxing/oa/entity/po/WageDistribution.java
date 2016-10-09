@@ -1,5 +1,7 @@
 package com.chaoxing.oa.entity.po;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +22,8 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "职员工资分布表", schema = "")
 @DynamicInsert(true)
 @DynamicUpdate(true)
-public class WageDistribution {
+public class WageDistribution implements Serializable{
+	private static final long serialVersionUID = 9141347037396584312L;
 	private Integer id;//职员工资分布表id
 	private Integer employeeId;//职员编号
 //	private UserName userName;

@@ -1,5 +1,4 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
-
 <!-- 社保维护 -->
 <div id="tab_shebaoSummary" title="社保汇总" style="padding: 10px;overflow: hidden"	data-options="iconCls:'icon-edit',closable:true">
 <!-- 组合查询form表单 -->
@@ -34,8 +33,39 @@
 				handler: function(){
 				employee.shebaoSummary.exportShebaoSummary(0);
 				}
-			}]
-			,
+			},'-',{
+				iconCls: 'icon-locked',
+				text:'锁定该公司',
+				handler:function(){
+					employee.shebaoSummary.locked(true);
+				}
+			},'-',{
+				iconCls: 'icon-unlocke',
+				text:'解锁该公司',
+				handler:function(){
+					employee.shebaoSummary.locked(false);
+				}
+			}
+			],
+			rowStyler : function(index, row) {
+								if(row.locked == '已锁定'){
+									return 'background-color:#FF4500;';
+								}
+								if(index%2 == 0)
+								{
+									return 'background-color:rgb(245,245,245);';
+								}
+							},
+			loadFilter : function(data){
+				$.each(data.rows,function(n, obj){
+					if(obj.locked == 0){
+						obj.locked = '未锁定';
+					}else if(obj.locked == 1){
+						obj.locked = '已锁定';
+					}
+				})
+				return data;
+			},
 			onDblClickRow : function(index, row) {
 								employee.shebaoSummary.view(index, row);
 							}">
@@ -54,6 +84,8 @@
 					<th data-options="field:'subMedicare',width:100">代扣医疗保险总额</th>
 					<th data-options="field:'cHouseIinsurance',width:100">公司住房保险总额</th>
 					<th data-options="field:'subHouseIinsurance'">代扣住房保险总额</th>
+					<th data-options="field:'locked',align:'center'">锁定开关</th>
+					<!-- <th data-options="field:'locked',align:'center',editor:{type:'checkbox',options:{on:'已锁定',off:'未锁定'}">锁定开关</th> -->
 				</tr>
 			</thead>
 		</table>

@@ -1,5 +1,7 @@
 package com.chaoxing.oa.entity.po;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +16,8 @@ import org.hibernate.annotations.DynamicUpdate;
 @Table(name = "company", schema="")
 @DynamicInsert(true)
 @DynamicUpdate(true)
-public class Company {
+public class Company implements Serializable {
+	private static final long serialVersionUID = -8157506368747187395L;
 	private int id; 
 	private String cmopany;
 	@Id

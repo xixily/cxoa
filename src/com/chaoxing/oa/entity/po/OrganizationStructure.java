@@ -1,12 +1,16 @@
 package com.chaoxing.oa.entity.po;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
@@ -24,7 +28,6 @@ import org.hibernate.annotations.DynamicUpdate;
 public class OrganizationStructure implements Serializable{
 	private static final long serialVersionUID = 2789824726889624857L;
 	private int id;//部门id
-	private String sortCode;//排序代码
 	private String firstLevel;//一级
 	private String secondLevel;//二级
 	private String thirdLevel;//三级
@@ -33,52 +36,87 @@ public class OrganizationStructure implements Serializable{
 	private String cellCoreEmail;//细胞核邮箱
 	private String guidance;//指导
 	private String guidanceEmail;//指导邮箱
+	private String sortCode;//排序代码
 	private String taxStructure;//报税架构
+//	private OrganizationStructure preStructure;//preId 父级id
+	private Integer preId;//preId 父级id
+	private Set<OrganizationStructure> structures;
+	private int level;//级别
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}
-	@Column(name="代码")
+	@Column(name="排序代码", columnDefinition = "varchar(32) default 'ZZZ999'")
 	public String getSortCode() {
 		return sortCode;
 	}
-	@Column(name="一级")
+	@Column(name="一级",columnDefinition="varchar(32)")
 	public String getFirstLevel() {
 		return firstLevel;
 	}
-	@Column(name="二级")
+	@Column(name="二级",columnDefinition="varchar(32)")
 	public String getSecondLevel() {
 		return secondLevel;
 	}
-	@Column(name="三级")
+	@Column(name="三级",columnDefinition="varchar(32)")
 	public String getThirdLevel() {
 		return thirdLevel;
 	}
-	@Column(name="四级")
+	@Column(name="四级",columnDefinition="varchar(32)")
 	public String getFourthLevel() {
 		return fourthLevel;
 	}
-	@Column(name="细胞核")
+	@Column(name="细胞核",columnDefinition="varchar(32)")
 	public String getCellCore() {
 		return cellCore;
 	}
-	@Column(name="细胞核邮箱")
+	@Column(name="细胞核邮箱",columnDefinition="varchar(32)")
 	public String getCellCoreEmail() {
 		return cellCoreEmail;
 	}
-	@Column(name="指导")
+	@Column(name="指导",columnDefinition="varchar(32)")
 	public String getGuidance() {
 		return guidance;
 	}
-	@Column(name="指导邮箱")
+	@Column(name="指导邮箱",columnDefinition="varchar(32)")
 	public String getGuidanceEmail() {
 		return guidanceEmail;
 	}
-	@Column(name="报税架构")
+	@Column(name="报税架构",columnDefinition="varchar(32)")
 	public String getTaxStructure() {
 		return taxStructure;
 	}
+	/*@ManyToOne(fetch=FetchType.EAGER,targetEntity=OrganizationStructure.class)
+	@JoinColumn(name = "preId")*/
+	@Column(name="preId")
+	public Integer getPreId() {
+		return preId;
+	}
+	
+//	public OrganizationStructure getPreId() {
+//		return preId;
+//	}
+	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL,mappedBy="preId")
+	public Set<OrganizationStructure> getStructures() {
+		return structures;
+	}
+	@Column(name="级别",columnDefinition="int default 4")
+	public int getLevel() {
+		return level;
+	}
+	public void setStructures(Set<OrganizationStructure> structures) {
+		this.structures = structures;
+	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	public void setPreId(Integer preId) {
+		this.preId = preId;
+	}
+//	public void setPreId(OrganizationStructure preId) {
+//		this.preId = preId;
+//	}
 	public void setId(int id) {
 		this.id = id;
 	}

@@ -13,7 +13,7 @@ onclick="confirmDialog.createDialog('您确定要删除吗？',function(){$.mess
 <span class="btn-separator"></span>
 <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-databse_refresh',plain:true" onclick="employee.monthWages.generateMothWages()">批量生成工资表</a>
 <span class="btn-separator"></span>
-<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-coins',plain:true" onclick="">发放完毕</a>
+<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-coins',plain:true" onclick="employee.monthWages.fafang()">发放完毕</a>
 </div>
 <div id="menu_monthWages_export" >
 	 <div data-options="iconCls:'icon-excel'" onclick="">导出</div>

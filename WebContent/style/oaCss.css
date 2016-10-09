@@ -71,3 +71,12 @@ td .comboxy .combtitle {
 .icon-coins{
 	background:url('images/extjs_icons/coins.png') no-repeat center center;
 }
+.icon-locked{
+	background:url('images/extjs_icons/lock/lock.png') no-repeat center center;
+}
+.icon-unlocke{
+	background:url('images/extjs_icons/lock/lock_open.png') no-repeat center center;
+}
+.icon-email_go{
+	background:url('images/extjs_icons/email/email_go.png') no-repeat center center;
+}

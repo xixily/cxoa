@@ -91,6 +91,10 @@ $(document).ready(function() {
 						<option value="panCard">办理工资卡</option>
 						<option value="email">邮箱</option>
 						<option value="reportForm">报表</option>
+						<option value="ruzhiReport">入职报表</option>
+						<option value="lizhiReport">离职报表</option>
+						<option value="zhuanzhengReport">转正报表</option>
+						<option value="bumentiaozhengReport">部门调整报表</option>
 					</select>
 					<div style="height: 2px; border: 0px;"></div>
 					<input name="configurable_value" class="f1 easyui-textbox" />
@@ -128,7 +132,7 @@ $(document).ready(function() {
 			<td>
             <!--  <a href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="clearForm($(this))">重置</a> -->
 			<input class="easyui-linkbutton" id="btn_reset" type="button" value="重置"
-				onclick="$('#renshiquery_form').form('clear')" style="width:46px;height:26px;" />
+				onclick="clearForm($(this))" style="width:46px;height:26px;" />
 			</td>
 		</tr>
 	</table>

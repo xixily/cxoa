@@ -18,6 +18,8 @@ public interface BaseDaoI<T> {
 
 	public T get(Class<T> c, Serializable id);
 
+	public T load(Class<T> c, Serializable id);
+
 	public T get(String hql);
 
 	public T get(String hql, Map<String, Object> params);
@@ -34,7 +36,7 @@ public interface BaseDaoI<T> {
 
 	public Long count(String hql, Map<String, Object> params);
 
-	public int executeHql(String hql);
+	public int executeHql(String hql) throws HibernateException;
 
 	public int executeHql(String hql, Map<String, Object> params);
 	

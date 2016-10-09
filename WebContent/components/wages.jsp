@@ -2,7 +2,7 @@
 
 <style>
     .form_width input{
-        width: 86px;
+        width: 90px;
     }
     .spanFont{
     	font-size: 12px;
@@ -30,7 +30,7 @@
 	</div>
     <div style="padding:2px;margin:10px auto;border: 1px dashed LightGrey;width:934px;">
         <form id="updatewages_form" class="easyui-form form_width"  method="post"  data-options="novalidate:true">
-            <table cellpadding="2">
+            <table>
                 <tr>
                		<td>工资编号</td>
                     <td> 
@@ -60,10 +60,14 @@
                     <td>
                     <input class="easyui-numberbox" data-options="min:0,precision:2" name="lunchSubsidy" />
                     </td>
-                    <td>历史工资:</td>
+                    <td>身份证号码:</td>
+                    <td>
+                    <input class="easyui-textbox" type="text" name="identityCard" />
+                    </td>
+                    <!-- <td>历史工资:</td>
                     <td>
                     <input class="easyui-textbox" type="text" name="lishiSalary" />
-                    </td>
+                    </td> -->
                      <td>公司名称:</td>
                     <td  id="wages_company">
                      <input class="easyui-combobox" name="company" data-options="
@@ -218,13 +222,17 @@
                     </td>
                 </tr>
                 <tr>
-                 	<td>身份证号码:</td>
+                 	<!-- <td>身份证号码:</td>
                     <td>
                     <input class="easyui-textbox" type="text" name="identityCard" />
-                    </td>
+                    </td> -->
                  	<td>入保时间:</td>
                     <td>
                     <input class="easyui-textbox" type="text" name="rubaoTime" />
+                    </td>
+                    <td>历史工资:</td>
+                    <td>
+                    <input class="easyui-textbox" type="text" name="lishiSalary" />
                     </td>
                  	<td>调薪报表:</td>
                     <td>

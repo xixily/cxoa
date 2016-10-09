@@ -22,6 +22,10 @@ var employee = {
 								if(row.zhuanzhengTime =='实习生'){
 									return 'background-color:yellow;';
 								}	
+								if(index%2 == 0)
+								{
+									return 'background-color:rgb(245,245,245);';
+								}
 							},
 							columns : [ [ 
 							              {
@@ -81,13 +85,23 @@ var employee = {
 								sortable : true,
 								width : 40
 							}, {
-								field : 'company',
-								title : '公司名称',
+								field : 'householdType',
+								title : '户口性质',
 								sortable : true,
-								width : 80
+								width : 60
+							}, {
+								field : 'insurance',
+								title : '保险',
+								sortable : true,
+								width : 60
 							}, {
 								field : 'insuranceCompany',
 								title : '保险公司',
+								sortable : true,
+								width : 80
+							}, {
+								field : 'company',
+								title : '公司名称',
 								sortable : true,
 								width : 80
 							}, {
@@ -151,16 +165,6 @@ var employee = {
 								sortable : true,
 								width : 80
 							}, {
-								field : 'householdType',
-								title : '户口性质',
-								sortable : true,
-								width : 60
-							}, {
-								field : 'insurance',
-								title : '保险',
-								sortable : true,
-								width : 60
-							}, {
 								field : 'maritalStatus',
 								title : '婚姻状况',
 								sortable : true,
@@ -187,7 +191,7 @@ var employee = {
 								width : 100
 							}, {
 								field : 'managementSystem',
-								title : '管理制度',
+								title : '关系',
 								sortable : true,
 								width : 100
 							}, {
@@ -240,6 +244,11 @@ var employee = {
 								title : '转正报表',
 								sortable : true,
 								width : 100
+							}, {
+								field : 'bumentiaozhengReport',
+								title : '部门调整报表',
+								sortable : true,
+								width : 100
 							} ] ],
 							toolbar : '#renshi_toolbar',
 							onDblClickCell : function(index, field, value) {
@@ -254,20 +263,14 @@ var employee = {
 	},
 	view : function() {
 		var rights = session.user.roleId;
+		var userInfo = $('#employee_datas').datagrid('getSelected');
+		if(!userInfo||!userInfo.id||userInfo.id==0){
+			$.messager.alert('操作提示：','请先选择员工,您没有选择任何员工！~');
+			return false;
+		}
 		$('#userName_info').dialog({
 			title : '查看职员信息'
 		});
-		$("#textbox_id").textbox({
-			onChange : function() {
-				return
-			}
-		});
-		$("#textbox_addrss").textbox({
-			onChange : function() {
-				return
-			}
-		});
-		var userInfo = $('#employee_datas').datagrid('getSelected');
 		var url = "user/getUserName.action";
 		$.getJSON(url, userInfo, function(result) {
 			if (result.success) {
@@ -295,20 +298,14 @@ var employee = {
 		})
 	},
 	editEmployee : function() {
+		var userInfo = $('#employee_datas').datagrid('getSelected');
+		if(!userInfo||!userInfo.id||userInfo.id==0){
+			$.messager.alert('操作提示：','请先选择员工,您没有选择任何员工！~');
+			return;
+		}
 		$('#userName_info').dialog({
 			title : '编辑职员信息'
 		});
-		$("#textbox_id").textbox({
-			onChange : function() {
-				return
-			}
-		});
-		$("#textbox_addrss").textbox({
-			onChange : function() {
-				return
-			}
-		});
-		var userInfo = $('#employee_datas').datagrid('getSelected');
 		var url = "user/getUserName.action";
 		var form_url = "user/updateUserName.action"
 		$('#updateUsesrname_form').form({
@@ -374,11 +371,15 @@ var employee = {
 			success : function(result) {
 				var result = eval('(' + result + ')');
 				$('#employee_datas').datagrid('reload');
-				if (result.success) {
-					$.messager.alert("添加提示", result.msg);
-				} else {
-					$.messager.alert("添加提示", result.msg);
-				}
+//				if (result.success) {
+////					form_hidden_ID
+//					data = {};
+//					data.id = result.obj;
+//					$('#updateUsesrname_form').form('load', data);
+//					$.messager.alert("添加提示", result.msg);
+//				} else {
+//					$.messager.alert("添加提示", result.msg);
+//				}
 			}
 		});
 		$('#text_nation').textbox('setValue', '汉');
@@ -448,9 +449,9 @@ var employee = {
 		var month = mydate.getMonth() + 1; // 获取当前月份(0-11,0代表1月)
 		var monthb = month - 1;
 		var montha = month + 1;
-		var date = year + (month < 10 ? ('0' + month) : month);
-		var dateBefore = year + (monthb < 10 ? ('0' + monthb) : monthb);
-		var dateAfter = year + (montha < 10 ? ('0' + montha) : montha);
+		var date = '' + year + (month < 10 ? ('0' + month) : month);
+		var dateBefore ='' + year + (monthb < 10 ? ('0' + monthb) : monthb);
+		var dateAfter ='' + year + (montha < 10 ? ('0' + montha) : montha);
 		exportParam.configurable = 'reportForm';
 		if (!type || type == 0) {
 			delete exportParam.configurable;
@@ -459,83 +460,87 @@ var employee = {
 			}
 		} else if (type == 111 || type == 112 || type == 113 || type == 121
 				|| type == 122 || type == 123) {
+			exportParam.configurable = 'ruzhiReport';
 			if (type == 111) {
-				exportParam.configurable_value = dateBefore + "入职";
+				exportParam.configurable_value = dateBefore;
 				exportParam.levelc = "非实习生";
 			} else if (type == 112) {
-				exportParam.configurable_value = date + "入职";
+				exportParam.configurable_value = date;
 				exportParam.levelc = "非实习生";
 			} else if (type == 113) {
-				exportParam.configurable_value = dateAfter + "入职";
+				exportParam.configurable_value = dateAfter;
 				exportParam.levelc = "非实习生";
 			} else if (type == 121) {
-				exportParam.configurable_value = dateBefore + "入职";
+				exportParam.configurable_value = dateBefore;
 				exportParam.levelc = "实习生";
 			} else if (type == 122) {
-				exportParam.configurable_value = date + "入职";
+				exportParam.configurable_value = date;
 				exportParam.levelc = "实习生";
 			} else {
-				exportParam.configurable_value = dateAfter + "入职";
+				exportParam.configurable_value = dateAfter;
 				exportParam.levelc = "实习生";
 			}
 		} else if (type == 211 || type == 212 || type == 213 || type == 221
 				|| type == 222 || type == 223) {
+			exportParam.configurable = 'zhuanzhengReport';
 			if (type == 211) {
-				exportParam.configurable_value = dateBefore + "转正";
+				exportParam.configurable_value = dateBefore;
 				exportParam.levelc = "非实习生";
 			} else if (type == 212) {
-				exportParam.configurable_value = date + "转正";
+				exportParam.configurable_value = date;
 				exportParam.levelc = "非实习生";
 			} else if (type == 213) {
-				exportParam.configurable_value = dateAfter + "转正";
+				exportParam.configurable_value = dateAfter;
 				exportParam.levelc = "非实习生";
 			} else if (type == 221) {
-				exportParam.configurable_value = dateBefore + "转正";
+				exportParam.configurable_value = dateBefore;
 				exportParam.levelc = "实习生";
 			} else if (type == 222) {
-				exportParam.configurable_value = date + "转正";
+				exportParam.configurable_value = date;
 				exportParam.levelc = "实习生";
 			} else {
-				exportParam.configurable_value = dateAfter + "转正";
+				exportParam.configurable_value = dateAfter;
 				exportParam.levelc = "实习生";
 			}
 		} else if (type == 311 || type == 312 || type == 313 || type == 321
 				|| type == 322 || type == 323) {
+			exportParam.configurable = 'lizhiReport';
 			if (type == 311) {
-				exportParam.configurable_value = dateBefore + "离职";
+				exportParam.configurable_value = dateBefore;
 				exportParam.levelc = "非实习生";
 			} else if (type == 312) {
-				exportParam.configurable_value = date + "离职";
+				exportParam.configurable_value = date;
 				exportParam.levelc = "非实习生";
 			} else if (type == 313) {
-				exportParam.configurable_value = dateAfter + "离职";
+				exportParam.configurable_value = dateAfter;
 				exportParam.levelc = "非实习生";
 			} else if (type == 321) {
-				exportParam.configurable_value = dateBefore + "离职";
+				exportParam.configurable_value = dateBefore;
 				exportParam.levelc = "实习生";
 			} else if (type == 322) {
-				exportParam.configurable_value = date + "离职";
+				exportParam.configurable_value = date;
 				exportParam.levelc = "实习生";
 			} else {
-				exportParam.configurable_value = dateAfter + "离职";
+				exportParam.configurable_value = dateAfter;
 				exportParam.levelc = "实习生";
 			}
 		} else if (type == 411 || type == 412 || type == 413 || type == 421
 				|| type == 422 || type == 423) {
-			if (month == 411) {
-				exportParam.configurable_value = dateBefore + "异动";
+			exportParam.configurable = 'bumentiaozhengReport';
+			if (type == 411) {
+				exportParam.configurable_value = dateBefore;
 			} else if (type == 412) {
-				exportParam.configurable_value = date + "异动";
+				exportParam.configurable_value = date;
 			} else if (type == 413) {
-				exportParam.configurable_value = dateAfter + "异动";
+				exportParam.configurable_value = dateAfter;
 			} else if (type == 421) {
-				exportParam.configurable_value = dateBefore + "异动";
+				exportParam.configurable_value = dateBefore;
 				exportParam.levelc = "实习生";
 			} else if (type == 422) {
-				exportParam.configurable_value = date + "异动";
+				exportParam.configurable_value = date;
 				exportParam.levelc = "实习生";
 			} else {
-				exportParam.configurable_value = dateAfter + "异动";
+				exportParam.configurable_value = dateAfter;
 				exportParam.levelc = "实习生";
 			}
 		}
@@ -577,6 +582,10 @@ var employee = {
 			$('#wages_company').html(session.formData.company);
 			var queryParam = {};
 			queryParam.id = session.formData.id;
+			if(queryParam.id<0){
+				$.messager.alert('提示：','职员id错误，请重新打开职员信息窗口！~');
+				return false;
+			}
 //			session.wadgeData = {};
 			$('#datagrid_wages').datagrid(
 					{
@@ -708,7 +717,7 @@ var employee = {
 						onEndEdit : employee.wages.onEndEdit,
 						onLoadSuccess : function(){
 							employee.wages.updateHtml();
-							$('#userName_info').dialog('close');
+//							$('#userName_info').dialog('close');
 							$('#updatewages_form').form('clear');
 							$('#updatewages_form').form({
 								url : 'employee/updateWages.action'
@@ -915,6 +924,7 @@ var employee = {
 			$('#updatewages_form').form({
 				url : 'employee/updateWages.action'
 			});
+			$('#wages_id').trigger('onclick');
 			submitForm(dom, function(result) {
 				if (result.success) {
 //					employee.wages.openWages();
@@ -1155,6 +1165,22 @@ var employee = {
 		}
 	},
 shebaoSummary : {
+//	initShebaoSummary : function(){
+//		$('#datagrid_shebaoSummary').datagrid({
+//			loadFilter : function(data){
+//				$.each(data.rows,function(n, obj){
+//					if(obj.locked == 0){
+//						console.log(obj.locked);
+//						obj.locked = '未锁定';
+//					}else if(obj.locked == 1){
+//						console.log(obj.locked);
+//						obj.locked = '已锁定';
+//					}
+//				})
+//				return data;
+//			}
+//		})
+//	},
 	queryShebaoSummary : function(data, src) {
 		$('#datagrid_shebaoSummary').datagrid({
 			queryParams : data
@@ -1165,6 +1191,26 @@ shebaoSummary : {
 		$('#datagrid_shebaoCompany').datagrid({
 			queryParams : data
 		})
+	},
+	locked : function(flag){
+		var shebaoSummaryInfo = $('#datagrid_shebaoSummary').datagrid('getSelected');
+		var url = flag ? 'employee/luckedShebaoSummary.action':'employee/unluckeShebaoSummary.action';
+		if(shebaoSummaryInfo.locked&&shebaoSummaryInfo.locked=='未锁定'&&!flag){
+			return false;
+		}
+		if(shebaoSummaryInfo.locked&&shebaoSummaryInfo.locked=='已锁定'&&flag){
+			return false;
+		}
+		if(shebaoSummaryInfo&&shebaoSummaryInfo.company&&shebaoSummaryInfo.company!=''){
+			shebaoSummaryInfo.locked = (shebaoSummaryInfo.locked||shebaoSummaryInfo.locked=='未锁定')?0:1;
+			$.post(url,shebaoSummaryInfo,function(result){
+				var result =  eval("(" + result + ")");
+				if(result.success){
+					$('#datagrid_shebaoSummary').datagrid('reload');
+				}
+				$.messager.alert('提示',result.msg);
+			})
+		}
 	},
 	view : function(index, row){
 		
@@ -1445,7 +1491,7 @@ shebaoSummary : {
 	},
 	onEndEdit : function(index,row,changes) {
 		var message = "您确定要更新吗？";
-		var url = "employee/updateWages.action";
+		var url = "employee/updateShebaoDetail.action";
 		confirmDialog.createDialog(
 				message,
 				function(confirmId){
@@ -1506,6 +1552,23 @@ shebaoSummary : {
 		$('#shebaoCompany_czhuf').html(row.cHouseIinsurance);
 		$('#shebaoCompany_cgongs').html(row.cInjuryInsurance);
 		$('#shebaoCompany_cshengy').html(row.cBirthIinsurance);
+	},
+	updateType : function(){
+		var shebaoType = $('#shebaoComany_sbtype').combobox('getValue');
+		var data = {};
+		if(shebaoType){
+			data.shebaoType = shebaoType;
+			$.post('',data,function(result){
+				result = eval("("+ result + ")");
+				if(result.success){
+					
+				}
+				$.messager.alert('提示：',result.msg);
+			})
+			
+		}else{
+			$.messager.alert('提示','请选择社保类型~');
+		}
 	},
 	updateRadix : function(){
 		var checkeds = $('#datagrid_shebaoCompany').datagrid('getChecked');
@@ -1571,6 +1634,20 @@ shebaoSummary : {
 		queryKaoqin : function(data, src) {
 			$('#datagrid_kaoqin').datagrid({
 				queryParams : data
+			})
+		},
+		locked : function(checked){
+			var url = 'employee/lockedKaoqin.action';
+//			var url = checked ? 'employee/lockedKaoqin.action':'employee/unlockeKaoqin.action';
+			var data = {};
+			data.locked = checked;
+			$.post(url,data,function(result){
+				result = eval("("+result+")");
+				if(result.success){
+					disabledButton('kaoqin_toolbar',checked?checked:false);
+					$('#kaoqin_generate').switchbutton('enable');
+				}
+//				$.messager.alert('提示',result.msg);
 			})
 		},
 		view : function(){
@@ -1900,12 +1977,26 @@ shebaoSummary : {
 		},
 		deleteMonthWage : function(){
 			var monthInfo = ("");
+		},
+		fafang : function(){
+			confirmDialog.createDialog(
+					'您确定工资已经发放完毕了吗？',function(confirmId){
+							confirmDialog.destoryDialog(confirmId);
+							$.messager.alert('提示','发放完毕功能有待改进，暂不开放~');
+//							$.post('employee/fangfa.action',null,function(result){
+//								result = eval("("+result+")");
+//								$.messager.alert('发放提示',result.msg); 
+//							})
+						});
 		}
 	},
 	jiagou:{
-		queryJiagou : function(){
-			//TODO  查询组织架构  ，架构包括公司，在职人数，总人数 
-		}
+		queryJiagou : function(data, src) {
+//			$('#datagrid_jiagou').treegrid('load',data);
+//			$('#datagrid_jiagou').datagrid({
+//				queryParams : data
+//			})
+		},
 	}
 }
 var wagesDateAdd = undefined;

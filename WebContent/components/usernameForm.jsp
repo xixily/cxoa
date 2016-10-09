@@ -112,7 +112,8 @@
                     			firstLevel : obj.firstLevel,
                     			secondLevel : obj.secondLevel,
                     			thirdLevel : obj.thirdLevel,
-                    			cellCore : obj.cellCore,
+                    			signedBy : obj.cellCore,
+                    			chargedBy : obj.cellCore,
                     			departmentId : obj.departmentId
                     		});
                     	}
@@ -403,7 +404,15 @@
                     <td><input class="easyui-textbox" type="text" name="zhuanzhengReport" /></td>
                     <td colspan="2" rowspan="2">
                         <div style="text-align:center;">
-                            <a id="btn_employeeSave" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="submitForm($(this))">保存</a>
+                            <a id="btn_employeeSave" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="submitForm($(this),function(result){
+	                            $('#btn_employeeEdit').linkbutton('enable');
+                            	if(result.success){
+                            		if(result.obj&&result.obj>0){
+	                            	$('#updateUsesrname_form').form('load', {id:result.obj});
+                            		}
+                            	}
+                            	$.messager.alert('更新提示',result.msg);
+                            },true)">保存</a>
                             <a id="btn_employeeRest" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="clearForm($(this))">重置</a>
                             <a id="btn_employeeEdit" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="employee.editEmployee()">编辑</a><br/>
                             <a id="btn_wagesInfo" href="javascript:void(0)" class="easyui-linkbutton" style="width:60px;" onclick="employee.wages.openWages(this)">工资信息</a>
@@ -436,10 +445,11 @@
 $('#date_hiredate').datebox({
 	onChange:function(newValue,oldValue){
 		var date = new Date(newValue);
+		var newDate1 = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + date.getDate();
+		$('#signed_date').datebox('setValue',newDate1);
 		date.setMonth(date.getMonth()+3);
 		var newDate = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + date.getDate();
 		$('#zhuangZheng_datebox').datebox('setValue',newDate);
-		$('#signed_date').datebox('setValue',newDate);
 		}
 })
 $('#signed_date').datebox({
@@ -447,7 +457,7 @@ $('#signed_date').datebox({
 		var date = new Date(newValue);
 //		date.setMonth(date.getMonth()+3);
 		date.setYear(date.getFullYear()+3);
-		var newDate = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + date.getDate();
+		var newDate = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + (date.getDate()-1);
 		$('#end_datebox').datebox('setValue',newDate);
 	}
 })

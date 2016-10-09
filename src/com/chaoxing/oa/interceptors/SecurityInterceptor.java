@@ -1,6 +1,5 @@
 package com.chaoxing.oa.interceptors;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +9,6 @@ import org.apache.log4j.Logger;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.alibaba.druid.pool.ha.config.HAConfigLoader;
 import com.chaoxing.oa.entity.page.SessionInfo;
 import com.chaoxing.oa.util.ResourceUtil;
 
@@ -64,7 +62,8 @@ public class SecurityInterceptor implements HandlerInterceptor {
 				if (urls.contains(url)) {
 					return true;
 				} else {
-					request.setAttribute("msg", "您没有访问此资源的权限！<br/>请联系超管赋予您<br/>[" + url + "]<br/>的资源访问权限！");
+					request.setAttribute("msg", "{msg:'您没有访问此资源的权限！请联系超管赋予您" + url + "的资源访问权限！'}");
+//					request.setAttribute("msg", "您没有访问此资源的权限！<br/>请联系超管赋予您<br/>[" + url + "]<br/>的资源访问权限！");
 					request.getRequestDispatcher("/error/noSecurity.jsp").forward(request, response);
 					return false;
 				}

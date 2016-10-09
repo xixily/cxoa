@@ -7,6 +7,7 @@ public class PUlList implements Comparable<PUlList>{
 	private String iconCls = "icon-man";//设置图标
 	private int preMenuId;//前置menu
 	private Integer domId;//映射menuid
+	private String sortCode;
 	/*private List<UlList> children;*/
 //	private String state;//ul的开启状态
 	public int getPreMenuId() {
@@ -20,6 +21,12 @@ public class PUlList implements Comparable<PUlList>{
 	}
 	public String getUrl() {
 		return url;
+	}
+	public String getSortCode() {
+		return sortCode;
+	}
+	public void setSortCode(String sortCode) {
+		this.sortCode = sortCode;
 	}
 	public void setPreMenuId(int preMenuId) {
 		this.preMenuId = preMenuId;
@@ -41,7 +48,12 @@ public class PUlList implements Comparable<PUlList>{
 	}
 	@Override
 	public int compareTo(PUlList o) {
-		return this.domId.compareTo(o.getDomId());
+		if(this.sortCode!=null && o.getSortCode()!= null){
+			return this.sortCode.compareTo(o.getSortCode());
+		}else{
+			return -1;
+		}
+//		return this.domId.compareTo(o.getDomId());
 //		return this.text.compareTo(o.getText());
 	}
 	

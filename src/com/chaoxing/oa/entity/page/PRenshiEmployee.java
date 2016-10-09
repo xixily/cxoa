@@ -66,6 +66,7 @@ public class PRenshiEmployee implements Serializable{
 	private String ruzhiReport;//入职报表
 	private String lizhiReport;//离职报表
 	private String zhuanzhengReport;//转正报表
+	private String bumentiaozhengReport;//部门调整报表
 	
 	public int getId() {
 		return id;
@@ -435,5 +436,12 @@ public class PRenshiEmployee implements Serializable{
 	public void setIfSecret(String ifSecret) {
 		this.ifSecret = ifSecret;
 	}
+	public String getBumentiaozhengReport() {
+		return bumentiaozhengReport;
+	}
+	public void setBumentiaozhengReport(String bumentiaozhengReport) {
+		this.bumentiaozhengReport = bumentiaozhengReport;
+	}
+	
 	
 }

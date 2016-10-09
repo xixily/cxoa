@@ -12,6 +12,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsController/employee.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsController/system.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsController/wagesCalculate.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsController/center/hetong.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
 	init();

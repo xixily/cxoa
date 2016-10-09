@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -16,14 +18,14 @@ import com.chaoxing.oa.dao.BaseDaoI;
 
 @Repository("baseDao")
 public class BaseDaoImpl<T> implements BaseDaoI<T> {
-
+	@Resource(name="sessionFactory")
 	private SessionFactory sessionFactory;
 
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
 
-	@Autowired
+//	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
@@ -44,6 +46,11 @@ public class BaseDaoImpl<T> implements BaseDaoI<T> {
 	@Override
 	public T get(Class<T> c, Serializable id) {
 		return (T) this.getCurrentSession().get(c, id);
+	}
+
+	@Override
+	public T load(Class<T> c, Serializable id) {
+		return (T) this.getCurrentSession().load(c, id);
 	}
 
 	@Override

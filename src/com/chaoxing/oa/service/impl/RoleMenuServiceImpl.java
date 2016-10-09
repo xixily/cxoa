@@ -1,6 +1,7 @@
 package com.chaoxing.oa.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,6 @@ import com.chaoxing.oa.entity.page.PUlList;
 import com.chaoxing.oa.entity.po.Menu;
 import com.chaoxing.oa.entity.po.RoleResources;
 //import com.chaoxing.oa.entity.po.RoleRights;
-import com.chaoxing.oa.entity.po.UserRole;
 import com.chaoxing.oa.service.RoleMenuService;
 
 @Service("roleMenuService")
@@ -94,13 +94,14 @@ public class RoleMenuServiceImpl implements RoleMenuService {
 		List<RoleResources> roleResources2 = roleResourcesDao.find("from RoleResources r where r.roleId.roleId=:roleId and menuId.menuLevel=2 ",params);
 		for (RoleResources roleRe : roleResources) {
 			PMenu menuInfo = new PMenu(); 
-			UserRole urole = roleRe.getRoleId();
+//			UserRole urole = roleRe.getRoleId();
 			menuInfo.setUserId(roleRe.getRoleId().getRoleId());
 			menuInfo.setMenuId(roleRe.getMenuId().getMenuId());
 			menuInfo.setMenuName(roleRe.getMenuId().getMenuName());
 			for (RoleResources roleR : roleResources2) {
 				if(roleR.getMenuId().getPreMenuId().getMenuId()== menuInfo.getMenuId()){
 					PUlList ulList = new PUlList();
+					ulList.setSortCode(roleR.getSortCode());
 					ulList.setDomId(roleR.getMenuId().getMenuId());
 					ulList.setText(roleR.getMenuId().getMenuName());
 					ulList.setIconCls(roleR.getMenuId().getIconCls());
@@ -110,6 +111,7 @@ public class RoleMenuServiceImpl implements RoleMenuService {
 			}
 			l_menuInfos.add(menuInfo);
 		}
+		Collections.sort(l_menuInfos);
 		return l_menuInfos;
 	}
 	
@@ -123,16 +125,23 @@ public class RoleMenuServiceImpl implements RoleMenuService {
 //			menuInfo.setUserId(menu.getRoleId().getRoleId());
 			menuInfo.setMenuId(menu.getMenuId());
 			menuInfo.setMenuName(menu.getMenuName());
+			menuInfo.setSortCode(menu.getSortCode());
 			for (Menu menu2 : menu.getMenus()) {
 				PUlList ulList = new PUlList();
+				ulList.setSortCode(menu2.getSortCode());
 				ulList.setDomId(menu2.getMenuId());
 				ulList.setText(menu2.getMenuName());
 				ulList.setIconCls(menu2.getIconCls());
-				ulList.setUrl(menu2.getUrl());
+				if(menu2.getUrl()==null){
+					ulList.setUrl("");
+				}else{
+					ulList.setUrl(menu2.getUrl());
+				}
 				menuInfo.getUls().add(ulList);
 			}
 			l_menuInfos.add(menuInfo);
 		}
+		Collections.sort(l_menuInfos);
 		return l_menuInfos;
 	}
 

@@ -67,5 +67,40 @@ public class ResourceUtil {
 	public static final String getDownloadDirectory(){
 		return bundle.getString("excelDir");
 	}
-
+	/**
+	 * 获得下载文件的目录(checkword)
+	 * @return
+	 */
+	public static final String getCheckWord(){
+		return bundle.getString("checkword");
+	}
+	/**
+	 * 获得下载文件的目录(url1)
+	 * @return
+	 */
+	public static final String getUrl1(){
+		return bundle.getString("url1");
+	}
+	/**
+	 * 获得下载文件的目录(port1)
+	 * @return
+	 */
+	public static final String getPort1(){
+		return bundle.getString("port1");
+	}
+	/**
+	 * 获得下载文件的目录(url2)
+	 * @return
+	 */
+	public static final String getUrl2(){
+		return bundle.getString("url2");
+	}
+	/**
+	 * 获得下载文件的目录(port2)
+	 * @return
+	 */
+	public static final String getPort2(){
+		return bundle.getString("port2");
+	}
+	
 }
