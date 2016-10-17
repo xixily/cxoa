@@ -1046,5 +1046,11 @@ public class EmployeeController {
 		result.setObj(kl);
 		return result;
 	}
-	
+
+	@RequestMapping(value = "/getgongzihuizong")
+	@ResponseBody
+	public Map<String, Object>  getgongzihuizong(QueryForm queryform){
+		Map<String, Object> pshebaos = employeeInfoService.getgongzihuizong(queryform);
+		return pshebaos;
+	}
 }
