@@ -12,5 +12,7 @@
 <span class="btn-separator"></span>
 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-email_go',plain:true" onclick="hetong.fahuo.sendKuaidi()">发送快递</a>
 <span class="btn-separator"></span>
+<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-printer',plain:true" onclick="hetong.fahuo.print()">打印</a>
+<span class="btn-separator"></span>
 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-excel',plain:true" onclick="hetong.fahuo.addFahuo()">导出查询表</a>
 </div>

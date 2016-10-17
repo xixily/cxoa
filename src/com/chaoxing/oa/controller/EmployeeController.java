@@ -6,10 +6,12 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,6 +34,8 @@ import com.chaoxing.oa.entity.page.Pwage_;
 import com.chaoxing.oa.entity.page.Pwages;
 import com.chaoxing.oa.entity.page.QueryForm;
 import com.chaoxing.oa.entity.page.SessionInfo;
+import com.chaoxing.oa.entity.page.SF.KuaidiList;
+import com.chaoxing.oa.entity.page.SF.OrderResponse;
 import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.util.DateUtil;
 import com.chaoxing.oa.util.ResourceUtil;
@@ -259,7 +263,7 @@ public class EmployeeController {
 	public Json updateWages(Pwage_ pwages, HttpSession session){
 		//TODO 修改策略，更新的时候只更改部分字段。
 		Json result = new Json();
-		PSystemConfig ps = employeeInfoService.getSysconfig(pwages.getCompany(), SysConfig.SHEBAO_SUMMARY);
+//		PSystemConfig ps = employeeInfoService.getSysconfig(pwages.getCompany(), SysConfig.SHEBAO_SUMMARY);
 //		if(ps==null || ps.getLocked()==0){
 			if(pwages.getId()!=null&&pwages.getId()!=0){
 				QueryForm queryForm = new QueryForm();
@@ -339,19 +343,21 @@ public class EmployeeController {
 	
 	@RequestMapping(value = "/addWages")
 	@ResponseBody
-	public Json addWages(Pwages pwages, HttpSession session){
+	public Json addWages(Pwage_ pwages, HttpSession session){
 		Json result = new Json();
 		PSystemConfig ps = employeeInfoService.getSysconfig(pwages.getCompany(), SysConfig.SHEBAO_SUMMARY);
-		if(ps!=null && ps.getLocked()==1&&(pwages.getRadix()!=0||pwages.getSubEndowmentIinsurance()!=0||pwages.getSubMedicare()!=0||
-				pwages.getSubUnemployedInsurance()!=0||pwages.getSubHouseIinsurance()!=0)){
-			result.setMsg("该社保公司已被社保管理员锁定，请您把社保基数置0，或者与社保管理员联系。");
-		}else{
+//		if(ps!=null && ps.getLocked()==1&&(pwages.getRadix()!=0||pwages.getSubEndowmentIinsurance()!=0||pwages.getSubMedicare()!=0||
+//				pwages.getSubUnemployedInsurance()!=0||pwages.getSubHouseIinsurance()!=0)){
+//			result.setMsg("该社保公司已被社保管理员锁定，请您把社保基数置0，或者与社保管理员联系。");
+//		}else{
 			QueryForm queryForm = new QueryForm();
 			queryForm.setId(pwages.getEmployeeId());
 			SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());	
 			String ifSecret = employeeInfoService.getUserInfo(queryForm).getIfSecret();
 			if(sessionInfo.getRoleId()<=1||sessionInfo.getRoleId()==100||ifSecret.equals("off")){
-				if(employeeInfoService.addWages(pwages)!=0){
+				Pwages pw = new Pwages();
+				BeanUtils.copyProperties(pwages, pw);
+				if(employeeInfoService.addWages(pw)!=0){
 					result.setSuccess(true);
 					result.setMsg("添加成功！");
 				}else{
@@ -360,7 +366,7 @@ public class EmployeeController {
 			}else{
 				result.setMsg("对不起，您没有删除权限~！");
 			}
-		}
+//		}
 		return result;
 	}
 	
@@ -615,16 +621,106 @@ public class EmployeeController {
 		}else{
 			target = pmonthWages;
 		}
-		caculateWages(target);
-		if(employeeInfoService.updateMonthWages(target, sessionInfo)!=0){
-			result.setSuccess(true);
-			result.setMsg("更新成功！");
+		if(caculateWages(target)==0){
+			if(employeeInfoService.updateMonthWages(target, sessionInfo)!=0){
+				result.setSuccess(true);
+				result.setMsg("更新成功！");
+			}else{
+				result.setMsg("更新失败！");
+			}
 		}else{
-			result.setMsg("更新失败！");
+			result.setMsg("计算工资失败,可能是转正报表有问题！~");
 		}
 		return result;
 	}
-	private void caculateWages(PMonthWages pmonthWages) {
+	
+	private int caculateWages(PMonthWages pmonthWages) {
+		Double salary = pmonthWages.getSalary();
+		Float chuqin = pmonthWages.getChuqinDay();
+		double chaeDay = pmonthWages.getZhuanzhengChaeDay()!=null ? pmonthWages.getZhuanzhengChaeDay():0;
+		double zhuanzhengChae = 0.00;
+		double lishiSalary = pmonthWages.getLishiSalary()!=null ? pmonthWages.getLishiSalary():0;
+		double baomiSub = pmonthWages.getSecrecySubsidy()!=null?pmonthWages.getSecrecySubsidy():0;
+		double lunchSub = pmonthWages.getLunchSubsidy()!=null?pmonthWages.getLunchSubsidy():0;
+		double tongxunSub = pmonthWages.getCommunicationSubsidy()!=null?pmonthWages.getCommunicationSubsidy():0;
+		double jiangjin = pmonthWages.getJiangjin()!=null?pmonthWages.getJiangjin():0;
+		double bufaSalary = pmonthWages.getBufaSalary()!=null?pmonthWages.getBufaSalary():0;
+		double fakuan = pmonthWages.getFakuan()!=null?pmonthWages.getFakuan():0;
+		float shijia = (pmonthWages.getShiJiaHour()!=null)? pmonthWages.getShiJiaHour():0;
+		String zhuanZhengRport = pmonthWages.getZhuanzhengReport();
+		//计算考勤总额
+		Double bingjia = 0.0;
+		if(pmonthWages.getSickLleaveTotal()==null){
+			pmonthWages.setSickLleaveTotal(0d);
+		}
+		if(pmonthWages.getSickLleaveTotal()<=24){
+			bingjia =  ((pmonthWages.getBingJiaHour() + pmonthWages.getSickLleaveTotal())>24?(pmonthWages.getBingJiaHour() + pmonthWages.getSickLleaveTotal() -24):0);
+		}else{
+			bingjia =(double)pmonthWages.getBingJiaHour();
+		}
+		Float kuanggong = pmonthWages.getKuangGongHour();
+		Float chidaoYingkou = pmonthWages.getChidaoYingkouDay();
+		if(chidaoYingkou<=3){
+			chidaoYingkou = chidaoYingkou * 20;
+		}else{
+			chidaoYingkou = chidaoYingkou * 50 - 150;
+		}
+		if(lishiSalary!=0 && chaeDay>0){
+			zhuanzhengChae = (salary - lishiSalary)/21 * (21 - chaeDay);
+		}
+		float kaoqinTotal = (float) (salary*shijia/168 + bingjia*salary/336 + kuanggong*salary/56 + chidaoYingkou + zhuanzhengChae) ;
+		//计算社保代扣总额
+		float subTotal = (float) (pmonthWages.getSubEndowmentIinsurance()+pmonthWages.getSubHouseIinsurance()+pmonthWages.getSubMedicare()+pmonthWages.getSubUnemployedInsurance());
+		if(zhuanZhengRport!=null && (!zhuanZhengRport.equals(""))){
+			if(zhuanZhengRport.length() >= 6){
+				zhuanZhengRport.substring(0, 6);
+				try {
+					Integer a = Integer.valueOf(zhuanZhengRport.substring(0, 6));
+					SimpleDateFormat df = new SimpleDateFormat("yyyyMM");
+					Calendar cal = Calendar.getInstance();
+					String afterDate = df.format(cal.getTime());
+					Integer b = Integer.valueOf(afterDate);
+					if(a>=b){
+						salary = lishiSalary;
+					}
+				} catch (Exception e) {
+					return -1;
+				}
+			}else{
+				return -1;
+			}
+		}
+	
+		//应发工资
+		float yingfa = (float) (salary*chuqin/21 -kaoqinTotal-subTotal + baomiSub + lunchSub + tongxunSub+jiangjin+bufaSalary-fakuan);
+		//个税
+		float selfTax = 0;
+		if((yingfa - 3500)<=0){
+			selfTax = 0;
+		}else if(0<(yingfa-3500)&&(yingfa-3500)<=1500){
+			selfTax = (float) ((yingfa-3500)*0.03);
+		}else if((yingfa-3500)<=4500){
+			selfTax = (float) ((yingfa-3500)*0.1 - 105);
+		}else if((yingfa - 3500)<=9000){
+			selfTax = (float) ((yingfa-3500)*0.2 - 555);
+		}else if((yingfa - 3500)<=35000){
+			selfTax = (float) ((yingfa-3500)*0.25 - 1005);
+		}else if((yingfa - 3500)<=55000){
+			selfTax = (float) ((yingfa-3500)*0.30 - 2755);
+		}else if((yingfa - 3500)<=80000){
+			selfTax = (float) ((yingfa-3500)*0.35 - 5505);
+		}else{
+			selfTax = (float) ((yingfa-3500)*0.45 - 13505);
+		}
+		pmonthWages.setSubTotal(subTotal);
+		pmonthWages.setKaoqinTotal(kaoqinTotal);
+		pmonthWages.setYingfaTotal(yingfa);
+		pmonthWages.setSelfTax(selfTax);
+		pmonthWages.setShifaTotal(yingfa-selfTax);
+		return 0;
+	}
+	
+	public void caculateWages(PMonthWages pmonthWages, int i) {
 		Double salary = pmonthWages.getSalary();
 		BigDecimal b_salary = new BigDecimal(salary.toString());
 		Float chuqin = pmonthWages.getChuqinDay();
@@ -921,5 +1017,34 @@ public class EmployeeController {
 		return result;
 	}
 	
+	@RequestMapping(value = "testDir.action")
+	@ResponseBody
+	public Json getDir(HttpServletRequest request){
+		Json result = new Json();
+//		String dir = request.
+//		request.getRealPath("");
+//		System.out.println(request.getRealPath(""));
+		KuaidiList kl = new KuaidiList();
+		kl.setAddService_name("增值服务名");
+		kl.setAddService_value1("value1");
+		kl.setAddService_value2("value2");
+		kl.setContent("发票");
+		kl.setCustid("66666");
+		kl.setD_address("jxnu");
+		kl.setD_company("江西师范大学");
+		kl.setD_contact("Mrs deng");
+		kl.setD_mobile("131346789");
+		kl.setD_tel("0791-123456");
+		kl.setDestcode("079");
+		kl.setExpress_type(26);
+		kl.setJ_address("BeiJing");
+		kl.setJ_company("SJCX");
+		kl.setJ_contact("Mrs deng");
+		kl.setJ_tel("17745678913");
+		kl.setMailno("123456789");
+		kl.setRemark("备注");
+		result.setObj(kl);
+		return result;
+	}
 	
 }

@@ -202,7 +202,7 @@ public class BarCode128C {
 	//private static int m_nImageHeight = 40; // 条码的高度像素数
 	public static void main(String[] args) throws Exception{
 		
-		getCode128CPicture("909751806716", 72, "d:/code128Ctest.jpg");
+		getCode128CPicture("610366681928", 22, "d:/code3.jpg");
 	}
 
 	/**

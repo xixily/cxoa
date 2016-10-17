@@ -27,7 +27,7 @@
 								}
 							},
 			pageList:[10,15,20,30,50,200],
-			toolbar : '#fahuo_toolbar',
+			toolbar : '#fapiao_toolbar',
 			onDblClickCell : hetong.fapiao.editFapiao
 			">
 		<!-- 	onDblClickCell : hetong.fapiao.onDblClickRow,

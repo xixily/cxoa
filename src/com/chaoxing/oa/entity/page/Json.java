@@ -4,7 +4,8 @@ public class Json {
 
 	private boolean success = false;
 	
-	private int errorCode;
+//	private int errorCode;
+	private String errorCode;
 
 	private String msg = "";
 
@@ -34,11 +35,11 @@ public class Json {
 		this.obj = obj;
 	}
 
-	public int getErrorCode() {
+	public String getErrorCode() {
 		return errorCode;
 	}
 
-	public void setErrorCode(int errorCode) {
+	public void setErrorCode(String errorCode) {
 		this.errorCode = errorCode;
 	}
 

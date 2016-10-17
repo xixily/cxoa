@@ -1026,7 +1026,6 @@ var employee = {
 	$('#wages_totalSalary').html(salary);
 		},
 		canotEdit : function(formId){
-			return false;
 			if(!formId) return false;
 			//禁用jquery easyui中的linkbutton组件
 			$("#" + formId + " input[target~='_blank']").each(function () {

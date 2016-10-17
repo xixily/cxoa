@@ -9,10 +9,10 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 
-@Entity
-@Table(name="发货情况")
-@DynamicInsert(true)
-@DynamicUpdate(true)
+//@Entity
+//@Table(name="发货情况")
+//@DynamicInsert(true)
+//@DynamicUpdate(true)
 public class Fahuo {
 	private int orderid;//序号
 	private int hetongCode;//合同编号
@@ -28,7 +28,7 @@ public class Fahuo {
 	private String content;//内容
 	private String areaCode;//区号
 	private String sender;//发货人
-	private String city;//城市
+	private String d_city;//城市
 	private String area;//地区
 	private String recorder;//录库人
 	
@@ -90,8 +90,8 @@ public class Fahuo {
 		return sender;
 	}
 	@Column(name="城市")
-	public String getCity() {
-		return city;
+	public String getD_city() {
+		return d_city;
 	}
 	@Column(name="地区")
 	public String getArea() {
@@ -143,8 +143,8 @@ public class Fahuo {
 	public void setSender(String sender) {
 		this.sender = sender;
 	}
-	public void setCity(String city) {
-		this.city = city;
+	public void setD_city(String d_city) {
+		this.d_city = d_city;
 	}
 	public void setArea(String area) {
 		this.area = area;

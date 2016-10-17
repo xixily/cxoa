@@ -100,7 +100,7 @@
     <welcome-file>/index.jsp</welcome-file>
   </welcome-file-list>
   <session-config>
-    <session-timeout>80</session-timeout>
+    <session-timeout>120</session-timeout>
   </session-config>
   <error-page>
     <error-code>404</error-code>

@@ -1051,6 +1051,11 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 			for (MonthWages monthWage : monthWages) {
 				if(monthWage!=null){
 					PMonthWages pMonthWage = new PMonthWages();
+//					BeanUtils.copyProperties(monthWage, pMonthWage);
+//					pMonthWage.setBasicWage(null);
+//					pMonthWage.setPostSalary(null);
+//					pMonthWage.setPerformanceRelatedPay(null);
+//					pMonthWage.setSalary(null);
 					pMonthWage.setId(monthWage.getId());
 					pMonthWage.setUsername(monthWage.getUsername());
 					pMonthWage.setFirstLevel(monthWage.getFirstLevel());
@@ -1077,6 +1082,9 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 					pMonthWage.setZhuanzhengTime(monthWage.getZhuanzhengTime());
 					pMonthWage.setKaoQinremarks(monthWage.getKaoQinremarks());
 					pMonthWage.setCompany(monthWage.getCompany());
+					pMonthWage.setZhuanzhengReport(monthWage.getZhuanzhengReport());
+					pMonthWage.setLizhiReport(monthWage.getLizhiReport());
+					pMonthWage.setRuzhiReport(monthWage.getRuzhiReport());
 					pMonthWages.add(pMonthWage);
 				}
 			}

@@ -13,6 +13,9 @@ public class Pwage_ {
 	private String remarks;//备注
 	private String company;//公司名称
 	private String householdType;//户口性质
+	private Double basicWage;//基本工资
+	private Double postSalary;//岗位工资
+	private Double performanceRelatedPay;//绩效工资
 	private String accountBank;//开户行
 	private String account;//职工帐号
 	private String salaryCode;//工资编号
@@ -56,6 +59,24 @@ public class Pwage_ {
 	}
 	public String getHouseholdType() {
 		return householdType;
+	}
+	public Double getBasicWage() {
+		return basicWage;
+	}
+	public Double getPostSalary() {
+		return postSalary;
+	}
+	public Double getPerformanceRelatedPay() {
+		return performanceRelatedPay;
+	}
+	public void setBasicWage(Double basicWage) {
+		this.basicWage = basicWage;
+	}
+	public void setPostSalary(Double postSalary) {
+		this.postSalary = postSalary;
+	}
+	public void setPerformanceRelatedPay(Double performanceRelatedPay) {
+		this.performanceRelatedPay = performanceRelatedPay;
 	}
 	public String getAccountBank() {
 		return accountBank;

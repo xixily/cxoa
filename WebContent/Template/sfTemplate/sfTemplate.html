@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>顺丰打印单</title>
+	<link rel="icon" href="">
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body style="height: 0px;">
+<!--<object id="Web" width="0" classid="CLSID:8856F961-340A-11D0-A96B-00C4FD705A2"></object>-->
+	<div class="page">
+		<div class="m1 b">
+			<img src="img/logo.jpg" class="img1">
+			<img src="img/tel.png" class="img2">
+			<p><span class="s1">E</span><span class="s2">加急</span></p>
+		</div>
+		<div class="m2 b">
+			<div class="left">
+				<img target="_value" src="img/code.jpg">
+				<!--<div style="background:"></div>-->
+				<p>运单号<span target="_value" name="mailno"></span></p>
+				<!-- <p>母单号<span>444 004 772 115</span></p> -->
+			</div>
+			<div class="right">
+				<div class="r1 b">
+					<p style="text-align: center"><span  target="_value">express_type</span></p>
+				</div>
+				<div class="r2"><!-- 这里应该属于顺丰增值服务,[name、value1、value2] -->
+					<p class="p1"><span target="_value">addService_name</span></p>
+					<p class="p2"><span target="_value">addService_value1</span></p>
+					<p class="p3"><span target="_value">addService_value2</span></p>
+				</div>
+			</div>
+		</div>
+		<div class="m3 b">
+			<div class="left">
+				<p>目的地</p>
+			</div>
+			<div class="right">
+				<p><span target="_value">destcode</span></p>
+			</div>
+		</div>
+		<div class="m4 b">
+			<div class="left">
+				<p>收件人</p>
+			</div>
+			<div class="right">
+				<p>
+					<span target="_value">d_contact</span>
+					<span target="_value">d_tel</span>
+					<span target="_value">d_mobile</span>
+					<span target="_value">d_company</span></p>
+				<p>
+					<span target="_value">d_address</span>
+				</p>
+			</div>
+		</div>
+		<div class="m5 b">
+			<div class="left">
+				<p>寄件人</p>
+			</div>
+			<div class="right-1">
+				<p>
+					<span target="_value">j_contact</span>
+					<span target="_value">j_tel</span>
+					<span target="_value">j_company</span>
+					0731-12345678
+				</p>
+				<p>
+					<span target="_value">j_address</span>
+				</p>
+			</div>
+			<div class="right-2">
+				<p class="p1"><span target="_value" >addService_name</span></p>
+				<p class="p2"><span target="_value">addService_value1</span></p>
+				<p class="p3"><span target="_value">addService_value2</span></p>
+			</div>
+		</div>
+		<div class="m6 b cl">
+			<div class="left">
+				<div class="l1 b">
+					<ul>
+						<li>付款方式：<span target="_value">pay_method</span></li>
+						<li>月结账号：<span target="_value">custid</span></li>
+						<li>件数：<span target="_value">parcel_quantity</span></li>
+					</ul>
+					<ul>
+						<li>备注：<span target="_value">remark</span></li>
+						<li>定时派送：<span target="_value">due_send</span></li>
+					</ul>
+					<ul>
+						<li>运费：<b  target="_value">freight</b></li>
+						<li>费用合计：<b  target="_value">fee_total</b></li>
+					</ul>
+					<p  target="_value" name="mark1">mark1</p>
+				</div>
+				<div class="l2">
+					<div class="l2-a">
+						<p>托寄物</p>
+					</div>
+					<div class="l2-b">
+						<span  target="_value" >content</span>
+					</div>
+					<div class="l2-c">
+						<ul>
+							<li>收件员：<span  target="_value">sf_receiver</span></li>
+							<li>收件日期：<span  target="_value">sf_revevie_date</span></li>
+							<li>派件员：<span  target="_value">sf_sender</span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="right">
+				<p>签名：</p>
+				<p class="p2">月<span>日</span></p>
+			</div>
+		</div>
+		<div class="item b">
+			<div class="m7 b cl">
+				<div class="left">
+					<img class="img1" src="img/logo.jpg">
+					<img src="img/tel.png">
+				</div>
+				<div class="right">
+					<img src="img/code.jpg">
+					<p>运单号<span target="_value">mailno</span></p>
+				</div>
+			</div>
+			<div class="m8 b">
+				<div class="left">
+					<p>寄件人</p>
+				</div>
+				<div class="right">
+					<p>
+						<span target="_value">j_contact</span>
+						<span target="_value">j_tel</span>
+						<span target="_value">j_company</span>
+					</p>
+					<p>
+						<span target="_value">j_address</span>
+					</p>
+				</div>
+			</div>
+			<div class="m8 b">
+				<div class="left">
+					<p>收件人</p>
+				</div>
+				<div class="right">
+					<p>
+						<span target="_value" >d_contact</span>
+						<span target="_value">d_tel</span>
+						<span target="_value">d_mobile</span>
+						<span target="_value">d_company</span></p>
+					<p>
+						<span target="_value">d_address</span>
+					</p>
+				</div>
+			</div>
+			<div class="m10"></div>
+		</div>
+		<div class="item b">
+			<div class="m7 b cl">
+				<div class="left">
+					<img class="img1" src="code_url">
+					<img src="img/tel.png">
+				</div>
+				<div class="right">
+					<img src="img/code.jpg">
+					<p>运单号<span target="_value">mailno</span></p>
+				</div>
+			</div>
+			<div class="m8 b">
+				<div class="left">
+					<p>寄件人</p>
+				</div>
+				<div class="right">
+					<p>
+						<span target="_value">j_contact</span>
+						<span target="_value">j_tel</span>
+						<span target="_value">j_company</span>
+					</p>
+					<p>
+						<span target="_value">j_address</span>
+					</p>
+				</div>
+			</div>
+			<div class="m8 b">
+				<div class="left">
+					<p>收件人</p>
+				</div>
+				<div class="right">
+					<p>
+						<span target="_value">d_contact</span>
+						<span target="_value">d_tel</span>
+						<span target="_value">d_mobile</span>
+						<span target="_value">d_company</span></p>
+					<p>
+						<span target="_value">d_address</span>
+					</p>
+				</div>
+			</div>
+			<div class="m10"></div>
+		</div>
+	</div>
+</body>
+</html>

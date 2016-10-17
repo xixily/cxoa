@@ -20,7 +20,7 @@ public class TestXml {
 		pfahuo.setContent("这是一条测试数据的内容");
 		pfahuo.setAreaCode("0791");
 		pfahuo.setSender("test cc");
-		pfahuo.setCity("BeiJing");
+		pfahuo.setD_city("BeiJing");
 		pfahuo.setArea("haidian");
 		pfahuo.setRecorder("jj");
 	}

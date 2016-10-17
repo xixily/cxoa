@@ -84,7 +84,7 @@ $(document).ready(function() {
 	<div style="margin: 0 8px;">
 		<jsp:include page="../toolBar/shebaoCompany_toolbar.jsp"></jsp:include>
 		<table id="datagrid_shebaoCompany" class="easyui-datagrid"
-			style="width: 98%; margin: 5 20px;" data-options="">
+			style="width: 98%; margin: 5px 20px;" data-options="">
 		</table>
 	</div>
 

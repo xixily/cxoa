@@ -18,7 +18,21 @@ public class Test {
 
 	public static void main(String[] args) {
 		
-		String xml = Md5AndBase64.loadFile(TestHttpProvider.class.getClass().getResource("/").getFile().toString() + "SFTemplate.xml");
+//		System.out.println("201610".substring(0, 6));;
+		try {
+			Integer i = Integer.valueOf("你是谁是啊");
+			System.out.println(i);
+		} catch (Exception e) {
+			System.out.println("不做事儿");
+			// TODO: handle exception
+		}
+//		SimpleDateFormat df = new SimpleDateFormat("yyyyMM");
+//		Calendar cal = Calendar.getInstance();
+//		String afterDate = df.format(cal.getTime());
+//		System.out.println(afterDate);
+////		String xml = Md5AndBase64.loadFile(TestHttpProvider.class.getClass().getResource("/").getFile().toString() + "SFTemplate.xml");
+//		String dir = Test.class.getClass().getResource("/").getFile().toString();
+//		System.out.println(dir);
 //		Float a = 12f;
 //		a = a < 18 ? 18 :(a>360?360:a);
 //		System.out.println(a);

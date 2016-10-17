@@ -102,15 +102,15 @@
                 <tr>
                     <td>基本工资:</td>
                     <td>
-                    <input class="easyui-numberbox" target="_blank" data-options="min:0,precision:2" name="basicWage" />
+                    <input class="easyui-numberbox" data-options="min:0,precision:2" name="basicWage" />
                     </td>
                     <td>岗位工资:</td>
                     <td>
-                    <input class="easyui-numberbox" target="_blank" data-options="min:0,precision:2" name="postSalary" />
+                    <input class="easyui-numberbox" data-options="min:0,precision:2" name="postSalary" />
                     </td>
                     <td>绩效工资:</td>
                     <td>
-                    <input class="easyui-numberbox" target="_blank" data-options="min:0,precision:2" name="performanceRelatedPay" />
+                    <input class="easyui-numberbox" data-options="min:0,precision:2" name="performanceRelatedPay" />
                     </td>
                     <td>开户行:</td>
                     <td>

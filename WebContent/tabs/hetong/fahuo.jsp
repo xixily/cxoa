@@ -16,11 +16,11 @@ $(document).ready(function() {
 				{iconCls:'icon-reload',handler:function(){$('#query_form_fahuo').panel('open').panel('refresh')}}]"
 		style="width: 98%; padding: 10px; margin-bottom: 10px;">
 	</div>
-
+	<%--hetong/queryHetong.action--%>
 	<div style="width: 98%">
 		<table id="datagrid_fahuo" class="easyui-datagrid" style="width:100%;height:489px;"
 			data-options="
-			url:'hetong/queryHetong.action',
+			url:'datagrid.json',
 			title:'发货表',
 			fitColumns:true,
 			singleSelect:true,
@@ -61,4 +61,5 @@ $(document).ready(function() {
 		</table>
 		<jsp:include page="../../toolBar/hetong/fahuo_toolbar.jsp"></jsp:include>
 	</div>
+	<div id="kuaidi_form" class="easyui-dialog" data-options="title:'打印页面',width:'477px',height:'800px',closed:false,cache:false,modal:false"></div>
 </div>

@@ -14,19 +14,19 @@ public class SysConfig {
 	/**
 	 * session 失效
 	 */
-	public final static int SESSION_INVALIAD = -1;
+	public final static String SESSION_INVALIAD = "-1";
 	/**
 	 * 请求成功
 	 */
-	public final static int REQUEST_SUCCESSED = 0;
+	public final static String REQUEST_SUCCESSED = "0";
 	/**
 	 * 权限不够
 	 */
-	public final static int NO_RIGHTS = 1;
+	public final static String NO_RIGHTS = "1";
 	/**
 	 * 请求错误
 	 */
-	public final static int REQUEST_ERROR = 2;
+	public final static String REQUEST_ERROR = "2";
 	/**
 	 * 
 	 */

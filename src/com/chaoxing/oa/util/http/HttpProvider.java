@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 public class HttpProvider {
 	private static Logger log = Logger.getLogger(HttpProvider.class.getName());
 	
-	public static String sendPost(String url, byte[] data) throws Exception{
+	public static String sendPost(String url, byte[] data) throws IOException{
 		HttpURLConnection con = null;
 		BufferedReader in = null;
 		try {

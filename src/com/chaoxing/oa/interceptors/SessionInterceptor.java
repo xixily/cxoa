@@ -58,9 +58,11 @@ public class SessionInterceptor implements HandlerInterceptor {
 			if (sessionInfo != null && sessionInfo.getId() != 0) {
 				return true;
 			} else {
+				System.out.println("登录超时~！");
 				request.setAttribute("msg", "您还没有登录或登录已超时，请重新登录，然后再刷新本功能！");
-				request.getRequestDispatcher("login.jsp").forward(request, response);
-//				request.getRequestDispatcher("/error/noSession.jsp").forward(request, response);
+				request.setAttribute("obj", "1000");
+//				response.sendRedirect("/cxoa/error/nosession.json");
+				request.getRequestDispatcher("/error/noSession.jsp").forward(request, response);
 				return false;
 			}
 		}
