@@ -261,9 +261,18 @@ var employee = {
 			queryParams : data
 		})
 	},
-	view : function() {
+	view : function(flage,obj) {
 		var rights = session.user.roleId;
-		var userInfo = $('#employee_datas').datagrid('getSelected');
+		var userInfo;
+		if(flage == 1)
+			{
+			userInfo = obj;
+			}
+		else
+			{
+			userInfo = $('#employee_datas').datagrid('getSelected');
+			
+			}
 		if(!userInfo||!userInfo.id||userInfo.id==0){
 			$.messager.alert('操作提示：','请先选择员工,您没有选择任何员工！~');
 			return false;
@@ -1961,6 +1970,8 @@ shebaoSummary : {
 							})
 						});
 		},
+	
+		
 		exportMonthWagesExcel : function(type){
 			console.log('exportExcel:' + type);
 			var exportParam = {};
@@ -2001,6 +2012,14 @@ shebaoSummary : {
 						});
 		}
 	},
+	gongzihuizong:{
+		
+		querygongzihuizong : function(data, src) {
+			$('#datagrid_gongzihuizong').datagrid({
+				queryParams : data
+			})
+		}
+	},	
 	jiagou:{
 		queryJiagou : function(data, src) {
 //			$('#datagrid_jiagou').treegrid('load',data);
@@ -2009,6 +2028,7 @@ shebaoSummary : {
 //			})
 		},
 	}
+	
 }
 var wagesDateAdd = undefined;
 var monthWagesAdd = undefined;

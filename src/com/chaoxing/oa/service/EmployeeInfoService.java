@@ -135,5 +135,7 @@ public interface EmployeeInfoService {
 	public PSystemConfig getSysconfig(String name, String type);
 
 	public long fafang();
+	
+	public Map<String, Object> getgongzihuizong(QueryForm queryForm);
 
 }
