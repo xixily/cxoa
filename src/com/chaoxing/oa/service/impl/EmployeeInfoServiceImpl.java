@@ -54,6 +54,8 @@ import com.chaoxing.oa.entity.po.view.RenshiUserName;
 import com.chaoxing.oa.entity.po.view.SheBaoSummary;
 import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.util.ResourceUtil;
+import com.chaoxing.oa.entity.page.pGongziHuiZong;
+import com.chaoxing.oa.entity.po.gongziHuiZong;
 
 @Service("employeeInfoService")
 public class EmployeeInfoServiceImpl implements EmployeeInfoService {
@@ -74,6 +76,16 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	private BaseDaoI<WagesDate> wagesDateDao;
 	private BaseDaoI<UserName> useDao;
 	private BaseDaoI<SystemConfig> systemConfigDao;
+	
+	@Autowired
+	private BaseDaoI<gongziHuiZong> gongzihuizongDao;
+	
+	public BaseDaoI<gongziHuiZong> getGongzihuizongDao() {
+		return gongzihuizongDao;
+	}
+	public void setGongzihuizongDao(BaseDaoI<gongziHuiZong> gongzihuizongDao) {
+		this.gongzihuizongDao = gongzihuizongDao;
+	}
 	
 	public BaseDaoI<SystemConfig> getSystemConfigDao() {
 		return systemConfigDao;
@@ -1460,5 +1472,55 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	@Override
 	public UserName getUserInfo(QueryForm queryform) {
 		return useDao.get(UserName.class, queryform.getId());
+	}
+	
+	/*打开工资汇总信息
+	 * 史昊  2016.10.17*/
+	public long getGongziHuiZongCount(String hql, Map<String, Object> params) {
+		StringBuffer hqll = new StringBuffer("select count(*) from gongziHuiZong t where ");
+		hqll.append(hql.split("where")[1]);
+		return sheBaoDao.count(hqll.toString(), params);
+	}
+	@Override
+	public Map<String, Object> getgongzihuizong(QueryForm queryForm) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		List<pGongziHuiZong> pgongzihuizongs = new ArrayList<pGongziHuiZong>();
+		Map<String, Object> result = new HashMap<String, Object>();
+		StringBuffer hql = new StringBuffer("from gongziHuiZong t where 1=1");
+		if(queryForm.getUsername()!=null && queryForm.getUsername()!=""){
+			hql.append(" and (t.username like :username1 )");
+			params.put("username1", "%" + queryForm.getUsername() + "%");
+		}
+		if(queryForm.getFourthLevel()!=null && queryForm.getFourthLevel()!=""){
+			hql.append(" and t.fourthLevel like :fourthLevel1");
+			params.put("fourthLevel1", "%" + queryForm.getFourthLevel() + "%");
+		}
+			
+		String sort = "id";
+		String order = SysConfig.DESC;
+		if(queryForm.getSort() != null){
+			sort = queryForm.getSort();
+			if(queryForm.getOrder() != null){
+				order = queryForm.getOrder();
+			}
+		}
+		hql.append(" order by t." + sort + " " + order);
+		int	intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
+		int	pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+		
+		List<gongziHuiZong> gongzihuizongs =gongzihuizongDao.find(hql.toString(), params, intPage, pageSize);
+		
+		long total = getGongziHuiZongCount(hql.toString(), params);
+		for (gongziHuiZong gongzihuizong : gongzihuizongs) {
+			if(gongzihuizong!=null){
+				pGongziHuiZong pgongzihuizong1 = new pGongziHuiZong();
+				BeanUtils.copyProperties(gongzihuizong, pgongzihuizong1);
+				pgongzihuizongs.add(pgongzihuizong1);
+			}
+		}
+		result.put("total", total);
+		result.put("rows", pgongzihuizongs);
+	
+		return result;
 	}
 }
