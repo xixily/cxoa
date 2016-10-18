@@ -19,17 +19,19 @@ public class Test {
 	public static void main(String[] args) {
 		
 //		System.out.println("201610".substring(0, 6));;
-		try {
-			Integer i = Integer.valueOf("你是谁是啊");
-			System.out.println(i);
-		} catch (Exception e) {
-			System.out.println("不做事儿");
-			// TODO: handle exception
-		}
+//		try {
+//			Integer i = Integer.valueOf("你是谁是啊");
+//			System.out.println(i);
+//		} catch (Exception e) {
+//			System.out.println("不做事儿");
+//			// TODO: handle exception
+//		}
 //		SimpleDateFormat df = new SimpleDateFormat("yyyyMM");
 //		Calendar cal = Calendar.getInstance();
 //		String afterDate = df.format(cal.getTime());
 //		System.out.println(afterDate);
+		String hql = "select t.id,t.bb,t.cc from username ,wages where salfk";
+		System.out.println(hql.split("from")[1]);
 ////		String xml = Md5AndBase64.loadFile(TestHttpProvider.class.getClass().getResource("/").getFile().toString() + "SFTemplate.xml");
 //		String dir = Test.class.getClass().getResource("/").getFile().toString();
 //		System.out.println(dir);
