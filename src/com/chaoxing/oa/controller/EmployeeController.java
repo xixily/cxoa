@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,6 +24,7 @@ import com.chaoxing.oa.entity.page.PKaoQin;
 import com.chaoxing.oa.entity.page.PLevel;
 import com.chaoxing.oa.entity.page.PMonthWages;
 import com.chaoxing.oa.entity.page.POStructs;
+import com.chaoxing.oa.entity.page.PQuickQuery;
 import com.chaoxing.oa.entity.page.PShebao;
 import com.chaoxing.oa.entity.page.PShebaoType;
 import com.chaoxing.oa.entity.page.PSystemConfig;
@@ -35,7 +35,6 @@ import com.chaoxing.oa.entity.page.Pwages;
 import com.chaoxing.oa.entity.page.QueryForm;
 import com.chaoxing.oa.entity.page.SessionInfo;
 import com.chaoxing.oa.entity.page.SF.KuaidiList;
-import com.chaoxing.oa.entity.page.SF.OrderResponse;
 import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.util.DateUtil;
 import com.chaoxing.oa.util.ResourceUtil;
@@ -345,7 +344,7 @@ public class EmployeeController {
 	@ResponseBody
 	public Json addWages(Pwage_ pwages, HttpSession session){
 		Json result = new Json();
-		PSystemConfig ps = employeeInfoService.getSysconfig(pwages.getCompany(), SysConfig.SHEBAO_SUMMARY);
+//		PSystemConfig ps = employeeInfoService.getSysconfig(pwages.getCompany(), SysConfig.SHEBAO_SUMMARY);
 //		if(ps!=null && ps.getLocked()==1&&(pwages.getRadix()!=0||pwages.getSubEndowmentIinsurance()!=0||pwages.getSubMedicare()!=0||
 //				pwages.getSubUnemployedInsurance()!=0||pwages.getSubHouseIinsurance()!=0)){
 //			result.setMsg("该社保公司已被社保管理员锁定，请您把社保基数置0，或者与社保管理员联系。");
@@ -1052,5 +1051,15 @@ public class EmployeeController {
 	public Map<String, Object>  getgongzihuizong(QueryForm queryform){
 		Map<String, Object> pshebaos = employeeInfoService.getgongzihuizong(queryform);
 		return pshebaos;
+	}
+	
+	@RequestMapping(value = "/quickQuery")
+	@ResponseBody
+	public Map<String, Object>  quickQuery(PQuickQuery pquick, HttpSession session){
+		if(pquick.getType()!=0){
+			Map<String, Object> pshebaos = employeeInfoService.findRenshiQuick(pquick, session);
+			return pshebaos;
+		}
+		return null;
 	}
 }
