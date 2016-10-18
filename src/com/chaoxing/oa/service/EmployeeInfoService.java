@@ -12,6 +12,7 @@ import com.chaoxing.oa.entity.page.PKaoQin;
 import com.chaoxing.oa.entity.page.PLevel;
 import com.chaoxing.oa.entity.page.PMonthWages;
 import com.chaoxing.oa.entity.page.POStructs;
+import com.chaoxing.oa.entity.page.PQuickQuery;
 import com.chaoxing.oa.entity.page.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.PShebao;
 import com.chaoxing.oa.entity.page.PShebaoType;
@@ -29,6 +30,8 @@ public interface EmployeeInfoService {
 	public Map<String, Object> getRenshiUserName(QueryForm queryForm, HttpSession session);
 	
 	public Map<String, Object> getRenshiUserName(QueryForm queryForm, HttpSession session, int isExport);
+	
+	public Map<String, Object> findRenshiQuick(PQuickQuery pquick, HttpSession session);
 
 	public long getRenshiUserNameCount(String hql, Map<String, Object> params);
 
