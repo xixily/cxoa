@@ -1,4 +1,25 @@
 var employee = {
+	employee : {
+		quickQuery : function(flage){
+			if(flage){
+				var params = {};
+				params.type = flage;
+				$('#employee_datas').datagrid({
+					url : 'employee/quickQuery.action',
+					queryParams : params
+				})
+			}
+//			$.post(url,null,function(result){
+//				result = eval("(" + result + ")");
+//			});
+		/*	if(flage == 111|| flage==112 ||flage==113||flage==211||flage==212){
+				params.type = 'wages';
+				if(flage==111){
+					params.salary = 0;
+				}
+			}*/
+		}
+	},
 	initEmployee : function(data, user) {
 //		console.log("employee.initEmployee!");
 		$('#employee_datas')
@@ -258,6 +279,7 @@ var employee = {
 	},
 	queryEmployee : function(data, src) {
 		$('#employee_datas').datagrid({
+			url : 'employee/renshiUser.action',
 			queryParams : data
 		})
 	},
@@ -306,12 +328,7 @@ var employee = {
 			}
 		})
 	},
-	editEmployee : function() {
-		var userInfo = $('#employee_datas').datagrid('getSelected');
-		if(!userInfo||!userInfo.id||userInfo.id==0){
-			$.messager.alert('操作提示：','请先选择员工,您没有选择任何员工！~');
-			return;
-		}
+	editEmployee : function(flage) {
 		$('#userName_info').dialog({
 			title : '编辑职员信息'
 		});
@@ -328,25 +345,37 @@ var employee = {
 				}
 			}
 		});
-		$.getJSON(url, userInfo, function(result) {
-			if (result.success) {
-				result.obj.sercret = result.obj.ifSecret;
-				$('#updateUsesrname_form').form('load', result.obj);
-				$('#btn_employeeMailto').attr('href', 'mailto:' + result.obj.email);
-				$('#userName_info').window('open').window(
-						'resize',
-						{
-							top : $(document).scrollTop()
-									+ ($(window).height() - 480) * 0.5
-						});
-				disabledForm('updateUsesrname_form', false);
-				$('#btn_employeeSave').linkbutton("enable");
-				$('#btn_employeeRest').linkbutton("enable");
-				$('#btn_employeeEdit').linkbutton("disable");
-			} else {
-				$.messagr.alert('提示：',result.msg);
+		if(flage && flage == 1){
+			disabledForm('updateUsesrname_form', false);
+			$('#btn_employeeSave').linkbutton("enable");
+			$('#btn_employeeRest').linkbutton("enable");
+			$('#btn_employeeEdit').linkbutton("disable");
+		}else{
+			var userInfo = $('#employee_datas').datagrid('getSelected');
+			if(!userInfo||!userInfo.id||userInfo.id==0){
+				$.messager.alert('操作提示：','请先选择员工,您没有选择任何员工！~');
+				return;
 			}
-		})
+			$.getJSON(url, userInfo, function(result) {
+				if (result.success) {
+					result.obj.sercret = result.obj.ifSecret;
+					$('#updateUsesrname_form').form('load', result.obj);
+					$('#btn_employeeMailto').attr('href', 'mailto:' + result.obj.email);
+					$('#userName_info').window('open').window(
+							'resize',
+							{
+								top : $(document).scrollTop()
+								+ ($(window).height() - 480) * 0.5
+							});
+					disabledForm('updateUsesrname_form', false);
+					$('#btn_employeeSave').linkbutton("enable");
+					$('#btn_employeeRest').linkbutton("enable");
+					$('#btn_employeeEdit').linkbutton("disable");
+				} else {
+					$.messagr.alert('提示：',result.msg);
+				}
+			})
+		}
 	},
 	openAddEEmployee : function() {
 		$('#updateUsesrname_form').form('clear');
