@@ -26,6 +26,7 @@ import com.chaoxing.oa.entity.page.PKaoQin;
 import com.chaoxing.oa.entity.page.PLevel;
 import com.chaoxing.oa.entity.page.PMonthWages;
 import com.chaoxing.oa.entity.page.POStructs;
+import com.chaoxing.oa.entity.page.PQuickQuery;
 import com.chaoxing.oa.entity.page.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.PSheBaoSummary;
 import com.chaoxing.oa.entity.page.PShebao;
@@ -273,6 +274,73 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		userInfos.put("total", total);
 		userInfos.put("rows", renshiEmployeeInfos);
 		return userInfos;
+	}
+	
+	@Override
+	public Map<String, Object> findRenshiQuick(PQuickQuery pquick, HttpSession session) {
+		StringBuffer hql = null;
+		List<PRenshiEmployee> renshiEmployeeInfos = new ArrayList<PRenshiEmployee>();
+		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> userInfos = new HashMap<String, Object>();
+//		Map<String, Object> params = new HashMap<String, Object>();
+		int type = pquick.getType();
+		String column = "select new RenshiUserName(t.renshiRight, t.firstLevel, t.secondLevel, t.thirdLevel,"
+				+ "t.fourthLevel, t.cellCore, t.cellCoreEmail, t.guidance, t.guidanceEmail, t.id,"
+				+ "t.username, t.password, t.departmentId, t.position, t.sex, t.identityCard,"
+				+ "t.borthDay, t.nation, t.degree, t.graduatedSchool, t.major, t.phoneNumber,"
+				+ "t.homeAddress, t.homeNumber, t.hiredate, t.zhuanzhengTime, t.pastLeaveTime,"
+				+ "t.earlyEntryDate, t.householdType, t.insurance, t.insuranceCompany, t.company,"
+				+ "t.resume, t.photo, t.identityCardCopy, t.familyRegister, t.leavingCertificate,"
+				+ "t.contract, t.managementSystem, t.entryForm, t.signedTime, t.terminationTime,"
+				+ "t.registeredAddress, t.postcode, t.remarks, t.contractNumber, t.dueSocialSecurity,"
+				+ "t.socialSecurityHospital, t.level, t.recruitmentSources, t.contractRenewal,"
+				+ "t.originalNumber, t.secrecyAgreement, t.reportForm, t.panCard, t.leaveTime,"
+				+ "t.workPlace, t.email, t.ifSecret, t.maritalStatus, t.roleId, t.ruzhiReport,"
+				+ "t.lizhiReport, t.zhuanzhengReport, t.bumentiaozhengReport) ";
+//		String tableUnion = "";
+		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM");
+		Calendar cal = Calendar.getInstance();
+		String afterDate = df.format(cal.getTime());
+		cal.add(Calendar.MONTH, -1);
+		String date = df.format(cal.getTime());
+		cal.add(Calendar.MONTH, -1);
+//		String preDate = df.format(cal.getTime());
+//		System.out.println(afterDate.m);
+		if(type == 111 || type == 112 || type == 211 || type == 212){
+			hql = new StringBuffer(column + "from RenshiUserName as t,WageDistribution as w where t.id=w.employeeId ");
+//			hql = new StringBuffer( "select new RenshiUserName(t.id) from RenshiUserName as t,WageDistribution as w where t.id=w.employeeId ");
+			if(type == 111){
+				hql.append(" and w.salary=0 and t.hiredate like :hiredate");
+				params.put("hiredate", "%" + afterDate + "%");
+			}else if(type == 112){
+				hql.append(" and w.salary=0 and t.hiredate like :hiredate");
+				params.put("hiredate", "%" + date + "%");
+			}
+		}
+		SessionInfo userInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
+		if(userInfo.getRoleId() > 1 && !(userInfo.getRoleId()==100)){
+			hql.append(" and t.renshiRight like :renshiRight ");
+			params.put("renshiRight", "%" + userInfo.getUsername() + "%");
+		}
+		List<RenshiUserName> renshiUsernames = userNameDao.find(hql.toString(), params, pquick.getPage(), pquick.getRows());
+		for (RenshiUserName renshiUserName : renshiUsernames) {
+			if(renshiUserName!=null){
+				PRenshiEmployee renshiEmployeeInfo = new PRenshiEmployee();
+				BeanUtils.copyProperties(renshiUserName, renshiEmployeeInfo);
+				renshiEmployeeInfos.add(renshiEmployeeInfo);
+			}
+		}
+		long total = getCount(hql.toString(),params);
+		userInfos.put("total", total);
+		userInfos.put("rows", renshiEmployeeInfos);
+		return userInfos;
+	}
+	
+	public long getCount(String hql, Map<String, Object>params){
+		String hqll = "select count(*) from " + hql.split("from")[1];
+//		String hqll = "select new RenshiUserName(t.id)  from " + hql.split("from")[1];
+//		String hqll = "select {count(t.*)} from " + hql.split("from")[1];
+		return objectDao.count(hqll,params);
 	}
 
 	@Override
