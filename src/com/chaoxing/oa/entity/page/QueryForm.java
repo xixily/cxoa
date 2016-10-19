@@ -77,6 +77,8 @@ public class QueryForm {
 	private String wagesMonth;//工作日计算表月份
 	private String accountBank;//职工账号
 	private String account;//职工账号
+	// 密码修改
+	private String newpassword;//新密码
 	/**
 	 * 可配置项
 	 */
@@ -518,6 +520,12 @@ public class QueryForm {
 	}
 	public void setWagesMonth(String wagesMonth) {
 		this.wagesMonth = wagesMonth;
+	}
+	public String getNewpassword() {
+		return newpassword;
+	}
+	public void setNewpassword(String newpassword) {
+		this.newpassword = newpassword;
 	}
 	@Override
 	public String toString() {
