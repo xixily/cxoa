@@ -64,6 +64,7 @@
 				<property name="excludeUrls">
 					<list>
 						<value>/user/login.action</value>
+						<value>/user/modifyPassword.action</value>
 						<value>/user/logout.action</value>
 						<!-- <value>/employee/getCompany.action</value> -->
 						<!-- <value>/druidController/druid.action</value> -->
@@ -86,6 +87,7 @@
 						<value>/employee/getCompany.action</value>
 						<value>/employee/getInsuranceCompany.action</value>
 						<value>/system/queryMenus.action</value>
+						<value>/user/modifyPassword.action</value>
 					</list>
 				</property>
 			</bean>
