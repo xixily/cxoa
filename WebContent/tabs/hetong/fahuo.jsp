@@ -61,5 +61,5 @@ $(document).ready(function() {
 		</table>
 		<jsp:include page="../../toolBar/hetong/fahuo_toolbar.jsp"></jsp:include>
 	</div>
-	<div id="kuaidi_form" class="easyui-dialog" data-options="title:'打印页面',width:'477px',height:'800px',closed:false,cache:false,modal:false"></div>
+	<div id="kuaidi_form" class="easyui-dialog" data-options="title:'打印页面',width:'518px',height:'800px',closed:true,cache:false,modal:false"></div>
 </div>

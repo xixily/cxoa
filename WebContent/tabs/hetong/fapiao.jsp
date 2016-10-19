@@ -58,7 +58,7 @@
 		<jsp:include page="../../toolBar/hetong/fapiao_toolbar.jsp"></jsp:include>
 		
 		<div id="hetong_fapiao_info" class="easyui-dialog" title="发票信息"
-		data-options="iconCls : 'icon-edit',modal : false,closed : true" style="width:980px;">
+		data-options="iconCls : 'icon-edit',modal : false,closed : true,closable:false" style="width:980px;">
 			<jsp:include page="../../components/hetong/fapiaoForm.jsp"></jsp:include>
 		</div>
 	</div>
