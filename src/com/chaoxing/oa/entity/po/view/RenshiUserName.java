@@ -45,7 +45,7 @@ public class RenshiUserName implements Serializable {
 	private String company;//公司名称
 	private String resume;//简历
 	private String photo;//照片
-//	private String degreeCertificate;//学历证书
+	private String degreeCertificate;//学历证书
 	private String identityCardCopy;//身份证复印件
 	private String familyRegister;//户口本
 	private String leavingCertificate;//离职证明
@@ -624,6 +624,14 @@ public class RenshiUserName implements Serializable {
 	public String getZhuanzhengReport() {
 		return zhuanzhengReport;
 	}
+	@Column(name = "学历证书")
+	public String getDegreeCertificate() {
+		return degreeCertificate;
+	}
+	public void setDegreeCertificate(String degreeCertificate) {
+		this.degreeCertificate = degreeCertificate;
+	}
+
 	public void setRuzhiReport(String ruzhiReport) {
 		this.ruzhiReport = ruzhiReport;
 	}

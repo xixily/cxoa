@@ -3,11 +3,11 @@
 <!-- my97日期控件 -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/jslib/My97DatePickerBeta4.8b2/My97DatePicker/WdatePicker.js" charset="utf-8"></script>
 <!-- easyui控件 -->
-<link id="easyuiTheme" rel="stylesheet" href="${pageContext.request.contextPath}/jslib/jquery-easyui-1.4.5/themes/<c:out value="${cookie.easyuiThemeName.value}" default="default"/>/easyui.css" type="text/css"></link>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/jslib/jquery-easyui-1.4.5/themes/icon.css" type="text/css"></link>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/jquery-easyui-1.4.5/jquery.min.js" charset="utf-8"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/jquery-easyui-1.4.5/jquery.easyui.min.js" charset="utf-8"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
+<link id="easyuiTheme" rel="stylesheet" href="${pageContext.request.contextPath}/jslib/jquery-easyui-1.5/themes/<c:out value="${cookie.easyuiThemeName.value}" default="default"/>/easyui.css" type="text/css"></link>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/jslib/jquery-easyui-1.5/themes/icon.css" type="text/css"></link>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/jquery-easyui-1.5/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/jquery-easyui-1.5/jquery.easyui.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/jquery-easyui-1.5/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
 <!-- easyui portal插件 -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/jslib/jquery-easyui-portal/portal.css" type="text/css"></link>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jslib/jquery-easyui-portal/jquery.portal.js" charset="utf-8"></script>

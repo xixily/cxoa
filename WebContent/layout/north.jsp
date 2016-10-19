@@ -10,11 +10,10 @@
 <div id="layout_north_pfMenu" style="width: 120px; display: none;">
 	<div onclick="changeTheme('default');">default</div>
 	<div onclick="changeTheme('gray');">gray</div>
+	<div onclick="changeTheme('black');">black</div>
+	<div onclick="changeTheme('bootstrap');">bootstrap</div>
 	<div onclick="changeTheme('metro');">metro</div>
-	<!-- <div onclick="changeTheme('cupertino');">cupertino</div>
-	<div onclick="changeTheme('dark-hive');">dark-hive</div> -->
-	<!-- <div onclick="changeTheme('pepper-grinder');">pepper-grinder</div>
-	<div onclick="changeTheme('sunny');">sunny</div> -->
+	<div onclick="changeTheme('material');">material</div>
 </div>
 <div id="layout_north_zxMenu" style="width: 100px; display: none;">
 	<div class="menu-sep"></div>
