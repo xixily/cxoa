@@ -12,7 +12,7 @@ var hetong = {
 					pageSize:15,
 					loadFilter: function(data){
 						$.each(data.rows,function(n,obj){
-							obj.send = '<span class="linked"><a href="javascript:hetong.fahuo.sendKuaidi()">获取邮寄凭证号</a></span>';
+							obj.send = '<span class="linked"><a href="javascript:hetong.fahuo.sendKuaidi()">获取顺丰号</a></span>';
 							if(obj.mailno){
 								obj.send += '/<span class="linked"><a href="javascript:hetong.fahuo.print()"><span style="color:#6c7147">打印</span></a></span>';
 							}
