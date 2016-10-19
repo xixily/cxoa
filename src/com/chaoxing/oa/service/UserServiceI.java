@@ -26,4 +26,6 @@ public interface UserServiceI {
 
 	public List<String> finRoleResoures(int roleId);
 
+	public long updatePassword(QueryForm queryForm);
+
 }
