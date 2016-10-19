@@ -634,8 +634,8 @@ public class EmployeeController {
 	}
 	
 	private int caculateWages(PMonthWages pmonthWages) {
-		Double salary = pmonthWages.getSalary();
-		Float chuqin = pmonthWages.getChuqinDay();
+		Double salary = pmonthWages.getSalary()!=null ? pmonthWages.getSalary():0;
+		Float chuqin = pmonthWages.getChuqinDay()!=null ? pmonthWages.getChuqinDay():0;
 		double chaeDay = pmonthWages.getZhuanzhengChaeDay()!=null ? pmonthWages.getZhuanzhengChaeDay():0;
 		double zhuanzhengChae = 0.00;
 		double lishiSalary = pmonthWages.getLishiSalary()!=null ? pmonthWages.getLishiSalary():0;
@@ -655,20 +655,32 @@ public class EmployeeController {
 		if(pmonthWages.getSickLleaveTotal()<=24){
 			bingjia =  ((pmonthWages.getBingJiaHour() + pmonthWages.getSickLleaveTotal())>24?(pmonthWages.getBingJiaHour() + pmonthWages.getSickLleaveTotal() -24):0);
 		}else{
-			bingjia =(double)pmonthWages.getBingJiaHour();
+			bingjia =(double)(pmonthWages.getBingJiaHour()!=null?pmonthWages.getBingJiaHour():0);
 		}
-		Float kuanggong = pmonthWages.getKuangGongHour();
-		Float chidaoYingkou = pmonthWages.getChidaoYingkouDay();
+		Float kuanggong = pmonthWages.getKuangGongHour()!=null?pmonthWages.getKuangGongHour():0;
+		Float chidaoYingkou = pmonthWages.getChidaoYingkouDay()!=null?pmonthWages.getChidaoYingkouDay():0;
 		if(chidaoYingkou<=3){
 			chidaoYingkou = chidaoYingkou * 20;
 		}else{
 			chidaoYingkou = chidaoYingkou * 50 - 150;
 		}
-		if(lishiSalary!=0 && chaeDay>0){
+		if(lishiSalary!=0 && chaeDay!=0){
 			zhuanzhengChae = (salary - lishiSalary)/21 * (21 - chaeDay);
 		}
 		float kaoqinTotal = (float) (salary*shijia/168 + bingjia*salary/336 + kuanggong*salary/56 + chidaoYingkou + zhuanzhengChae) ;
 		//计算社保代扣总额
+		if(pmonthWages.getSubEndowmentIinsurance()==null){
+			pmonthWages.setSubEndowmentIinsurance(0d);
+		}
+		if(pmonthWages.getSubHouseIinsurance()==null){
+			pmonthWages.setSubHouseIinsurance(0d);
+		}
+		if(pmonthWages.getSubMedicare()==null){
+			pmonthWages.setSubMedicare(0d);
+		}
+		if(pmonthWages.getSubUnemployedInsurance()==null){
+			pmonthWages.setSubUnemployedInsurance(0d);
+		}
 		float subTotal = (float) (pmonthWages.getSubEndowmentIinsurance()+pmonthWages.getSubHouseIinsurance()+pmonthWages.getSubMedicare()+pmonthWages.getSubUnemployedInsurance());
 		if(zhuanZhengRport!=null && (!zhuanZhengRport.equals(""))){
 			if(zhuanZhengRport.length() >= 6){
