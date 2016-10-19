@@ -5,20 +5,20 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>顺丰打印单</title>
 	<link rel="icon" href="">
-	<link rel="stylesheet" href="css/common.css">
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="template/sfTemplate/css/common.css">
+	<link rel="stylesheet" href="template/sfTemplate/css/style.css">
 </head>
 <body style="height: 0px;">
 <!--<object id="Web" width="0" classid="CLSID:8856F961-340A-11D0-A96B-00C4FD705A2"></object>-->
 	<div id="sf_kuaidi_print_list" class="page">
 		<div class="m1 b">
-			<img src="img/logo.jpg" class="img1" target="_value" name="log">
-			<img src="img/tel.png" class="img2" target="_value" name="tel">
+			<img src="template/sfTemplate/img/logo.jpg" class="img1" target="_value" name="log">
+			<img src="template/sfTemplate/img/tel.png" class="img2" target="_value" name="tel">
 			<p><span class="s1">E</span><span class="s2">加急</span></p>
 		</div>
 		<div class="m2 b">
 			<div class="left">
-				<img src="img/code.jpg" target="_value" name="code">
+				<img src="template/sfTemplate/img/code.jpg" target="_value" name="code_src">
 				<!--<div style="background:"></div>-->
 				<p>运单号<span target="_value" name="mailno"></span></p>
 				<!-- <p>母单号<span>444 004 772 115</span></p> -->
@@ -120,11 +120,11 @@
 		<div class="item b">
 			<div class="m7 b cl">
 				<div class="left">
-					<img class="img1" src="img/logo.jpg" target="_value" name="logo">
-					<img src="img/tel.png" target="_value" name="tel">
+					<img class="img1" src="template/sfTemplate/img/logo.jpg" target="_value" name="logo">
+					<img src="template/sfTemplate/img/tel.png" target="_value" name="tel">
 				</div>
 				<div class="right">
-					<img src="img/code.jpg" target="_value" name="code">
+					<img src="template/sfTemplate/img/code.jpg" target="_value" name="code_src">
 					<p>运单号<span target="_value"  name="mailno">033 203 023 629</span></p>
 				</div>
 			</div>
@@ -163,11 +163,11 @@
 		<div class="item b">
 			<div class="m7 b cl">
 				<div class="left">
-					<img class="img1" src="img/logo.jpg" target="_value" name="logo">
-					<img src="img/tel.png" target="_value" name="tel">
+					<img class="img1" src="template/sfTemplate/img/logo.jpg" target="_value" name="logo">
+					<img src="template/sfTemplate/img/tel.png" target="_value" name="tel">
 				</div>
 				<div class="right">
-					<img src="img/code.jpg" target="_value" name="code">
+					<img src="template/sfTemplate/img/code.jpg" target="_value" name="code_src">
 					<p>运单号<span target="_value"  name="mailno">033 203 023 629</span></p>
 				</div>
 			</div>
@@ -206,8 +206,9 @@
 	</div>
 </body>
 <script type="text/javascript">
-	$.(document).ready(function(){
-		window.print();
-	})
+	/* $.(document).ready(function(){ */
+	window.onload = window.print;
+//		window.print();
+	/* }) */
 </script>
 </html>
