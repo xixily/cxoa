@@ -403,6 +403,13 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 				if(pMonthWage.getLishiSalary()!=null){
 					sxffWriter.setData(pMonthWage.getLishiSalary().toString());
 				}
+				sxffWriter.createCell();
+				sxffWriter.setData(pMonthWage.getRuzhiReport());
+				sxffWriter.createCell();
+				sxffWriter.setData(pMonthWage.getLizhiReport());
+				sxffWriter.createCell();
+				sxffWriter.setData(pMonthWage.getZhuanzhengReport());
+				
 			}
 //			insertCell(PKaoQin.class,pKaoqins);
 			sxffWriter.flush();
@@ -722,13 +729,14 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 			sxffWriter.createCell();
 			sxffWriter.setStringData("历史工资");
 		}
+		sxffWriter.createCell();
+		sxffWriter.setStringData("入职报表");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("离职报表");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("转正报表");
+		sxffWriter.createCell();
 		if(isMonthWages==0){
-			sxffWriter.createCell();
-			sxffWriter.setStringData("入职报表");
-			sxffWriter.createCell();
-			sxffWriter.setStringData("离职报表");
-			sxffWriter.createCell();
-			sxffWriter.setStringData("转正报表");
 			sxffWriter.createCell();
 			sxffWriter.setStringData("考勤备注");
 		}
