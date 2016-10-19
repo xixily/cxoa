@@ -9,10 +9,10 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 
-//@Entity
-//@Table(name="发货情况")
-//@DynamicInsert(true)
-//@DynamicUpdate(true)
+@Entity
+@Table(name="发货情况")
+@DynamicInsert(true)
+@DynamicUpdate(true)
 public class Fahuo {
 	private int orderid;//序号
 	private int hetongCode;//合同编号

@@ -12,10 +12,10 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-//@Entity
-//@Table(name="发票情况")
-//@DynamicInsert(true)
-//@DynamicUpdate(true)
+@Entity
+@Table(name="发票情况")
+@DynamicInsert(true)
+@DynamicUpdate(true)
 public class FaPiao implements Serializable{
 	private static final long serialVersionUID = 6160133666108543609L;
 	private Integer id;
