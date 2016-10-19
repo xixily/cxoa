@@ -193,6 +193,45 @@ public class UserController {
 		}
 		return result;
 	}
+	
+	@RequestMapping(value = "/modifyPassword",method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView updatePassword(QueryForm queryForm, HttpSession session, Model model ) {
+		ModelAndView modelView = new ModelAndView("login.jsp");
+		if(queryForm.getEmail()==null || queryForm.getPassword()==null || queryForm.getNewpassword()==null || queryForm.getNewpassword().length()<8){
+			modelView.setViewName("login");
+			modelView.addObject("password_modify_error", "更新失败,可能是邮箱或者密码错误！~");
+			return modelView;
+		}
+		long r = userService.updatePassword(queryForm);
+		if (r != 0) {
+			modelView.setViewName("login");
+			modelView.addObject("password_modify_error", "恭喜您，密码修改成功！~");
+		} else {
+			modelView.setViewName("login");
+			modelView.addObject("password_modify_error", "更新失败,可能是邮箱或者密码错误！~");
+		}
+		return modelView;
+	}
+	
+	@RequestMapping(value = "/modifyPassword",method=RequestMethod.GET)
+	@ResponseBody
+	public Json updatePassword_(QueryForm queryForm, HttpSession session) {
+		Json result = new Json();
+		if(queryForm.getEmail()==null || queryForm.getPassword()==null || queryForm.getNewpassword()==null || queryForm.getNewpassword().length()<8){
+			result.setMsg("您输入的信息有误！~");
+			return result;
+		}
+		long r = userService.updatePassword(queryForm);
+		if (r != 0) {
+			result.setSuccess(true);
+			result.setMsg("更新成功！");
+		} else {
+			result.setErrorCode(SysConfig.REQUEST_ERROR);
+			result.setMsg("更新失败,可能是邮箱或者密码错误！~");
+		}
+		return result;
+	}
 	/*@RequestMapping(value = "/login",method = RequestMethod.GET)
 	@ResponseBody
 	public Json login(UserInfo userInfo, HttpServletRequest request, HttpSession session){
