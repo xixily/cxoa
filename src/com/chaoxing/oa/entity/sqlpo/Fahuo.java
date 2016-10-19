@@ -31,7 +31,10 @@ public class Fahuo {
 	private String d_city;//城市
 	private String area;//地区
 	private String recorder;//录库人
-	
+	/**
+	 * 货单新增
+	 */
+	private String destcode;//目的地区域代码
 	@Id
 	@Column(name="序号")
 	public int getOrderid() {
@@ -100,6 +103,13 @@ public class Fahuo {
 	@Column(name="录库人")
 	public String getRecorder() {
 		return recorder;
+	}
+	@Column
+	public String getDestcode() {
+		return destcode;
+	}
+	public void setDestcode(String destcode) {
+		this.destcode = destcode;
 	}
 	public void setOrderid(int orderid) {
 		this.orderid = orderid;
