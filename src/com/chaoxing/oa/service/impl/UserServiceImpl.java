@@ -177,5 +177,14 @@ public class UserServiceImpl implements UserServiceI {
 		}
 		return lists;
 	}
+	@Override
+	public long updatePassword(QueryForm queryForm) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		String hql = "update UserName t set t.password = :newpassword where t.email = :email and t.password = :password";
+		params.put("newpassword", queryForm.getNewpassword());
+		params.put("email", queryForm.getEmail());
+		params.put("password", queryForm.getPassword());
+		return usernameDao.executeHql(hql);
+	}
 	
 }
