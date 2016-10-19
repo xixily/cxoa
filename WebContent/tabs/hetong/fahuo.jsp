@@ -55,7 +55,7 @@ $(document).ready(function() {
 					<th data-options="field:'city',width:50,sortable:true">城市</th>
 					<th data-options="field:'area',width:60,sortable:true">地区 </th>
 					<th data-options="field:'recorder',width:60,sortable:true">录库人</th>
-					<th data-options="field:'send',width:60,sortable:true">寄件</th>
+					<th data-options="field:'send',width:120,sortable:true">寄件</th>
 				</tr>
 			</thead>
 		</table>
