@@ -53,6 +53,19 @@ td .comboxy .combtitle {
 	margin-top: -18px;
 	color: #999999
 }
+.linked a{text-decoration: none ;color:#ca6969}
+.linked a:hover {
+    text-decoration: none !important; background-color: rgb(222, 228, 237);
+}
+.linked a:focus {
+    text-decoration: none !important; background-color: rgb(222, 228, 237);
+}
+.linked a:active {
+    text-decoration: none !important; background-color: rgb(222, 228, 237);
+}
+a.touched {
+    text-decoration: none !important; background-color: rgb(222, 228, 237);
+}
 .icon-excel{
 	background:url('images/extjs_icons/page/page_white_excel.png') no-repeat center center;
 }
