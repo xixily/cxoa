@@ -322,6 +322,15 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 			hql.append(" and t.renshiRight like :renshiRight ");
 			params.put("renshiRight", "%" + userInfo.getUsername() + "%");
 		}
+		String sort = "id";
+		String order = SysConfig.DESC;
+		if(pquick.getSort() != null){
+			sort = pquick.getSort();
+			if(pquick.getOrder() != null){
+				order = pquick.getOrder();
+			}
+		}
+		hql.append(" order by t." + sort + " " + order);
 		List<RenshiUserName> renshiUsernames = userNameDao.find(hql.toString(), params, pquick.getPage(), pquick.getRows());
 		for (RenshiUserName renshiUserName : renshiUsernames) {
 			if(renshiUserName!=null){
