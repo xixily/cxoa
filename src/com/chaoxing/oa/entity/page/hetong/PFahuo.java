@@ -1,8 +1,8 @@
 package com.chaoxing.oa.entity.page.hetong;
 
 public class PFahuo {
-	private int orderid;//序号
-	private int hetongCode;//合同编号<
+	private Integer orderid;//序号
+	private Integer hetongCode;//合同编号<
 	private String d_contact;//收件人
 	private String d_company;//邮寄单位(到方
 	private String d_address;//邮寄地址
@@ -21,16 +21,21 @@ public class PFahuo {
 	private String area;//地区<
 	private String recorder;//录库人<
 	/**
+	 * 货单新增
+	 */
+	private String destcode;//目的地区域代码
+	/**
 	 * 分页项
 	 */
-	private int page;
-	private int rows;
+	private Integer page;
+	private Integer rows;
 	private String sort;
 	private String order;
-	public int getOrderid() {
+	
+	public Integer getOrderid() {
 		return orderid;
 	}
-	public int getHetongCode() {
+	public Integer getHetongCode() {
 		return hetongCode;
 	}
 	public String getD_contact() {
@@ -84,10 +89,10 @@ public class PFahuo {
 	public String getRecorder() {
 		return recorder;
 	}
-	public int getPage() {
+	public Integer getPage() {
 		return page;
 	}
-	public int getRows() {
+	public Integer getRows() {
 		return rows;
 	}
 	public String getSort() {
@@ -96,10 +101,10 @@ public class PFahuo {
 	public String getOrder() {
 		return order;
 	}
-	public void setOrderid(int orderid) {
+	public void setOrderid(Integer orderid) {
 		this.orderid = orderid;
 	}
-	public void setHetongCode(int hetongCode) {
+	public void setHetongCode(Integer hetongCode) {
 		this.hetongCode = hetongCode;
 	}
 	public void setD_contact(String d_contact) {
@@ -154,10 +159,10 @@ public class PFahuo {
 	public void setRecorder(String recorder) {
 		this.recorder = recorder;
 	}
-	public void setPage(int page) {
+	public void setPage(Integer page) {
 		this.page = page;
 	}
-	public void setRows(int rows) {
+	public void setRows(Integer rows) {
 		this.rows = rows;
 	}
 	public void setSort(String sort) {
@@ -165,6 +170,12 @@ public class PFahuo {
 	}
 	public void setOrder(String order) {
 		this.order = order;
+	}
+	public String getDestcode() {
+		return destcode;
+	}
+	public void setDestcode(String destcode) {
+		this.destcode = destcode;
 	}
 	@Override
 	public String toString() {
