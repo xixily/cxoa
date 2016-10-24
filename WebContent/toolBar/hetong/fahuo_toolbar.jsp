@@ -14,5 +14,7 @@
 <span class="btn-separator"></span>
 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-printer',plain:true" onclick="hetong.fahuo.print()">打印</a>
 <span class="btn-separator"></span>
+<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-printer',plain:true" onclick="hetong.fahuo.createCode128C()">重新生成条形码</a>
+<span class="btn-separator"></span>
 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-excel',plain:true" onclick="hetong.fahuo.addFahuo()">导出查询表</a>
 </div>
