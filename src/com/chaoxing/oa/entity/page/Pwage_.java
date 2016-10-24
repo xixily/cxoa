@@ -11,13 +11,13 @@ public class Pwage_ {
 	private Double communicationSubsidy;//通讯补贴
 	private Double lunchSubsidy;//午餐补贴
 	private String remarks;//备注
-	private String company;//公司名称
-	private String householdType;//户口性质
+//	private String company;//公司名称
+//	private String householdType;//户口性质
 	private Double basicWage;//基本工资
 	private Double postSalary;//岗位工资
 	private Double performanceRelatedPay;//绩效工资
-	private String accountBank;//开户行
-	private String account;//职工帐号
+//	private String accountBank;//开户行
+//	private String account;//职工帐号
 	private String salaryCode;//工资编号
 	private Double cSickPayTotal;//累计带薪病假
 	private Double annualLleave;//年假累计
@@ -54,12 +54,12 @@ public class Pwage_ {
 	public String getRemarks() {
 		return remarks;
 	}
-	public String getCompany() {
-		return company;
-	}
-	public String getHouseholdType() {
-		return householdType;
-	}
+//	public String getCompany() {
+//		return company;
+//	}
+//	public String getHouseholdType() {
+//		return householdType;
+//	}
 	public Double getBasicWage() {
 		return basicWage;
 	}
@@ -78,12 +78,12 @@ public class Pwage_ {
 	public void setPerformanceRelatedPay(Double performanceRelatedPay) {
 		this.performanceRelatedPay = performanceRelatedPay;
 	}
-	public String getAccountBank() {
-		return accountBank;
-	}
-	public String getAccount() {
-		return account;
-	}
+//	public String getAccountBank() {
+//		return accountBank;
+//	}
+//	public String getAccount() {
+//		return account;
+//	}
 	public String getSalaryCode() {
 		return salaryCode;
 	}
@@ -138,18 +138,18 @@ public class Pwage_ {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-	public void setCompany(String company) {
-		this.company = company;
-	}
-	public void setHouseholdType(String householdType) {
-		this.householdType = householdType;
-	}
-	public void setAccountBank(String accountBank) {
-		this.accountBank = accountBank;
-	}
-	public void setAccount(String account) {
-		this.account = account;
-	}
+//	public void setCompany(String company) {
+//		this.company = company;
+//	}
+//	public void setHouseholdType(String householdType) {
+//		this.householdType = householdType;
+//	}
+//	public void setAccountBank(String accountBank) {
+//		this.accountBank = accountBank;
+//	}
+//	public void setAccount(String account) {
+//		this.account = account;
+//	}
 	public void setSalaryCode(String salaryCode) {
 		this.salaryCode = salaryCode;
 	}
