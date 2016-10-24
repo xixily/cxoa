@@ -38,6 +38,7 @@ $(document).ready(function () {
 		session.user.position = '${sessionInfo.position}';
 		session.user.sex = '${sessionInfo.sex}';
 		session.user.phoneNumber = '${sessionInfo.phoneNumber}';
+		session.user.email = '${sessionInfo.email}';
 		initClickHandler();
 		</script> 
 	  	<!-- $(document).ready(function () {
