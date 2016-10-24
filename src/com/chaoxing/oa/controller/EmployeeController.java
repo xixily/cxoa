@@ -3,6 +3,7 @@ package com.chaoxing.oa.controller;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +39,7 @@ import com.chaoxing.oa.entity.page.SF.KuaidiList;
 import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.util.DateUtil;
 import com.chaoxing.oa.util.ResourceUtil;
+import com.chaoxing.oa.util.SFUtil;
 
 @Controller
 @RequestMapping("/employee")
@@ -1030,31 +1032,42 @@ public class EmployeeController {
 	
 	@RequestMapping(value = "testDir.action")
 	@ResponseBody
-	public Json getDir(HttpServletRequest request){
+	public Json getDir(HttpServletRequest request, HttpSession session){
 		Json result = new Json();
 //		String dir = request.
 //		request.getRealPath("");
-//		System.out.println(request.getRealPath(""));
-		KuaidiList kl = new KuaidiList();
-		kl.setAddService_name("增值服务名");
-		kl.setAddService_value1("value1");
-		kl.setAddService_value2("value2");
-		kl.setContent("发票");
-		kl.setCustid("66666");
-		kl.setD_address("jxnu");
-		kl.setD_company("江西师范大学");
-		kl.setD_contact("Mrs deng");
-		kl.setD_mobile("131346789");
-		kl.setD_tel("0791-123456");
-		kl.setDestcode("079");
-		kl.setExpress_type(26);
-		kl.setJ_address("BeiJing");
-		kl.setJ_company("SJCX");
-		kl.setJ_contact("Mrs deng");
-		kl.setJ_tel("17745678913");
-		kl.setMailno("123456789");
-		kl.setRemark("备注");
-		result.setObj(kl);
+		Map<String, Object> mm = new HashMap<String, Object>();
+		System.out.println(request.getContextPath());
+		mm.put("requestt-contentPath", request.getServletContext().getRealPath("/"));
+		mm.put("cxoa", request.getRealPath("cxoa"));
+		mm.put("sss", request.getRealPath(""));
+		mm.put("getPathTranslated", request.getPathTranslated());
+		mm.put("getServletPath", request.getServletPath());
+		mm.put("getRealPath:upload", request.getRealPath("\\uploadFolder\\"));
+		mm.put("classPath", this.getClass().getResource("").getFile().toString());
+		mm.put("SFUtil:classPath", SFUtil.class.getResource("/").getFile().toString());
+		mm.put("session-servletContext", session.getServletContext().getRealPath("/"));
+		result.setObj(mm);
+//		KuaidiList kl = new KuaidiList();
+//		kl.setAddService_name("增值服务名");
+//		kl.setAddService_value1("value1");
+//		kl.setAddService_value2("value2");
+//		kl.setContent("发票");
+//		kl.setCustid("66666");
+//		kl.setD_address("jxnu");
+//		kl.setD_company("江西师范大学");
+//		kl.setD_contact("Mrs deng");
+//		kl.setD_mobile("131346789");
+//		kl.setD_tel("0791-123456");
+//		kl.setDestcode("079");
+//		kl.setExpress_type(26);
+//		kl.setJ_address("BeiJing");
+//		kl.setJ_company("SJCX");
+//		kl.setJ_contact("Mrs deng");
+//		kl.setJ_tel("17745678913");
+//		kl.setMailno("123456789");
+//		kl.setRemark("备注");
+//		result.setObj(kl);
 		return result;
 	}
 
