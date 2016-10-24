@@ -109,8 +109,8 @@ public class SFUtil implements Runnable{
 	 * @param _addService @Optional 增值服务信息，可选
 	 * @return String
 	 */
-	public String prepareXML(String type, Object _order, List<Cargo> cargos, List<AddedService> addServices){
-		File xmlFile = new File(this.getClass().getResource("/").getFile().toString() + "sfTemplate/SFTemplate.xml");
+	public static String prepareXML(String type, Object _order, List<Cargo> cargos, List<AddedService> addServices){
+		File xmlFile = new File(SFUtil.class.getResource("/").getFile().toString() + "sfTemplate/SFTemplate.xml");
 		SAXReader reader = new SAXReader();
 		Document document = null;
 		try {
@@ -172,7 +172,7 @@ public class SFUtil implements Runnable{
 	 * @throws IllegalArgumentException 
 	 * @throws IllegalAccessException 
 	 */
-	public void prepareXML(Object source,Element node) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+	public static void prepareXML(Object source,Element node) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		Class<?> clss = source.getClass();
 		Field[] fs = clss.getDeclaredFields();
 		for (Field field : fs) {
@@ -201,7 +201,7 @@ public class SFUtil implements Runnable{
 	 * @param clazz 与属性节点相对应的实体类
 	 * @return
 	 */
-	public Object parseXml2Response(Element node, Class<?> clazz){
+	public static Object parseXml2Response(Element node, Class<?> clazz){
 		String name = null;
 		String type = null;
 		String value = null;
@@ -253,7 +253,7 @@ public class SFUtil implements Runnable{
 	 * @param xml 发货xml配置信息
 	 * @return
 	 */
-	public Json sendOrder(Order order, List<Cargo> cargo, List<AddedService> addService){
+	public static Json sendOrder(Order order, List<Cargo> cargo, List<AddedService> addService){
 		Json result = new Json();
 		OrderResponse oderResponse = null;
 		if(order.getOrderid()==0 || order.getD_company()==null || order.getD_contact()==null||order.getD_address()==null){
@@ -286,6 +286,7 @@ public class SFUtil implements Runnable{
 					Element responz = body.element("OrderResponse");
 					if(responz!=null){
 						oderResponse = (OrderResponse) parseXml2Response(responz,OrderResponse.class);
+						result.setMsg("下单成功！~");
 						System.out.println(oderResponse);
 					}else{
 						result.setMsg("下单请求成功，但查询结果为空！~");
@@ -316,7 +317,7 @@ public class SFUtil implements Runnable{
 	 * @param orderid 要查询的订单编号
 	 * @return
 	 */
-	public Json queryOrder(String orderid){
+	public static Json queryOrder(String orderid){
 		Json result = new Json();
 		OrderResponse oderResponse = null;
 		if(orderid == null){
@@ -376,7 +377,7 @@ public class SFUtil implements Runnable{
 	 * @param orderid 客户订单号
 	 * @return 
 	 */
-	public Json queryRoute(String orderid){
+	public static Json queryRoute(String orderid){
 		RouteRequest rtRequest = new RouteRequest();
 		rtRequest.setTracking_type(2);
 		rtRequest.setTracking_number(orderid);
@@ -390,7 +391,7 @@ public class SFUtil implements Runnable{
 	 * @param method_type 路由查询类别：1：标准路由查询 ;2：定制路由查询  
 	 * @return
 	 */
-	public Json queryRoute(RouteRequest rtRequest){
+	public static Json queryRoute(RouteRequest rtRequest){
 		Json result = new Json();
 		OrderResponse oderResponse = null;
 		if(rtRequest.getTracking_number() == null){
