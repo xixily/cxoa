@@ -51,12 +51,12 @@ import com.chaoxing.oa.entity.po.SystemConfig;
 import com.chaoxing.oa.entity.po.UserName;
 import com.chaoxing.oa.entity.po.WageDistribution;
 import com.chaoxing.oa.entity.po.WagesDate;
+import com.chaoxing.oa.entity.po.view.GongziHuiZong;
 import com.chaoxing.oa.entity.po.view.RenshiUserName;
 import com.chaoxing.oa.entity.po.view.SheBaoSummary;
 import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.util.ResourceUtil;
-import com.chaoxing.oa.entity.page.pGongziHuiZong;
-import com.chaoxing.oa.entity.po.gongziHuiZong;
+import com.chaoxing.oa.entity.page.PGongziHuiZong;
 
 @Service("employeeInfoService")
 public class EmployeeInfoServiceImpl implements EmployeeInfoService {
@@ -79,12 +79,12 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	private BaseDaoI<SystemConfig> systemConfigDao;
 	
 	@Autowired
-	private BaseDaoI<gongziHuiZong> gongzihuizongDao;
+	private BaseDaoI<GongziHuiZong> gongzihuizongDao;
 	
-	public BaseDaoI<gongziHuiZong> getGongzihuizongDao() {
+	public BaseDaoI<GongziHuiZong> getGongzihuizongDao() {
 		return gongzihuizongDao;
 	}
-	public void setGongzihuizongDao(BaseDaoI<gongziHuiZong> gongzihuizongDao) {
+	public void setGongzihuizongDao(BaseDaoI<GongziHuiZong> gongzihuizongDao) {
 		this.gongzihuizongDao = gongzihuizongDao;
 	}
 	
@@ -1554,16 +1554,16 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	/*打开工资汇总信息
 	 * 史昊  2016.10.17*/
 	public long getGongziHuiZongCount(String hql, Map<String, Object> params) {
-		StringBuffer hqll = new StringBuffer("select count(*) from gongziHuiZong t where ");
+		StringBuffer hqll = new StringBuffer("select count(*) from GongziHuiZong t where ");
 		hqll.append(hql.split("where")[1]);
 		return sheBaoDao.count(hqll.toString(), params);
 	}
 	@Override
 	public Map<String, Object> getgongzihuizong(QueryForm queryForm) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		List<pGongziHuiZong> pgongzihuizongs = new ArrayList<pGongziHuiZong>();
+		List<PGongziHuiZong> pgongzihuizongs = new ArrayList<PGongziHuiZong>();
 		Map<String, Object> result = new HashMap<String, Object>();
-		StringBuffer hql = new StringBuffer("from gongziHuiZong t where 1=1");
+		StringBuffer hql = new StringBuffer("from GongziHuiZong t where 1=1");
 		if(queryForm.getUsername()!=null && queryForm.getUsername()!=""){
 			hql.append(" and (t.username like :username1 )");
 			params.put("username1", "%" + queryForm.getUsername() + "%");
@@ -1585,12 +1585,12 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		int	intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
 		int	pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
 		
-		List<gongziHuiZong> gongzihuizongs =gongzihuizongDao.find(hql.toString(), params, intPage, pageSize);
+		List<GongziHuiZong> gongzihuizongs =gongzihuizongDao.find(hql.toString(), params, intPage, pageSize);
 		
 		long total = getGongziHuiZongCount(hql.toString(), params);
-		for (gongziHuiZong gongzihuizong : gongzihuizongs) {
+		for (GongziHuiZong gongzihuizong : gongzihuizongs) {
 			if(gongzihuizong!=null){
-				pGongziHuiZong pgongzihuizong1 = new pGongziHuiZong();
+				PGongziHuiZong pgongzihuizong1 = new PGongziHuiZong();
 				BeanUtils.copyProperties(gongzihuizong, pgongzihuizong1);
 				pgongzihuizongs.add(pgongzihuizong1);
 			}
