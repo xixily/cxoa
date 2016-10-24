@@ -47,6 +47,7 @@ $(document).ready(function() {
 						<option value="secondLevel">部门</option>
 						<option value="thirdLevel">岗位</option>
 						<option value="fourthLevel">小组</option>
+						<option value="level">级别</option>
 						<option value="cellCore">细胞核</option>
 						<option value="cellCoreEmail">细胞核邮箱</option>
 						<option value="guidance">指导</option>
