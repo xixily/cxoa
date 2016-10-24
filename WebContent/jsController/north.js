@@ -52,5 +52,31 @@ var north = {
 			onLoad : function() {
 			}
 		});
+	},
+	lock : function(flage){
+		if(flage){
+			$('#unlock_login_form').form('clear');
+			$.getJSON('user/logout.action',null,function(result){
+				if(result.success){
+					$('#lock_sys_dialog').dialog('open',{modal:true});
+				}
+
+//				$.messager.alert("加锁提示：",result.msg);
+			})
+		}else{
+			var formResult = getDataOfForm($('#unlock_login_form'));
+			if(formResult.succeed){
+				var data = formResult.data;
+				data.email = session.user.email;
+				if(data.password && data.email){
+					$.getJSON('user/login.action',data,function(result){
+						if (result.success) {
+							$('#lock_sys_dialog').dialog('close');
+							$.messager.alert("解锁提示：",result.msg);
+						}
+					})
+				}
+			}
+		}
 	}
 }
