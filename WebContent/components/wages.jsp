@@ -70,7 +70,7 @@
                     </td> -->
                      <td>公司名称:</td>
                     <td >
-                     <input class="easyui-combobox" name="company" data-options="
+                     <input class="easyui-combobox" target="_blank" name="company" data-options="
                     url: 'employee/getCompany.action',
                     valueField:'cmopany',
                     textField:'cmopany',
@@ -83,7 +83,7 @@
                     </td> -->
                     <td>户口性质:</td>
                     <td id="wages_hoseholdType" >
-                    <input class="easyui-combobox" name="householdType"  data-options="
+                    <input class="easyui-combobox" target="_blank" name="householdType"  data-options="
                     valueField:'householdType',
                     textField:'householdType',
                     method:'get',
@@ -115,7 +115,7 @@
                     <td>开户行:</td>
                     <td>
                     <!-- <input class="easyui-textbox" type="text" name="accountBank" /> -->
-                    <input class="easyui-combobox" name="accountBank" data-options="
+                    <input class="easyui-combobox" name="accountBank" target="_blank" data-options="
 							valueField: 'value',
 							textField: 'text',
 							data: [{
@@ -152,7 +152,7 @@
                     </td>
                     <td>职工帐号:</td>
                     <td>
-                    <input class="easyui-textbox" type="text" name="account" />
+                    <input class="easyui-textbox" target="_blank" type="text" name="account" />
                     </td>
                 </tr>
                 <tr>
