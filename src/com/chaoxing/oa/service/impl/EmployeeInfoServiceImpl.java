@@ -317,6 +317,25 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 				params.put("hiredate", "%" + date + "%");
 			}
 		}
+		//查询本月合同到期名单	
+		if(type == 301)
+		{
+			Calendar nowcal = Calendar.getInstance();
+			nowcal.add(Calendar.MONTH, 1);
+			String nowDate = df.format(nowcal.getTime());
+			
+			hql = new StringBuffer(column + "from RenshiUserName as t  where (t.leaveTime is null or t.leaveTime ='') ");
+			hql.append(" and t.terminationTime <= :hiredate");
+			params.put("hiredate",  nowDate);
+		
+		}
+		//查询没有身份证的员工名单
+		if(type == 302)
+		{
+			hql = new StringBuffer(column + "from RenshiUserName as t  where (t.leaveTime is null or t.leaveTime ='') ");
+			hql.append(" and length(t.identityCard) < 18");
+				
+		}
 		SessionInfo userInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
 		if(userInfo.getRoleId() > 1 && !(userInfo.getRoleId()==100)){
 			hql.append(" and t.renshiRight like :renshiRight ");
