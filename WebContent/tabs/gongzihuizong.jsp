@@ -41,12 +41,18 @@
 					<th data-options="field:'id',width:40,sortable:true">id</th> 
 					<th data-options="field:'username',width:120,sortable:true">姓名</th> 
 					<th data-options="field:'fGongziZonge',width:100,sortable:true">工资总额</th>
+					<th data-options="field:'lishiSalary',width:100,sortable:true">历史工资总额</th>
 					<th data-options="field:'fSheBaoZiFu',width:100,sortable:true">社保自付</th>
 					<th data-options="field:'fSheBaoGongsi',width:100,sortable:true">公司社保</th>
 					<th data-options="field:'firstLevel',width:100,sortable:true">一级</th>
 					<th data-options="field:'secondLevel',width:100,sortable:true">二级</th>
 					<th data-options="field:'thirdLevel',width:100,sortable:true">三级</th>
 					<th data-options="field:'fourthLevel',width:100,sortable:true">四级</th>
+					<th data-options="field:'ruzhiReport',width:100,sortable:true">入职报表</th>
+					<th data-options="field:'lizhiReport',width:100,sortable:true">离职报表</th>
+					<th data-options="field:'zhuanzhengReport',width:100,sortable:true">转正报表</th>
+					<th data-options="field:'bumenttiaozhengReport',width:100,sortable:true">部门调整报表</th>
+					<th data-options="field:'tiaoxinReport',width:100,sortable:true">调薪报表</th>
 				</tr>
 			</thead>
 		</table>
