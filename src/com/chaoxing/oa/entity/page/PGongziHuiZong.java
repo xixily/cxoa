@@ -1,6 +1,6 @@
 package com.chaoxing.oa.entity.page;
 
-public class pGongziHuiZong {
+public class PGongziHuiZong {
 	private int id;
 	private String username;
 	private Float  fGongziZonge;
@@ -10,6 +10,12 @@ public class pGongziHuiZong {
 	private String secondLevel;//二级
 	private String thirdLevel;//三级
 	private String fourthLevel;//四级
+	private Float lishiSalary;
+	private String tiaoxinReport;
+	private String ruzhiReport;
+	private String lizhiReport;
+	private String zhuanzhengReport;
+	private String bumenttiaozhengReport;
 	public int getId() {
 		return id;
 	}
@@ -63,6 +69,42 @@ public class pGongziHuiZong {
 	}
 	public void setFourthLevel(String fourthLevel) {
 		this.fourthLevel = fourthLevel;
+	}
+	public Float getLishiSalary() {
+		return lishiSalary;
+	}
+	public String getTiaoxinReport() {
+		return tiaoxinReport;
+	}
+	public String getRuzhiReport() {
+		return ruzhiReport;
+	}
+	public String getLizhiReport() {
+		return lizhiReport;
+	}
+	public String getZhuanzhengReport() {
+		return zhuanzhengReport;
+	}
+	public String getBumenttiaozhengReport() {
+		return bumenttiaozhengReport;
+	}
+	public void setLishiSalary(Float lishiSalary) {
+		this.lishiSalary = lishiSalary;
+	}
+	public void setTiaoxinReport(String tiaoxinReport) {
+		this.tiaoxinReport = tiaoxinReport;
+	}
+	public void setRuzhiReport(String ruzhiReport) {
+		this.ruzhiReport = ruzhiReport;
+	}
+	public void setLizhiReport(String lizhiReport) {
+		this.lizhiReport = lizhiReport;
+	}
+	public void setZhuanzhengReport(String zhuanzhengReport) {
+		this.zhuanzhengReport = zhuanzhengReport;
+	}
+	public void setBumenttiaozhengReport(String bumenttiaozhengReport) {
+		this.bumenttiaozhengReport = bumenttiaozhengReport;
 	}
 
 }
