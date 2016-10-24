@@ -14,8 +14,8 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicInsert(true)
 @DynamicUpdate(true)
 public class Fahuo {
-	private int orderid;//序号
-	private int hetongCode;//合同编号
+	private Integer orderid;//序号
+	private Integer hetongCode;//合同编号
 	private String d_contact;//收件人
 	private String d_company;//邮寄单位(到方
 	private String d_address;//邮寄地址
@@ -35,13 +35,14 @@ public class Fahuo {
 	 * 货单新增
 	 */
 	private String destcode;//目的地区域代码
+//	private String 
 	@Id
 	@Column(name="序号")
-	public int getOrderid() {
+	public Integer getOrderid() {
 		return orderid;
 	}
 	@Column(name="合同编号")
-	public int getHetongCode() {
+	public Integer getHetongCode() {
 		return hetongCode;
 	}
 	@Column(name="收件人")
@@ -111,10 +112,10 @@ public class Fahuo {
 	public void setDestcode(String destcode) {
 		this.destcode = destcode;
 	}
-	public void setOrderid(int orderid) {
+	public void setOrderid(Integer orderid) {
 		this.orderid = orderid;
 	}
-	public void setHetongCode(int hetongCode) {
+	public void setHetongCode(Integer hetongCode) {
 		this.hetongCode = hetongCode;
 	}
 	public void setD_contact(String d_contact) {
