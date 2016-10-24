@@ -40,7 +40,7 @@ var employee = {
 								if (row.leaveTime && row.leaveTime != '') {
 									return 'background-color:#E88282;color:#fff;font-weight:bold;';
 								}
-								if(row.zhuanzhengTime =='实习生'){
+								if(/实习生/.test(row.level)){
 									return 'background-color:yellow;';
 								}	
 								if(index%2 == 0)
@@ -241,6 +241,11 @@ var employee = {
 								sortable : true,
 								width : 100
 							}, {
+								field : 'dueSocialSecurity',
+								title : '投保时间',
+								sortable : true,
+								width : 100
+							},{
 								field : 'level',
 								title : '级别',
 								sortable : true,
@@ -293,16 +298,15 @@ var employee = {
 		else
 			{
 			userInfo = $('#employee_datas').datagrid('getSelected');
-			
+			session.employee = {};
 			}
 		if(!userInfo||!userInfo.id||userInfo.id==0){
 			$.messager.alert('操作提示：','请先选择员工,您没有选择任何员工！~');
 			return false;
 		}
-		$('#userName_info').dialog({
-			title : '查看职员信息'
-		});
+		session.employee.cellCoreEmail = userInfo.cellCoreEmail?userInfo.cellCoreEmail:'';
 		var url = "user/getUserName.action";
+		$('#updateUsesrname_form').form('clear');
 		$.getJSON(url, userInfo, function(result) {
 			if (result.success) {
 //				if(result.obj.ifSecret == "on"){
@@ -310,9 +314,12 @@ var employee = {
 //				}else{
 //					$('#btn_wagesInfo').linkbutton({disabled:false});
 //				}
+				$('#userName_info').dialog({
+					title : '查看职员信息'
+				});
 				result.obj.sercret = result.obj.ifSecret;
 				$('#updateUsesrname_form').form('load', result.obj);
-				$('#btn_employeeMailto').attr('href', 'mailto:' + result.obj.email);
+				$('#btn_employeeMailto').attr('href', 'mailto:' + result.obj.email + "?cc=" + session.employee.cellCoreEmail);
 				disabledForm('updateUsesrname_form', true);
 				$('#userName_info').window('open').window(
 						'resize',
@@ -356,11 +363,13 @@ var employee = {
 				$.messager.alert('操作提示：','请先选择员工,您没有选择任何员工！~');
 				return;
 			}
+			$('#updateUsesrname_form').form('clear');
+			session.employee.cellCoreEmail = userInfo.cellCoreEmail?userInfo.cellCoreEmail:'';
 			$.getJSON(url, userInfo, function(result) {
 				if (result.success) {
 					result.obj.sercret = result.obj.ifSecret;
 					$('#updateUsesrname_form').form('load', result.obj);
-					$('#btn_employeeMailto').attr('href', 'mailto:' + result.obj.email);
+					$('#btn_employeeMailto').attr('href', 'mailto:' + result.obj.email + "?cc=" + session.employee.cellCoreEmail);
 					$('#userName_info').window('open').window(
 							'resize',
 							{
@@ -428,10 +437,12 @@ var employee = {
 //						if (oldValue && oldValue.length > 0) {
 //							return;
 //						}
-						borthday = newValue.substr(6, 4) + '.'
-								+ newValue.substr(10, 2) + '.'
-								+ newValue.substr(12, 2);
-						$('#textbox_borth').textbox('setValue', borthday);
+						if(newValue.length==18){
+							borthday = newValue.substr(6, 4) + '.'
+									+ newValue.substr(10, 2) + '.'
+									+ newValue.substr(12, 2);
+							$('#textbox_borth').textbox('setValue', borthday);
+						}
 					}
 				})
 		$("#textbox_addrss").textbox({
