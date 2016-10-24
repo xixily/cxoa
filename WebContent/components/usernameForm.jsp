@@ -17,7 +17,7 @@
                     <td>家庭住址:</td>
                     <td><input id="textbox_addrss" class="easyui-textbox" type="text" name="homeAddress" /></td>
                     <td>毕业时间:</td>
-                    <td><input class="easyui-datebox" type="text" name="degreeCertificate" /></td>
+                    <td><input class="easyui-textbox" type="text" name="degreeCertificate" /></td>
                     <td>户口地址:</td>
                     <td><input id="textbox_hukou" class="easyui-textbox" type="text" name="registeredAddress" /></td>
                 </tr>
@@ -72,14 +72,14 @@
                     <td><input id="input_thirdLevel" class="easyui-textbox" type="text" name="thirdLevel" data-options="required:true" readonly="true"/></td>
                     <td>入职时间:</td>
                     <td><input id="date_hiredate" class="easyui-datebox" type="text" name="hiredate"
-                    data-options = "onChange:function(newValue,oldValue){
-                    var date = new Date(newValue);
-                    date.setMonth(date.getMonth + 3);
-					var data = {};
-					alert(newValue);
-					data.zhuanzhengTime = (date.getFullYear()+ '.' +((date.getMonth()+1)<10?('0'+(date.getMonth()+1)):(date.getMonth()+1)) + '.' + (date.getDate()<10?('0'+date.getDate()):date.getDate()));
-                    $('#updatewages_form').form('load',data);
-                    }"
+                    <%--data-options = "onChange:function(newValue,oldValue){--%>
+                    <%--var date = new Date(newValue);--%>
+                    <%--date.setMonth(date.getMonth + 3);--%>
+					<%--var data = {};--%>
+					<%--alert(newValue);--%>
+					<%--data.zhuanzhengTime = (date.getFullYear()+ '.' +((date.getMonth()+1)<10?('0'+(date.getMonth()+1)):(date.getMonth()+1)) + '.' + (date.getDate()<10?('0'+date.getDate()):date.getDate()));--%>
+                    <%--$('#updatewages_form').form('load',data);--%>
+                    <%--}"--%>
                      /></td>
                     <td>离职证明:</td>
                     <td>
@@ -296,7 +296,7 @@
                     </td>
                     <td>保险公司:</td>
                     <td>
-                    <input id="combox_c1" class="easyui-combobox" name="insuranceCompany" data-options="
+                    <input id="combox_bx" class="easyui-combobox" name="insuranceCompany" data-options="
                     url: 'employee/getCompany.action',
                     valueField:'cmopany',
                     textField:'cmopany',
@@ -445,11 +445,11 @@
 $('#date_hiredate').datebox({
 	onChange:function(newValue,oldValue){
 		var date = new Date(newValue);
-		var newDate1 = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + date.getDate();
+		var newDate1 = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + (date.getDate()<10 ? ('0'+(date.getDate()+1)) : (date.getDate()+1));
 		$('#signed_date').datebox('setValue',newDate1);
 		date.setMonth(date.getMonth()+3);
-		var newDate = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + date.getDate();
-		$('#zhuangZheng_datebox').datebox('setValue',newDate);
+		var newDate = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + (date.getDate()<10 ? ('0'+(date.getDate()+1)) : (date.getDate()+1));
+		$('#zhuangZheng_datebox').textbox('setValue',newDate);
 		}
 })
 $('#signed_date').datebox({
@@ -457,7 +457,7 @@ $('#signed_date').datebox({
 		var date = new Date(newValue);
 //		date.setMonth(date.getMonth()+3);
 		date.setYear(date.getFullYear()+3);
-		var newDate = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + (date.getDate()-1);
+		var newDate = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + ((date.getDate()-1)<10 ? ('0'+(date.getDate()-1)) : (date.getDate()-1));
 		$('#end_datebox').datebox('setValue',newDate);
 	}
 })
