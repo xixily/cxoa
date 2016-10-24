@@ -70,8 +70,8 @@ public class UserController {
 		json.setSuccess(true);
 		return json;
 	}
-//	@RequestMapping(value="/login",method=RequestMethod.POST)
-	@RequestMapping(value="/login")
+	@RequestMapping(value="/login",method=RequestMethod.POST)
+//	@RequestMapping(value="/login")
 	public ModelAndView login(QueryForm queryForm, HttpServletRequest request, HttpSession session, Model model ){
 		ModelAndView modelView = new ModelAndView("login.jsp");
 		if(queryForm.getEmail() == null||queryForm.getEmail().equals("")|| queryForm.getPassword() == null||queryForm.getPassword().equals("")){
@@ -80,10 +80,8 @@ public class UserController {
 			return modelView;
 		}
 		String password = queryForm.getPassword();
-		System.out.println("client password:" + password);
 		SessionInfo sessionInfo = userService.findUser(queryForm);
 		if(null != sessionInfo){
-			System.out.println("database password:"+sessionInfo.getPassword());
 			if(password.equals(sessionInfo.getPassword())){
 				sessionInfo.setResourceUrls(userService.finRoleResoures(sessionInfo.getRoleId()));
 				sessionInfo.setIp(IpUtil.getIpAddr(request));
@@ -98,6 +96,33 @@ public class UserController {
 			modelView.addObject("user_login_error", "email不存在！");
 		}
 		return modelView;
+	}
+	
+	@RequestMapping(value="/login",method=RequestMethod.GET)
+	@ResponseBody
+	public Json login(QueryForm queryForm, HttpServletRequest request, HttpSession session){
+		Json result = new Json();
+		System.out.println("login Get 方法");
+		if(queryForm.getEmail() == null||queryForm.getEmail().equals("")|| queryForm.getPassword() == null||queryForm.getPassword().equals("")){
+			result.setMsg("请您输入用户名或者密码");
+			return result;
+		}
+		String password = queryForm.getPassword();
+		SessionInfo sessionInfo = userService.findUser(queryForm);
+		if(null != sessionInfo){
+			if(password.equals(sessionInfo.getPassword())){
+				sessionInfo.setResourceUrls(userService.finRoleResoures(sessionInfo.getRoleId()));
+				sessionInfo.setIp(IpUtil.getIpAddr(request));
+				session.setAttribute(ResourceUtil.getSessionInfoName(), sessionInfo);
+				result.setSuccess(true);
+				result.setMsg("登录成功！~");
+			}else{
+				result.setMsg( "您输入的密码不正确！");
+			}
+		}else{
+			result.setMsg("email不存在！");
+		}
+		return result;
 	}
 	
 	@RequestMapping(value = "/getUserName")
