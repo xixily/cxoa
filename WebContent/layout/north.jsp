@@ -17,5 +17,17 @@
 </div>
 <div id="layout_north_zxMenu" style="width: 100px; display: none;">
 	<div class="menu-sep"></div>
+	<div onclick="north.lock(true);">锁定系统</div>
 	<div onclick="north.logoutFun(true);">退出系统</div>
+</div>
+<div id="lock_sys_dialog" class="easyui-dialog" title="解锁" style="width:400px;padding:50px 60px" data-options = "modal:true,closed:true">
+	<form id="unlock_login_form">
+	<div style="margin-bottom:20px">
+	<input id="pass" name="password" class="easyui-passwordbox" prompt="密码..." style="width:100%" data-options="label:'请输入密码解锁:',required:true">
+	</div>
+	</form>
+	<div style="text-align:center">
+	<span class="easyui-linkbutton" onclick="north.lock(false)" style="width:80px;">解锁</span>
+	<span class="easyui-linkbutton" onclick="$('#unlock_login_form').form('clear')" style="width:80px;">重置</span>
+	</div>
 </div>
