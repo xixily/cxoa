@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -134,7 +135,7 @@ public class BarCode128C {
 
 
 	/**
-	*生产Code128的条形码的code
+	*生产Code128的条形码的code 2^7
 	* 
 	* @param barCode	需要用于生成条形码的数据  如：顺丰运单号
 	* @return
@@ -202,7 +203,7 @@ public class BarCode128C {
 	//private static int m_nImageHeight = 40; // 条码的高度像素数
 	public static void main(String[] args) throws Exception{
 		
-		getCode128CPicture("610366681928", 22, "d:/code3.jpg");
+		getCode128CPicture("444813218257", 22, "d:/code.jpg");
 	}
 
 	/**
@@ -224,11 +225,15 @@ public class BarCode128C {
 	 * @param path			返回条码图形保存的路径
 	 */
 	public static void drawCode128C(String barString, int height, String path){
+		OutputStream out = null;
+		File myPNG = null;
 		try{
-			File myPNG = new File(path);
-			OutputStream out = new FileOutputStream(myPNG);
-			if (null == barString || null == out || 0 == barString.length())
-			return ;
+			myPNG = new File(path);
+			out = new FileOutputStream(myPNG);
+			if (null == barString || null == out || 0 == barString.length()){
+				out.close();
+				return ;
+			}
 			int nImageWidth = 0;
 			char[] cs = barString.toCharArray();
 			for (int i = 0; i != cs.length; i++) {
@@ -250,6 +255,14 @@ public class BarCode128C {
 			encoder.encode(bi);
 		} catch (Exception e){
 			e.printStackTrace();
+		}finally{
+			if(null != out){
+				try {
+					out.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 }
