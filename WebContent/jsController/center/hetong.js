@@ -40,39 +40,28 @@ var hetong = {
 				data_id = data_id ? data_id : 'datagrid_fahuo';
 				var fahuoInfo = $('#' + data_id).datagrid('getSelected');
 				if(fahuoInfo && fahuoInfo.orderid && fahuoInfo.orderid != 0){
-					if(fahuoInfo.d_company && fahuoInfo.d_company!=''&& fahuoInfo.d_address && fahuoInfo.d_address!=''){
-						$.post('hetong/sendKuaidi.action', fahuoInfo, function(result){
-							var result =  eval("(" + result + ")");
-							if(result.success){
-								var obj = result.obj;
-								$.messager.alter('发送成功，邮寄凭证号[' + obj.mailno +']已写入数据库。');
-//								confirmDialog.createDialog(
-//										'发送成功，邮寄凭证号[' + obj.mailno +']已写入数据库。现在是否需要打印？',
-//										function(confirmId){
-//											var data = fahuoInfo;
-//											var url = 'hetong/print.action';
-//											$.post(url, data, function(result){
-//												var result =  eval("(" + result + ")");
-//												confirmDialog.destoryDialog(confirmId);
-//												if (!result.success) {
-//													// TODO 根据返回的结果去打印
-//												}else{
-//													//TODO 获取打印页面失败
-//												}
-//											});
-//										});
-							}
-							$.messager.alert('消息', result.msg, 'info');
-						})
+					if(fahuoInfo.d_company!='' && fahuoInfo.d_address!=''&& fahuoInfo.d_contact!='' && fahuoInfo.d_tel!=''){
+//						if(fahuoInfo.j_address!='' && fahuoInfo.j_company!='' && fahuoInfo.j_contact && fahuoInfo.j_tel){
+							$.post('hetong/sendKuaidi.action', fahuoInfo, function(result){
+								var result =  eval("(" + result + ")");
+								if(result.success){
+									var obj = result.obj;
+									$.messager.alter('发送成功，邮寄凭证号[' + obj.mailno +']已写入数据库。');
+								}
+								$.messager.alert('消息', result.msg, 'info');
+							})
+//						}else{
+//							$.messager.alert('操作提示：','缺少寄方单位、地址、联系人或者联系电话，请确认！~');
+//						}
 					}else{
-						$.messager.alert('操作提示：','缺少邮寄单位或邮寄地址，请确认！~');
+						$.messager.alert('操作提示：','缺少到方单位、地址、联系人或者联系电话，请确认！~');
 					}
 				}else{
 					$.messager.alert('操作提示：','没有找到序号，或者序号为0，请确认！~');
 					return false;
 				}
 				console.log('%o', data_id);
-				
+
 			},
 			sendAllKuaidi: function(){
 				$.messager.alert('调用成功~！');
@@ -105,7 +94,7 @@ var hetong = {
 //				dialog.dialog({content:iframe})
 				var info = $('#datagrid_fahuo').datagrid('getSelected');
 				if(info && info.orderid!=0 && info.mailno && info.mailno!=""){
-					info.code_src = "template/sfTemplate/img/code_" + info.mailno + ".jpg";//运单号的路径
+					info.code_src = "template/sfTemplate/img/code_" + info.orderid + ".jpg";//运单号的路径
 					if(info.express_type && info.express_type != 0){//快件产品类别
 						if(hetong.fahuo.express_type[info.express_type]){
 							info.express_type = hetong.fahuo.express_type[info.express_type];
@@ -125,7 +114,8 @@ var hetong = {
 						tt += str.slice((i-1)*3,str.length);
 						info.mailno = tt;
 					}
-					dialog.dialog('open');
+//					dialog.dialog()
+					dialog.dialog('open',{content:''});
 					//把快递单放进iframe，再通过iframe来打印。
 					$.get('template/sfTemplate/index.html',null,function(result){
 						var html_dom = result;
@@ -159,6 +149,26 @@ var hetong = {
 						$.messager.alert("打印提示：","请您先获取快递单号！~");
 					}
 				}
+			},
+			createCode128C : function(data_id){
+				data_id = data_id ? data_id : 'datagrid_fahuo';
+				var fahuoInfo = $('#' + data_id).datagrid('getSelected');
+				confirmDialog.createDialog(
+						"你确定要重新生成序号为：[" + fahuoInfo.orderid + "]的条形码吗?",
+						function(confirmId){
+							var data = fahuoInfo;
+							var url = 'hetong/createCode128C.action';
+							$.post(url, data, function(result){
+								var result =  eval("(" + result + ")");
+								confirmDialog.destoryDialog(confirmId);
+								if (!result.success) {
+									// TODO 根据返回的结果去打印
+									 }else{
+									 //TODO 获取打印页面失败
+									 }
+								$.messager.alert("生成提示：",result.msg);
+							});
+						});
 			}
 		},
 		fapiao : {
@@ -178,7 +188,7 @@ var hetong = {
 								}, 0);
 					}
 				}
-				
+
 			},
 			endEditing : function() {
 				if (fapiaoEdit == undefined) {
