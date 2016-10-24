@@ -38,18 +38,15 @@
 			
 			<thead>
 				<tr>
-					<th data-options="field:'id',width:40">id</th> 
-					<th data-options="field:'username',width:120">姓名</th> 
-					<th data-options="field:'fGongziZonge',width:100 ">工资总额</th>
-					<th data-options="field:'fSheBaoZiFu',width:100 ">社保自付</th>
-					<th data-options="field:'fSheBaoGongsi',width:100 ">公司社保</th>
-					<th data-options="field:'firstLevel',width:100 ">一级</th>
-					<th data-options="field:'secondLevel',width:100 ">二级</th>
-					<th data-options="field:'thirdLevel',width:100 ">三级</th>
-					<th data-options="field:'fourthLevel',width:100 ">四级</th>
-			
-					
-				
+					<th data-options="field:'id',width:40,sortable:true">id</th> 
+					<th data-options="field:'username',width:120,sortable:true">姓名</th> 
+					<th data-options="field:'fGongziZonge',width:100,sortable:true">工资总额</th>
+					<th data-options="field:'fSheBaoZiFu',width:100,sortable:true">社保自付</th>
+					<th data-options="field:'fSheBaoGongsi',width:100,sortable:true">公司社保</th>
+					<th data-options="field:'firstLevel',width:100,sortable:true">一级</th>
+					<th data-options="field:'secondLevel',width:100,sortable:true">二级</th>
+					<th data-options="field:'thirdLevel',width:100,sortable:true">三级</th>
+					<th data-options="field:'fourthLevel',width:100,sortable:true">四级</th>
 				</tr>
 			</thead>
 		</table>
