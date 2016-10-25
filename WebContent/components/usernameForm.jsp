@@ -135,9 +135,12 @@
 								text: '√',
 								value: '√'
 							},{
-								text: '╳',
-								value: '╳'
-							}]" />
+								text: '√协议',
+								value: '√协议'
+							},{
+                            text: '╳',
+                            value: '╳'
+                            }]" />
                     </td>
                     <td>投保时间:</td>
                     <td><input class="easyui-textbox" type="text" name="dueSocialSecurity" /></td>
@@ -442,23 +445,43 @@
     </div>
 </div>
 <script type="text/javascript">
-$('#date_hiredate').datebox({
-	onChange:function(newValue,oldValue){
-		var date = new Date(newValue);
-		var newDate1 = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + (date.getDate()<10 ? ('0'+(date.getDate()+1)) : (date.getDate()+1));
-		$('#signed_date').datebox('setValue',newDate1);
-		date.setMonth(date.getMonth()+3);
-		var newDate = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + (date.getDate()<10 ? ('0'+(date.getDate()+1)) : (date.getDate()+1));
-		$('#zhuangZheng_datebox').textbox('setValue',newDate);
-		}
-})
-$('#signed_date').datebox({
-	onChange:function(newValue,oldValue){
-		var date = new Date(newValue);
-//		date.setMonth(date.getMonth()+3);
-		date.setYear(date.getFullYear()+3);
-		var newDate = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + ((date.getDate()-1)<10 ? ('0'+(date.getDate()-1)) : (date.getDate()-1));
-		$('#end_datebox').datebox('setValue',newDate);
-	}
-})
+    $(document).ready(function(){
+    $('#date_hiredate').datebox({
+    onChange:function(newValue,oldValue){
+    var date = new Date(newValue);
+    var newDate1 = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + (date.getDate()<10 ? ('0'+(date.getDate()+1)) : (date.getDate()+1));
+    $('#signed_date').datebox('setValue',newDate1);
+    date.setMonth(date.getMonth()+3);
+    var newDate = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + (date.getDate()<10 ? ('0'+(date.getDate())) : (date.getDate()));
+    $('#zhuangZheng_datebox').textbox('setValue',newDate);
+    }
+    })
+    $('#signed_date').datebox({
+    onChange:function(newValue,oldValue){
+    var date = new Date(newValue);
+    //		date.setMonth(date.getMonth()+3);
+    date.setYear(date.getFullYear()+3);
+    var newDate = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + ((date.getDate()-1)<10 ? ('0'+(date.getDate()-1)) : (date.getDate()-1));
+    $('#end_datebox').datebox('setValue',newDate);
+    }
+    })
+    $('#textbox_id').textbox({
+    onChange : function(newValue, oldValue) {
+    if(newValue.length==18){
+    borthday = newValue.substr(6, 4) + '.'
+    + newValue.substr(10, 2) + '.'
+    + newValue.substr(12, 2);
+    $('#textbox_borth').textbox('setValue', borthday);
+    }
+    }
+    })
+    $("#textbox_addrss").textbox({
+    onChange : function(newValue, oldValue) {
+    if (oldValue && oldValue.length > 0) {
+    return;
+    }
+    $('#textbox_hukou').textbox('setValue', newValue);
+    }
+    })
+    })
 </script>
