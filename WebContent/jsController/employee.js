@@ -431,28 +431,28 @@ var employee = {
 		});
 		$('#text_nation').textbox('setValue', '汉');
 		$('#combox_sex').combobox('setValue', '男');
-		$("#textbox_id").textbox(
-				{
-					onChange : function(newValue, oldValue) {
-//						if (oldValue && oldValue.length > 0) {
-//							return;
+//		$("#textbox_id").textbox(
+//				{
+//					onChange : function(newValue, oldValue) {
+////						if (oldValue && oldValue.length > 0) {
+////							return;
+////						}
+//						if(newValue.length==18){
+//							borthday = newValue.substr(6, 4) + '.'
+//									+ newValue.substr(10, 2) + '.'
+//									+ newValue.substr(12, 2);
+//							$('#textbox_borth').textbox('setValue', borthday);
 //						}
-						if(newValue.length==18){
-							borthday = newValue.substr(6, 4) + '.'
-									+ newValue.substr(10, 2) + '.'
-									+ newValue.substr(12, 2);
-							$('#textbox_borth').textbox('setValue', borthday);
-						}
-					}
-				})
-		$("#textbox_addrss").textbox({
-			onChange : function(newValue, oldValue) {
-				if (oldValue && oldValue.length > 0) {
-					return;
-				}
-				$('#textbox_hukou').textbox('setValue', newValue);
-			}
-		})
+//					}
+//				})
+//		$("#textbox_addrss").textbox({
+//			onChange : function(newValue, oldValue) {
+//				if (oldValue && oldValue.length > 0) {
+//					return;
+//				}
+//				$('#textbox_hukou').textbox('setValue', newValue);
+//			}
+//		})
 //		$('#date_hiredate').datebox({
 //			onChange:function(newValue,oldValue){
 //				var date = new Date(newValue);
