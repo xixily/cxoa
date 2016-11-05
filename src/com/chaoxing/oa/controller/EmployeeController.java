@@ -16,27 +16,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.chaoxing.oa.config.SysConfig;
-import com.chaoxing.oa.entity.page.Json;
-import com.chaoxing.oa.entity.page.PComboBox;
-import com.chaoxing.oa.entity.page.PCompany;
-import com.chaoxing.oa.entity.page.PHouseholdType;
-import com.chaoxing.oa.entity.page.PKaoQin;
-import com.chaoxing.oa.entity.page.PLevel;
-import com.chaoxing.oa.entity.page.PMonthWages;
-import com.chaoxing.oa.entity.page.POStructs;
-import com.chaoxing.oa.entity.page.PQuickQuery;
-import com.chaoxing.oa.entity.page.PShebao;
-import com.chaoxing.oa.entity.page.PShebaoType;
-import com.chaoxing.oa.entity.page.PSystemConfig;
-import com.chaoxing.oa.entity.page.PWagesDate;
-import com.chaoxing.oa.entity.page.PshebaoDetail;
-import com.chaoxing.oa.entity.page.Pwage_;
-import com.chaoxing.oa.entity.page.Pwages;
-import com.chaoxing.oa.entity.page.QueryForm;
-import com.chaoxing.oa.entity.page.SessionInfo;
 import com.chaoxing.oa.entity.page.SF.KuaidiList;
+import com.chaoxing.oa.entity.page.common.Json;
+import com.chaoxing.oa.entity.page.common.PComboBox;
+import com.chaoxing.oa.entity.page.common.PCompany;
+import com.chaoxing.oa.entity.page.common.PHouseholdType;
+import com.chaoxing.oa.entity.page.common.PLevel;
+import com.chaoxing.oa.entity.page.common.POStructV;
+import com.chaoxing.oa.entity.page.common.POStructs;
+import com.chaoxing.oa.entity.page.common.PQuickQuery;
+import com.chaoxing.oa.entity.page.common.QueryForm;
+import com.chaoxing.oa.entity.page.employee.PKaoQin;
+import com.chaoxing.oa.entity.page.employee.PMonthWages;
+import com.chaoxing.oa.entity.page.employee.PShebao;
+import com.chaoxing.oa.entity.page.employee.PShebaoType;
+import com.chaoxing.oa.entity.page.employee.PWagesDate;
+import com.chaoxing.oa.entity.page.employee.PshebaoDetail;
+import com.chaoxing.oa.entity.page.employee.Pwage_;
+import com.chaoxing.oa.entity.page.employee.Pwages;
+import com.chaoxing.oa.entity.page.system.PSystemConfig;
+import com.chaoxing.oa.entity.page.system.SessionInfo;
 import com.chaoxing.oa.service.EmployeeInfoService;
+import com.chaoxing.oa.system.SysConfig;
+import com.chaoxing.oa.system.cache.CacheManager;
 import com.chaoxing.oa.util.DateUtil;
 import com.chaoxing.oa.util.ResourceUtil;
 import com.chaoxing.oa.util.SFUtil;
@@ -94,7 +96,7 @@ public class EmployeeController {
 	@RequestMapping(value = "/getOStruct")
 	@ResponseBody
 	public List<POStructs> getOStruct(){
-		List<POStructs> lists = employeeInfoService.getOStruct();
+		List<POStructs> lists = employeeInfoService.findOStruct();
 		return lists;
 	}
 	
@@ -104,6 +106,62 @@ public class EmployeeController {
 		
 		Map<String,Object> osInfo = employeeInfoService.getOStruct(queryform,0);
 		return osInfo;
+	}
+	
+	@RequestMapping(value = "/getAllJiagou")
+	@ResponseBody
+	public Map<String,Object> queryJiagou(POStructV poStructV){
+		Map<String,Object> osInfo = employeeInfoService.findAllStruct(poStructV);
+		return osInfo;
+	}
+	
+	@RequestMapping(value = "/updateOrsaveOS")
+	@ResponseBody
+	public Json updateOrsaveOS(POStructV poStructV){
+		Json result = new Json();
+		if(null !=poStructV.getFourthLevel() && null != poStructV.getId()){
+			if(-1 == poStructV.getId()){
+				poStructV.setId(null);
+			}
+			if(employeeInfoService.updateOrSave(poStructV)>0){
+				CacheManager.getInstance().remove(SysConfig.CACHE_COMMON + SysConfig.COMMON_JIAGOU);
+				result.setMsg("更新成功");
+				result.setSuccess(true);
+			}
+		}else{
+			result.setMsg("您输入的不合法，请检查！~");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/deleteOS")
+	@ResponseBody
+	public Json deleteOs(POStructV poStructV){
+		Json result = new Json();
+		if(null !=poStructV.getFourthLevel() && null != poStructV.getId()){
+			if(-1 == poStructV.getId()){
+				result.setSuccess(true);
+				return result;
+			}
+			if(employeeInfoService.deleteOS(poStructV)>0){
+				CacheManager.getInstance().remove(SysConfig.CACHE_COMMON + SysConfig.COMMON_JIAGOU);
+				result.setMsg("删除成功！");
+				result.setSuccess(true);
+			}
+		}else{
+			result.setMsg("您输入的不合法，请检查！~");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/queryOStruct")
+	@ResponseBody
+	public List<POStructV> queryOStruct(POStructV pOStructV){
+		List<POStructV> lists = null;
+		if(pOStructV.getId()!=null || pOStructV.getLevel()!=null){
+			lists = employeeInfoService.findOStruct(pOStructV, 0);
+		}
+		return lists;
 	}
 	
 	@RequestMapping(value = "/queryStruct")
