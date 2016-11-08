@@ -1,23 +1,123 @@
 package com.chaoxing.oa.test;
 
 import java.io.File;
-import java.math.BigDecimal;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
-import org.apache.poi.util.SystemOutLogger;
-
-import com.chaoxing.oa.entity.page.PWagesDate;
-import com.chaoxing.oa.util.Md5AndBase64;
-import com.chaoxing.oa.util.XMLEncoder;
+import com.chaoxing.oa.entity.page.common.POStructs;
+import com.chaoxing.oa.entity.page.employee.PRenshiEmployee;
+import com.chaoxing.oa.entity.page.employee.PWagesDate;
+import com.chaoxing.oa.util.SXSSFWriter;
 
 public class Test {
 
 	public static void main(String[] args) {
-		
+		Math.random();
+		List<Integer> list = new ArrayList<Integer>();
+		for (int i = 0; i <20 ;i++) {
+//			System.out.println((int)(Math.random()*10));
+			list.add((int)(Math.random()*10));
+		}
+		Iterator<Integer> it = list.iterator();
+		System.out.println("第一次循环");
+		while(it.hasNext()){
+			int i = it.next();
+			if(i%2 == 0){
+				System.out.println("被移除的："+i);
+				it.remove();
+//				list.remove(i);
+			}
+		}
+		it = list.iterator();
+		System.out.println("第二次循环");
+		while(it.hasNext()){
+			System.out.println("剩下的：" + it.next());
+		}
+//		Float i = 1.39f;
+//		float b;
+//		System.out.println((float)i);
+//		b=i;
+//		System.out.println(b*i);
+//		POStructs pos = new POStructs();
+//		Set<POStructs> cc = new HashSet<POStructs>();
+//		POStructs pp = new POStructs();
+//		pp.setId(33);
+//		cc.add(pp);
+//		pos.setChildren(cc);
+////		pos.setChildren(new HashSet<POStructs>());
+//		pos.setId(1);
+//		pos.setCellCore("xiaoli");
+//		pos.setCellCoreEmail("xiaoli@chaoxing.com");
+//		pos.setDepartmentId(123);
+//		pos.setFirstLevel("zhong");
+//		pos.setSecondLevel("qian");
+//		pos.setThirdLevel("xiaoshou");
+//		pos.setFourthLevel("jiaowu");
+//		pos.setGuidance("xiaoliu");
+//		pos.setGuidanceEmail("xiaoliu@chaoxing.com");
+//		pos.setLevel(4);
+//		pos.setParentId(111);
+//		pos.setPreId(111);
+//		pos.setSortCode("ABC");
+//		pos.setState("bjd");
+//		pos.setTaxStructure("jiaowu");
+//		Class<?> clazz = pos.getClass();
+//		Field[] fs = clazz.getDeclaredFields();
+//		Method method = null;
+//		String name;
+//		Object value;
+//		String type;
+//		for (Field field : fs) {
+//			type = field.getType().getSimpleName();
+//			name = field.getName();
+//			try {
+//				method = clazz.getMethod("get" + name.substring(0, 1).toUpperCase() + name.substring(1));
+//				value = method.invoke(pos);
+//				System.out.println("====>name:" + name);
+//				System.out.println("method:" + method.getName());
+//				System.out.println("value:" + value);
+////				if(value instanceof Object){
+////					System.out.println("我是非基础类型" + value);
+////				}
+//				System.out.println("type:" + type);
+//			} catch (NoSuchMethodException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (SecurityException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (IllegalAccessException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (IllegalArgumentException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (InvocationTargetException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//		String web_url = Test.class.getResource("").getFile().toString();
+//		String web_url2 = Test.class.getResource("/").getFile().toString().split("WEB-INF/")[0] + "template/sfTemplate/img/";
+//		
+//		System.out.println(web_url.split("WEB-INF/")[0]);
+//		System.out.println(web_url2.split("WEB-INF/")[0]);
+//		System.out.println(Test.class.getResource("").getFile().toString());
+//		System.out.println(Test.class.getClassLoader().getResource("").getPath());
+//		System.out.println(System.getProperty("config"));
+//		Test.class.getResource("/").getFile().toString();
+//		Map<String,Object> params = new HashMap<String,Object>();
+//		params.put("a", 1);
+//		params.put("a", 2);
+//		System.out.println(params.get("a"));
 //		System.out.println("201610".substring(0, 6));;
 //		try {
 //			Integer i = Integer.valueOf("你是谁是啊");
@@ -30,8 +130,8 @@ public class Test {
 //		Calendar cal = Calendar.getInstance();
 //		String afterDate = df.format(cal.getTime());
 //		System.out.println(afterDate);
-		String hql = "select t.id,t.bb,t.cc from username ,wages where salfk";
-		System.out.println(hql.split("from")[1]);
+//		String hql = "select t.id,t.bb,t.cc from username ,wages where salfk";
+//		System.out.println(hql.split("from")[1]);
 ////		String xml = Md5AndBase64.loadFile(TestHttpProvider.class.getClass().getResource("/").getFile().toString() + "SFTemplate.xml");
 //		String dir = Test.class.getClass().getResource("/").getFile().toString();
 //		System.out.println(dir);
@@ -185,4 +285,115 @@ public class Test {
 		   }
 		  }
 		 }
+	 public void tt(List<PRenshiEmployee> renshiEmployees, SXSSFWriter sxffWriter){
+		 for (PRenshiEmployee pRenshiEmployee : renshiEmployees) {
+				sxffWriter.createRow();
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getUsername());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getFirstLevel());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getSecondLevel());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getThirdLevel());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getFourthLevel());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getPosition());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getSex());
+				//add
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getIdentityCard());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getBorthDay());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getNation());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getDegree());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getGraduatedSchool());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getMajor());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getHomeAddress());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getPhoneNumber());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getHomeNumber());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getHiredate());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getZhuanzhengTime());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getLeaveTime());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getEarlyEntryDate());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getHouseholdType());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getInsurance());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getInsuranceCompany());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getCompany());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getResume());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getPhoto());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getDegreeCertificate());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getIdentityCardCopy());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getFamilyRegister());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getLeavingCertificate());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getContract());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getManagementSystem());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getEntryForm());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getSignedTime());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getTerminationTime());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getHouseholdType());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getPostcode());
+				
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getWorkPlace());
+				//add
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getPastLeaveTime());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getCellCore());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getCellCoreEmail());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getGuidance());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getGuidanceEmail());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getSocialSecurityHospital());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getLevel());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getEmail());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getRuzhiReport());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getLizhiReport());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getZhuanzhengReport());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getBumentiaozhengReport());
+				
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getMaritalStatus());
+			}
+	 }
 }

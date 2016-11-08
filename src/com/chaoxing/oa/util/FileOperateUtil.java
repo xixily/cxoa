@@ -23,7 +23,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;  
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.chaoxing.oa.config.SysConfig; 
+import com.chaoxing.oa.system.SysConfig; 
 
 public class FileOperateUtil {
 	 private static final String REALNAME = "realName";  

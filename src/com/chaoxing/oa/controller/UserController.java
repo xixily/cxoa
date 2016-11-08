@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.chaoxing.oa.config.SysConfig;
-import com.chaoxing.oa.entity.page.Json;
-import com.chaoxing.oa.entity.page.QueryForm;
-import com.chaoxing.oa.entity.page.SessionInfo;
-import com.chaoxing.oa.entity.page.PUserName;
+import com.chaoxing.oa.entity.page.common.Json;
+import com.chaoxing.oa.entity.page.common.QueryForm;
+import com.chaoxing.oa.entity.page.employee.PUserName;
+import com.chaoxing.oa.entity.page.system.SessionInfo;
 import com.chaoxing.oa.service.UserServiceI;
+import com.chaoxing.oa.system.SysConfig;
 import com.chaoxing.oa.util.IpUtil;
 import com.chaoxing.oa.util.ResourceUtil;
 
@@ -220,7 +220,6 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/modifyPassword",method=RequestMethod.POST)
-	@ResponseBody
 	public ModelAndView updatePassword(QueryForm queryForm, HttpSession session, Model model ) {
 		ModelAndView modelView = new ModelAndView("login.jsp");
 		if(queryForm.getEmail()==null || queryForm.getPassword()==null || queryForm.getNewpassword()==null || queryForm.getNewpassword().length()<8){
@@ -239,7 +238,7 @@ public class UserController {
 		return modelView;
 	}
 	
-	@RequestMapping(value = "/modifyPassword",method=RequestMethod.GET)
+	@RequestMapping(value = "/modifyPass",method=RequestMethod.POST)
 	@ResponseBody
 	public Json updatePassword_(QueryForm queryForm, HttpSession session) {
 		Json result = new Json();
@@ -249,8 +248,12 @@ public class UserController {
 		}
 		long r = userService.updatePassword(queryForm);
 		if (r != 0) {
+			if (session != null) {
+				session.invalidate();
+				System.out.println("*********session失效**********");
+			}
 			result.setSuccess(true);
-			result.setMsg("更新成功！");
+			result.setMsg("更新成功,请重新登录！~");
 		} else {
 			result.setErrorCode(SysConfig.REQUEST_ERROR);
 			result.setMsg("更新失败,可能是邮箱或者密码错误！~");

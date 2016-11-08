@@ -18,7 +18,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
-import com.chaoxing.oa.entity.page.ExportModelVo;
+import com.chaoxing.oa.entity.page.common.ExportModelVo;
 
 public class SXSSFWriter {
 	public static final String DEFAULT_FOLDER = ResourceUtil.getDownloadDirectory();

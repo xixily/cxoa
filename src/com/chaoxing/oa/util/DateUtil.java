@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.chaoxing.oa.entity.page.PWagesDate;
+import com.chaoxing.oa.entity.page.employee.PWagesDate;
 
 /**
  * 日期工具类

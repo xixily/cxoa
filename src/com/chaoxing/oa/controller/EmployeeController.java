@@ -16,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.chaoxing.oa.entity.page.SF.KuaidiList;
 import com.chaoxing.oa.entity.page.common.Json;
 import com.chaoxing.oa.entity.page.common.PComboBox;
 import com.chaoxing.oa.entity.page.common.PCompany;
@@ -63,20 +62,6 @@ public class EmployeeController {
 		return userInfos;
 	}
 	
-	/*//TODO 方法貌似弃用了,有时间整理一下删除掉
-	@RequestMapping(value = "/getQueryForm")
-	public ModelAndView getQueryForm(HttpSession session, Model model){
-		if(session.getAttribute(ResourceUtil.getSessionInfoName()) != null){
-			Map<String, Object> results = employeeInfoService.getQueryForm();
-			ModelAndView modelView = new ModelAndView();
-			modelView.setViewName("/components/queryform");
-			modelView.addObject("levels", results.get("levels"));
-			modelView.addObject("companys", results.get("companys"));
-			return modelView;
-		}
-		return null;
-	}
-	*/
 	@RequestMapping(value = "/getFourThLevel")
 	@ResponseBody
 	public Json getFourthLevel(){
@@ -100,13 +85,13 @@ public class EmployeeController {
 		return lists;
 	}
 	
-	@RequestMapping(value = "/queryJiagou")
-	@ResponseBody
-	public Map<String,Object> queryJiagou(QueryForm queryform){
-		
-		Map<String,Object> osInfo = employeeInfoService.getOStruct(queryform,0);
-		return osInfo;
-	}
+//	@RequestMapping(value = "/queryJiagou")
+//	@ResponseBody
+//	public Map<String,Object> queryJiagou(QueryForm queryform){
+//		
+//		Map<String,Object> osInfo = employeeInfoService.getOStruct(queryform,0);
+//		return osInfo;
+//	}
 	
 	@RequestMapping(value = "/getAllJiagou")
 	@ResponseBody
@@ -164,12 +149,12 @@ public class EmployeeController {
 		return lists;
 	}
 	
-	@RequestMapping(value = "/queryStruct")
+/*	@RequestMapping(value = "/queryStruct")
 	@ResponseBody
 	public Map<String,Object> queryStruct(QueryForm queryform){
 		Map<String,Object> structInfo = employeeInfoService.findStruct(queryform,0);
 		return structInfo;
-	}
+	}*/
 	
 	@RequestMapping(value = "/getLevel")
 	@ResponseBody
@@ -320,7 +305,6 @@ public class EmployeeController {
 	@RequestMapping(value = "/updateWages")
 	@ResponseBody
 	public Json updateWages(Pwage_ pwages, HttpSession session){
-		//TODO 修改策略，更新的时候只更改部分字段。
 		Json result = new Json();
 //		PSystemConfig ps = employeeInfoService.getSysconfig(pwages.getCompany(), SysConfig.SHEBAO_SUMMARY);
 //		if(ps==null || ps.getLocked()==0){
@@ -1097,11 +1081,11 @@ public class EmployeeController {
 		Map<String, Object> mm = new HashMap<String, Object>();
 		System.out.println(request.getContextPath());
 		mm.put("requestt-contentPath", request.getServletContext().getRealPath("/"));
-		mm.put("cxoa", request.getRealPath("cxoa"));
-		mm.put("sss", request.getRealPath(""));
+//		mm.put("cxoa", request.getRealPath("cxoa"));
+//		mm.put("sss", request.getRealPath(""));
 		mm.put("getPathTranslated", request.getPathTranslated());
 		mm.put("getServletPath", request.getServletPath());
-		mm.put("getRealPath:upload", request.getRealPath("\\uploadFolder\\"));
+//		mm.put("getRealPath:upload", request.getRealPath("\\uploadFolder\\"));
 		mm.put("classPath", this.getClass().getResource("").getFile().toString());
 		mm.put("SFUtil:classPath", SFUtil.class.getResource("/").getFile().toString());
 		mm.put("session-servletContext", session.getServletContext().getRealPath("/"));
@@ -1132,7 +1116,16 @@ public class EmployeeController {
 	@RequestMapping(value = "/getgongzihuizong")
 	@ResponseBody
 	public Map<String, Object>  getgongzihuizong(QueryForm queryform){
-		Map<String, Object> pshebaos = employeeInfoService.getgongzihuizong(queryform);
+		QueryForm queryForm = new QueryForm();
+		queryForm.setOrder(queryform.getOrder());
+		queryForm.setSort(queryform.getSort());
+		queryForm.setPage(queryform.getPage());
+		queryForm.setRows(queryform.getRows());;
+		queryForm.setFourthLevel(queryform.getFourthLevel());
+		queryForm.setUsername(queryform.getUsername());
+		queryForm.setConfigurable(queryform.getConfigurable());
+		queryForm.setConfigurable_value(queryform.getConfigurable_value());
+		Map<String, Object> pshebaos = employeeInfoService.getgongzihuizong(queryForm);
 		return pshebaos;
 	}
 	

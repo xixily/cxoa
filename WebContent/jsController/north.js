@@ -72,11 +72,32 @@ var north = {
 					$.getJSON('user/login.action',data,function(result){
 						if (result.success) {
 							$('#lock_sys_dialog').dialog('close');
-							$.messager.alert("解锁提示：",result.msg);
 						}
+						$.messager.alert("解锁提示：",result.msg);
 					})
 				}
 			}
 		}
+	},
+modifyPassword : function(flag){
+	if(!flag){
+		$('#login_frm').form('clear');
+		$('#login_frm').form('load',{email:session.user.email});
+		$('#login_dialog').dialog('open');
+	}else{
+		$('#login_frm').form('submit',{
+			onSubmit:function(){
+				return $(this).form('enableValidation').form('validate');
+			},
+			success:function(result){
+				result = eval("("+result+")");
+				if(result.success){
+					$.messager.alert('更新提示：',result.msg);
+					location.replace('/cxoa');
+				}
+				$.messager.alert('更新提示：',result.msg);
+			}
+		});
+	}
 	}
 }

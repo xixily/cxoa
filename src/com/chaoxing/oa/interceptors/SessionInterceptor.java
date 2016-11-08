@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.chaoxing.oa.entity.page.SessionInfo;
+import com.chaoxing.oa.entity.page.system.SessionInfo;
 import com.chaoxing.oa.util.ResourceUtil;
 
 public class SessionInterceptor implements HandlerInterceptor {

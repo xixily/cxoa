@@ -1,5 +1,6 @@
 package com.chaoxing.oa.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,15 +15,20 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.chaoxing.oa.entity.page.PKaoQin;
-import com.chaoxing.oa.entity.page.PMonthWages;
-import com.chaoxing.oa.entity.page.PRenshiEmployee;
-import com.chaoxing.oa.entity.page.PSheBaoSummary;
-import com.chaoxing.oa.entity.page.PshebaoDetail;
-import com.chaoxing.oa.entity.page.Pwages;
-import com.chaoxing.oa.entity.page.QueryForm;
+import com.chaoxing.oa.entity.page.common.POStructV;
+import com.chaoxing.oa.entity.page.common.QueryForm;
+import com.chaoxing.oa.entity.page.employee.PKaoQin;
+import com.chaoxing.oa.entity.page.employee.PMonthWages;
+import com.chaoxing.oa.entity.page.employee.PRenshiEmployee;
+import com.chaoxing.oa.entity.page.employee.PSheBaoSummary;
+import com.chaoxing.oa.entity.page.employee.PshebaoDetail;
+import com.chaoxing.oa.entity.page.employee.Pwages;
+import com.chaoxing.oa.entity.page.hetong.PFahuo;
 import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.service.ExportExcelService;
+import com.chaoxing.oa.system.SysConfig;
+import com.chaoxing.oa.system.cache.CacheManager;
+import com.chaoxing.oa.util.BarCode128C;
 import com.chaoxing.oa.util.FileOperateUtil;
 
 @Controller
@@ -164,6 +170,7 @@ public class FileOperateController {
     	
     	return null;
     }
+    
     @RequestMapping(value = "/exportShebaoCompany")
     public ModelAndView exportShebaoCompany(QueryForm queryForm, HttpServletRequest request, HttpServletResponse response, HttpSession session){
     	Map<String, Object> res = employeeInfoService.getShebaoCompany(queryForm, session,1);
@@ -183,6 +190,24 @@ public class FileOperateController {
     	return null;
     }
     
+    @RequestMapping(value = "/exportOS")
+    public ModelAndView exportOStruct(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+    	Map<String, Object> res = employeeInfoService.findAllStruct(null);
+    	List<POStructV> pos = (List<POStructV>) res.get("rows");
+    	if(pos!=null&&pos.size()>0){
+    		String storeName = exportExcelService.getPOStructExcel(pos);  
+    		String realName = "架构表.xlsx";  
+    		String contentType = "application/octet-stream";  
+    		try {
+    			FileOperateUtil.download(request, response, storeName, contentType,realName);
+    		} catch (Exception e) {
+    			System.out.println("文件下载失败！");
+    			e.printStackTrace();
+    		} 
+    	}
+    	return null;
+    }
+    
     @RequestMapping(value = "/exportShebaoSummary")
     public ModelAndView exportShebaoSummary(QueryForm queryForm, HttpServletRequest request, HttpServletResponse response, HttpSession session){
     	Map<String, Object> res = employeeInfoService.getShebaoSummary(queryForm, session,1);
@@ -199,6 +224,17 @@ public class FileOperateController {
     		} 
     	}
     	
+    	return null;
+    }
+    @RequestMapping(value = "/codeImage")
+    public ModelAndView getcodeImage(PFahuo pfahuo, HttpServletRequest request, HttpServletResponse response, HttpSession session){
+    	if(null != pfahuo.getMailno()&&""!=pfahuo.getMailno()&&!"".equals(pfahuo.getOrderid())){
+    		try {
+				BarCode128C.getCode128CPicture(pfahuo.getMailno(), 22, request, response );
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+    	}
     	return null;
     }
 }

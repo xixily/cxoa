@@ -2,15 +2,17 @@ package com.chaoxing.oa.service.impl;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.chaoxing.oa.entity.page.PKaoQin;
-import com.chaoxing.oa.entity.page.PMonthWages;
-import com.chaoxing.oa.entity.page.PRenshiEmployee;
-import com.chaoxing.oa.entity.page.PSheBaoSummary;
-import com.chaoxing.oa.entity.page.PshebaoDetail;
+import com.chaoxing.oa.entity.page.common.POStructV;
+import com.chaoxing.oa.entity.page.employee.PKaoQin;
+import com.chaoxing.oa.entity.page.employee.PMonthWages;
+import com.chaoxing.oa.entity.page.employee.PRenshiEmployee;
+import com.chaoxing.oa.entity.page.employee.PSheBaoSummary;
+import com.chaoxing.oa.entity.page.employee.PshebaoDetail;
 import com.chaoxing.oa.service.ExportExcelService;
 import com.chaoxing.oa.util.SXSSFWriter;
 
@@ -535,6 +537,87 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 		}
 		return null;
 	}
+	
+	@Override
+	public String getPOStructExcel(List<POStructV> pos) {
+
+		SXSSFWriter sxffWriter = null;
+		try {
+			sxffWriter = new SXSSFWriter("jiagouExcel");
+			//文件绝对路径
+			String filePath = SXSSFWriter.DEFAULT_FOLDER + sxffWriter.getFileName();
+			sxffWriter.createNewSheet("查询结果excel表");
+			createPOStruct(sxffWriter);
+			Iterator<POStructV> it = pos.iterator();
+			while(it.hasNext()){
+				POStructV po = it.next();
+				if(po.getLevel()!=4){
+					continue;
+				}
+				sxffWriter.createRow();
+				sxffWriter.createCell();
+				sxffWriter.setData(String.valueOf(po.getId()));
+				sxffWriter.createCell();
+				sxffWriter.setData(po.getFirstLevel());
+				sxffWriter.createCell();
+				sxffWriter.setData(po.getSecondLevel());
+				sxffWriter.createCell();
+				sxffWriter.setData(po.getThirdLevel());
+				sxffWriter.createCell();
+				sxffWriter.setData(po.getFourthLevel());
+				sxffWriter.createCell();
+				sxffWriter.setData(po.getCellCore());
+				sxffWriter.createCell();
+				sxffWriter.setData(po.getCellCoreEmail());
+				sxffWriter.createCell();
+				sxffWriter.setData(po.getGuidance());
+				sxffWriter.createCell();
+				sxffWriter.setData(po.getGuidanceEmail());
+				sxffWriter.createCell();
+				sxffWriter.setData(po.getSortCode());
+				sxffWriter.createCell();
+				sxffWriter.setData(po.getTaxStructure());
+			}
+			sxffWriter.flush();
+			return filePath;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				sxffWriter.destroy();
+			} catch (IOException e) {
+				System.out.println("销毁失败！");
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+	private void createPOStruct(SXSSFWriter sxffWriter) {
+		sxffWriter.createRow();
+		sxffWriter.createCell();
+		sxffWriter.setStringData("id");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("一级");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("二级");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("三级");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("四级");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("细胞核");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("细胞核邮箱");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("指导");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("指导邮箱");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("排序代码");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("报税架构");
+	}
 
 	private void createShebaoSummaryHeader(SXSSFWriter sxffWriter) {
 		sxffWriter.createRow();
@@ -597,7 +680,7 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 	}
 
 	@SuppressWarnings("unused")
-	private void createMonthWagesHeader(SXSSFWriter sxffWriter, Class clazz) {
+	private void createMonthWagesHeader(SXSSFWriter sxffWriter, Class<?> clazz) {
 		//TODO 自动生成头
 //		sxffWriter.createRow();
 //		sxffWriter.createCell();

@@ -14,7 +14,7 @@ public interface BaseDaoI<T> {
 
 	public void update(T o) throws Exception;
 
-	public void saveOrUpdate(T o);
+	public void saveOrUpdate(T o) throws HibernateException;
 
 	public T get(Class<T> c, Serializable id);
 

@@ -11,12 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chaoxing.oa.dao.BaseDaoI;
-import com.chaoxing.oa.entity.page.QueryForm;
-import com.chaoxing.oa.entity.page.SessionInfo;
-import com.chaoxing.oa.entity.page.PUserName;
-import com.chaoxing.oa.entity.po.OrganizationStructure;
-import com.chaoxing.oa.entity.po.RoleResources;
-import com.chaoxing.oa.entity.po.UserName;
+import com.chaoxing.oa.entity.page.common.QueryForm;
+import com.chaoxing.oa.entity.page.employee.PUserName;
+import com.chaoxing.oa.entity.page.system.SessionInfo;
+import com.chaoxing.oa.entity.po.commmon.OrganizationStructure;
+import com.chaoxing.oa.entity.po.employee.UserName;
+import com.chaoxing.oa.entity.po.system.RoleResources;
 import com.chaoxing.oa.service.UserServiceI;
 
 @Service("userService")
@@ -184,7 +184,7 @@ public class UserServiceImpl implements UserServiceI {
 		params.put("newpassword", queryForm.getNewpassword());
 		params.put("email", queryForm.getEmail());
 		params.put("password", queryForm.getPassword());
-		return usernameDao.executeHql(hql);
+		return usernameDao.executeHql(hql,params);
 	}
 	
 }

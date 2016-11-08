@@ -1,14 +1,15 @@
 package com.chaoxing.oa.controller;
 
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.chaoxing.oa.entity.page.PMenus;
+import com.chaoxing.oa.entity.page.system.PMenus;
+import com.chaoxing.oa.entity.page.system.PMenus_;
 import com.chaoxing.oa.service.SystemService;
 
 @Controller
@@ -37,5 +38,15 @@ public class SystemController {
 //			}
 //		}
 		return pmenus;
+	}
+	
+	@RequestMapping(value = "/getAllMenus")
+	@ResponseBody
+	public Map<String,Object> queryJiagou(PMenus_ pmenus){
+		if(pmenus==null){
+			Map<String,Object> meunsInfo = systemService.findAllMenus(pmenus);
+			return meunsInfo;
+		}
+		return null;
 	}
 }

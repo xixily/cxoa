@@ -5,24 +5,25 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import com.chaoxing.oa.entity.page.PComboBox;
-import com.chaoxing.oa.entity.page.PCompany;
-import com.chaoxing.oa.entity.page.PHouseholdType;
-import com.chaoxing.oa.entity.page.PKaoQin;
-import com.chaoxing.oa.entity.page.PLevel;
-import com.chaoxing.oa.entity.page.PMonthWages;
-import com.chaoxing.oa.entity.page.POStructs;
-import com.chaoxing.oa.entity.page.PQuickQuery;
-import com.chaoxing.oa.entity.page.PRenshiEmployee;
-import com.chaoxing.oa.entity.page.PShebao;
-import com.chaoxing.oa.entity.page.PShebaoType;
-import com.chaoxing.oa.entity.page.PSystemConfig;
-import com.chaoxing.oa.entity.page.PWagesDate;
-import com.chaoxing.oa.entity.page.PshebaoDetail;
-import com.chaoxing.oa.entity.page.Pwages;
-import com.chaoxing.oa.entity.page.QueryForm;
-import com.chaoxing.oa.entity.page.SessionInfo;
-import com.chaoxing.oa.entity.po.UserName;
+import com.chaoxing.oa.entity.page.common.PComboBox;
+import com.chaoxing.oa.entity.page.common.PCompany;
+import com.chaoxing.oa.entity.page.common.PHouseholdType;
+import com.chaoxing.oa.entity.page.common.PLevel;
+import com.chaoxing.oa.entity.page.common.POStructV;
+import com.chaoxing.oa.entity.page.common.POStructs;
+import com.chaoxing.oa.entity.page.common.PQuickQuery;
+import com.chaoxing.oa.entity.page.common.QueryForm;
+import com.chaoxing.oa.entity.page.employee.PKaoQin;
+import com.chaoxing.oa.entity.page.employee.PMonthWages;
+import com.chaoxing.oa.entity.page.employee.PRenshiEmployee;
+import com.chaoxing.oa.entity.page.employee.PShebao;
+import com.chaoxing.oa.entity.page.employee.PShebaoType;
+import com.chaoxing.oa.entity.page.employee.PWagesDate;
+import com.chaoxing.oa.entity.page.employee.PshebaoDetail;
+import com.chaoxing.oa.entity.page.employee.Pwages;
+import com.chaoxing.oa.entity.page.system.PSystemConfig;
+import com.chaoxing.oa.entity.page.system.SessionInfo;
+import com.chaoxing.oa.entity.po.employee.UserName;
 
 public interface EmployeeInfoService {
 	public List<PRenshiEmployee> getRenshiUserName();
@@ -41,7 +42,7 @@ public interface EmployeeInfoService {
 
 	public List<PComboBox> getForthLevel();
 
-	public List<POStructs> getOStruct();
+	public List<POStructs> findOStruct();
 	
 	public List<PLevel> getLevel();
 
@@ -119,11 +120,19 @@ public interface EmployeeInfoService {
 
 	public PMonthWages getMonthWages(Integer id);
 
-	public Map<String,Object> getOStruct(QueryForm queryform,int isExport);
+//	public Map<String,Object> getOStruct(QueryForm queryform,int isExport);
+	//重写
+	public List<POStructV> findOStruct(POStructV pOStructV,int isExport);
 	
+	public Map<String,Object> findAllStruct(POStructV pOStructV);
+	
+	public int updateOrSave(POStructV poStructV);
+
+	public int deleteOS(POStructV poStructV);
+
 	public long getOStructCount(String hql, Map<String, Object> params);
 
-	public Map<String, Object> findStruct(QueryForm queryform, int isExport);
+//	public Map<String, Object> findStruct(QueryForm queryform, int isExport);
 
 	public long updateSysconfig(PSystemConfig ps);
 	
@@ -140,5 +149,7 @@ public interface EmployeeInfoService {
 	public long fafang();
 	
 	public Map<String, Object> getgongzihuizong(QueryForm queryForm);
+
+
 
 }

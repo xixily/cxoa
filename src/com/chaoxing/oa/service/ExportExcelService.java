@@ -2,11 +2,12 @@ package com.chaoxing.oa.service;
 
 import java.util.List;
 
-import com.chaoxing.oa.entity.page.PKaoQin;
-import com.chaoxing.oa.entity.page.PMonthWages;
-import com.chaoxing.oa.entity.page.PRenshiEmployee;
-import com.chaoxing.oa.entity.page.PSheBaoSummary;
-import com.chaoxing.oa.entity.page.PshebaoDetail;
+import com.chaoxing.oa.entity.page.common.POStructV;
+import com.chaoxing.oa.entity.page.employee.PKaoQin;
+import com.chaoxing.oa.entity.page.employee.PMonthWages;
+import com.chaoxing.oa.entity.page.employee.PRenshiEmployee;
+import com.chaoxing.oa.entity.page.employee.PSheBaoSummary;
+import com.chaoxing.oa.entity.page.employee.PshebaoDetail;
 
 public interface ExportExcelService {
 
@@ -20,4 +21,6 @@ public interface ExportExcelService {
 	public String getShebaoCompany(List<PshebaoDetail> pShebaoDetails);
 
 	public String getShebaoSummary(List<PSheBaoSummary> pShebaoSummarys);
+
+	public String getPOStructExcel(List<POStructV> pos);
 }

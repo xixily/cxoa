@@ -88,6 +88,7 @@ public class ResourceUtil {
 	public static final String getPort1(){
 		return bundle.getString("port1");
 	}
+	
 	/**
 	 * 获得下载文件的目录(url2)
 	 * @return
@@ -95,6 +96,7 @@ public class ResourceUtil {
 	public static final String getUrl2(){
 		return bundle.getString("url2");
 	}
+	
 	/**
 	 * 获得下载文件的目录(port2)
 	 * @return
@@ -102,12 +104,17 @@ public class ResourceUtil {
 	public static final String getPort2(){
 		return bundle.getString("port2");
 	}
+	
 	/**
 	 * 获得下载文件的目录(port2)
 	 * @return
 	 */
 	public static final String getWebcontent(){
 		return bundle.getString("web_content");
+	}
+
+	public static final String getKey(String key) {
+		return bundle.getString(key);
 	}
 	
 }

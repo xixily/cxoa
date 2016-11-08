@@ -66,6 +66,8 @@
 						<value>/user/login.action</value>
 						<value>/user/modifyPassword.action</value>
 						<value>/user/logout.action</value>
+						<!-- <value>/employee/queryOStruct.action</value> -->
+						<!-- <value>/file/codeImage.action</value> -->
 						<!-- <value>/employee/getCompany.action</value> -->
 						<!-- <value>/druidController/druid.action</value> -->
 					</list>
@@ -88,6 +90,7 @@
 						<value>/employee/getInsuranceCompany.action</value>
 						<value>/system/queryMenus.action</value>
 						<value>/user/modifyPassword.action</value>
+						<!-- <value>/file/codeImage.action</value> -->
 					</list>
 				</property>
 			</bean>

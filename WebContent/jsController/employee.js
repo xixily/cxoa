@@ -34,6 +34,7 @@ var employee = {
 							singleSelect : true,// 是否单选
 							pagination : true,// 分页控件
 							pageSize : 15,
+							striped : true,
 							pageList : [ 10, 15, 20, 30, 50, 100, 200],
 							rownumbers : true,// 行号
 							rowStyler : function(index, row) {
@@ -43,239 +44,239 @@ var employee = {
 								if(/实习生/.test(row.level)){
 									return 'background-color:yellow;';
 								}	
-								if(index%2 == 0)
-								{
-									return 'background-color:rgb(245,245,245);';
-								}
+//								if(index%2 == 0)
+//								{
+//									return 'background-color:rgb(245,245,245);';
+//								}
 							},
-							columns : [ [ 
-							              {
-								field : 'id',
-								title : '员工编号',
-								sortable : true,
-								width : 60
-							}, 
-							{
-								field : 'username',
-								title : '姓名',
-								sortable : true,
-								width : 60
-							}, {
-								field : 'firstLevel',
-								title : '公司',
-								sortable : true,
-								width : 40
-							}, {
-								field : 'secondLevel',
-								title : '部门',
-								sortable : true,
-								width : 80
-							}, {
-								field : 'thirdLevel',
-								title : '岗位',
-								sortable : true,
-								width : 80
-							}, {
-								field : 'fourthLevel',
-								title : '小组',
-								sortable : true,
-								width : 100
-							}, {
-								field : 'position',
-								title : '职位',
-								sortable : true,
-								width : 80
-							}, {
-								field : 'sex',
-								title : '性别',
-								sortable : true,
-								width : 40
-							}, {
-								field : 'identityCard',
-								title : '身份证号',
-								sortable : true,
-								width : 125
-							}, {
-								field : 'borthDay',
-								title : '出生年月',
-								sortable : true,
-								width : 80
-							}, {
-								field : 'nation',
-								title : '民族',
-								sortable : true,
-								width : 40
-							}, {
-								field : 'householdType',
-								title : '户口性质',
-								sortable : true,
-								width : 60
-							}, {
-								field : 'insurance',
-								title : '保险',
-								sortable : true,
-								width : 60
-							}, {
-								field : 'insuranceCompany',
-								title : '保险公司',
-								sortable : true,
-								width : 80
-							}, {
-								field : 'company',
-								title : '公司名称',
-								sortable : true,
-								width : 80
-							}, {
-								field : 'degree',
-								title : '学历',
-								sortable : true,
-								width : 80
-							}, {
-								field : 'workPlace',
-								title : '工作地点',
-								sortable : true,
-								width : 100
-							}, {
-								field : 'earlyEntryDate',
-								title : '早期入职时间',
-								sortable : true,
-								width : 80
-							}, {
-								field : 'hiredate',
-								title : '入职时间',
-								sortable : true,
-								width : 80
-							}, {
-								field : 'zhuanzhengTime',
-								title : '转正时间',
-								sortable : true,
-								width : 80
-							}, {
-								field : 'leaveTime',
-								title : '离职时间',
-								sortable : true,
-								width : 80
-							}, {
-								field : 'phoneNumber',
-								title : '联系方式',
-								sortable : true,
-								width : 80
-							}, {
-								field : 'graduatedSchool',
-								title : '毕业学校',
-								sortable : true,
-								width : 100
-							}, {
-								field : 'major',
-								title : '专业',
-								sortable : true,
-								width : 100
-							}, {
-								field : 'homeAddress',
-								title : '家庭住址',
-								sortable : true,
-								width : 100
-							}, {
-								field : 'homeNumber',
-								title : '家庭电话',
-								sortable : true,
-								width : 80
-							}, {
-								field : 'pastLeaveTime',
-								title : '过去离职时间',
-								sortable : true,
-								width : 80
-							}, {
-								field : 'maritalStatus',
-								title : '婚姻状况',
-								sortable : true,
-								width : 60
-							}, {
-								field : 'cellCore',
-								title : '细胞核',
-								sortable : true,
-								width : 60
-							}, {
-								field : 'cellCoreEmail',
-								title : '细胞核邮箱',
-								sortable : true,
-								width : 100
-							}, {
-								field : 'guidance',
-								title : '指导',
-								sortable : true,
-								width : 60
-							}, {
-								field : 'guidanceEmail',
-								title : '指导邮箱',
-								sortable : true,
-								width : 100
-							}, {
-								field : 'managementSystem',
-								title : '关系',
-								sortable : true,
-								width : 100
-							}, {
-								field : 'signedTime',
-								title : '签定时间',
-								sortable : true,
-								width : 100
-							}, {
-								field : 'terminationTime',
-								title : '终止时间',
-								sortable : true,
-								width : 100
-							}, {
-								field : 'registeredAddress',
-								title : '户口地址',
-								sortable : true,
-								width : 100
-							}, {
-								field : 'Postcode',
-								title : '邮编',
-								sortable : true,
-								width : 80
-							}, {
-								field : 'socialSecurityHospital',
-								title : '社保医院',
-								sortable : true,
-								width : 100
-							}, {
-								field : 'dueSocialSecurity',
-								title : '投保时间',
-								sortable : true,
-								width : 100
-							},{
-								field : 'level',
-								title : '级别',
-								sortable : true,
-								width : 80
-							}, {
-								field : 'email',
-								title : '邮箱',
-								sortable : true,
-								width : 100
-							}, {
-								field : 'ruzhiReport',
-								title : '入职报表',
-								sortable : true,
-								width : 100
-							}, {
-								field : 'lizhiReport',
-								title : '离职报表',
-								sortable : true,
-								width : 100
-							}, {
-								field : 'zhuanzhengReport',
-								title : '转正报表',
-								sortable : true,
-								width : 100
-							}, {
-								field : 'bumentiaozhengReport',
-								title : '部门调整报表',
-								sortable : true,
-								width : 100
-							} ] ],
+//							columns : [ [
+//							              {
+//								field : 'id',
+//								title : '员工编号',
+//								sortable : true,
+//								width : 60
+//							},
+//							{
+//								field : 'username',
+//								title : '姓名',
+//								sortable : true,
+//								width : 60
+//							}, {
+//								field : 'firstLevel',
+//								title : '公司',
+//								sortable : true,
+//								width : 40
+//							}, {
+//								field : 'secondLevel',
+//								title : '部门',
+//								sortable : true,
+//								width : 80
+//							}, {
+//								field : 'thirdLevel',
+//								title : '岗位',
+//								sortable : true,
+//								width : 80
+//							}, {
+//								field : 'fourthLevel',
+//								title : '小组',
+//								sortable : true,
+//								width : 100
+//							}, {
+//								field : 'position',
+//								title : '职位',
+//								sortable : true,
+//								width : 80
+//							}, {
+//								field : 'sex',
+//								title : '性别',
+//								sortable : true,
+//								width : 40
+//							}, {
+//								field : 'identityCard',
+//								title : '身份证号',
+//								sortable : true,
+//								width : 125
+//							}, {
+//								field : 'borthDay',
+//								title : '出生年月',
+//								sortable : true,
+//								width : 80
+//							}, {
+//								field : 'nation',
+//								title : '民族',
+//								sortable : true,
+//								width : 40
+//							}, {
+//								field : 'householdType',
+//								title : '户口性质',
+//								sortable : true,
+//								width : 60
+//							}, {
+//								field : 'insurance',
+//								title : '保险',
+//								sortable : true,
+//								width : 60
+//							}, {
+//								field : 'insuranceCompany',
+//								title : '保险公司',
+//								sortable : true,
+//								width : 80
+//							}, {
+//								field : 'company',
+//								title : '公司名称',
+//								sortable : true,
+//								width : 80
+//							}, {
+//								field : 'degree',
+//								title : '学历',
+//								sortable : true,
+//								width : 80
+//							}, {
+//								field : 'workPlace',
+//								title : '工作地点',
+//								sortable : true,
+//								width : 100
+//							}, {
+//								field : 'earlyEntryDate',
+//								title : '早期入职时间',
+//								sortable : true,
+//								width : 80
+//							}, {
+//								field : 'hiredate',
+//								title : '入职时间',
+//								sortable : true,
+//								width : 80
+//							}, {
+//								field : 'zhuanzhengTime',
+//								title : '转正时间',
+//								sortable : true,
+//								width : 80
+//							}, {
+//								field : 'leaveTime',
+//								title : '离职时间',
+//								sortable : true,
+//								width : 80
+//							}, {
+//								field : 'phoneNumber',
+//								title : '联系方式',
+//								sortable : true,
+//								width : 80
+//							}, {
+//								field : 'graduatedSchool',
+//								title : '毕业学校',
+//								sortable : true,
+//								width : 100
+//							}, {
+//								field : 'major',
+//								title : '专业',
+//								sortable : true,
+//								width : 100
+//							}, {
+//								field : 'homeAddress',
+//								title : '家庭住址',
+//								sortable : true,
+//								width : 100
+//							}, {
+//								field : 'homeNumber',
+//								title : '家庭电话',
+//								sortable : true,
+//								width : 80
+//							}, {
+//								field : 'pastLeaveTime',
+//								title : '过去离职时间',
+//								sortable : true,
+//								width : 80
+//							}, {
+//								field : 'maritalStatus',
+//								title : '婚姻状况',
+//								sortable : true,
+//								width : 60
+//							}, {
+//								field : 'cellCore',
+//								title : '细胞核',
+//								sortable : true,
+//								width : 60
+//							}, {
+//								field : 'cellCoreEmail',
+//								title : '细胞核邮箱',
+//								sortable : true,
+//								width : 100
+//							}, {
+//								field : 'guidance',
+//								title : '指导',
+//								sortable : true,
+//								width : 60
+//							}, {
+//								field : 'guidanceEmail',
+//								title : '指导邮箱',
+//								sortable : true,
+//								width : 100
+//							}, {
+//								field : 'managementSystem',
+//								title : '关系',
+//								sortable : true,
+//								width : 100
+//							}, {
+//								field : 'signedTime',
+//								title : '签定时间',
+//								sortable : true,
+//								width : 100
+//							}, {
+//								field : 'terminationTime',
+//								title : '终止时间',
+//								sortable : true,
+//								width : 100
+//							}, {
+//								field : 'registeredAddress',
+//								title : '户口地址',
+//								sortable : true,
+//								width : 100
+//							}, {
+//								field : 'Postcode',
+//								title : '邮编',
+//								sortable : true,
+//								width : 80
+//							}, {
+//								field : 'socialSecurityHospital',
+//								title : '社保医院',
+//								sortable : true,
+//								width : 100
+//							}, {
+//								field : 'dueSocialSecurity',
+//								title : '投保时间',
+//								sortable : true,
+//								width : 100
+//							},{
+//								field : 'level',
+//								title : '级别',
+//								sortable : true,
+//								width : 80
+//							}, {
+//								field : 'email',
+//								title : '邮箱',
+//								sortable : true,
+//								width : 100
+//							}, {
+//								field : 'ruzhiReport',
+//								title : '入职报表',
+//								sortable : true,
+//								width : 100
+//							}, {
+//								field : 'lizhiReport',
+//								title : '离职报表',
+//								sortable : true,
+//								width : 100
+//							}, {
+//								field : 'zhuanzhengReport',
+//								title : '转正报表',
+//								sortable : true,
+//								width : 100
+//							}, {
+//								field : 'bumentiaozhengReport',
+//								title : '部门调整报表',
+//								sortable : true,
+//								width : 100
+//							} ] ],
 							toolbar : '#renshi_toolbar',
 							onDblClickCell : function(index, field, value) {
 								employee.view();
@@ -298,8 +299,8 @@ var employee = {
 		else
 			{
 			userInfo = $('#employee_datas').datagrid('getSelected');
-			session.employee = {};
 			}
+		session.employee = {};
 		if(!userInfo||!userInfo.id||userInfo.id==0){
 			$.messager.alert('操作提示：','请先选择员工,您没有选择任何员工！~');
 			return false;
@@ -691,7 +692,7 @@ var employee = {
 							field : 'accountBank',
 							title : '开户行',
 							width : 100,
-							editor : 'textbox',
+//							editor : 'textbox',
 							editor : {
 								type:'combobox',
 								options:{
@@ -1304,6 +1305,7 @@ shebaoSummary : {
 					rownumbers : true,// 行号
 					pagination : true,// 分页控件
 					pageSize : 10,
+					striped:true,
 					loadFilter : function(data){
 						if (typeof(data.d)=='number'){
 							return data.d.toFixed(2);
@@ -2062,13 +2064,165 @@ shebaoSummary : {
 	},	
 	jiagou:{
 		queryJiagou : function(data, src) {
-//			$('#datagrid_jiagou').treegrid('load',data);
-//			$('#datagrid_jiagou').datagrid({
-//				queryParams : data
-//			})
+			var level = data.level;
+			var name = data.name;
+			var jiagou = session.jiagou;
+			var newJiagou = [];
+			if(name && name!=''){
+				if(level && level != ''){
+					var levelIndex = jiagou.selectLike("_" + level,undefined,false,true);
+					for (var i = 0; i < levelIndex.length; i++) {
+						newJiagou.push(jiagou[levelIndex[i]]);
+					}
+					jiagou = newJiagou;
+				}
+				newJiagou = [];
+				var nameIndex = jiagou.selectLike(name);
+				for (var i = 0; i < nameIndex.length; i++) {
+					newJiagou.push(jiagou[nameIndex[i]].split("_")[1]);
+				}
+				employee.jiagou.openJiagou(newJiagou);
+			}
 		},
+		openJiagou : function(array, id){
+			id = (id?id:"treegrid_jiagou");
+			$("#"+id).treegrid('collapseAll');
+			for (var i = 0; i < array.length; i++) {
+				$("#"+id).treegrid('expandTo',array[i]);
+				if(0 === i){
+					$("#"+id).treegrid('select',array[i]);
+				}
+			}
+		},
+		add : function(){
+			var parent = $('#treegrid_jiagou').treegrid('getSelected');
+			if(parent){
+				var level = parent.level + 1;
+				var firstLeve;
+				var secondLevel;
+				var thirdLevel;
+				var icon = 'icon-organisation';
+				var preId = parent.id;
+				if(level == 2){
+					firstLeve = parent.fourthLevel;
+				}else if(level == 3){
+					firstLeve = parent.firstLeve;
+					secondLevel = parent.fourthLevel;
+				}else if(level == 4){
+					firstLeve = parent.firstLeve;
+					secondLevel = parent.secondLevel;
+					thirdLevel = parent.fourthLevel;
+					icon = 'icon-man';
+				}
+				jiagouAdd = -1;
+				$('#treegrid_jiagou').treegrid('append',{
+					parent: preId,
+					data: [{
+						id:-1,
+						firstLeve : firstLeve,
+						secondLevel : secondLevel,
+						thirdLevel : thirdLevel,
+						fourthLevel:'正在添加...',
+						iconCls:icon,
+						level:level,
+						total:0,
+						onJob:0,
+						preId:preId,
+						sortCode:parent.sortCode,
+						taxStructure:parent.taxStructure,
+						guidance:parent.guidance,
+						guidanceEmail:parent.guidanceEmail
+					}]
+				});
+				jiagouEdit = -1;
+				$('#treegrid_jiagou').treegrid('select',-1);
+				employee.jiagou.edit();
+			}
+		},
+		edit : function(){
+			if (jiagouEdit != undefined){
+				$('#treegrid_jiagou').treegrid('select', jiagouEdit);
+				$('#treegrid_jiagou').treegrid('beginEdit', jiagouEdit);
+				return;
+			}
+			var row = $('#treegrid_jiagou').treegrid('getSelected');
+			if (row){
+				jiagouEdit = row.id
+				$('#treegrid_jiagou').treegrid('beginEdit', jiagouEdit);
+			}
+		},
+		save : function(){
+			if (jiagouEdit != undefined){
+				var t = $('#treegrid_jiagou');
+				var data = t.treegrid('find',jiagouEdit)
+				t.treegrid('endEdit', jiagouEdit);
+				jiagouEdit = undefined;
+				jiagouAdd = undefined;
+				$.post('employee/updateOrsaveOS.action',data,function(result){
+					result = eval("(" + result + ")");
+					if(result.success){
+						t.treegrid('reload');
+						t.treegrid({onLoadSuccess:function(){
+//							if(jiagouEdit){
+//								t.treegrid('expandTo',jiagouEdit);
+//								t.treegrid('select', jiagouEdit);
+//								jiagouEdit = undefined;
+//								$.messager.alert('保存提示：',result.msg);
+//							}
+						}})
+//						employee.jiagou.remove();
+					}else{
+//						jiagouEdit = undefined;
+						$.messager.alert('保存提示：',result.msg);
+					}
+				})
+			}
+		},
+		cancel : function(){
+			if (jiagouEdit != undefined){
+				if(jiagouAdd != undefined){
+					$('#treegrid_jiagou').treegrid('pop', jiagouEdit);
+					jiagouAdd = undefined;
+					jiagouEdit = undefined;
+					return ;
+				}
+				$('#treegrid_jiagou').treegrid('cancelEdit', jiagouEdit);
+				jiagouEdit = undefined;
+			}
+		},
+		remove : function(){
+			var data = {};
+			if (jiagouEdit != undefined){
+				data = $('#treegrid_jiagou').treegrid('find',jiagouEdit);
+			}else{
+				data = $('#treegrid_jiagou').treegrid('getSelected');
+			}
+			jiagouEdit = data.id;
+			if (data){
+				$.post('employee/deleteOS.action',data,function(result){
+					result = eval("(" + result + ")");
+					if(result.success){
+						$('#treegrid_jiagou').treegrid('pop', jiagouEdit);
+						jiagouEdit = undefined;
+					}
+					$.messager.alert('删除提示：',result.msg);
+				})
+			}
+		},
+		exportExcel : function(){
+			downloadForm.createForm();
+			var url = "file/exportOS.action";
+			$("#export_query").form('submit', {
+				url : url,
+				onSubmit : function() {
+					console.log("正在导出,请稍后");
+				},
+				onLoadSuccess : function() {
+					downloadForm.destoryForm();
+				}
+			});
+		}
 	}
-	
 }
 var wagesDateAdd = undefined;
 var monthWagesAdd = undefined;
@@ -2076,3 +2230,5 @@ var shebaoAdd = undefined;
 var shebaoEdit = undefined;
 var shebaoCompanyEdit = undefined;
 var kaoqinEdit = undefined;
+var jiagouEdit = undefined;
+var jiagouAdd = undefined;

@@ -7,25 +7,26 @@ import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
-import com.chaoxing.oa.config.SysConfig;
 import com.chaoxing.oa.dao.BaseHetongDaoI;
-import com.chaoxing.oa.entity.page.Json;
 import com.chaoxing.oa.entity.page.SF.Cargo;
 import com.chaoxing.oa.entity.page.SF.Order;
 import com.chaoxing.oa.entity.page.SF.OrderResponse;
+import com.chaoxing.oa.entity.page.common.Json;
 import com.chaoxing.oa.entity.page.hetong.PFahuo;
 import com.chaoxing.oa.entity.page.hetong.PFapiao;
 import com.chaoxing.oa.entity.sqlpo.FaPiao;
 import com.chaoxing.oa.entity.sqlpo.Fahuo;
 import com.chaoxing.oa.service.HetongService;
+import com.chaoxing.oa.system.SysConfig;
 import com.chaoxing.oa.util.SFUtil;
 @Service("hetongService")
 public class HetongServiceImpl implements HetongService {
 	private BaseHetongDaoI<Fahuo> htDao;
 	private BaseHetongDaoI<FaPiao> fpDao;
+	@Autowired
+	private BaseHetongDaoI<Object> objDao;
 	
 	
 	public BaseHetongDaoI<FaPiao> getFpDao() {
@@ -113,7 +114,7 @@ public class HetongServiceImpl implements HetongService {
 		cargo.setName("发票");
 		List<Cargo> cargos = new ArrayList<Cargo>();
 		cargos.add(cargo);
-		Json result = SFUtil.sendOrder(order, cargos, null);
+//		Json result = SFUtil.sendOrder(order, cargos, null);
 //		if(result.isSuccess()){
 //			OrderResponse or = (OrderResponse) result.getObj();
 //			String mailno = or.getMailno();
@@ -187,7 +188,7 @@ public class HetongServiceImpl implements HetongService {
 	public long getFapiaoCount(String hql, Map<String, Object> params){
 		StringBuffer hqll = new StringBuffer("select count(*) from FaPiao t where ");
 		hqll.append(hql.split("where")[1]);
-		return fpDao.count(hqll.toString(), params);
+		return objDao.count(hqll.toString(), params);
 	}
 	@Override
 	public int updateFapiao(PFapiao pfapiao) {

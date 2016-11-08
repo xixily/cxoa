@@ -21,7 +21,7 @@ onclick="confirmDialog.createDialog('您确定要删除吗？',employee.deleteEm
 <a href="#" class="easyui-menubutton" data-options="menu:'#menu_employee_export',iconCls:'icon-excel'">导出报表</a>
 <!-- <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-copy',plain:true">复制</a> -->
 </div>
-<% 
+<%
 Calendar cal = Calendar.getInstance();
 int year = cal.get(Calendar.YEAR);
 int month = cal.get(Calendar.MONTH) + 1;
@@ -79,30 +79,51 @@ int month = cal.get(Calendar.MONTH) + 1;
     <div data-options="iconCls:'icon-excel'" onclick="employee.exportExcel(0)">根据当前查询条件导出</div>
 </div>
 
+    <%--<div id="menu_employee_speedQuery" style="width:160px;">--%>
+    <%--<div>--%>
+    <%--<span>工资快捷查询</span>--%>
+    <%--<div>--%>
+    <%--<div data-options="inconCLs:'icon-search'" onclick="employee.employee.quickQuery(111)">查询<%= "" + year+ "-"+ (month - 1) %>入职，工资为0</div>--%>
+    <%--<div data-options="inconCLs:'icon-search'" onclick="employee.employee.quickQuery(112)">查询<%= "" + year + "-"+ month %>入职，工资为0</div>--%>
+    <%--<div class="menu-sep"></div>--%>
+    <%--<div data-options="inconCLs:'icon-search'" onclick="employee.employee.quickQuery(211)">查询<%= "" + year+ "-"+ (month - 1) %>转正，历史工资为0</div>--%>
+    <%--<div data-options="inconCLs:'icon-search'" onclick="employee.employee.quickQuery(212)">查询<%= "" + year + "-"+ month %>入职，历史工资为0</div>--%>
+    <%--</div>--%>
+    <%--</div>--%>
+    <%--<div>--%>
+    <%--<span>快捷查询</span>--%>
+    <%--<div>--%>
+    <%--<div data-options="inconCLs:'icon-search'" onclick="employee.employee.quickQuery()"></div>--%>
+    <%--<div data-options="iconCls:'icon-excel'" onclick="employee.exportExcel(111)">导出<%= "" + year+ "-"+ (month - 1) %>月入职信息(正式)</div>--%>
+    <%--<div data-options="iconCls:'icon-excel'" onclick="employee.exportExcel(112)">导出<%= "" + year + "-"+ month %>月入职信息(正式)</div>--%>
+    <%--<div data-options="iconCls:'icon-excel'" onclick="employee.exportExcel(113)">导出<%= "" + year + "-"+ (month + 1) %>月入职信息(正式)</div>--%>
+    <%--<div class="menu-sep"></div>--%>
+    <%--<div data-options="iconCls:'icon-excel'" onclick="employee.exportExcel(121)">导出<%= "" + year+ "-"+ (month - 1) %>月入职信息(实习)</div>--%>
+    <%--<div data-options="iconCls:'icon-excel'" onclick="employee.exportExcel(122)">导出<%= "" + year + "-"+ month %>月入职信息(实习)</div>--%>
+    <%--<div data-options="iconCls:'icon-excel'" onclick="employee.exportExcel(123)">导出<%= "" + year + "-"+ (month + 1) %>月入职信息(实习)</div>--%>
+    <%--</div>--%>
+    <%--</div>--%>
+    <%--<div class="menu-sep"></div>--%>
+    <%--<div data-options="iconCls:'icon-excel'" onclick="employee.exportExcel(0)">根据当前查询条件导出</div>--%>
+    <%--</div>--%>
+
     <div id="menu_employee_speedQuery" style="width:160px;">
     <div>
     <span>工资快捷查询</span>
     <div>
     <div data-options="inconCLs:'icon-search'" onclick="employee.employee.quickQuery(111)">查询<%= "" + year+ "-"+ (month - 1) %>入职，工资为0</div>
     <div data-options="inconCLs:'icon-search'" onclick="employee.employee.quickQuery(112)">查询<%= "" + year + "-"+ month %>入职，工资为0</div>
-    <div class="menu-sep"></div>
-    <div data-options="inconCLs:'icon-search'" onclick="employee.employee.quickQuery(211)">查询<%= "" + year+ "-"+ (month - 1) %>转正，历史工资为0</div>
-    <div data-options="inconCLs:'icon-search'" onclick="employee.employee.quickQuery(212)">查询<%= "" + year + "-"+ month %>入职，历史工资为0</div>
     </div>
     </div>
     <div>
-    <span>快捷查询</span>
+    <span>其他快捷查询</span>
     <div>
     <div data-options="inconCLs:'icon-search'" onclick="employee.employee.quickQuery()"></div>
-    <div data-options="iconCls:'icon-excel'" onclick="employee.exportExcel(111)">导出<%= "" + year+ "-"+ (month - 1) %>月入职信息(正式)</div>
-    <div data-options="iconCls:'icon-excel'" onclick="employee.exportExcel(112)">导出<%= "" + year + "-"+ month %>月入职信息(正式)</div>
-    <div data-options="iconCls:'icon-excel'" onclick="employee.exportExcel(113)">导出<%= "" + year + "-"+ (month + 1) %>月入职信息(正式)</div>
-    <div class="menu-sep"></div>
-    <div data-options="iconCls:'icon-excel'" onclick="employee.exportExcel(121)">导出<%= "" + year+ "-"+ (month - 1) %>月入职信息(实习)</div>
-    <div data-options="iconCls:'icon-excel'" onclick="employee.exportExcel(122)">导出<%= "" + year + "-"+ month %>月入职信息(实习)</div>
-    <div data-options="iconCls:'icon-excel'" onclick="employee.exportExcel(123)">导出<%= "" + year + "-"+ (month + 1) %>月入职信息(实习)</div>
+    <div data-options="inconCLs:'icon-search'" onclick="employee.employee.quickQuery(301)">查询本月合同到期名单</div>
+    <div data-options="inconCLs:'icon-search'" onclick="employee.employee.quickQuery(302)">查询没有身份证的名单</div>
     </div>
     </div>
     <div class="menu-sep"></div>
-    <div data-options="iconCls:'icon-excel'" onclick="employee.exportExcel(0)">根据当前查询条件导出</div>
+    <%-- <div data-options="inconCLs:'icon-search'" onclick="employee.employee.quickQuery(211)">查询<%= "" + year+ "-"+ (month - 1) %>转正，历史工资为0</div>
+    <div data-options="inconCLs:'icon-search'" onclick="employee.employee.quickQuery(212)">查询<%= "" + year + "-"+ month %>入职，历史工资为0</div> --%>
     </div>

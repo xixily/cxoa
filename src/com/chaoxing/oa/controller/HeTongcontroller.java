@@ -12,15 +12,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.chaoxing.oa.entity.page.Json;
 import com.chaoxing.oa.entity.page.SF.Cargo;
 import com.chaoxing.oa.entity.page.SF.Order;
 import com.chaoxing.oa.entity.page.SF.OrderResponse;
+import com.chaoxing.oa.entity.page.common.Json;
 import com.chaoxing.oa.entity.page.hetong.PFahuo;
 import com.chaoxing.oa.entity.page.hetong.PFapiao;
 import com.chaoxing.oa.service.HetongService;
 import com.chaoxing.oa.util.BarCode128C;
-import com.chaoxing.oa.util.ResourceUtil;
 import com.chaoxing.oa.util.SFUtil;
 
 @Controller

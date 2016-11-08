@@ -13,10 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chaoxing.oa.dao.BaseDaoI;
-import com.chaoxing.oa.entity.page.PMenu;
-import com.chaoxing.oa.entity.page.PUlList;
-import com.chaoxing.oa.entity.po.Menu;
-import com.chaoxing.oa.entity.po.RoleResources;
+import com.chaoxing.oa.entity.page.system.PMenu;
+import com.chaoxing.oa.entity.page.system.PUlList;
+import com.chaoxing.oa.entity.po.system.Menu;
+import com.chaoxing.oa.entity.po.system.RoleResources;
 //import com.chaoxing.oa.entity.po.RoleRights;
 import com.chaoxing.oa.service.RoleMenuService;
 

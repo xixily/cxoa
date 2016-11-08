@@ -4,6 +4,8 @@ $.ajaxSetup({
 var session = {
     logined : false,
     user : {},
+	jiagou : [],
+	menus:[]
 //    testText : '我在这里存放全局缓存数据'
 };
 function SFservice(){
@@ -613,6 +615,7 @@ var confirmDialog = {
 					text:'取消',
 					iconCls:'icon-cancel',
 					handler:function(){
+
 						if(cancelCallback){
 							cancelCallback(confirmId);
 						}
@@ -910,6 +913,53 @@ serializeObject = function(form) {
 };
 
 /**
+ * 获取html元素
+ */
+function getView(view, callback, errorCallback) {
+    $.ajax({
+        type: "GET",
+        url: "./views/" + view,
+        timeout: 10000,
+        cache: false,
+        success: function (data) {
+            if (typeof callback == "function") {
+                callback(data);
+            }
+            if (data && !data.logined) {
+            	$.messager.alert("会话已经失效，请您重新登录");
+                window.location.href = "./";
+                return;
+            }
+        },
+        error: function (xhr, status, error) {
+            if (errorCallback && (typeof errorCallback == "function")) {
+                errorCallback(xhr, status, error);
+            } else {
+                if (xhr.statusText != 'success') {
+                	$.messager.alert('showErrorToast', '请求超时或网络问题,' + status || error);
+                }
+            }
+        }
+    });
+}
+
+/**
+ * 获取页面元素，并缓存在页面内存
+ */
+function getBufferedView(view, callback) {
+    if (!session[view]) {
+        getView(view + ".html", function (data) {
+            session[view] = data;
+            callback(data);
+        }, function () {
+        	$.messager.alert('获取页面失败!');
+        });
+    } else {
+        callback(session[view]);
+    }
+}
+
+/**
  * @author dengxf
  * 
  * 增加formatString功能
@@ -1152,4 +1202,71 @@ function round2(number,fractiondigits){
     with(Math){   
         return round(number*pow(10,fractiondigits))/pow(10,fractiondigits);   
     }   
-}   
+}
+
+///为字符串添加模糊比较的方法
+String.prototype.isLike = function(exp/*类似于SQL中的模糊查询字符串*/, i/*是否区分大小写*/, start/*以该字符串开始*/, end/*以该字符串结束*/) {
+	var str = this;
+	i = (i == null ? false : i);
+	start = (start ? "^" : "");
+	end = (end ? "$" : "");
+	if (exp.constructor == String) {
+		/*首先将表达式中的‘_’替换成‘.’，但是‘[_]’表示对‘_’的转义，所以做特殊处理*/
+		var s = exp.replace(/_/g, function(m, i) {
+			if (i == 0 || i == exp.length - 1) {
+				return ".";
+			}
+			else {
+				if (exp.charAt(i - 1) == "[" && exp.charAt(i + 1) == "]") {
+					return m;
+				}
+				return ".";
+			}
+		});
+		/*将表达式中的‘%’替换成‘.’，但是‘[%]’表示对‘%’的转义，所以做特殊处理*/
+		s = s.replace(/%/g, function(m, i) {
+			if (i == 0 || i == s.length - 1) {
+				return ".*";
+			}
+			else {
+				if (s.charAt(i - 1) == "[" && s.charAt(i + 1) == "]") {
+					return m;
+				}
+				return ".*";
+			}
+		});
+
+		/*将表达式中的‘[_]’、‘[%]’分别替换为‘_’、‘%’*/
+
+		s = s.replace(/\[_\]/g, "_").replace(/\[%\]/g, "%");
+
+		/*对表达式处理完后构造一个新的正则表达式，用以判断当前字符串是否和给定的表达式相似*/
+
+		/*var regex = new RegExp("^" + s, i ? "" : "i");*/
+		var regex = new RegExp(start + s + end, i ? "" : "i");
+		return regex.test(this);
+	}
+	return false;
+};
+
+///为数组添加模糊查询方法
+Array.prototype.selectLike = function(exp/*类似于SQL中的模糊查询字符串*/, fun, start, end) {
+	var arr = [];
+	start = (start?true:false);
+	end = (end?true:false);
+	if (fun && fun.constructor == Function) {
+		for (var i = 0; i < this.length; i++) {
+			if (fun(this[i], exp)) {
+				arr.push(i);
+			}
+		}
+	}
+	else {
+		for (var i = 0; i < this.length; i++) {
+			if (this[i].isLike(exp, false, start, end)) {
+				arr.push(i);
+			}
+		}
+	}
+	return arr;
+};

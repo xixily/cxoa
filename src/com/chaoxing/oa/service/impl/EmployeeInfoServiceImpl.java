@@ -1,14 +1,14 @@
 package com.chaoxing.oa.service.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,198 +17,90 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.chaoxing.oa.config.SysConfig;
 import com.chaoxing.oa.dao.BaseDaoI;
-import com.chaoxing.oa.entity.page.PComboBox;
-import com.chaoxing.oa.entity.page.PCompany;
-import com.chaoxing.oa.entity.page.PHouseholdType;
-import com.chaoxing.oa.entity.page.PKaoQin;
-import com.chaoxing.oa.entity.page.PLevel;
-import com.chaoxing.oa.entity.page.PMonthWages;
-import com.chaoxing.oa.entity.page.POStructs;
-import com.chaoxing.oa.entity.page.PQuickQuery;
-import com.chaoxing.oa.entity.page.PRenshiEmployee;
-import com.chaoxing.oa.entity.page.PSheBaoSummary;
-import com.chaoxing.oa.entity.page.PShebao;
-import com.chaoxing.oa.entity.page.PShebaoType;
-import com.chaoxing.oa.entity.page.PSystemConfig;
-import com.chaoxing.oa.entity.page.PWagesDate;
-import com.chaoxing.oa.entity.page.PshebaoDetail;
-import com.chaoxing.oa.entity.page.Pstruct;
-import com.chaoxing.oa.entity.page.Pwages;
-import com.chaoxing.oa.entity.page.QueryForm;
-import com.chaoxing.oa.entity.page.SessionInfo;
-import com.chaoxing.oa.entity.po.Company;
-import com.chaoxing.oa.entity.po.HouseholdType;
-import com.chaoxing.oa.entity.po.KaoQin;
-import com.chaoxing.oa.entity.po.Level;
-import com.chaoxing.oa.entity.po.MonthWages;
-import com.chaoxing.oa.entity.po.OrganizationStructure;
-import com.chaoxing.oa.entity.po.Shebao;
-import com.chaoxing.oa.entity.po.ShebaoType;
-import com.chaoxing.oa.entity.po.Struct;
-import com.chaoxing.oa.entity.po.SystemConfig;
-import com.chaoxing.oa.entity.po.UserName;
-import com.chaoxing.oa.entity.po.WageDistribution;
-import com.chaoxing.oa.entity.po.WagesDate;
+import com.chaoxing.oa.entity.page.common.PComboBox;
+import com.chaoxing.oa.entity.page.common.PCompany;
+import com.chaoxing.oa.entity.page.common.PHouseholdType;
+import com.chaoxing.oa.entity.page.common.PLevel;
+import com.chaoxing.oa.entity.page.common.POStructV;
+import com.chaoxing.oa.entity.page.common.POStructs;
+import com.chaoxing.oa.entity.page.common.PQuickQuery;
+import com.chaoxing.oa.entity.page.common.QueryForm;
+import com.chaoxing.oa.entity.page.employee.PGongziHuiZong;
+import com.chaoxing.oa.entity.page.employee.PKaoQin;
+import com.chaoxing.oa.entity.page.employee.PMonthWages;
+import com.chaoxing.oa.entity.page.employee.PRenshiEmployee;
+import com.chaoxing.oa.entity.page.employee.PSheBaoSummary;
+import com.chaoxing.oa.entity.page.employee.PShebao;
+import com.chaoxing.oa.entity.page.employee.PShebaoType;
+import com.chaoxing.oa.entity.page.employee.PWagesDate;
+import com.chaoxing.oa.entity.page.employee.PshebaoDetail;
+import com.chaoxing.oa.entity.page.employee.Pwages;
+import com.chaoxing.oa.entity.page.system.PSystemConfig;
+import com.chaoxing.oa.entity.page.system.SessionInfo;
+import com.chaoxing.oa.entity.po.commmon.Company;
+import com.chaoxing.oa.entity.po.commmon.HouseholdType;
+import com.chaoxing.oa.entity.po.commmon.Level;
+import com.chaoxing.oa.entity.po.commmon.OrganizationStructure;
+import com.chaoxing.oa.entity.po.commmon.ShebaoType;
+import com.chaoxing.oa.entity.po.commmon.WagesDate;
+import com.chaoxing.oa.entity.po.employee.KaoQin;
+import com.chaoxing.oa.entity.po.employee.MonthWages;
+import com.chaoxing.oa.entity.po.employee.Shebao;
+import com.chaoxing.oa.entity.po.employee.UserName;
+import com.chaoxing.oa.entity.po.employee.WageDistribution;
+//import com.chaoxing.oa.entity.po.system.Struct;
+import com.chaoxing.oa.entity.po.system.SystemConfig;
 import com.chaoxing.oa.entity.po.view.GongziHuiZong;
+import com.chaoxing.oa.entity.po.view.OStructureV;
 import com.chaoxing.oa.entity.po.view.RenshiUserName;
 import com.chaoxing.oa.entity.po.view.SheBaoSummary;
 import com.chaoxing.oa.service.EmployeeInfoService;
+import com.chaoxing.oa.system.SysConfig;
+import com.chaoxing.oa.system.cache.CacheManager;
 import com.chaoxing.oa.util.ResourceUtil;
-import com.chaoxing.oa.entity.page.PGongziHuiZong;
+import com.chaoxing.oa.util.SqlHelper;
 
 @Service("employeeInfoService")
 public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 
+	@Autowired
 	private BaseDaoI<RenshiUserName> userNameDao;
+	@Autowired
 	private BaseDaoI<Object> objectDao;
+	@Autowired
 	private BaseDaoI<Company> companyDao;
+	@Autowired
 	private BaseDaoI<Level> levelDao;//级别
+	@Autowired
 	private BaseDaoI<OrganizationStructure> organizationStructureDao;//组织结构
-	private BaseDaoI<Struct> structDao;//组织结构
+//	@Autowired
+//	private BaseDaoI<Struct> structDao;//组织结构
+	@Autowired
 	private BaseDaoI<WageDistribution> wageDistributionDao;
+	@Autowired
 	private BaseDaoI<Shebao> sheBaoDao;
+	@Autowired
 	private BaseDaoI<ShebaoType> sheBaoTypeDao;
+	@Autowired
 	private BaseDaoI<HouseholdType> househodlType;
+	@Autowired
 	private BaseDaoI<SheBaoSummary> shebaoSummaryDao;
+	@Autowired
 	private BaseDaoI<KaoQin> kaoqinDao;
+	@Autowired
 	private BaseDaoI<MonthWages> monthWagesDao;
+	@Autowired
 	private BaseDaoI<WagesDate> wagesDateDao;
+	@Autowired
 	private BaseDaoI<UserName> useDao;
+	@Autowired
 	private BaseDaoI<SystemConfig> systemConfigDao;
-	
+	@Autowired
+	private BaseDaoI<OStructureV> oStructureVdao;
 	@Autowired
 	private BaseDaoI<GongziHuiZong> gongzihuizongDao;
 	
-	public BaseDaoI<GongziHuiZong> getGongzihuizongDao() {
-		return gongzihuizongDao;
-	}
-	public void setGongzihuizongDao(BaseDaoI<GongziHuiZong> gongzihuizongDao) {
-		this.gongzihuizongDao = gongzihuizongDao;
-	}
-	
-	public BaseDaoI<SystemConfig> getSystemConfigDao() {
-		return systemConfigDao;
-	}
-	@Autowired
-	public void setSystemConfigDao(BaseDaoI<SystemConfig> systemConfigDao) {
-		this.systemConfigDao = systemConfigDao;
-	}
-	public BaseDaoI<Struct> getStructDao() {
-		return structDao;
-	}
-	@Autowired
-	public void setStructDao(BaseDaoI<Struct> structDao) {
-		this.structDao = structDao;
-	}
-	public BaseDaoI<UserName> getUseDao() {
-		return useDao;
-	}
-	@Autowired
-	public void setUseDao(BaseDaoI<UserName> useDao) {
-		this.useDao = useDao;
-	}
-	public BaseDaoI<WagesDate> getWagesDateDao() {
-		return wagesDateDao;
-	}
-	@Autowired
-	public void setWagesDateDao(BaseDaoI<WagesDate> wagesDateDao) {
-		this.wagesDateDao = wagesDateDao;
-	}
-	public BaseDaoI<MonthWages> getMonthWagesDao() {
-		return monthWagesDao;
-	}
-	@Autowired
-	public void setMonthWagesDao(BaseDaoI<MonthWages> monthWagesDao) {
-		this.monthWagesDao = monthWagesDao;
-	}
-	public BaseDaoI<KaoQin> getKaoqinDao() {
-		return kaoqinDao;
-	}
-	@Autowired
-	public void setKaoqinDao(BaseDaoI<KaoQin> kaoqinDao) {
-		this.kaoqinDao = kaoqinDao;
-	}
-	public BaseDaoI<SheBaoSummary> getShebaoSummaryDao() {
-		return shebaoSummaryDao;
-	}
-	@Autowired
-	public void setShebaoSummaryDao(BaseDaoI<SheBaoSummary> shebaoSummaryDao) {
-		this.shebaoSummaryDao = shebaoSummaryDao;
-	}
-	public BaseDaoI<HouseholdType> getHousehodlType() {
-		return househodlType;
-	}
-	@Autowired
-	public void setHousehodlType(BaseDaoI<HouseholdType> househodlType) {
-		this.househodlType = househodlType;
-	}
-	public BaseDaoI<ShebaoType> getSheBaoTypeDao() {
-		return sheBaoTypeDao;
-	}
-	@Autowired
-	public void setSheBaoTypeDao(BaseDaoI<ShebaoType> sheBaoTypeDao) {
-		this.sheBaoTypeDao = sheBaoTypeDao;
-	}
-	public BaseDaoI<Shebao> getSheBaoDao() {
-		return sheBaoDao;
-	}
-	@Autowired
-	public void setSheBaoDao(BaseDaoI<Shebao> sheBaoDao) {
-		this.sheBaoDao = sheBaoDao;
-	}
-	public BaseDaoI<WageDistribution> getWageDistributionDao() {
-		return wageDistributionDao;
-	}
-	@Autowired
-	public void setWageDistributionDao(BaseDaoI<WageDistribution> wageDistributionDao) {
-		this.wageDistributionDao = wageDistributionDao;
-	}
-
-	public BaseDaoI<Object> getObjectDao() {
-		return objectDao;
-	}
-
-	@Autowired
-	public void setObjectDao(BaseDaoI<Object> objectDao) {
-		this.objectDao = objectDao;
-	}
-
-	public BaseDaoI<OrganizationStructure> getOrganizationStructureDao() {
-		return organizationStructureDao;
-	}
-
-	@Autowired
-	public void setOrganizationStructureDao(BaseDaoI<OrganizationStructure> organizationStructureDao) {
-		this.organizationStructureDao = organizationStructureDao;
-	}
-
-	public BaseDaoI<Company> getCompanyDao() {
-		return companyDao;
-	}
-
-	public BaseDaoI<Level> getLevelDao() {
-		return levelDao;
-	}
-	@Autowired
-	public void setCompanyDao(BaseDaoI<Company> companyDao) {
-		this.companyDao = companyDao;
-	}
-	@Autowired
-	public void setLevelDao(BaseDaoI<Level> levelDao) {
-		this.levelDao = levelDao;
-	}
-
-
-	public BaseDaoI<RenshiUserName> getUserNameDao() {
-		return userNameDao;
-	}
-
-	@Autowired
-	public void setUserNameDao(BaseDaoI<RenshiUserName> userNameDao) {
-		this.userNameDao = userNameDao;
-	}
 
 	@Override
 	public List<PRenshiEmployee> getRenshiUserName() {
@@ -440,108 +332,335 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	}
 
 	@Override
-	public List<POStructs> getOStruct() {
-//		return getOStruct(null,0);
+	public List<POStructs> findOStruct() {
 		List<POStructs> listComs = new ArrayList<POStructs>();
 		List<OrganizationStructure> lists = organizationStructureDao.find("from OrganizationStructure t where t.level=4");
 		for (OrganizationStructure os : lists) {
 			if(os!=null){
 				POStructs pos = new POStructs();
-//				pos.setId(os.getId());
-//				pos.setCellCore(os.getCellCore());
-//				pos.setCellCoreEmail(os.getCellCoreEmail());
-//				pos.setGuidance(os.getGuidance());
-//				pos.setGuidanceEmail(os.getGuidanceEmail());
-//				pos.setChildren(null);
-//				pos.setFirstLevel(os.getFirstLevel());
-//				pos.setSecondLevel(os.getSecondLevel());
-//				pos.setThirdLevel(os.getThirdLevel());
-//				pos.setFourthLevel(os.getFourthLevel());
-//				pos.setLevel(os.getLevel());
-//				pos.setPreId(os.getPreId());
-//				pos.setTaxStructure(os.getTaxStructure());
-//				pos.setSortCode(os.getSortCode());
 				BeanUtils.copyProperties(os, pos);
-//				postruct.setDepartmentId(organizationStructure.getId());
 				listComs.add(pos);
 			}
 		}
 		return listComs;
 	}
 
-	
-	
 	@Override
-		public Map<String,Object> getOStruct(QueryForm queryForm,int isExport) {
-		Map<String,Object> osInfo = new HashMap<String, Object>();
-		Set<POStructs> listComs = new TreeSet<POStructs>();
-		StringBuffer hql;
-		Map<String,Object> params = new HashMap<String, Object>();
-		String sort = "sortCode";
-		String order = SysConfig.ASC;
-		int intPage = 0;
-		int pageSize = 30000;//最多导出30000条数据
-		if(queryForm==null){
-			hql = new StringBuffer("from OrganizationStructure t where t.level=4");
-		}else{
-			hql = new StringBuffer("from OrganizationStructure t where t.level=1");
+	public List<POStructV> findOStruct(POStructV pOStructV,int isExport) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		StringBuffer hql = new StringBuffer("from OStructureV t where");
+		List<POStructV> posList = new ArrayList<POStructV>();
+		OStructureV o = new OStructureV();
+		BeanUtils.copyProperties(pOStructV, o);
+		try {
+			hql.append(SqlHelper.prepareAndSql(o, params, true, "id"));
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
 		}
-//		if(queryForm.getFirstLevel()==null&&queryForm.getSecondLevel()==null&&queryForm.getThirdLevel()==null&&queryForm.getFourthLevel()==null){
-//			if(queryForm.getId()!=0){
-//				hql.append(" and t.preId=:id");
-//				params.put("id", queryForm.getId());
-//			}else{
-//				hql.append(" and t.level = 1 ");
-//			}
-//		}else{
-//			addCondition(hql, queryForm, params);
-//		}
-		if(queryForm.getSort() != null){
-			sort = queryForm.getSort();
-			if(queryForm.getOrder() != null){
-				order = queryForm.getOrder();
+		if(pOStructV.getId()!=null){
+			hql.append(" and t.preId=:id");
+			params.put("id", pOStructV.getId());
+		}
+		System.out.println(hql.toString());
+//		params.clear();
+//		params.put("level", 3);
+//		List<OStructureV> osList = oStructureVdao.find("from OStructureV t where level like '%:level%'",params);
+		List<OStructureV> osList = oStructureVdao.find(hql.toString(),params);
+		if(pOStructV.getLevel() != null && pOStructV.getLevel()<4 && osList.size()>0){
+			for (OStructureV oStructureV : osList) {
+				POStructV postructV = new POStructV();
+				String name = oStructureV.getFourthLevel();
+				Map<String,Object> param2 = new HashMap<String, Object>();
+				param2.put("name", name);
+				Integer level = oStructureV.getLevel();
+				String level_ = "";
+				if(level==1){
+					level_ = "firstLevel";
+				}else if(level==2){
+					level_ = "secondLevel";
+				}else{
+					level_ = "thirdLevel";
+				}
+				List<Object> olist = objectDao.find("select sum(t.total) as total,sum(t.onJob) as onJob from OStructureV t where t." + level_ +
+						"=:name",param2);
+				String value1;
+				String value2;
+				if(olist.size()>0){
+					Object[] obList = (Object[])olist.get(0);
+					value1 = String.valueOf((obList[0]!=null) ? obList[0] : "0");
+					value2 = String.valueOf((obList[1]!=null) ? obList[1] : "0");
+//					System.out.println(name);
+//					System.out.println(obList);
+//					System.out.println(obList[0]);
+//					System.out.println(obList[1]);
+					postructV.setTotal(Integer.valueOf(value1));
+					postructV.setTotal(Integer.valueOf(value2));
+				}
+//				postructV.setTotal((Integer)obList[0]);
+//				postructV.setOnJob((Integer)obList[1]);
+				BeanUtils.copyProperties(oStructureV, postructV);
+				posList.add(postructV);
+			}
+		}else{
+			for (OStructureV oStructureV : osList) {
+				POStructV postructV = new POStructV();
+				BeanUtils.copyProperties(oStructureV, postructV);
+				posList.add(postructV);
 			}
 		}
-		if(isExport == 0&&queryForm!=null){
-			intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
-			pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+		return posList;
+	}
+	
+	class OsTotal{
+		private int total;
+		private int onJob;
+		public OsTotal(int total2, int onJob2) {
+			this.total=total2;
+			this.onJob=onJob2;
 		}
-		hql.append(" order by t." + sort + " " + order);
-		List<OrganizationStructure> lists = organizationStructureDao.find(hql.toString(), params, intPage, pageSize);
-		listComs = copyos2t(lists);
-//		for (OrganizationStructure organizationStructure : lists) {
-//			if(organizationStructure!=null){
-//				POStructs postruct = new POStructs();
-////				if(organizationStructure.getSecondLevel().equals("离职")){
-////					organizationStructure.setFourthLevel("离职");
-////				}
-//				BeanUtils.copyProperties(organizationStructure, postruct);
-//				if(postruct.getLevel()==4){
-//					postruct.setState(null);
-//				}
-//				listComs.add(postruct);
+		public int getTotal() {
+			return total;
+		}
+		public int getOnJob() {
+			return onJob;
+		}
+		public void setTotal(int total) {
+			this.total = total;
+		}
+		public void setOnJob(int onJob) {
+			this.onJob = onJob;
+		}
+		public void addTotal(int num){
+			this.total += num;
+		}
+		public void addOnJob(int num){
+			this.onJob += num;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<String, Object> findAllStruct(POStructV pOStructV) {
+		Map<String, Object> osInfo = new HashMap<String, Object>();
+		if(null == CacheManager.getInstance().get(SysConfig.CACHE_COMMON + SysConfig.COMMON_JIAGOU)){
+			StringBuffer hql = new StringBuffer("from OStructureV t where 1=1");
+//			Map<String,Object> params = new HashMap<String, Object>();
+//			if(null !=pOStructV.getId()){
+//				hql.append(" and id=:id");
+//				params.put("id", pOStructV.getId());
 //			}
-//		}
-		long count = getOStructCount(hql.toString(), params);
-		osInfo.put("rows", listComs);
-		osInfo.put("total", count);
+			List<OStructureV> osList = oStructureVdao.find(hql.toString(),null);
+			List<POStructV> posList = new ArrayList<POStructV>();
+			
+			Iterator<OStructureV> it = osList.iterator();
+			if(osList.size()>0){
+				Map<Integer,OsTotal> countMap = new HashMap<Integer, OsTotal>();
+				while(it.hasNext()){
+					OStructureV os4 = it.next();
+					if(os4.getLevel() == 4){
+						int s3 = os4.getPreId();
+						int total = os4.getTotal();
+						int onJob = os4.getOnJob();
+						OsTotal osTotal = countMap.get(s3);
+						if(null != osTotal){
+							osTotal.addTotal(total);
+							osTotal.addOnJob(onJob);
+						}else{
+							countMap.put(s3, new OsTotal(total,onJob));
+						}
+						POStructV pos = new POStructV();
+						BeanUtils.copyProperties(os4, pos);
+						pos.setState("");
+						posList.add(pos);
+						it.remove();
+//						osList.remove(os4);
+					}
+				}
+				it = osList.iterator();
+				while(it.hasNext()){
+					OStructureV os3 = it.next();
+					if(os3.getLevel()==3){
+						int s2 = os3.getPreId();
+						OsTotal osTotal = countMap.get(os3.getId());
+						if(null != osTotal){
+							//3级先取给自己
+							os3.setTotal(osTotal.getTotal());
+							os3.setOnJob(osTotal.getOnJob());
+							//后去加给2级
+							OsTotal osTotal2 = countMap.get(s2);
+							if(null != osTotal2){
+								osTotal2.addTotal(osTotal.getTotal());
+								osTotal2.addOnJob(osTotal.getOnJob());
+							}else{
+								countMap.put(s2, new OsTotal(osTotal.getTotal(),osTotal.getOnJob()));
+							}
+						}
+						POStructV pos = new POStructV();
+						BeanUtils.copyProperties(os3, pos);
+						posList.add(pos);
+//						osList.remove(os3);
+						it.remove();
+					}
+				}
+				
+				it = osList.iterator();
+				while(it.hasNext()){
+					OStructureV os2 = it.next();
+					if(os2.getLevel()==2){
+						int s1 = os2.getPreId();
+						OsTotal osTotal = countMap.get(os2.getId());
+						if(null != osTotal){
+							//2级先取给自己
+							os2.setTotal(osTotal.getTotal());
+							os2.setOnJob(osTotal.getOnJob());
+							//后去加给1级
+							OsTotal osTotal2 = countMap.get(s1);
+							if(null != osTotal2){
+								osTotal2.addTotal(osTotal.getTotal());
+								osTotal2.addOnJob(osTotal.getOnJob());
+							}else{
+								countMap.put(s1, new OsTotal(osTotal.getTotal(),osTotal.getOnJob()));
+							}
+						}
+						POStructV pos = new POStructV();
+						BeanUtils.copyProperties(os2, pos);
+						posList.add(pos);
+//						osList.remove(os2);
+						it.remove();
+					}
+				}
+				
+				osInfo.put("total", osList.size());
+				it = osList.iterator();
+				while(it.hasNext()){
+					OStructureV os1 = it.next();
+					if(os1.getLevel()==1){
+						OsTotal osTotal = countMap.get(os1.getId());
+						if(null != osTotal){
+							os1.setTotal(osTotal.getTotal());
+							os1.setOnJob(osTotal.getOnJob());
+						}
+						POStructV pos = new POStructV();
+						BeanUtils.copyProperties(os1, pos);
+						posList.add(pos);
+//						osList.remove(os1);
+						it.remove();
+					}
+				}
+			}
+			osInfo.put("rows", posList);
+			CacheManager.getInstance().put(SysConfig.CACHE_COMMON + SysConfig.COMMON_JIAGOU, osInfo);
+		}else{
+			osInfo = (Map<String, Object>) CacheManager.getInstance().get(SysConfig.CACHE_COMMON + SysConfig.COMMON_JIAGOU);
+		}
 		return osInfo;
 	}
 	
-	private Set<POStructs> copyos2t(List<OrganizationStructure> lists) {
-		Set<POStructs> pstructs = new TreeSet<POStructs>();
-		for (OrganizationStructure struct : lists) {
-			POStructs pstruct = new POStructs();
-			BeanUtils.copyProperties(struct, pstruct);
-			if(struct.getStructures().size()>0){
-				pstruct.setChildren(copyos2t(new ArrayList<OrganizationStructure>(struct.getStructures())));
-			}else{
-				pstruct.setState(null);
-			}
-			pstructs.add(pstruct);
+
+	@Override
+	public int updateOrSave(POStructV poStructV) {
+		OrganizationStructure os = new OrganizationStructure();
+		BeanUtils.copyProperties(poStructV, os);
+		try {
+			organizationStructureDao.saveOrUpdate(os);
+		} catch (Exception e) {
+			return 0;
 		}
-		return pstructs;
+		return 1;
 	}
+	
+
+	@Override
+	public int deleteOS(POStructV poStructV) {
+		OrganizationStructure os = new OrganizationStructure();
+		BeanUtils.copyProperties(poStructV, os);
+		try {
+			organizationStructureDao.delete(os);
+		} catch (Exception e) {
+			return 0;
+		}
+		return 1;
+	}
+
+//	@Override
+//		public Map<String,Object> getOStruct(QueryForm queryForm,int isExport) {
+//		Map<String,Object> osInfo = new HashMap<String, Object>();
+//		Set<POStructs> listComs = new TreeSet<POStructs>();
+//		StringBuffer hql;
+//		Map<String,Object> params = new HashMap<String, Object>();
+//		String sort = "sortCode";
+//		String order = SysConfig.ASC;
+//		int intPage = 0;
+//		int pageSize = 30000;//最多导出30000条数据
+//		if(queryForm==null){
+//			hql = new StringBuffer("from OrganizationStructure t where t.level=4");
+//		}else{
+//			hql = new StringBuffer("from OrganizationStructure t where t.level=1");
+//		}
+////		if(queryForm.getFirstLevel()==null&&queryForm.getSecondLevel()==null&&queryForm.getThirdLevel()==null&&queryForm.getFourthLevel()==null){
+////			if(queryForm.getId()!=0){
+////				hql.append(" and t.preId=:id");
+////				params.put("id", queryForm.getId());
+////			}else{
+////				hql.append(" and t.level = 1 ");
+////			}
+////		}else{
+////			addCondition(hql, queryForm, params);
+////		}
+//		if(queryForm.getSort() != null){
+//			sort = queryForm.getSort();
+//			if(queryForm.getOrder() != null){
+//				order = queryForm.getOrder();
+//			}
+//		}
+//		if(isExport == 0&&queryForm!=null){
+//			intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
+//			pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+//		}
+//		hql.append(" order by t." + sort + " " + order);
+//		List<OrganizationStructure> lists = organizationStructureDao.find(hql.toString(), params, intPage, pageSize);
+//		listComs = copyos2t(lists);
+////		for (OrganizationStructure organizationStructure : lists) {
+////			if(organizationStructure!=null){
+////				POStructs postruct = new POStructs();
+//////				if(organizationStructure.getSecondLevel().equals("离职")){
+//////					organizationStructure.setFourthLevel("离职");
+//////				}
+////				BeanUtils.copyProperties(organizationStructure, postruct);
+////				if(postruct.getLevel()==4){
+////					postruct.setState(null);
+////				}
+////				listComs.add(postruct);
+////			}
+////		}
+//		long count = getOStructCount(hql.toString(), params);
+//		osInfo.put("rows", listComs);
+//		osInfo.put("total", count);
+//		return osInfo;
+//	}
+	
+//	private Set<POStructs> copyos2t(List<OrganizationStructure> lists) {
+//		Set<POStructs> pstructs = new TreeSet<POStructs>();
+//		for (OrganizationStructure struct : lists) {
+//			POStructs pstruct = new POStructs();
+//			BeanUtils.copyProperties(struct, pstruct);
+//			if(struct.getStructures().size()>0){
+//				pstruct.setChildren(copyos2t(new ArrayList<OrganizationStructure>(struct.getStructures())));
+//			}else{
+//				pstruct.setState(null);
+//			}
+//			pstructs.add(pstruct);
+//		}
+//		return pstructs;
+//	}
 	
 	@Override
 	public long getOStructCount(String hql, Map<String, Object> params) {
@@ -550,7 +669,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		return organizationStructureDao.count(hqll.toString(), params);
 	}
 	
-	@Override
+	/*@Override
 	public Map<String, Object> findStruct(QueryForm queryform, int isExport) {
 		Map<String,Object> structInfo = new HashMap<String, Object>();
 		Set<Pstruct> structs = new TreeSet<Pstruct>();
@@ -601,9 +720,9 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		structInfo.put("rows", structs);
 		structInfo.put("total", count);
 		return structInfo;
-	}
+	}*/
 	
-	private Set<Pstruct> copyo2t(List<Struct> lists) {
+	/*private Set<Pstruct> copyo2t(List<Struct> lists) {
 		Set<Pstruct> pstructs = new TreeSet<Pstruct>();
 		for (Struct struct : lists) {
 			Pstruct pstruct = new Pstruct();
@@ -624,12 +743,12 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 			pstructs.add(pstruct);
 		}
 		return pstructs;
-	}
-	public long getStructCount(String hql, Map<String,Object> params){
+	}*/
+	/*public long getStructCount(String hql, Map<String,Object> params){
 		StringBuffer hqll = new StringBuffer("select count(*) from Struct t where ");
 		hqll.append(hql.split("where")[1]);
 		return structDao.count(hqll.toString(), params);
-	}
+	}*/
 	
 	@Override
 	public List<PComboBox> getInsuranceCompany() {
@@ -992,9 +1111,9 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		List<WageDistribution> wageDistributions = new ArrayList<WageDistribution>();
 		List<PshebaoDetail> pwages = new ArrayList<PshebaoDetail>();
 		StringBuffer hql = new StringBuffer("from WageDistribution t where t.radix > 0 and t.company = :company");
-		SimpleDateFormat df = new SimpleDateFormat("yyyyMM");
-		Calendar cal = Calendar.getInstance();
-		String date = df.format(cal.getTime());
+//		SimpleDateFormat df = new SimpleDateFormat("yyyyMM");
+//		Calendar cal = Calendar.getInstance();
+//		String date = df.format(cal.getTime());
 //		hql.append(" and t.rubaoTime < :rubaoTime ");
 //		params.put("rubaoTime", date);
 		long total = 0;
@@ -1583,14 +1702,15 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		List<PGongziHuiZong> pgongzihuizongs = new ArrayList<PGongziHuiZong>();
 		Map<String, Object> result = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer("from GongziHuiZong t where 1=1");
-		if(queryForm.getUsername()!=null && queryForm.getUsername()!=""){
-			hql.append(" and (t.username like :username1 )");
-			params.put("username1", "%" + queryForm.getUsername() + "%");
-		}
-		if(queryForm.getFourthLevel()!=null && queryForm.getFourthLevel()!=""){
-			hql.append(" and t.fourthLevel like :fourthLevel1");
-			params.put("fourthLevel1", "%" + queryForm.getFourthLevel() + "%");
-		}
+		addCondition(hql, queryForm, params);
+//		if(queryForm.getUsername()!=null && queryForm.getUsername()!=""){
+//			hql.append(" and (t.username like :username1 )");
+//			params.put("username1", "%" + queryForm.getUsername() + "%");
+//		}
+//		if(queryForm.getFourthLevel()!=null && queryForm.getFourthLevel()!=""){
+//			hql.append(" and t.fourthLevel like :fourthLevel1");
+//			params.put("fourthLevel1", "%" + queryForm.getFourthLevel() + "%");
+//		}
 			
 		String sort = "id";
 		String order = SysConfig.DESC;

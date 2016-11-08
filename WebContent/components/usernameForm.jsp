@@ -374,8 +374,16 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>负责人:</td>
-                    <td><input class="easyui-textbox" type="text" name="chargedBy" /></td>
+                    <td>级别:</td>
+                    <td>
+                    <input id="combox_level" class="easyui-combobox" name="level" data-options="
+                    url: 'employee/getLevel.action',
+                    valueField:'name',
+                    textField:'name'
+                    ">
+                    </td>
+                    <%--<td>负责人:</td>--%>
+                    <%--<td><input class="easyui-textbox" type="text" name="chargedBy"  readonly="true"/></td>--%>
                     <td>照片:</td>
                     <td>
                     	<input class="easyui-combobox" name="photo" data-options="
@@ -399,8 +407,10 @@
                     </c:if>
                 </tr>
                 <tr>
-                    <td>签字人:</td>
-                    <td><input class="easyui-textbox" type="text" name="signedBy" /></td>
+                    <td>合同续签:</td>
+                    <td><input class="easyui-textbox" type="text" name="contractRenewal" /></td>
+                    <%--<td>签字人:</td>--%>
+                    <%--<td><input class="easyui-textbox" type="text" name="signedBy"  readonly="true"/></td>--%>
                      <td>招聘来源:</td>
                     <td><input class="easyui-textbox" type="text" name="recruitmentSources" /></td>
                     <td>转正报表</td>
@@ -426,16 +436,18 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>级别:</td>
-                    <td>
-                    <input id="combox_level" class="easyui-combobox" name="level" data-options="
-                    url: 'employee/getLevel.action',
-                    valueField:'name',
-                    textField:'name'
-                    ">
-                    </td>
-                    <td>合同续签:</td>
-                    <td><input class="easyui-textbox" type="text" name="contractRenewal" /></td>
+                    <%--<td>级别:</td>--%>
+                    <%--<td>--%>
+                    <%--<input id="combox_level" class="easyui-combobox" name="level" data-options="--%>
+                    <%--url: 'employee/getLevel.action',--%>
+                    <%--valueField:'name',--%>
+                    <%--textField:'name'--%>
+                    <%--">--%>
+                    <%--</td>--%>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td>部门调整报表</td>
                     <td><input class="easyui-textbox" type="text" name="bumentiaozhengReport" /></td>
                 </tr>
@@ -467,7 +479,7 @@
     })
     $('#textbox_id').textbox({
     onChange : function(newValue, oldValue) {
-    if(newValue.length==18){
+    if(newValue && newValue.length==18){
     borthday = newValue.substr(6, 4) + '.'
     + newValue.substr(10, 2) + '.'
     + newValue.substr(12, 2);

@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import com.chaoxing.oa.entity.page.PMenu;
+import com.chaoxing.oa.entity.page.system.PMenu;
 
 public interface RoleMenuService {
 //	public List<PMenu> findMenu(int roleId);

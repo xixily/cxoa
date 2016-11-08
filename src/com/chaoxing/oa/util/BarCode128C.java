@@ -3,12 +3,19 @@ package com.chaoxing.oa.util;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
@@ -264,5 +271,59 @@ public class BarCode128C {
 				}
 			}
 		}
+	}
+
+
+	public static void getCode128CPicture(String barCode, int height, HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+			String barString = getCode(barCode);
+		   	response.setContentType("text/html;charset=UTF-8");  
+	        response.setHeader("Pragma","No-cache");     
+	        response.setHeader("Cache-Control","no-cache");     
+	        response.setDateHeader("Expires", 0);     
+	        response.setHeader("Content-disposition", "attachment; filename="  
+	                + new String((barString + ".jpg").getBytes("utf-8"), "ISO8859-1"));  
+	        //表明生成的响应是图片     
+	        response.setContentType("image/jpeg");   
+	    	OutputStream out = null;
+			try{
+				out = new BufferedOutputStream(response.getOutputStream()); 
+				if (null == barString || null == out || 0 == barString.length()){
+					out.close();
+					return ;
+				}
+				int nImageWidth = 0;
+				char[] cs = barString.toCharArray();
+				for (int i1 = 0; i1 != cs.length; i1++) {
+					nImageWidth = cs.length;
+				}
+				BufferedImage bi = new BufferedImage(nImageWidth, height,
+				BufferedImage.TYPE_INT_RGB);
+				Graphics g = bi.getGraphics();
+				for (int i1 = 0; i1 < cs.length; i1++){
+					if ("1".equals(cs[i1] + "")){
+						g.setColor(Color.BLACK);
+						g.fillRect(i1, 0, 1, height);
+					}else {
+						g.setColor(Color.WHITE);
+						g.fillRect(i1, 0, 1, height);
+					}
+				}
+				JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
+				encoder.encode(bi);
+//				bi.flush();
+			} catch (Exception e){
+				e.printStackTrace();
+			}finally{
+				if(null != out){
+					try {
+						out.flush();
+						out.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		
 	}
 }

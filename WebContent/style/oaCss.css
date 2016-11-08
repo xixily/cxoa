@@ -96,3 +96,15 @@ a.touched {
 .icon-printer{
 	background:url('images/extjs_icons/printer/printer.png') no-repeat center center;
 }
+.icon-organisation{
+	background:url('images/extjs_icons/chart/chart_organisation.png') no-repeat center center;
+}
+.icon-collapse{
+	background:url('images/extjs_icons/text_padding_top.png') no-repeat center center;
+}
+.icon-page{
+	 background:url('images/extjs_icons/page/page_white_code.png') no-repeat center center;
+ }
+.icon-action{
+	 background:url('images/extjs_icons/page/page_white_actionscript.png') no-repeat center center;
+ }

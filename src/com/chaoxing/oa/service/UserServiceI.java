@@ -1,12 +1,11 @@
 package com.chaoxing.oa.service;
 
 
-import com.chaoxing.oa.entity.page.QueryForm;
-import com.chaoxing.oa.entity.page.SessionInfo;
+import com.chaoxing.oa.entity.page.common.QueryForm;
+import com.chaoxing.oa.entity.page.employee.PUserName;
+import com.chaoxing.oa.entity.page.system.SessionInfo;
 
 import java.util.List;
-
-import com.chaoxing.oa.entity.page.PUserName;
 
 public interface UserServiceI {
 

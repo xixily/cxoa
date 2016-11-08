@@ -10,8 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.chaoxing.oa.entity.page.PMenu;
-import com.chaoxing.oa.entity.page.SessionInfo;
+import com.chaoxing.oa.entity.page.system.PMenu;
+import com.chaoxing.oa.entity.page.system.SessionInfo;
 import com.chaoxing.oa.service.RoleMenuService;
 import com.chaoxing.oa.util.ResourceUtil;
 

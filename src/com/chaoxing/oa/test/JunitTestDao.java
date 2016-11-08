@@ -1,9 +1,5 @@
 package com.chaoxing.oa.test;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.annotation.Resource;
 
 import org.junit.Before;
@@ -15,8 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.chaoxing.oa.dao.BaseDaoI;
-import com.chaoxing.oa.entity.po.Struct;
-import com.chaoxing.oa.entity.po.UserName;
+import com.chaoxing.oa.entity.po.employee.UserName;
 
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,30 +21,30 @@ public class JunitTestDao {
 	private BaseDaoI<UserName> ud;
 	@Resource(name = "baseDao")
 	private BaseDaoI<Object> od;
-	@Resource(name = "baseDao")
-	private BaseDaoI<Struct> structDao;
+//	@Resource(name = "baseDao")
+//	private BaseDaoI<Struct> structDao;
 	@Before
 	public void setUp() throws Exception{
 		
 	}
 	@Test
 	public void testMyDao(){
-		try {
-			List<Struct> structs = structDao.find("from Structure where id = 1");
-			for (Struct structure : structs) {
-				System.out.println("一级架构" + structure.getName() +"下面的二级架构有:");
-				for (Struct st : structure.getChildren()) {
-					System.out.println("##" +st.getName());
-					System.out.println("二级" + st.getName() +"下面的三级架构有:");
-					for (Struct st2 : st.getChildren()) {
-						System.out.println("###" + st2.getName());
-						System.out.println("三级" + st2.getName() +"下面的四级架构有:");
-						for (Struct st3 : st2.getChildren()) {
-							System.out.println("####" + st3.getName());
-						}
-					}
-				}
-			}
+//		try {
+//			List<Struct> structs = structDao.find("from Structure where id = 1");
+//			for (Struct structure : structs) {
+//				System.out.println("一级架构" + structure.getName() +"下面的二级架构有:");
+//				for (Struct st : structure.getChildren()) {
+//					System.out.println("##" +st.getName());
+//					System.out.println("二级" + st.getName() +"下面的三级架构有:");
+//					for (Struct st2 : st.getChildren()) {
+//						System.out.println("###" + st2.getName());
+//						System.out.println("三级" + st2.getName() +"下面的四级架构有:");
+//						for (Struct st3 : st2.getChildren()) {
+//							System.out.println("####" + st3.getName());
+//						}
+//					}
+//				}
+//			}
 //			Map<String, Object> params = new HashMap<String, Object>();
 //			params.put("date1", "2016.06");
 //			params.put("date2", "2016.05");
@@ -68,9 +63,9 @@ public class JunitTestDao {
 ////			}else{
 ////				System.out.println("找不着");
 ////			}
-		} catch (Exception e) {
-			System.out.println("连接失败！" + e);
-		}
+//		} catch (Exception e) {
+//			System.out.println("连接失败！" + e);
+//		}
 	}
 	@Ignore
 	public void noyet(){

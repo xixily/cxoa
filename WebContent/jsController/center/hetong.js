@@ -14,7 +14,7 @@ var hetong = {
 						$.each(data.rows,function(n,obj){
 							obj.send = '<span class="linked"><a href="javascript:hetong.fahuo.sendKuaidi()">获取顺丰号</a></span>';
 							if(obj.mailno){
-								obj.send += '/<span class="linked"><a href="javascript:hetong.fahuo.print()"><span style="color:#6c7147">打印</span></a></span>';
+								obj.send += '/<span class="linked"><a href="javascript:hetong.fahuo.printOnClient()"><span style="color:#6c7147">打印</span></a></span>';
 							}
 						});
 						return data;
@@ -67,34 +67,20 @@ var hetong = {
 				$.messager.alert('调用成功~！');
 			},
 			express_type : {
-				1 : '标准快递',
-				2 : '顺丰特惠',
-				3 : '电商特惠',
+				1 : '顺丰次日',
+				2 : '顺丰隔日',
 				5 : '顺丰次晨',
-				6 : '即日件',
+				6 : '顺丰即日',
 				7 : '电商速配',
-				28 : '电商专配'
+				37:'云仓专配次日',
+				38:'云仓专配隔日'
 			},
-			print :function(){
+			printOnClient : function(){
 				var dialog = $('#kuaidi_form');
-				dialog.dialog('clear');
-				dialog.dialog({
-					buttons: [{
-					text:'重新打印',
-					iconCls:'icon-ok',
-					handler:function(){
-						$('#kuaidi_form').dialog({title:'打印页面'});
-					}
-				},{
-					text:'Cancel',
-					handler:function(){
-						$('#kuaidi_form').dialog('close');
-					}
-				}]})
-//				dialog.dialog({content:iframe})
-				var info = $('#datagrid_fahuo').datagrid('getSelected');
+				var info = $.extend({}, $('#datagrid_fahuo').datagrid('getSelected'));
+				var mailno = info.mailno;
 				if(info && info.orderid!=0 && info.mailno && info.mailno!=""){
-					info.code_src = "template/sfTemplate/img/code_" + info.orderid + ".jpg";//运单号的路径
+					info.code_src = "file/codeImage.action?mailno=" + info.mailno + "&orderid=" + info.orderid;
 					if(info.express_type && info.express_type != 0){//快件产品类别
 						if(hetong.fahuo.express_type[info.express_type]){
 							info.express_type = hetong.fahuo.express_type[info.express_type];
@@ -114,8 +100,85 @@ var hetong = {
 						tt += str.slice((i-1)*3,str.length);
 						info.mailno = tt;
 					}
+					dialog.dialog('clear');
+					dialog.dialog('open',{content:'<div></div>'});
+					//把快递单放进iframe，再通过iframe来打印。2
+					$.get('template/sfTemplate/index2.html',null,function(result){
+						var html_dom = result;
+						var jObj = $(html_dom);
+						var _values = jObj.find("[target='_value']");
+						$.each(_values, function(n, obj){
+							var name = $(obj).attr('name');
+							if(name == "code_src"){
+								$(obj).attr("src",info.code_src);
+							}else{
+								if(info[name]){
+									$(obj).html(info[name]);
+								}
+							}
+//							console.log(obj);
+						});
+						var html = $('<html>');
+						html.append(jObj);
+						html.find('#mailno').val(mailno);
+						var iframe = $('<iframe>')
+						iframe.attr("height","1040px");
+						iframe.attr("width","485px");
+						iframe.attr("frameborder",0);
+						iframe.attr('srcdoc',html[0].innerHTML);
+						dialog.dialog({content:iframe});
+					});
+				}else{
+					if(!info||info.orderid==0){
+						$.messager.alert("打印提示","请选择需要打印的合同！~")
+					}
+					if(!info.code_src){
+						$.messager.alert("打印提示：","请您先获取快递单号！~");
+					}
+				}
+
+			},
+			printFromServer :function(){
+				var dialog = $('#kuaidi_form');
+//				dialog.dialog('open');
+				dialog.dialog({
+					buttons: [{
+					text:'重新打印',
+					iconCls:'icon-ok',
+					handler:function(){
+						$('#kuaidi_form').dialog({title:'打印页面'});
+					}
+				},{
+					text:'Cancel',
+					handler:function(){
+						$('#kuaidi_form').dialog('close');
+					}
+				}]})
+//				dialog.dialog({content:iframe})
+				var info = $.extend({}, $('#datagrid_fahuo').datagrid('getSelected'));
+				if(info && info.orderid!=0 && info.mailno && info.mailno!=""){
+					info.code_src = "file/codeImage.action?mailno=" + info.mailno + "&orderid=" + info.orderid;
+					if(info.express_type && info.express_type != 0){//快件产品类别
+						if(hetong.fahuo.express_type[info.express_type]){
+							info.express_type = hetong.fahuo.express_type[info.express_type];
+						}else{
+							info.express_type = '电商专配';
+						}
+					}else{
+						info.express_type = '电商专配';
+					}
+					if (info.mailno && info.mailno.length>0){
+						var str = info.mailno;
+						var tt = '';
+						for(var i = 1; 3*i<= str.length;i++){
+							tt += str.slice((i-1)*3,3*i) +' ';
+						}
+						tt += str.slice((i-1)*3,str.length);
+						info.mailno = tt;
+					}
 //					dialog.dialog()
-					dialog.dialog('open',{content:''});
+					dialog.dialog('clear');
+					dialog.dialog('open',{content:'<div></div>'});
 					//把快递单放进iframe，再通过iframe来打印。
 					$.get('template/sfTemplate/index.html',null,function(result){
 						var html_dom = result;
@@ -243,6 +306,15 @@ var hetong = {
 			},
 			editFapiao : function(){
 				hetong.fapiao.view();
+			}
+		},
+		htManage : {
+			getOperator : function(newValue,oldValue){
+				if(true){
+					$('#th_manage_operator').combobox({
+						queryParams : {username:newValue}
+					})
+				}
 			}
 		}
 }

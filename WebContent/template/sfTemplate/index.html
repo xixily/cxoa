@@ -7,25 +7,28 @@
 	<link rel="icon" href="">
 	<link rel="stylesheet" href="template/sfTemplate/css/common.css">
 	<link rel="stylesheet" href="template/sfTemplate/css/style.css">
+	<script type="text/javascript" src="jslib/jquery-easyui-1.5/jquery.min.js"></script>
+	<script type="text/javascript" src="jslib/jquery-barcode.min.js"></script>
 </head>
 <body style="height: 0px;">
 <!--<object id="Web" width="0" classid="CLSID:8856F961-340A-11D0-A96B-00C4FD705A2"></object>-->
+<input id="mailno" type="hidden" value=""/>
 	<div id="sf_kuaidi_print_list" class="page">
 		<div class="m1 b">
 			<img src="template/sfTemplate/img/logo.jpg" class="img1" target="_value" name="log">
 			<img src="template/sfTemplate/img/tel.png" class="img2" target="_value" name="tel">
-			<p><span class="s1">E</span><span class="s2">加急</span></p>
+			<p></p>
 		</div>
 		<div class="m2 b">
 			<div class="left">
 				<img src="template/sfTemplate/img/code.jpg" target="_value" name="code_src">
 				<!--<div style="background:"></div>-->
-				<p>运单号<span target="_value" name="mailno"></span></p>
+				<p>运单号&nbsp;&nbsp;<span target="_value" name="mailno"></span></p>
 				<!-- <p>母单号<span>444 004 772 115</span></p> -->
 			</div>
 			<div class="right">
 				<div class="r1 b">
-					<p style="text-align: center"><span  target="_value" name="express_type">电商专配</span></p>
+					<p style="text-align: center"><span  target="_value" name="express_type"></span></p>
 				</div>
 				<div class="r2"><!-- 这里应该属于顺丰增值服务,[name、value1、value2] -->
 					<p class="p1"><span target="_value" name="addService_name" ></span></p>
@@ -39,7 +42,7 @@
 				<p>目的地</p>
 			</div>
 			<div class="right">
-				<p><span target="_value" name="destcode">7312</span></p>
+				<p><span target="_value" name="destcode"></span></p>
 			</div>
 		</div>
 		<div class="m4 b">
@@ -48,12 +51,12 @@
 			</div>
 			<div class="right">
 				<p>
-					<span target="_value" name="d_contact">熊大</span>
-					<span target="_value" name="d_tel">0731-12345678</span>
-					<span target="_value" name="d_mobile">13927481656</span>
-					<span target="_value" name="d_company">腾飞科技</span></p>
+					<span target="_value" name="d_contact"></span>
+					<span target="_value" name="d_tel"></span>
+					<span target="_value" name="d_mobile"></span>
+					<span target="_value" name="d_company"></span></p>
 				<p>
-					<span target="_value" name="d_address">湖南省湘潭市雨湖区学府路与建设路交汇口666号南山软件产业基地B栋8楼</span>
+					<span target="_value" name="d_address"></span>
 				</p>
 			</div>
 		</div>
@@ -63,13 +66,12 @@
 			</div>
 			<div class="right-1">
 				<p>
-					<span target="_value" name="j_contact">熊大</span>
-					<span target="_value" name="j_tel">0731-12345678</span>
+					<span target="_value" name="j_contact"></span>
+					<span target="_value" name="j_tel"></span>
 					<span target="_value" name="j_company"></span>
-					0731-12345678
 				</p>
 				<p>
-					<span target="_value" name="j_address">广东省深圳市学府路666号南山软件产业基地B栋8楼</span>
+					<span target="_value" name="j_address"></span>
 				</p>
 			</div>
 			<div class="right-2">
@@ -83,7 +85,7 @@
 				<div class="l1 b">
 					<ul>
 						<li>付款方式：<span target="_value" name="pay_method">寄付 月结</span></li>
-						<li>月结账号：<span target="_value" name="custid">0103289539</span></li>
+						<li>月结账号：<span target="_value" name="custid"></span></li>
 						<li>件数：<span target="_value" name="parcel_quantity">1</span></li>
 					</ul>
 					<ul>
@@ -125,7 +127,7 @@
 				</div>
 				<div class="right">
 					<img src="template/sfTemplate/img/code.jpg" target="_value" name="code_src">
-					<p>运单号<span target="_value"  name="mailno">033 203 023 629</span></p>
+					<p>运单号&nbsp;&nbsp;<span target="_value"  name="mailno"></span></p>
 				</div>
 			</div>
 			<div class="m8 b">
@@ -134,12 +136,12 @@
 				</div>
 				<div class="right">
 					<p>
-						<span target="_value" name="j_contact">熊大</span>
-						<span target="_value" name="j_tel">0731-12345678</span>
+						<span target="_value" name="j_contact"></span>
+						<span target="_value" name="j_tel"></span>
 						<span target="_value" name="j_company"></span>
 					</p>
 					<p>
-						<span target="_value" name="j_address">广东省深圳市学府路666号南山软件产业基地B栋8楼</span>
+						<span target="_value" name="j_address"></span>
 					</p>
 				</div>
 			</div>
@@ -149,12 +151,12 @@
 				</div>
 				<div class="right">
 					<p>
-						<span target="_value" name="d_contact">熊大</span>
-						<span target="_value" name="d_tel">0731-12345678</span>
-						<span target="_value" name="d_mobile">13927481656</span>
-						<span target="_value" name="d_company">腾飞科技</span></p>
+						<span target="_value" name="d_contact"></span>
+						<span target="_value" name="d_tel"></span>
+						<span target="_value" name="d_mobile"></span>
+						<span target="_value" name="d_company"></span></p>
 					<p>
-						<span target="_value" name="d_address">湖南省湘潭市雨湖区学府路与建设路交汇口666号南山软件产业基地B栋8楼</span>
+						<span target="_value" name="d_address"></span>
 					</p>
 				</div>
 			</div>
@@ -168,7 +170,7 @@
 				</div>
 				<div class="right">
 					<img src="template/sfTemplate/img/code.jpg" target="_value" name="code_src">
-					<p>运单号<span target="_value"  name="mailno">033 203 023 629</span></p>
+					<p>运单号&nbsp;&nbsp;<span target="_value"  name="mailno"></span></p>
 				</div>
 			</div>
 			<div class="m8 b">
@@ -177,12 +179,12 @@
 				</div>
 				<div class="right">
 					<p>
-						<span target="_value" name="j_contact">熊大</span>
-						<span target="_value" name="j_tel">0731-12345678</span>
+						<span target="_value" name="j_contact"></span>
+						<span target="_value" name="j_tel"></span>
 						<span target="_value" name="j_company"></span>
 					</p>
 					<p>
-						<span target="_value" name="j_address">广东省深圳市学府路666号南山软件产业基地B栋8楼</span>
+						<span target="_value" name="j_address"></span>
 					</p>
 				</div>
 			</div>
@@ -192,12 +194,12 @@
 				</div>
 				<div class="right">
 					<p>
-						<span target="_value" name="d_contact">熊大</span>
-						<span target="_value" name="d_tel">0731-12345678</span>
-						<span target="_value" name="d_mobile">13927481656</span>
-						<span target="_value" name="d_company">腾飞科技</span></p>
+						<span target="_value" name="d_contact"></span>
+						<span target="_value" name="d_tel"></span>
+						<span target="_value" name="d_mobile"></span>
+						<span target="_value" name="d_company"></span></p>
 					<p>
-						<span target="_value" name="d_address">湖南省湘潭市雨湖区学府路与建设路交汇口666号南山软件产业基地B栋8楼</span>
+						<span target="_value" name="d_address"></span>
 					</p>
 				</div>
 			</div>

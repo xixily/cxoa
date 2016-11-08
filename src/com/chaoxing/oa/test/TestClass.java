@@ -3,7 +3,7 @@ package com.chaoxing.oa.test;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import com.chaoxing.oa.entity.page.Json;
+import com.chaoxing.oa.entity.page.common.Json;
 
 public class TestClass {
 	public void getFileds(Object source, Object target, Class<?> clazz){
