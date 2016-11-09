@@ -73,7 +73,6 @@ public class OrderResponse {
 	public void setOpcode(String opcode) {
 		this.opcode = opcode;
 	}
-	
 	@Override
 	public String toString() {
 		return "OrderResponse [orderid=" + orderid + ", mailno=" + mailno + ", return_tracking_no=" + return_tracking_no

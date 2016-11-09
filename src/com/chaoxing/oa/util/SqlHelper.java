@@ -11,12 +11,24 @@ import java.util.Map;
  *
  */
 public class SqlHelper {
-	
+	/**
+	 * 预设hql and语句
+	 * @param obj 查询数据对象
+	 * @param params 
+	 * @param isLike "like" 还是 "="
+	 * @param expect 数组，被排除的字段
+	 * @return
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 */
 	public static String prepareAndSql(Object obj, Map<String, Object> params, boolean isLike, String... expect) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		return prepareAndSql(obj,params,"t",isLike,true,expect);
 	}
 	public static String prepareOrSql(Object obj, Map<String, Object> params, boolean isLike, String... expect) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-		return prepareAndSql(obj,params,"t",isLike,true,expect);
+		return prepareAndSql(obj,params,"t",isLike,false,expect);
 	}
 	
 	public static String prepareAndSql(Object obj, Map<String, Object> params, String tableName, boolean isLike, boolean isAnd,String... expect){

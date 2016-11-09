@@ -2,19 +2,28 @@ var hetong = {
 		fahuo : {
 			intiFahuo : function(){
 				$('#datagrid_fahuo').datagrid({
-					url:'tabs/hetong/datagrid.json',
-//					url:'hetong/queryHetong.action',
+//					url:'tabs/hetong/datagrid.json',
+					url:'hetong/queryFahuo.action',
 					title:'发货表',
 					fitColumns:true,
 					singleSelect:true,
 					pagination:true,
 					rownumbers:true,
 					pageSize:15,
+					rowStyler: function(index,row){
+						if (row.filter_result == 3){
+							return 'background-color:red;color:#fff;'; // return inline style
+						}else if(row.filter_result == 1){
+							return 'background-color:yellow;color:#fff;';
+						}
+					},
 					loadFilter: function(data){
 						$.each(data.rows,function(n,obj){
-							obj.send = '<span class="linked"><a href="javascript:hetong.fahuo.sendKuaidi()">获取顺丰号</a></span>';
-							if(obj.mailno){
-								obj.send += '/<span class="linked"><a href="javascript:hetong.fahuo.printOnClient()"><span style="color:#6c7147">打印</span></a></span>';
+							if(!obj.mailno){
+								obj.send = '<span class="linked"><a href="javascript:hetong.fahuo.sendKuaidi()">获取顺丰号</a></span>';
+
+							}else{
+								obj.send = '<span class="linked"><a href="javascript:hetong.fahuo.printOnClient()"><span style="color:#6c7147">打印</span></a></span>';
 							}
 						});
 						return data;
@@ -39,22 +48,26 @@ var hetong = {
 			sendKuaidi: function(data_id){
 				data_id = data_id ? data_id : 'datagrid_fahuo';
 				var fahuoInfo = $('#' + data_id).datagrid('getSelected');
+				if(fahuoInfo && (fahuoInfo.mailno|| fahuoInfo.mailno=='')){
+					$.messager.alert('改条记录已经有邮寄凭证号。');
+					return;
+				}
 				if(fahuoInfo && fahuoInfo.orderid && fahuoInfo.orderid != 0){
-					if(fahuoInfo.d_company!='' && fahuoInfo.d_address!=''&& fahuoInfo.d_contact!='' && fahuoInfo.d_tel!=''){
-//						if(fahuoInfo.j_address!='' && fahuoInfo.j_company!='' && fahuoInfo.j_contact && fahuoInfo.j_tel){
+					if(fahuoInfo.d_company && fahuoInfo.d_company!='' && fahuoInfo.d_address && fahuoInfo.d_address!=''&& fahuoInfo.d_contact &&
+							fahuoInfo.d_contact!='' && fahuoInfo.d_tel && fahuoInfo.d_tel!=''&& fahuoInfo.sender && fahuoInfo.sender!=''){
+						if(fahuoInfo.j_company!=''){
 							$.post('hetong/sendKuaidi.action', fahuoInfo, function(result){
 								var result =  eval("(" + result + ")");
 								if(result.success){
-									var obj = result.obj;
-									$.messager.alter('发送成功，邮寄凭证号[' + obj.mailno +']已写入数据库。');
+									$('#' + data_id).datagrid('reload');
 								}
 								$.messager.alert('消息', result.msg, 'info');
 							})
-//						}else{
-//							$.messager.alert('操作提示：','缺少寄方单位、地址、联系人或者联系电话，请确认！~');
-//						}
+						}else{
+							$.messager.alert('操作提示：','缺少寄方单位，请确认！~');
+						}
 					}else{
-						$.messager.alert('操作提示：','缺少到方单位、地址、联系人或者联系电话，请确认！~');
+						$.messager.alert('操作提示：','缺少到方单位、地址、联系人、联系电话或发货人，请确认！~');
 					}
 				}else{
 					$.messager.alert('操作提示：','没有找到序号，或者序号为0，请确认！~');
@@ -75,59 +88,82 @@ var hetong = {
 				37:'云仓专配次日',
 				38:'云仓专配隔日'
 			},
+			pay_method:{
+				1:'寄方付',
+				2:'收方付',
+				3:'第三方付'
+			},
 			printOnClient : function(){
 				var dialog = $('#kuaidi_form');
 				var info = $.extend({}, $('#datagrid_fahuo').datagrid('getSelected'));
 				var mailno = info.mailno;
 				if(info && info.orderid!=0 && info.mailno && info.mailno!=""){
-					info.code_src = "file/codeImage.action?mailno=" + info.mailno + "&orderid=" + info.orderid;
-					if(info.express_type && info.express_type != 0){//快件产品类别
-						if(hetong.fahuo.express_type[info.express_type]){
-							info.express_type = hetong.fahuo.express_type[info.express_type];
-						}else{
-							info.express_type = '电商专配';
-						}
-					}else{
-						info.express_type = '电商专配';
-					}
-					if (info.mailno && info.mailno.length>0){
-						var str = info.mailno;
-						var tt = '';
-						var i = 1;
-						for(i = 1; 3*i<= str.length;i++){
-							tt += str.slice((i-1)*3,3*i) +' ';
-						}
-						tt += str.slice((i-1)*3,str.length);
-						info.mailno = tt;
-					}
-					dialog.dialog('clear');
-					dialog.dialog('open',{content:'<div></div>'});
-					//把快递单放进iframe，再通过iframe来打印。2
-					$.get('template/sfTemplate/index2.html',null,function(result){
-						var html_dom = result;
-						var jObj = $(html_dom);
-						var _values = jObj.find("[target='_value']");
-						$.each(_values, function(n, obj){
-							var name = $(obj).attr('name');
-							if(name == "code_src"){
-								$(obj).attr("src",info.code_src);
-							}else{
-								if(info[name]){
-									$(obj).html(info[name]);
+					$.post('hetong/queryKuaidiList.action',info,function(result){
+						result = eval("(" + result + ")");
+						if(result.success){
+							info = result.obj;
+							if(info){
+								info.code_src = "file/codeImage.action?mailno=" + info.mailno + "&orderid=" + info.orderid;
+								if(info.pay_method && info.pay_method!=0){
+									if(hetong.fahuo.pay_method[info.pay_method]){
+										info.pay_method = hetong.fahuo.pay_method[info.pay_method];
+									}else{
+										info.pay_method = '寄方付';
+									}
+								}else{
+									info.pay_method = '寄方付';
 								}
+								if(info.express_type && info.express_type != 0){//快件产品类别
+									if(hetong.fahuo.express_type[info.express_type]){
+										info.express_type = hetong.fahuo.express_type[info.express_type];
+									}else{
+										info.express_type = '顺丰次日';
+									}
+								}else{
+									info.express_type = '顺丰次日';
+								}
+								if (info.mailno && info.mailno.length>0){
+									var str = info.mailno;
+									var tt = '';
+									var i = 1;
+									for(i = 1; 3*i<= str.length;i++){
+										tt += str.slice((i-1)*3,3*i) +' ';
+									}
+									tt += str.slice((i-1)*3,str.length);
+									info.mailno = tt;
+								}
+								dialog.dialog('clear');
+								dialog.dialog('open',{content:'<div></div>'});
+								//把快递单放进iframe，再通过iframe来打印。2
+								$.get('template/sfTemplate/index2.html',null,function(result){
+									var html_dom = result;
+									var jObj = $(html_dom);
+									var _values = jObj.find("[target='_value']");
+									$.each(_values, function(n, obj){
+										var name = $(obj).attr('name');
+										if(name == "code_src"){
+											$(obj).attr("src",info.code_src);
+										}else{
+											if(info[name]){
+												$(obj).html(info[name]);
+											}
+										}
+									});
+									var html = $('<html>');
+									html.append(jObj);
+									html.find('#mailno').val(mailno);
+									var iframe = $('<iframe>')
+									iframe.attr("height","1040px");
+									iframe.attr("width","485px");
+									iframe.attr("frameborder",0);
+									iframe.attr('srcdoc',html[0].innerHTML);
+									dialog.dialog({content:iframe});
+								});
 							}
-//							console.log(obj);
-						});
-						var html = $('<html>');
-						html.append(jObj);
-						html.find('#mailno').val(mailno);
-						var iframe = $('<iframe>')
-						iframe.attr("height","1040px");
-						iframe.attr("width","485px");
-						iframe.attr("frameborder",0);
-						iframe.attr('srcdoc',html[0].innerHTML);
-						dialog.dialog({content:iframe});
-					});
+						}else{
+							$.messager.alert(TIPS,result.msg);
+						}
+					})
 				}else{
 					if(!info||info.orderid==0){
 						$.messager.alert("打印提示","请选择需要打印的合同！~")

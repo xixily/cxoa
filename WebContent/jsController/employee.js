@@ -2098,18 +2098,18 @@ shebaoSummary : {
 			var parent = $('#treegrid_jiagou').treegrid('getSelected');
 			if(parent){
 				var level = parent.level + 1;
-				var firstLeve;
+				var firstLevel;
 				var secondLevel;
 				var thirdLevel;
 				var icon = 'icon-organisation';
 				var preId = parent.id;
 				if(level == 2){
-					firstLeve = parent.fourthLevel;
+					firstLevel = parent.fourthLevel;
 				}else if(level == 3){
-					firstLeve = parent.firstLeve;
+					firstLevel = parent.firstLevel;
 					secondLevel = parent.fourthLevel;
 				}else if(level == 4){
-					firstLeve = parent.firstLeve;
+					firstLevel = parent.firstLevel;
 					secondLevel = parent.secondLevel;
 					thirdLevel = parent.fourthLevel;
 					icon = 'icon-man';
@@ -2119,7 +2119,7 @@ shebaoSummary : {
 					parent: preId,
 					data: [{
 						id:-1,
-						firstLeve : firstLeve,
+						firstLevel : firstLevel,
 						secondLevel : secondLevel,
 						thirdLevel : thirdLevel,
 						fourthLevel:'正在添加...',

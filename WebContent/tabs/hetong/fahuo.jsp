@@ -12,7 +12,7 @@ $(document).ready(function() {
 <div id="tab_fahuo" title="发货管理" style="padding: 10px;overflow: hidden"	data-options="iconCls:'icon-edit',closable:true">
 <!-- 组合查询form表单 -->
 	<div id="query_form_fahuo" title="组合查询" class="easyui-panel"
-		data-options="iconCls:'icon-search',href:'${pageContext.request.contextPath}/queryForm/hetong/fahuo_queryform.jsp',tools:[
+		data-options="iconCls:'icon-search',href:'${pageContext.request.contextPath}/queryForm/hetong/fahuo_queryform.jsp',collapsible:true,tools:[
 				{iconCls:'icon-reload',handler:function(){$('#query_form_fahuo').panel('open').panel('refresh')}}]"
 		style="width: 98%; padding: 10px; margin-bottom: 10px;">
 	</div>
@@ -20,24 +20,20 @@ $(document).ready(function() {
 	<div style="width: 98%">
 		<table id="datagrid_fahuo" class="easyui-datagrid" style="width:100%;height:489px;"
 			data-options="
-			url:'datagrid.json',
+			<%--url:'datagrid.json',--%>
 			title:'发货表',
 			fitColumns:true,
 			singleSelect:true,
 			pagination:true,
 			rownumbers:true,
 			pageSize:15,
-			rowStyler : function(index, row) {
-								if(index%2 == 0)
-								{
-									return 'background-color:rgb(245,245,245);';
-								}
-							},
+			striped:true,
 			pageList:[10,15,20,30,50,200],
 			toolbar : '#fahuo_toolbar'">
 			
 			<thead>
 				<tr>
+					<th data-options="field:'send',width:80">寄件</th>
 					<th data-options="field:'orderid',width:50,sortable:true">序号</th><br>
 					<th data-options="field:'hetongCode',width:60,sortable:true">合同编号</th>
 					<th data-options="field:'d_contact',width:50,sortable:true">收件人</th>
@@ -55,7 +51,6 @@ $(document).ready(function() {
 					<th data-options="field:'city',width:50,sortable:true">城市</th>
 					<th data-options="field:'area',width:60,sortable:true">地区 </th>
 					<th data-options="field:'recorder',width:60,sortable:true">录库人</th>
-					<th data-options="field:'send',width:150,sortable:true">寄件</th>
 				</tr>
 			</thead>
 		</table>

@@ -22,14 +22,13 @@ import com.chaoxing.oa.entity.page.employee.PMonthWages;
 import com.chaoxing.oa.entity.page.employee.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.employee.PSheBaoSummary;
 import com.chaoxing.oa.entity.page.employee.PshebaoDetail;
-import com.chaoxing.oa.entity.page.employee.Pwages;
 import com.chaoxing.oa.entity.page.hetong.PFahuo;
+import com.chaoxing.oa.entity.page.system.SessionInfo;
 import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.service.ExportExcelService;
-import com.chaoxing.oa.system.SysConfig;
-import com.chaoxing.oa.system.cache.CacheManager;
 import com.chaoxing.oa.util.BarCode128C;
 import com.chaoxing.oa.util.FileOperateUtil;
+import com.chaoxing.oa.util.ResourceUtil;
 
 @Controller
 @RequestMapping(value = "/file")
@@ -119,7 +118,12 @@ public class FileOperateController {
     	Map<String, Object> res = employeeInfoService.getRenshiUserName(queryForm, session,1);
     	List<PRenshiEmployee> renshiEmployeeInfos = (List<PRenshiEmployee>) res.get("rows");
     	if(renshiEmployeeInfos!=null){
-    		String storeName = exportExcelService.getRenshiQueryExport(renshiEmployeeInfos);  
+    		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
+    		boolean flag = false;
+    		if(100 == sessionInfo.getRoleId()){
+    			flag = true;
+    		}
+    		String storeName = exportExcelService.getRenshiQueryExport(renshiEmployeeInfos,flag);  
     		String realName = "导出查询结果表.xlsx";  
     		String contentType = "application/octet-stream";  
     		try {

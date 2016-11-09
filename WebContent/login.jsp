@@ -31,7 +31,16 @@ font-family:verdana,helvetica,arial,sans-serif;
         <div style="margin-bottom:20px">
             <span id="login_err" style="color:red;margin-left: 86px;">${password_modify_error }</span><br/>
             <input id="email" class="easyui-textbox" name="email" style="width:280px;" data-options="label:'邮箱:',required:true,validType:'email'">
-            <input type="checkbox" onclick = "if($(this).prop('checked')){var user = {};user.email = $('#email').val();localStorage.user=JSON.stringify(user)}">
+            <input type="checkbox" onclick = "if($(this).prop('checked')){
+                var user = {};
+                user.email = $('#email').val();
+                if(user.email &&　user.email!=''){
+                localStorage.user=JSON.stringify(user)
+                }
+            }else{
+                localStorage.user = '';
+            }
+            ">
             <div style="display: inline-block;color: #7b7272;font-size: 10px;margin-left: -3px;">:记住邮箱</div><br/>
             <span style="color:red;margin-left: 86px;">${user_login_error }</span>
         </div>

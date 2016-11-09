@@ -29,8 +29,8 @@ public class Order {
 	private String d_post_code;//到方邮编
 	//Order 其他信息
 	private String custid;//顺丰月结卡号（条件）
-	private Integer pay_method;//付款方式：1、寄方付；2、收方付；3、第三方付 
-	private Integer express_type;//快件产品类别，见《快件产品类别表》，1、标准快递；2、顺丰特惠；3、电商特惠；5、顺丰次晨；6、即日件；7、电商速配;28、电商专配
+	private Integer pay_method=1;//付款方式：1、寄方付；2、收方付；3、第三方付 
+	private Integer express_type=1;//快件产品类别，见《快件产品类别表》，1、标准快递；2、顺丰特惠；3、电商特惠；5、顺丰次晨；6、即日件；7、电商速配;28、电商专配
 	private Integer parcel_quantity;//包裹数,字母件
 	private Float cargo_length;//客户订单货物总长number(10,3)
 	private Float cargo_width;//客户订单货物总宽number(10,3)

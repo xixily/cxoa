@@ -61,7 +61,6 @@ public class SFUtil implements Runnable{
 	}
 	
 	public static void main(String[] args) {
-		SFUtil s = new SFUtil();
 		PFahuo pf = new PFahuo();
 		Integer a = (int) (Math.random()*10000000);
 		pf.setOrderid(a);
@@ -78,10 +77,12 @@ public class SFUtil implements Runnable{
 		pf.setSender("邓~");
 		Order order = new Order();
 		BeanUtils.copyProperties(pf, order);
+		
 		order.setJ_tel("17744543034");
 		order.setJ_company("世纪超星公司");
 		order.setJ_contact("小邓");
 		order.setJ_address("北京市海淀区 上地东里3区4号楼 601");
+		
 		order.setExpress_type(1);
 		order.setPay_method(1);
 		order.setCustid("0103289539");
@@ -294,7 +295,8 @@ public class SFUtil implements Runnable{
 					if(responz!=null){
 						oderResponse = (OrderResponse) parseXml2Response(responz,OrderResponse.class);
 						result.setMsg("下单成功！~");
-						System.out.println(oderResponse);
+						result.setObj(oderResponse);
+//						System.out.println(oderResponse);
 					}else{
 						result.setMsg("下单请求成功，但查询结果为空！~");
 					}
@@ -304,6 +306,9 @@ public class SFUtil implements Runnable{
 				Element error = response.element("ERROR");
 				String errCode = error.attributeValue("code");
 				String errText = error.getText();
+				if("8016".equals(errCode)){
+					errText = "重复下单";
+				}
 				result.setErrorCode(errCode);
 				result.setMsg("获取订单出错，错误代码：[" + errCode + "],错误原因：" + errText);
 			}
@@ -465,7 +470,6 @@ public class SFUtil implements Runnable{
 	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		
 	}
 

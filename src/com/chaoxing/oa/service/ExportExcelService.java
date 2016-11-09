@@ -12,7 +12,9 @@ import com.chaoxing.oa.entity.page.employee.PshebaoDetail;
 public interface ExportExcelService {
 
 	/** 人事查询结果excel报表导出 **/
-	public String getRenshiQueryExport(List<PRenshiEmployee> renshiEmployees);
+//	public String getRenshiQueryExport(List<PRenshiEmployee> renshiEmployees);
+	
+	public String getRenshiQueryExport(List<PRenshiEmployee> renshiEmployees, boolean flag);
 
 	String getKaoqinExportExcel(List<PKaoQin> pKaoqins);
 

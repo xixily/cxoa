@@ -24,14 +24,8 @@ public class PFahuo {
 	 * 货单新增
 	 */
 	private String destcode;//目的地区域代码
-	/**
-	 * 分页项
-	 */
-	private Integer page;
-	private Integer rows;
-	private String sort;
-	private String order;
-	
+	private String origincode;//发货地代码
+	private Integer filter_result;//筛选结果 1、人工确认 2、可派收 3、不可派收
 	public Integer getOrderid() {
 		return orderid;
 	}
@@ -89,17 +83,8 @@ public class PFahuo {
 	public String getRecorder() {
 		return recorder;
 	}
-	public Integer getPage() {
-		return page;
-	}
-	public Integer getRows() {
-		return rows;
-	}
-	public String getSort() {
-		return sort;
-	}
-	public String getOrder() {
-		return order;
+	public String getDestcode() {
+		return destcode;
 	}
 	public void setOrderid(Integer orderid) {
 		this.orderid = orderid;
@@ -145,7 +130,6 @@ public class PFahuo {
 	}
 	public void setSender(String sender) {
 		this.sender = sender;
-		setOrder_name(sender);
 	}
 	public void setOrder_name(String order_name) {
 		this.order_name = order_name;
@@ -159,32 +143,20 @@ public class PFahuo {
 	public void setRecorder(String recorder) {
 		this.recorder = recorder;
 	}
-	public void setPage(Integer page) {
-		this.page = page;
-	}
-	public void setRows(Integer rows) {
-		this.rows = rows;
-	}
-	public void setSort(String sort) {
-		this.sort = sort;
-	}
-	public void setOrder(String order) {
-		this.order = order;
-	}
-	public String getDestcode() {
-		return destcode;
-	}
 	public void setDestcode(String destcode) {
 		this.destcode = destcode;
 	}
-	@Override
-	public String toString() {
-		return "PFahuo [orderid=" + orderid + ", hetongCode=" + hetongCode + ", d_contact=" + d_contact + ", d_company="
-				+ d_company + ", d_address=" + d_address + ", d_tel=" + d_tel + ", postMethod=" + postMethod
-				+ ", jDate=" + jDate + ", sendstarttime=" + sendstarttime + ", mailno=" + mailno + ", remark=" + remark
-				+ ", d_post_code=" + d_post_code + ", content=" + content + ", areaCode=" + areaCode + ", sender="
-				+ sender + ", order_name=" + order_name + ", d_city=" + d_city + ", area=" + area + ", recorder="
-				+ recorder + ", page=" + page + ", rows=" + rows + ", sort=" + sort + ", order=" + order + "]";
+	public String getOrigincode() {
+		return origincode;
 	}
-	
+	public void setOrigincode(String origincode) {
+		this.origincode = origincode;
+	}
+	public Integer getFilter_result() {
+		return filter_result;
+	}
+	public void setFilter_result(Integer filter_result) {
+		this.filter_result = filter_result;
+	}
+
 }

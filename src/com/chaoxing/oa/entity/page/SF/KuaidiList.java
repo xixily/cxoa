@@ -1,30 +1,41 @@
 package com.chaoxing.oa.entity.page.SF;
 /**
- * 顺丰快递单信息，有一些没有做
+ * 顺丰打印单信息，有一些没有做
  * @author dengxf
  *
  */
 public class KuaidiList {
+	private Integer orderid;//序号
+	private String order_name;//下单
 	private String mailno;//顺丰运单号
-	private Integer express_type=28;//快件产品类别，见《快件产品类别表》，1、标准快递；2、顺丰特惠；3、电商特惠；5、顺丰次晨；6、即日件；7、电商速配;28、电商专配
+	private Integer express_type=1;//快件产品类别，见《快件产品类别表》，1、标准快递；2、顺丰特惠；3、电商特惠；5、顺丰次晨；6、即日件；7、电商速配;28、电商专配
+	
 	private String addService_name;//增值服务名称，如 COD 等。（关于增值服务具体查看文档4.2.6增值服务下单属性）
 	private String addService_value1;//增值服务扩展属性，参考增值服务传 值说明。 
 	private String addService_value2;//增值服务扩展属性
+	
 	private String destcode;//目的地区域代码
 	private String d_contact;//到件方联系人（必填）
 	private String d_tel;//到件方联系电话（必填）
 	private String d_mobile;//到件方手机 
 	private String d_company;//邮寄单位(到方）
 	private String d_address;//到件方详细地址（必填），如果不传输 d_province/d_city 字段，此详细地址 需包含省市信息，以提高地址识别的 
+	private String d_post_code;//邮编
+	
+	private String origincode;//寄方区域代码
 	private String j_contact;//寄件方联系人
 	private String j_tel;//寄件方联系电话
 	private String j_company;//寄件方单位
 	private String j_address;//寄件方详细地址(条件，如果需要 生成电子运单)
-	private Integer pay_method;//付款方式：1、寄方付；2、收方付；3、第三方付 
-	private Integer parcel_quantity;//包裹数,字母件	
+	
+	private Integer pay_method=1;//付款方式：1、寄方付；2、收方付；3、第三方付 
+	private Integer parcel_quantity=1;//包裹数,字母件	
 	private String custid;//顺丰月结卡号（条件）
 	private String content;//内容>>托寄物
 	private String remark;//备注
+	
+	private String name;//货物名称
+	private Integer count;// 货物数量
 	public String getMailno() {
 		return mailno;
 	}
@@ -145,5 +156,42 @@ public class KuaidiList {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+	public Integer getOrderid() {
+		return orderid;
+	}
+	public String getOrder_name() {
+		return order_name;
+	}
+	public String getD_post_code() {
+		return d_post_code;
+	}
+	public String getOrigincode() {
+		return origincode;
+	}
+	public void setOrderid(Integer orderid) {
+		this.orderid = orderid;
+	}
+	public void setOrder_name(String order_name) {
+		this.order_name = order_name;
+	}
+	public void setD_post_code(String d_post_code) {
+		this.d_post_code = d_post_code;
+	}
+	public void setOrigincode(String origincode) {
+		this.origincode = origincode;
+	}
+	public String getName() {
+		return name;
+	}
+	public Integer getCount() {
+		return count;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+	
 	
 }

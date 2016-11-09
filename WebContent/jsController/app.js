@@ -107,7 +107,7 @@ function login(){
  */
 function initClickHandler() {
     $(document).on("click", ".do_action", function(event) {
-        console.log('do_action!');
+//        console.log('do_action!');
         event.preventDefault();//关闭默认事件
         event.stopImmediatePropagation();//停止冒泡
         var src = $(event.currentTarget);
@@ -1270,3 +1270,7 @@ Array.prototype.selectLike = function(exp/*类似于SQL中的模糊查询字符�
 	}
 	return arr;
 };
+var TIPS = "提示";
+var UPDATETIPS = "更新提示：";
+var REMOVETIPS = "删除提示：";
+var ADDTIPS = "添加提示：";

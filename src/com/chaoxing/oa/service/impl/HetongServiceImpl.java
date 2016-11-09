@@ -1,5 +1,6 @@
 package com.chaoxing.oa.service.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,44 +11,44 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chaoxing.oa.dao.BaseHetongDaoI;
-import com.chaoxing.oa.entity.page.SF.Cargo;
-import com.chaoxing.oa.entity.page.SF.Order;
-import com.chaoxing.oa.entity.page.SF.OrderResponse;
-import com.chaoxing.oa.entity.page.common.Json;
+import com.chaoxing.oa.entity.page.common.Page;
+import com.chaoxing.oa.entity.page.hetong.PCompanyInfo;
+import com.chaoxing.oa.entity.page.hetong.PContract;
+import com.chaoxing.oa.entity.page.hetong.PCustomer;
+import com.chaoxing.oa.entity.page.hetong.PCustomerDepart;
 import com.chaoxing.oa.entity.page.hetong.PFahuo;
 import com.chaoxing.oa.entity.page.hetong.PFapiao;
+import com.chaoxing.oa.entity.page.hetong.PItemPrice;
+import com.chaoxing.oa.entity.sqlpo.CompanyInfo;
+import com.chaoxing.oa.entity.sqlpo.Contract;
 import com.chaoxing.oa.entity.sqlpo.FaPiao;
 import com.chaoxing.oa.entity.sqlpo.Fahuo;
 import com.chaoxing.oa.service.HetongService;
 import com.chaoxing.oa.system.SysConfig;
-import com.chaoxing.oa.util.SFUtil;
+import com.chaoxing.oa.util.SqlHelper;
 @Service("hetongService")
 public class HetongServiceImpl implements HetongService {
-	private BaseHetongDaoI<Fahuo> htDao;
-	private BaseHetongDaoI<FaPiao> fpDao;
+	@Autowired
+	private BaseHetongDaoI<Fahuo> fahuoDao;
+	@Autowired
+	private BaseHetongDaoI<FaPiao> fapiaoDao;
+	@Autowired
+	private BaseHetongDaoI<Contract> contractDao;
 	@Autowired
 	private BaseHetongDaoI<Object> objDao;
-	
-	
-	public BaseHetongDaoI<FaPiao> getFpDao() {
-		return fpDao;
-	}
 	@Autowired
-	public void setFpDao(BaseHetongDaoI<FaPiao> fpDao) {
-		this.fpDao = fpDao;
-	}
-	public BaseHetongDaoI<Fahuo> getHtDao() {
-		return htDao;
-	}
-	@Autowired
-	public void setHtDao(BaseHetongDaoI<Fahuo> htDao) {
-		this.htDao = htDao;
-	}
-
+	private BaseHetongDaoI<CompanyInfo> companyInfoDao;
+	
 	@Override
-	public Map<String, Object> findHetong(PFahuo queryForm, int isExport) {
-		StringBuffer hql = new StringBuffer("from Fahuo t where 1=1 and postMethod=:postMethod");
+	public Map<String, Object> findFahuo(PFahuo queryForm, Page page, int isExport) {
+		StringBuffer hql = new StringBuffer("from Fahuo t where");
 		Map<String,Object> params = new HashMap<String, Object>();
+		try {
+			hql.append(SqlHelper.prepareAndSql(queryForm, params, true));
+		}catch(Exception e){
+			hql.append("1=1 "); 
+		}
+		hql.append(" and postMethod=:postMethod");
 		params.put("postMethod", "顺丰");
 		List<Fahuo> fahuos = null;
 		List<PFahuo> pfahuos = new ArrayList<PFahuo>();
@@ -55,21 +56,21 @@ public class HetongServiceImpl implements HetongService {
 //		addConditions(queryForm, hql, params);
 		String sort = "id";
 		String order = SysConfig.DESC;
-		if(queryForm.getSort() != null){
-			sort = queryForm.getSort();
-			if(queryForm.getOrder() != null){
-				order = queryForm.getOrder();
+		if(page.getSort() != null){
+			sort = page.getSort();
+			if(page.getOrder() != null){
+				order = page.getOrder();
 			}
 		}
 		long count = getHetongCount(hql.toString(),params);
 		int intPage = 0;
 		int pageSize = 30000;//最多导出30000条数据
 		if(isExport == 0){
-			intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
-			pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+			intPage = (page.getPage() == 0) ? 1 : page.getPage();
+			pageSize = (page.getRows() == 0) ? 100 : page.getRows();
 		}
 		hql.append(" order by t." + sort + " " + order);
-		fahuos = htDao.find(hql.toString(), params, intPage, pageSize);
+		fahuos = fahuoDao.find(hql.toString(), params, intPage, pageSize);
 		for (Fahuo fahuo : fahuos) {
 			PFahuo pfahuo = new PFahuo();
 			BeanUtils.copyProperties(fahuo, pfahuo);
@@ -84,58 +85,9 @@ public class HetongServiceImpl implements HetongService {
 	private long getHetongCount(String hql, Map<String, Object> params) {
 		StringBuffer hqll = new StringBuffer("select count(*) from Fahuo t where ");
 		hqll.append(hql.split("where")[1]);
-		return htDao.count(hqll.toString(), params);
+		return fahuoDao.count(hqll.toString(), params);
 	}
-	
-	
 	@Override
-	public OrderResponse sendKuaidi(PFahuo pfahuo) {
-//		PFahuo pf = new PFahuo();
-//		Integer a = (int) (Math.random()*10000000);
-//		pf.setOrderid(a);
-//		pf.setArea("0796");
-//		pf.setAreaCode("0796");
-//		pf.setContent("就是想发个快递");
-//		pf.setD_address("师范大学（瑶湖校区）邓 17744543034");
-//		pf.setD_company("师范大学");
-//		pf.setD_contact("小邓");
-//		pf.setD_tel("18146612837");
-//		pf.setD_post_code("330022");
-//		pf.setD_city("南昌");
-//		pf.setRemark("这是一个很长很长的故事i·~~");
-//		pf.setSender("邓~");
-		Order order = new Order();
-		BeanUtils.copyProperties(pfahuo, order);
-		order.setJ_tel("17744543034");
-		order.setJ_company("世纪超星公司");
-		order.setJ_contact("小邓");
-		order.setJ_address("北京市海淀区 上地东里3区4号楼 601");
-		Cargo cargo = new Cargo();
-		cargo.setName("发票");
-		List<Cargo> cargos = new ArrayList<Cargo>();
-		cargos.add(cargo);
-//		Json result = SFUtil.sendOrder(order, cargos, null);
-//		if(result.isSuccess()){
-//			OrderResponse or = (OrderResponse) result.getObj();
-//			String mailno = or.getMailno();
-//			or.getOrderid();
-//			BarCode128C.getCode128CPicture(mailno, 22, "d:/code3.jpg");
-//		}
-//		System.out.println(result.getMsg());
-		//查询订单 6320318
-//		Json result2 = s.queryOrder(String.valueOf(pf.getOrderid()));
-//		Json result2 = s.queryOrder("4624347");
-//		System.out.println((OrderResponse)result2.getObj());
-		Json result3 = SFUtil.queryRoute("4624347");
-		System.out.println(result3.getMsg());
-		System.out.println("路由查询结果" + (OrderResponse)result3.getObj());
-		return null;
-	}
-	/*private void addConditions(QueryForm queryForm, StringBuffer hql, Map<String, Object> params) {
-	
-	}*/
-	/*@Override
-	 */
 	public Map<String, Object> findFapiao(PFapiao pfapiao, int isExport) {
 		StringBuffer hql = new StringBuffer("from FaPiao t where t.money > 0 ");
 		Map<String,Object> params = new HashMap<String, Object>();
@@ -175,7 +127,7 @@ public class HetongServiceImpl implements HetongService {
 			pageSize = (pfapiao == null || pfapiao.getRows() == 0) ? 100 : pfapiao.getRows();
 		}
 		hql.append(" order by t." + sort + " " + order);
-		fapiaos = fpDao.find(hql.toString(), params, intPage, pageSize);
+		fapiaos = fapiaoDao.find(hql.toString(), params, intPage, pageSize);
 		for (FaPiao fapiao : fapiaos) {
 			PFapiao pfapiao1 = new PFapiao();
 			BeanUtils.copyProperties(fapiao, pfapiao1);
@@ -196,15 +148,176 @@ public class HetongServiceImpl implements HetongService {
 		params.put("queryStatus", pfapiao.getQueryStatus());
 		params.put("id", pfapiao.getId());
 		StringBuffer hql = new StringBuffer("update FaPiao t set t.queryStatus = :queryStatus where id = :id");
-		int i = fpDao.executeHql(hql.toString(), params);
+		int i = fapiaoDao.executeHql(hql.toString(), params);
 		return i;
 	}
 	@Override
-	public PFahuo getFahuo(int orderId) {
-		Fahuo fahuo = htDao.get(Fahuo.class, orderId);
+	public PFahuo getFahuo(Integer orderId) {
+		Fahuo fahuo = fahuoDao.get(Fahuo.class, orderId);
 		PFahuo pfahuo = new PFahuo();
 		BeanUtils.copyProperties(fahuo, pfahuo);
 		return pfahuo;
 	}
-	
+	@Override
+	public Map<String, Object> findCustomers(PCustomer pCustomer, int isExport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public PCustomer getCustomer(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public int addCustomer(PCustomer pCustomer) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int updateCustomer(PCustomer pCustomer) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int deleteCustomer(PCustomer pCustomer) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public Map<String, Object> findCustomerDepart(PCustomerDepart pCustomerDepart, int isExport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public PCustomerDepart getCustomerDepart(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public int addCustomerDepart(PCustomerDepart pCustomerDepart) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int updateCustomerDepart(PCustomerDepart pCustomerDepart) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int deleteCustomerDepart(PCustomerDepart pCustomerDepart) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public Map<String, Object> findContracts(PContract pConstract, int isExport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public PContract getContract(Integer hetongCode) {
+		Contract contract = contractDao.get(Contract.class, hetongCode);
+		PContract pcontract = null;
+		if(null != contract){
+			pcontract = new PContract();
+			BeanUtils.copyProperties(contract, pcontract);
+		}
+		return pcontract;
+	}
+	@Override
+	public int addContract(PContract pConstract) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int updateContract(PContract pConstract) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int deleteContract(PContract pConstract) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public PFapiao getFapiao(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public int addFapiao(PFapiao pfapiao) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int deleteFapiao(PFapiao pfapiao) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public Map<String, Object> findItemPrice(PItemPrice pItemPrice, int isExport) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public PItemPrice getItemPrice(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public int updateItemPrice(PItemPrice pItemPrice) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int addItemPrice(PItemPrice pItemPrice) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int deleteItemPrice(PItemPrice pItemPrice) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int addFahuo(PFahuo pfahuo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int deleteFahuo(PFahuo pfahuo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int updateFahuo(PFahuo pfahuo) {
+		Fahuo fahuo = new Fahuo();
+		BeanUtils.copyProperties(pfahuo, fahuo);
+		try {
+			fahuoDao.update(fahuo);
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	@Override
+	public PCompanyInfo getCompanyInfo(int i) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PCompanyInfo getCompanyInfoByName(String company) {
+		CompanyInfo companyInfo = null;
+		PCompanyInfo pcompany = null;
+		Map<String,Object> params = new HashMap<String, Object>();
+		params.put("company", company);
+		List<CompanyInfo> comlists = companyInfoDao.find("from CompanyInfo t where t.name=:company",params);
+		if(null!=comlists && comlists.size()>0){
+			companyInfo = comlists.get(0);
+			pcompany = new PCompanyInfo();
+			BeanUtils.copyProperties(companyInfo, pcompany);
+		}
+		return pcompany;
+	}
 }

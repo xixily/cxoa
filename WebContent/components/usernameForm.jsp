@@ -461,7 +461,7 @@
     $('#date_hiredate').datebox({
     onChange:function(newValue,oldValue){
     var date = new Date(newValue);
-    var newDate1 = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + (date.getDate()<10 ? ('0'+(date.getDate()+1)) : (date.getDate()+1));
+    var newDate1 = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + (date.getDate()<10 ? ('0'+(date.getDate())) : (date.getDate()));
     $('#signed_date').datebox('setValue',newDate1);
     date.setMonth(date.getMonth()+3);
     var newDate = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + (date.getDate()<10 ? ('0'+(date.getDate())) : (date.getDate()));

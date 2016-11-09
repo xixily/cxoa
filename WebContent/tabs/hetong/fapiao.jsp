@@ -1,7 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 
 <!-- 发票管理 -->
-<div id="tab_fahuo" title="发票管理" style="padding: 10px;overflow: hidden"	data-options="iconCls:'icon-edit',closable:true">
+<div id="tab_fahuo" title="发票管理" style="padding: 10px;overflow: hidden"	data-options="iconCls:'icon-edit',collapsible:true,closable:true">
 <!-- 组合查询form表单 -->
 	<div id="query_form_fapiao" title="组合查询" class="easyui-panel"
 		data-options="iconCls:'icon-search',href:'${pageContext.request.contextPath}/queryForm/hetong/fapiao_queryform.jsp',tools:[
@@ -20,12 +20,7 @@
 			rownumbers:true,
 			pageSize:15,
 			queryParams:{queryStatus:0},
-			rowStyler : function(index, row) {
-								if(index%2 == 0)
-								{
-									return 'background-color:rgb(245,245,245);';
-								}
-							},
+			striped:true,
 			pageList:[10,15,20,30,50,200],
 			toolbar : '#fapiao_toolbar',
 			onDblClickCell : hetong.fapiao.editFapiao

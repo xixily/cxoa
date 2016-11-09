@@ -2,6 +2,8 @@ package com.chaoxing.oa.entity.sqlpo;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -35,8 +37,11 @@ public class Fahuo {
 	 * 货单新增
 	 */
 	private String destcode;//目的地区域代码
+	private String origincode;//发货地代码
+	private Integer filter_result;//筛选结果 1、人工确认 2、可派收 3、不可派收
 //	private String 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="序号")
 	public Integer getOrderid() {
 		return orderid;
@@ -108,6 +113,20 @@ public class Fahuo {
 	@Column
 	public String getDestcode() {
 		return destcode;
+	}
+	@Column
+	public String getOrigincode() {
+		return origincode;
+	}
+	@Column
+	public Integer getFilter_result() {
+		return filter_result;
+	}
+	public void setOrigincode(String origincode) {
+		this.origincode = origincode;
+	}
+	public void setFilter_result(Integer filter_result) {
+		this.filter_result = filter_result;
 	}
 	public void setDestcode(String destcode) {
 		this.destcode = destcode;
