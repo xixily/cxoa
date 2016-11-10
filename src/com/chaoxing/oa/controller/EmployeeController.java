@@ -23,7 +23,7 @@ import com.chaoxing.oa.entity.page.common.PHouseholdType;
 import com.chaoxing.oa.entity.page.common.PLevel;
 import com.chaoxing.oa.entity.page.common.POStructV;
 import com.chaoxing.oa.entity.page.common.POStructs;
-import com.chaoxing.oa.entity.page.common.PQuickQuery;
+import com.chaoxing.oa.entity.page.common.Page;
 import com.chaoxing.oa.entity.page.common.QueryForm;
 import com.chaoxing.oa.entity.page.employee.PKaoQin;
 import com.chaoxing.oa.entity.page.employee.PMonthWages;
@@ -1131,9 +1131,9 @@ public class EmployeeController {
 	
 	@RequestMapping(value = "/quickQuery")
 	@ResponseBody
-	public Map<String, Object>  quickQuery(PQuickQuery pquick, HttpSession session){
-		if(pquick.getType()!=0){
-			Map<String, Object> pshebaos = employeeInfoService.findRenshiQuick(pquick, session);
+	public Map<String, Object>  quickQuery(Page page, Integer type, HttpSession session){
+		if(null != type){
+			Map<String, Object> pshebaos = employeeInfoService.findRenshiQuick(page, type, session);
 			return pshebaos;
 		}
 		return null;
