@@ -36,7 +36,10 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 //				return null;
 //			}
 			createHeader(sxffWriter,flag);
-			for (PRenshiEmployee pRenshiEmployee : renshiEmployees) {
+			Iterator<PRenshiEmployee> it = renshiEmployees.iterator();
+			PRenshiEmployee pRenshiEmployee = null;
+			while(it.hasNext()){
+				pRenshiEmployee = it.next();
 				sxffWriter.createRow();
 				if(flag){
 					sxffWriter.createCell();
@@ -120,7 +123,7 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 					sxffWriter.createCell();
 				}
 				sxffWriter.createCell();
-				sxffWriter.setStringData(pRenshiEmployee.getHouseholdType());
+				sxffWriter.setStringData(pRenshiEmployee.getRegisteredAddress());
 				sxffWriter.createCell();
 				sxffWriter.setStringData(pRenshiEmployee.getPostcode());
 				if(flag){
@@ -150,21 +153,21 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 				sxffWriter.setStringData(pRenshiEmployee.getWorkPlace());
 				sxffWriter.createCell();
 				sxffWriter.setStringData(pRenshiEmployee.getEmail());
-				if(flag){
-					sxffWriter.createCell();
-				}
+//				if(flag){
+//					sxffWriter.createCell();
+//				}
 				if(!flag){
 					//add
 					sxffWriter.createCell();
 					sxffWriter.setStringData(pRenshiEmployee.getPastLeaveTime());
 					sxffWriter.createCell();
 					sxffWriter.setStringData(pRenshiEmployee.getCellCore());
-					sxffWriter.createCell();
-					sxffWriter.setStringData(pRenshiEmployee.getCellCoreEmail());
 				}
 				sxffWriter.createCell();
-				sxffWriter.setStringData(pRenshiEmployee.getGuidance());
+				sxffWriter.setStringData(pRenshiEmployee.getCellCoreEmail());
 				if(!flag){
+					sxffWriter.createCell();
+					sxffWriter.setStringData(pRenshiEmployee.getGuidance());
 					sxffWriter.createCell();
 					sxffWriter.setStringData(pRenshiEmployee.getGuidanceEmail());
 					sxffWriter.createCell();
@@ -187,6 +190,8 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 					sxffWriter.setStringData(pRenshiEmployee.getRecruitmentSources());
 				}
 			}
+//			for (PRenshiEmployee pRenshiEmployee : renshiEmployees) {
+//			}
 			sxffWriter.flush();
 			return filePath;
 		} catch (IOException e) {
@@ -1015,10 +1020,10 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 		sxffWriter.setStringData("工作地点");
 		sxffWriter.createCell();
 		sxffWriter.setStringData("邮箱");
-		if(flag){
-			sxffWriter.createCell();
-			sxffWriter.setStringData("备份");
-		}
+//		if(flag){
+//			sxffWriter.createCell();
+//			sxffWriter.setStringData("备份");
+//		}
 		if(!flag){
 			//add
 			sxffWriter.createCell();
