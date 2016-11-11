@@ -21,6 +21,7 @@ import com.chaoxing.oa.entity.page.employee.PKaoQin;
 import com.chaoxing.oa.entity.page.employee.PMonthWages;
 import com.chaoxing.oa.entity.page.employee.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.employee.PSheBaoSummary;
+import com.chaoxing.oa.entity.page.employee.PYidong;
 import com.chaoxing.oa.entity.page.employee.PshebaoDetail;
 import com.chaoxing.oa.entity.page.hetong.PFahuo;
 import com.chaoxing.oa.entity.page.system.SessionInfo;
@@ -113,7 +114,8 @@ public class FileOperateController {
         return null;  
     }
     
-    @RequestMapping(value = "/exportExcel")
+    
+    @RequestMapping(value = "/exportEmployeeExcel")
     public ModelAndView exprotRenshiQuery(QueryForm queryForm, HttpServletRequest request, HttpServletResponse response, HttpSession session){
     	Map<String, Object> res = employeeInfoService.getRenshiUserName(queryForm, session,1);
     	List<PRenshiEmployee> renshiEmployeeInfos = (List<PRenshiEmployee>) res.get("rows");
@@ -133,6 +135,31 @@ public class FileOperateController {
     			e.printStackTrace();
     		} 
     	}
+    	
+    	return null;
+    }
+    
+    @RequestMapping(value = "/exportYidong")
+    public ModelAndView exportYidong(QueryForm queryForm, HttpServletRequest request, HttpServletResponse response, HttpSession session){
+    	Map<String,Object> res = employeeInfoService.findYidong(queryForm, session,true);
+//    	Map<String, Object> res = employeeInfoService.getRenshiUserName(queryForm, session,1);
+//    	List<PRenshiEmployee> renshiEmployeeInfos = (List<PRenshiEmployee>) res.get("rows");
+//    	if(renshiEmployeeInfos!=null){
+//    		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
+//    		boolean flag = false;
+//    		if(100 == sessionInfo.getRoleId()){
+//    			flag = true;
+//    		}
+//    		String storeName = exportExcelService.getRenshiQueryExport(renshiEmployeeInfos,flag);  
+//    		String realName = "导出查询结果表.xlsx";  
+//    		String contentType = "application/octet-stream";  
+//    		try {
+//    			FileOperateUtil.download(request, response, storeName, contentType,realName);
+//    		} catch (Exception e) {
+//    			System.out.println("文件下载失败！");
+//    			e.printStackTrace();
+//    		} 
+//    	}
     	
     	return null;
     }
