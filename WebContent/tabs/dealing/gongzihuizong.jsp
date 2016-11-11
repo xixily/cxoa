@@ -62,7 +62,7 @@
                 modal : false,
                 closed : true
             ">
-           	<jsp:include page="../../components/usernameForm.jsp"></jsp:include>
+           	<jsp:include page="../../components/employee/usernameForm.jsp"></jsp:include>
 	</div>
 	<div id="dialog_wagesInfo" class="easyui-dialog" title="查看修改职员工资信息"
 		style="width: 980px;overflow: hidden"
@@ -71,7 +71,7 @@
                 modal : false,
                 closed : true
             ">
-           	<jsp:include page="../../components/wages.jsp"></jsp:include>
+           	<jsp:include page="../../components/employee/wages.jsp"></jsp:include>
 	</div>
 
 </div>

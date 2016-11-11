@@ -102,6 +102,7 @@ public class SqlHelper {
 //				continue;
 //			}
 		}
+		System.out.println("return hql:" + sql.toString());
 		return sql.toString();
 	}
 	

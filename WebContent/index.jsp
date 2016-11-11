@@ -9,7 +9,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsController/app.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsController/north.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsController/west.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jsController/employee.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsController/center/employee.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsController/system.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsController/wagesCalculate.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsController/center/hetong.js"></script>

@@ -1138,4 +1138,11 @@ public class EmployeeController {
 		}
 		return null;
 	}
+	
+	@RequestMapping(value = "/testExport")
+	@ResponseBody
+	public Map<String, Object>  test(QueryForm queryForm, HttpSession session){
+		return employeeInfoService.findYidong(queryForm, session, false);
+	}
+	
 }

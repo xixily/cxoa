@@ -5,7 +5,7 @@
 $(document).ready(function() {
 	$('#fahuoQuery_form').keydown(function(e){
 		if(e.keyCode==13){
-		   $('#employee_search').trigger('click');
+		   $('#query_form_btn').trigger('click');
 		}
 		});
 })
@@ -38,7 +38,7 @@ $(document).ready(function() {
 			<td></td>
 			<td></td>
 			<td>
-			<input class="easyui-linkbutton do_action" appaction="hetong.fahuo.queryFahuo"
+			<input id="query_form_btn" class="easyui-linkbutton do_action" appaction="hetong.fahuo.queryFahuo"
 				type="button" value="查询" onclick="" style="width:46px;height:26px;" />
 			</td>
 			<td></td>

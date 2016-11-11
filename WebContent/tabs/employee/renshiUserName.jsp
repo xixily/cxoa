@@ -15,7 +15,7 @@ $(document).ready(function() {
 		data-options="iconCls:'icon-search',href:'${pageContext.request.contextPath}/queryForm/employee/renshi_queryform.jsp',collapsible:true,tools:[
 				{iconCls:'icon-reload',handler:function(){$('#renshi_form').panel('open').panel('refresh')}}]"
 		style="width: 98%; padding: 10px; margin-bottom: 10px;"></div>
-	<jsp:include page="../../toolBar/renshiUsername_toolbar.jsp"></jsp:include>
+	<jsp:include page="../../toolBar/employee/renshiUsername_toolbar.jsp"></jsp:include>
 <%-- 	<jsp:include page="../components/toolbar.jsp"></jsp:include> --%>
 	<table id="employee_datas" style="width:98%;height:489px;">
 	<thead data-options="frozen:true">
@@ -80,7 +80,7 @@ $(document).ready(function() {
                 modal : false,
                 closed : true
             ">
-           	<jsp:include page="../../components/usernameForm.jsp"></jsp:include>
+           	<jsp:include page="../../components/employee/usernameForm.jsp"></jsp:include>
 	</div>
 	<div id="dialog_wagesInfo" class="easyui-dialog" title="查看修改职员工资信息"
 		style="width: 980px;overflow: hidden"
@@ -89,6 +89,6 @@ $(document).ready(function() {
                 modal : false,
                 closed : true
             ">
-           	<jsp:include page="../../components/wages.jsp"></jsp:include>
+           	<jsp:include page="../../components/employee/wages.jsp"></jsp:include>
 	</div>
 </div>

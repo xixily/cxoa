@@ -48,7 +48,7 @@
                         </div>
                     </td>
                 </tr>
-              </table>
         </form>
     </div>
+</div>
 </div>

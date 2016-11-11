@@ -17,7 +17,7 @@
                     <td>家庭住址:</td>
                     <td><input id="textbox_addrss" class="easyui-textbox" type="text" name="homeAddress" /></td>
                     <td>毕业时间:</td>
-                    <td><input class="easyui-datebox" type="text" name="degreeCertificate" /></td>
+                    <td><input class="easyui-textbox" type="text" name="degreeCertificate" /></td>
                     <td>户口地址:</td>
                     <td><input id="textbox_hukou" class="easyui-textbox" type="text" name="registeredAddress" /></td>
                 </tr>
@@ -72,14 +72,14 @@
                     <td><input id="input_thirdLevel" class="easyui-textbox" type="text" name="thirdLevel" data-options="required:true" readonly="true"/></td>
                     <td>入职时间:</td>
                     <td><input id="date_hiredate" class="easyui-datebox" type="text" name="hiredate"
-                    data-options = "onChange:function(newValue,oldValue){
-                    var date = new Date(newValue);
-                    date.setMonth(date.getMonth + 3);
-					var data = {};
-					alert(newValue);
-					data.zhuanzhengTime = (date.getFullYear()+ '.' +((date.getMonth()+1)<10?('0'+(date.getMonth()+1)):(date.getMonth()+1)) + '.' + (date.getDate()<10?('0'+date.getDate()):date.getDate()));
-                    $('#updatewages_form').form('load',data);
-                    }"
+                    <%--data-options = "onChange:function(newValue,oldValue){--%>
+                    <%--var date = new Date(newValue);--%>
+                    <%--date.setMonth(date.getMonth + 3);--%>
+					<%--var data = {};--%>
+					<%--alert(newValue);--%>
+					<%--data.zhuanzhengTime = (date.getFullYear()+ '.' +((date.getMonth()+1)<10?('0'+(date.getMonth()+1)):(date.getMonth()+1)) + '.' + (date.getDate()<10?('0'+date.getDate()):date.getDate()));--%>
+                    <%--$('#updatewages_form').form('load',data);--%>
+                    <%--}"--%>
                      /></td>
                     <td>离职证明:</td>
                     <td>
@@ -112,7 +112,7 @@
                     			firstLevel : obj.firstLevel,
                     			secondLevel : obj.secondLevel,
                     			thirdLevel : obj.thirdLevel,
-                    			cellCore : obj.cellCore,
+                                cellCore : obj.cellCore,
                     			departmentId : obj.departmentId
                     		});
                     	}
@@ -134,9 +134,12 @@
 								text: '√',
 								value: '√'
 							},{
-								text: '╳',
-								value: '╳'
-							}]" />
+								text: '√协议',
+								value: '√协议'
+							},{
+                            text: '╳',
+                            value: '╳'
+                            }]" />
                     </td>
                     <td>投保时间:</td>
                     <td><input class="easyui-textbox" type="text" name="dueSocialSecurity" /></td>
@@ -295,7 +298,7 @@
                     </td>
                     <td>保险公司:</td>
                     <td>
-                    <input id="combox_c1" class="easyui-combobox" name="insuranceCompany" data-options="
+                    <input id="combox_bx" class="easyui-combobox" name="insuranceCompany" data-options="
                     url: 'employee/getCompany.action',
                     valueField:'cmopany',
                     textField:'cmopany',
@@ -370,8 +373,16 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>负责人:</td>
-                    <td><input class="easyui-textbox" type="text" name="chargedBy" /></td>
+                    <td>级别:</td>
+                    <td>
+                    <input id="combox_level" class="easyui-combobox" name="level" data-options="
+                    url: 'employee/getLevel.action',
+                    valueField:'name',
+                    textField:'name'
+                    ">
+                    </td>
+                    <%--<td>负责人:</td>--%>
+                    <%--<td><input class="easyui-textbox" type="text" name="chargedBy"  readonly="true"/></td>--%>
                     <td>照片:</td>
                     <td>
                     	<input class="easyui-combobox" name="photo" data-options="
@@ -395,17 +406,27 @@
                     </c:if>
                 </tr>
                 <tr>
-                    <td>签字人:</td>
-                    <td><input class="easyui-textbox" type="text" name="signedBy" /></td>
+                    <td>合同续签:</td>
+                    <td><input class="easyui-textbox" type="text" name="contractRenewal" /></td>
+                    <%--<td>签字人:</td>--%>
+                    <%--<td><input class="easyui-textbox" type="text" name="signedBy"  readonly="true"/></td>--%>
                      <td>招聘来源:</td>
                     <td><input class="easyui-textbox" type="text" name="recruitmentSources" /></td>
                     <td>转正报表</td>
                     <td><input class="easyui-textbox" type="text" name="zhuanzhengReport" /></td>
                     <td colspan="2" rowspan="2">
                         <div style="text-align:center;">
-                            <a id="btn_employeeSave" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="submitForm($(this))">保存</a>
+                            <a id="btn_employeeSave" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="submitForm($(this),function(result){
+	                            $('#btn_employeeEdit').linkbutton('enable');
+                            	if(result.success){
+                            		if(result.obj&&result.obj>0){
+	                            	$('#updateUsesrname_form').form('load', {id:result.obj});
+                            		}
+                            	}
+                            	$.messager.alert('更新提示',result.msg);
+                            },true)">保存</a>
                             <a id="btn_employeeRest" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="clearForm($(this))">重置</a>
-                            <a id="btn_employeeEdit" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="employee.editEmployee()">编辑</a><br/>
+                            <a id="btn_employeeEdit" href="javascript:void(0)" style="width:60px;display:;" class="easyui-linkbutton" onclick="employee.editEmployee(1)">编辑</a><br/>
                             <a id="btn_wagesInfo" href="javascript:void(0)" class="easyui-linkbutton" style="width:60px;" onclick="employee.wages.openWages(this)">工资信息</a>
                             <!-- <a id="btn_wagesInfo" href="javascript:void(0)" class="easyui-linkbutton" style="width:60px;" onclick="$('#dialog_wagesInfo').dialog('open')">工资信息</a>  -->
                             <a id="btn_employeeMailto" href="mailto:dengxuefeng@chaoxing.com?cc=dengxuefeng@chaoxing.com&bcc=dengxuefeng@chaoxing.com" style="width:60px;"  class="easyui-linkbutton">发送邮件</a>
@@ -414,16 +435,18 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>级别:</td>
-                    <td>
-                    <input id="combox_level" class="easyui-combobox" name="level" data-options="
-                    url: 'employee/getLevel.action',
-                    valueField:'name',
-                    textField:'name'
-                    ">
-                    </td>
-                    <td>合同续签:</td>
-                    <td><input class="easyui-textbox" type="text" name="contractRenewal" /></td>
+                    <%--<td>级别:</td>--%>
+                    <%--<td>--%>
+                    <%--<input id="combox_level" class="easyui-combobox" name="level" data-options="--%>
+                    <%--url: 'employee/getLevel.action',--%>
+                    <%--valueField:'name',--%>
+                    <%--textField:'name'--%>
+                    <%--">--%>
+                    <%--</td>--%>
+                    <td>细胞核</td>
+                    <td><input class="easyui-textbox" type="text" name="cellCore" /></td>
+                    <td></td>
+                    <td></td>
                     <td>部门调整报表</td>
                     <td><input class="easyui-textbox" type="text" name="bumentiaozhengReport" /></td>
                 </tr>
@@ -433,21 +456,43 @@
     </div>
 </div>
 <script type="text/javascript">
-$('#date_hiredate').datebox({
-	onChange:function(newValue,oldValue){
-		var date = new Date(newValue);
-		date.setMonth(date.getMonth()+3);
-		var newDate = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + date.getDate();
-		$('#zhuangZheng_datebox').datebox('setValue',newDate);
-		$('#signed_date').datebox('setValue',newDate);
-		}
-})
-$('#signed_date').datebox({
-	onChange:function(newValue,oldValue){
-		var date = new Date(newValue);
-		date.setYear(date.getFullYear()+3);
-		var newDate = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + (date.getDate()-1);
-		$('#end_datebox').datebox('setValue',newDate);
-	}
-})
+    $(document).ready(function(){
+    $('#date_hiredate').datebox({
+    onChange:function(newValue,oldValue){
+    var date = new Date(newValue);
+    var newDate1 = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + (date.getDate()<10 ? ('0'+(date.getDate())) : (date.getDate()));
+    $('#signed_date').datebox('setValue',newDate1);
+    date.setMonth(date.getMonth()+3);
+    var newDate = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + (date.getDate()<10 ? ('0'+(date.getDate())) : (date.getDate()));
+    $('#zhuangZheng_datebox').textbox('setValue',newDate);
+    }
+    })
+    $('#signed_date').datebox({
+    onChange:function(newValue,oldValue){
+    var date = new Date(newValue);
+    //		date.setMonth(date.getMonth()+3);
+    date.setYear(date.getFullYear()+3);
+    var newDate = date.getFullYear()+ "." + (date.getMonth()<10 ? ('0'+(date.getMonth()+1)) : (date.getMonth()+1)) + "." + ((date.getDate()-1)<10 ? ('0'+(date.getDate()-1)) : (date.getDate()-1));
+    $('#end_datebox').datebox('setValue',newDate);
+    }
+    })
+    $('#textbox_id').textbox({
+    onChange : function(newValue, oldValue) {
+    if(newValue && newValue.length==18){
+    borthday = newValue.substr(6, 4) + '.'
+    + newValue.substr(10, 2) + '.'
+    + newValue.substr(12, 2);
+    $('#textbox_borth').textbox('setValue', borthday);
+    }
+    }
+    })
+    $("#textbox_addrss").textbox({
+    onChange : function(newValue, oldValue) {
+    if (oldValue && oldValue.length > 0) {
+    return;
+    }
+    $('#textbox_hukou').textbox('setValue', newValue);
+    }
+    })
+    })
 </script>

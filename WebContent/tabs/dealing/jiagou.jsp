@@ -95,7 +95,7 @@
                 modal : false,
                 closed : true
             ">
-           	<jsp:include page="../../components/jiagouInfo.jsp"></jsp:include>
+           	<jsp:include page="../../components/employee/jiagouInfo.jsp"></jsp:include>
 	</div>
 
 </div>

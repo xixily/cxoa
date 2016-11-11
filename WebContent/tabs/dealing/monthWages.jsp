@@ -117,7 +117,7 @@
 				</tr>
 			</thead>
 		</table>
-		<jsp:include page="../../toolBar/monthWages_toolbar.jsp"></jsp:include>
+		<jsp:include page="../../toolBar/employee/monthWages_toolbar.jsp"></jsp:include>
 		<!-- <div  style="width: 98%">
 			 <form id="ff" action="form1_proc.php" method="post" enctype="multipart/form-data">
             <table>

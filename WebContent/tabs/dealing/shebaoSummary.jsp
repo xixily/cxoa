@@ -94,6 +94,6 @@
                 modal : false,
                 closed : true
             ">
-           	<jsp:include page="../../components/shebaoCompany.jsp"></jsp:include>
+           	<jsp:include page="../../components/employee/shebaoCompany.jsp"></jsp:include>
 	</div>
 </div>

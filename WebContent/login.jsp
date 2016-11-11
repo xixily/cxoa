@@ -34,8 +34,8 @@ font-family:verdana,helvetica,arial,sans-serif;
             <input type="checkbox" onclick = "if($(this).prop('checked')){
                 var user = {};
                 user.email = $('#email').val();
-                if(user.email &&　user.email!=''){
-                localStorage.user=JSON.stringify(user)
+                if(user.email && user.email!=''){
+                	localStorage.user=JSON.stringify(user)
                 }
             }else{
                 localStorage.user = '';

@@ -24,7 +24,7 @@ import com.chaoxing.oa.entity.page.common.PHouseholdType;
 import com.chaoxing.oa.entity.page.common.PLevel;
 import com.chaoxing.oa.entity.page.common.POStructV;
 import com.chaoxing.oa.entity.page.common.POStructs;
-import com.chaoxing.oa.entity.page.common.PQuickQuery;
+import com.chaoxing.oa.entity.page.common.Page;
 import com.chaoxing.oa.entity.page.common.QueryForm;
 import com.chaoxing.oa.entity.page.employee.PGongziHuiZong;
 import com.chaoxing.oa.entity.page.employee.PKaoQin;
@@ -34,6 +34,7 @@ import com.chaoxing.oa.entity.page.employee.PSheBaoSummary;
 import com.chaoxing.oa.entity.page.employee.PShebao;
 import com.chaoxing.oa.entity.page.employee.PShebaoType;
 import com.chaoxing.oa.entity.page.employee.PWagesDate;
+import com.chaoxing.oa.entity.page.employee.PYidong;
 import com.chaoxing.oa.entity.page.employee.PshebaoDetail;
 import com.chaoxing.oa.entity.page.employee.Pwages;
 import com.chaoxing.oa.entity.page.system.PSystemConfig;
@@ -74,8 +75,6 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	private BaseDaoI<Level> levelDao;//级别
 	@Autowired
 	private BaseDaoI<OrganizationStructure> organizationStructureDao;//组织结构
-//	@Autowired
-//	private BaseDaoI<Struct> structDao;//组织结构
 	@Autowired
 	private BaseDaoI<WageDistribution> wageDistributionDao;
 	@Autowired
@@ -102,23 +101,23 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	private BaseDaoI<GongziHuiZong> gongzihuizongDao;
 	
 
-	@Override
-	public List<PRenshiEmployee> getRenshiUserName() {
-		Map<String, Object> params = new HashMap<String, Object>();
-		List<PRenshiEmployee> renshiEmployeeInfos = new ArrayList<PRenshiEmployee>();
-		params.put("fourthLevel", "常规数据");
-		List<RenshiUserName> renshiUsernames = userNameDao
-				.find("from RenshiUserName r where r.fourthLevel=:fourthLevel", params);
-		for (RenshiUserName renshiUserName : renshiUsernames) {
-			if(renshiUserName!=null){
-				PRenshiEmployee renshiEmployeeInfo = new PRenshiEmployee();
-				BeanUtils.copyProperties(renshiUserName, renshiEmployeeInfo);
-//			renshiEmployeeInfo.setId(renshiUserName.getID());
-				renshiEmployeeInfos.add(renshiEmployeeInfo);
-			}
-		}
-		return renshiEmployeeInfos;
-	}
+//	@Override
+//	public List<PRenshiEmployee> getRenshiUserName() {
+//		Map<String, Object> params = new HashMap<String, Object>();
+//		List<PRenshiEmployee> renshiEmployeeInfos = new ArrayList<PRenshiEmployee>();
+//		params.put("fourthLevel", "常规数据");
+//		List<RenshiUserName> renshiUsernames = userNameDao
+//				.find("from RenshiUserName r where r.fourthLevel=:fourthLevel", params);
+//		for (RenshiUserName renshiUserName : renshiUsernames) {
+//			if(renshiUserName!=null){
+//				PRenshiEmployee renshiEmployeeInfo = new PRenshiEmployee();
+//				BeanUtils.copyProperties(renshiUserName, renshiEmployeeInfo);
+////			renshiEmployeeInfo.setId(renshiUserName.getID());
+//				renshiEmployeeInfos.add(renshiEmployeeInfo);
+//			}
+//		}
+//		return renshiEmployeeInfos;
+//	}
 
 	@Override
 	public Map<String, Object> getRenshiUserName(QueryForm queryForm, HttpSession session) {
@@ -169,13 +168,71 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	}
 	
 	@Override
-	public Map<String, Object> findRenshiQuick(PQuickQuery pquick, HttpSession session) {
+	public Map<String,Object> findYidong(QueryForm queryForm, HttpSession session, boolean isExport) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> ydInfo = new HashMap<String, Object>();
+		List<PYidong> ydList = new ArrayList<PYidong>();
+		StringBuffer hql = new StringBuffer("select t.id,t.username,t.firstLevel,t.secondLevel,t.thirdLevel,t.fourthLevel,t.position,t.hiredate,t.zhuanzhengTime"
+				+ ",w.tiaoxinRecord,t.company,t.remarks,t.bumentiaozhengReport from RenshiUserName t,WageDistribution w where t.id=w.employeeId ");
+		addCondition(hql, queryForm, params);
+		SessionInfo userInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
+		if(userInfo.getRoleId() > 1 && !(userInfo.getRoleId()==100)){
+			hql.append(" and t.renshiRight like :renshiRight ");
+			params.put("renshiRight", "%" + userInfo.getUsername() + "%");
+		}
+		String sort = "id";
+		String order = SysConfig.DESC;
+		if(queryForm.getSort() != null){
+			sort = queryForm.getSort();
+			if(queryForm.getOrder() != null){
+				order = queryForm.getOrder();
+			}
+		}
+		hql.append(" order by t." + sort + " " + order);
+		int intPage = 0;
+		int pageSize = 30000;//最多导出30000条数据
+		if(!isExport){
+			intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
+			pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+		}
+		List<Object> olist = objectDao.find(hql.toString(),params, intPage, pageSize);
+		if(olist.size()>0){
+			PYidong pyidong = new PYidong();
+			Object[] obList = (Object[])olist.get(0);
+			if(null != obList){
+				System.out.println("obList lenth:" + obList.length);
+				pyidong.setId((obList[0]!=null) ? (Integer)obList[0] : 0);
+				pyidong.setUsername(String.valueOf((obList[1]!=null) ? obList[1] : ""));
+				String depart = ((obList[2]!=null) ? (String)obList[2] : "") + "/" +
+						((obList[3]!=null) ? (String)obList[3] : "")+ "/" +
+						((obList[4]!=null) ? (String)obList[4] : "")+ "/" +
+						((obList[5]!=null) ? (String)obList[5] : "")
+						;
+				pyidong.setFourthLevel(depart);
+				pyidong.setPosition(((obList[6]!=null) ? (String)obList[6] : ""));
+				pyidong.setHiredate(((obList[7]!=null) ? (String)obList[7] : ""));
+				pyidong.setZhuanzhengTime(((obList[8]!=null) ? (String)obList[8] : ""));
+				pyidong.setTiaoxinRecord(((obList[9]!=null) ? (String)obList[9] : ""));
+				pyidong.setCompany(((obList[10]!=null) ? (String)obList[10] : ""));
+				pyidong.setRemark(((obList[11]!=null) ? (String)obList[11] : ""));
+				pyidong.setdReport(((obList[12]!=null) ? (String)obList[12] : ""));
+				ydList.add(pyidong);
+			}
+		}
+		String csql = "select count(*) from " + (hql.toString()).split("from");
+		long total = objectDao.count(csql,params);
+		ydInfo.put("rows", ydList);
+		ydInfo.put("total", total);
+		return ydInfo;
+	}
+
+	@Override
+	public Map<String, Object> findRenshiQuick(Page page, Integer type, HttpSession session) {
 		StringBuffer hql = null;
 		List<PRenshiEmployee> renshiEmployeeInfos = new ArrayList<PRenshiEmployee>();
 		Map<String, Object> params = new HashMap<String, Object>();
 		Map<String, Object> userInfos = new HashMap<String, Object>();
 //		Map<String, Object> params = new HashMap<String, Object>();
-		int type = pquick.getType();
 		String column = "select new RenshiUserName(t.renshiRight, t.firstLevel, t.secondLevel, t.thirdLevel,"
 				+ "t.fourthLevel, t.cellCore, t.cellCoreEmail, t.guidance, t.guidanceEmail, t.id,"
 				+ "t.username, t.password, t.departmentId, t.position, t.sex, t.identityCard,"
@@ -235,14 +292,14 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		}
 		String sort = "id";
 		String order = SysConfig.DESC;
-		if(pquick.getSort() != null){
-			sort = pquick.getSort();
-			if(pquick.getOrder() != null){
-				order = pquick.getOrder();
+		if(page.getSort() != null){
+			sort = page.getSort();
+			if(page.getOrder() != null){
+				order = page.getOrder();
 			}
 		}
 		hql.append(" order by t." + sort + " " + order);
-		List<RenshiUserName> renshiUsernames = userNameDao.find(hql.toString(), params, pquick.getPage(), pquick.getRows());
+		List<RenshiUserName> renshiUsernames = userNameDao.find(hql.toString(), params, page.getPage(), page.getRows());
 		for (RenshiUserName renshiUserName : renshiUsernames) {
 			if(renshiUserName!=null){
 				PRenshiEmployee renshiEmployeeInfo = new PRenshiEmployee();

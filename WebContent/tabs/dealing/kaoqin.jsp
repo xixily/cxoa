@@ -86,7 +86,7 @@
 				</tr>
 			</thead>
 		</table>
-		<jsp:include page="../../toolBar/kaoqin_toolbar.jsp"></jsp:include>
+		<jsp:include page="../../toolBar/employee/kaoqin_toolbar.jsp"></jsp:include>
 		<div id="dialog_wagesDate" class="easyui-dialog" title="维护工作日表"
 		style="width: 360px;overflow: hidden"
 		data-options="
@@ -94,7 +94,7 @@
                 modal : false,
                 closed : true
             ">
-           	<jsp:include page="../../components/wagesDate.jsp"></jsp:include>
+           	<jsp:include page="../../components/employee/wagesDate.jsp"></jsp:include>
 	</div>
 	</div>
 	
@@ -105,7 +105,7 @@
                 modal : false,
                 closed : true
             ">
-           	<jsp:include page="../../components/kaoqinAdd.jsp"></jsp:include>
+           	<jsp:include page="../../components/employee/kaoqinAdd.jsp"></jsp:include>
 	</div>
 
 </div>

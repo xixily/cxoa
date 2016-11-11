@@ -41,6 +41,7 @@ var hetong = {
 				})
 			},
 			queryFahuo : function(data, src){
+				console.log("query fahuo%o" + data);
 				$('#datagrid_fahuo').datagrid({
 					queryParams : data
 				})
