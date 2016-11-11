@@ -11,7 +11,7 @@ import com.chaoxing.oa.entity.page.common.PHouseholdType;
 import com.chaoxing.oa.entity.page.common.PLevel;
 import com.chaoxing.oa.entity.page.common.POStructV;
 import com.chaoxing.oa.entity.page.common.POStructs;
-import com.chaoxing.oa.entity.page.common.PQuickQuery;
+import com.chaoxing.oa.entity.page.common.Page;
 import com.chaoxing.oa.entity.page.common.QueryForm;
 import com.chaoxing.oa.entity.page.employee.PKaoQin;
 import com.chaoxing.oa.entity.page.employee.PMonthWages;
@@ -19,6 +19,7 @@ import com.chaoxing.oa.entity.page.employee.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.employee.PShebao;
 import com.chaoxing.oa.entity.page.employee.PShebaoType;
 import com.chaoxing.oa.entity.page.employee.PWagesDate;
+import com.chaoxing.oa.entity.page.employee.PYidong;
 import com.chaoxing.oa.entity.page.employee.PshebaoDetail;
 import com.chaoxing.oa.entity.page.employee.Pwages;
 import com.chaoxing.oa.entity.page.system.PSystemConfig;
@@ -26,13 +27,13 @@ import com.chaoxing.oa.entity.page.system.SessionInfo;
 import com.chaoxing.oa.entity.po.employee.UserName;
 
 public interface EmployeeInfoService {
-	public List<PRenshiEmployee> getRenshiUserName();
+//	public List<PRenshiEmployee> getRenshiUserName();
 
 	public Map<String, Object> getRenshiUserName(QueryForm queryForm, HttpSession session);
 	
 	public Map<String, Object> getRenshiUserName(QueryForm queryForm, HttpSession session, int isExport);
 	
-	public Map<String, Object> findRenshiQuick(PQuickQuery pquick, HttpSession session);
+	public Map<String, Object> findRenshiQuick(Page page, Integer type, HttpSession session);
 
 	public long getRenshiUserNameCount(String hql, Map<String, Object> params);
 
@@ -89,6 +90,8 @@ public interface EmployeeInfoService {
 	public Map<String, Object> findKaoqin(QueryForm queryForm, HttpSession session);
 	
 	public Map<String, Object> findKaoqin(QueryForm queryForm, HttpSession session, int isExport);
+	
+	public Map<String,Object> findYidong(QueryForm queryForm, HttpSession session, boolean isExport);
 	
 	public long getKaoQinCount(String hql, Map<String,Object> params);
 
@@ -149,7 +152,6 @@ public interface EmployeeInfoService {
 	public long fafang();
 	
 	public Map<String, Object> getgongzihuizong(QueryForm queryForm);
-
 
 
 }
