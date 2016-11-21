@@ -10,7 +10,7 @@ public interface BaseDaoI<T> {
 
 	public Serializable save(T o) throws Exception;
 
-	public void delete(T o);
+	public void delete(T o) throws HibernateException;
 
 	public void update(T o) throws Exception;
 
@@ -41,5 +41,9 @@ public interface BaseDaoI<T> {
 	public int executeHql(String hql, Map<String, Object> params);
 	
 	public void prepareCall(String sql, Map<String, Object> params) throws HibernateException;
+	
+	public void bigSave(List<T> objs);
+	
+	public void bigUpdate(List<T> objs);
 
 }

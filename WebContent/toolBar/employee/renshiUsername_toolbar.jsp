@@ -76,6 +76,9 @@ int month = cal.get(Calendar.MONTH) + 1;
         </div>
     </div>
     <div class="menu-sep"></div>
+    <div data-options="iconCls:'icon-excel'" onclick="employee.shebaoSummary.exportShebaoDetail(111)">导出<%= "" + year+ "-"+ (month - 1) %>月社保明细</div>
+    <div data-options="iconCls:'icon-excel'" onclick="employee.shebaoSummary.exportShebaoDetail(112)">导出<%= "" + year+ "-"+ (month - 1) %>社保增员</div>
+    <div data-options="iconCls:'icon-excel'" onclick="employee.shebaoSummary.exportShebaoDetail(113)">导出<%= "" + year+ "-"+ (month - 1) %>社保减员</div>
     <div data-options="iconCls:'icon-excel'" onclick="employee.employee.exportExcel(0)">根据当前查询条件导出</div>
 </div>
 
@@ -91,7 +94,6 @@ int month = cal.get(Calendar.MONTH) + 1;
     <div>
     <span>其他快捷查询</span>
     <div>
-    <div data-options="inconCLs:'icon-search'" onclick="employee.employee.quickQuery()"></div>
     <div data-options="inconCLs:'icon-search'" onclick="employee.employee.quickQuery(301)">查询本月合同到期名单</div>
     <div data-options="inconCLs:'icon-search'" onclick="employee.employee.quickQuery(302)">查询没有身份证的名单</div>
     </div>

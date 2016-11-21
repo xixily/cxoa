@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ import com.chaoxing.oa.service.UserServiceI;
 @Service("userService")
 public class UserServiceImpl implements UserServiceI {
 
-	private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
+//	private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
 
 	private BaseDaoI<UserName> usernameDao;
 	private BaseDaoI<OrganizationStructure> ogsDao;
@@ -94,15 +94,10 @@ public class UserServiceImpl implements UserServiceI {
 
 	@Override
 	public int deleteUserName(QueryForm queryForm) {
-		Map<String, Object> params = new HashMap<String, Object>();
-		int id = queryForm.getId();
 		UserName u = new UserName();
 		BeanUtils.copyProperties(queryForm, u);
-//		params.put("id", id);
-//		UserName username = usernameDao.get("from UserName u where u.id = :id", params);
 		try {
 			usernameDao.delete(u);
-//			usernameDao.delete(username);
 		} catch (Exception e) {
 			System.out.println("delete 失败！");
 			return 0;

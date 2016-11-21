@@ -445,10 +445,17 @@
                     <%--</td>--%>
                     <td>细胞核</td>
                     <td><input class="easyui-textbox" type="text" name="cellCore" /></td>
-                    <td></td>
-                    <td></td>
+                    <td>年假累计</td>
+                    <td>
+                    <input type="text" class="easyui-numberbox" value="100" data-options="min:0,precision:2" name="annualLleave">
+                    <%--<input class="easyui-textbox" type="text" name="cellCore" />--%>
+                    </td>
                     <td>部门调整报表</td>
                     <td><input class="easyui-textbox" type="text" name="bumentiaozhengReport" /></td>
+                </tr>
+                <tr>
+                <td>年假累计</td>
+                <td><input class="easyui-textbox" type="text" name="sickLleaveTotal" /></td>
                 </tr>
 
                 </table>

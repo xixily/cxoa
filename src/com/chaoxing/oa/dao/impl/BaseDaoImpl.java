@@ -11,7 +11,7 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
 import com.chaoxing.oa.dao.BaseDaoI;
@@ -33,7 +33,7 @@ public class BaseDaoImpl<T> implements BaseDaoI<T> {
 	private Session getCurrentSession() {
 		return this.sessionFactory.getCurrentSession();
 	}
-
+	
 	@Override
 	public Serializable save(T o) throws HibernateException{
 			try {
@@ -203,8 +203,6 @@ public class BaseDaoImpl<T> implements BaseDaoI<T> {
 	}
 	
 	public void prepareCall(String sql, Map<String, Object> params) throws HibernateException{
-		Session session = this.getCurrentSession();
-		
 		SQLQuery sq = this.getCurrentSession().createSQLQuery(sql);
 		if (params != null && !params.isEmpty()) {
 			for (String key : params.keySet()) {
@@ -216,5 +214,65 @@ public class BaseDaoImpl<T> implements BaseDaoI<T> {
 		} catch (HibernateException e) {
 			throw e;
 		}
+	}
+	
+//	public void excuteHql(String sql, Map<String,Object> params){
+//		SQLQuery sq = this.getCurrentSession().createSQLQuery(sql);
+//		if (params != null && !params.isEmpty()) {
+//			for (String key : params.keySet()) {
+//				sq.setParameter(key, params.get(key));
+//			}
+//		}
+//		
+//		sq.executeUpdate();
+//	}
+	
+	@Override
+	public void bigSave(List<T> objs){
+		Session session = getCurrentSession();
+		//获得spring aop 嵌入的事务
+//		Transaction tx = session.getTransaction();
+		for (int i = 0; i < objs.size(); i++) {
+			T obj = objs.get(i);
+			try {
+				session.save(obj);
+				if(i%100 == 0){
+					session.flush();
+					session.clear();
+//					tx.commit();
+//					tx = session.beginTransaction();
+				}
+			} catch (Exception e) {
+//				tx.rollback();
+			}
+			
+		}
+		session.flush();
+		session.clear();
+//		tx.commit();
+	}
+	
+	@Override
+	public void bigUpdate(List<T> objs){
+		Session session = getCurrentSession();
+		//手动开启事务
+//		Transaction tx = session.getTransaction();
+		for (int i = 0; i < objs.size(); i++) {
+			T obj = objs.get(i);
+			try {
+				session.update(obj);
+				if(i%100 == 0){
+					session.flush();
+					session.clear();
+//					tx.commit();
+//					tx = session.beginTransaction();
+				}
+			} catch (Exception e) {
+//				tx.rollback();
+			}
+		}
+		session.flush();
+		session.clear();
+//		tx.commit();
 	}
 }

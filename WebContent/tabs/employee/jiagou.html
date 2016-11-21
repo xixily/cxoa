@@ -48,6 +48,10 @@
                     text:'导出架构表',
                     handler: function(){employee.jiagou.exportExcel();}
                 },'-',{
+                    iconCls: 'icon-excel',
+                    text:'导出组织结构表',
+                    handler: function(){employee.jiagou.exportExcel(true);}
+                },'-',{
                     iconCls: 'icon-collapse',
                     text:'全部折叠',
                     handler: function(){$('#treegrid_jiagou').treegrid('collapseAll');}

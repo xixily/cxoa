@@ -159,6 +159,7 @@ public class UserController {
 	@RequestMapping(value = "deleteUserName")
 	@ResponseBody
 	public Json deleteUserName(QueryForm pu, HttpSession session) {
+		System.out.println(pu);
 		Json result = new Json();
 		if (pu.getId() == 0) {
 			result.setErrorCode(SysConfig.REQUEST_ERROR);

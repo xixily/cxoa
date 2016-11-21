@@ -51,9 +51,9 @@ public class WageDistribution implements Serializable{
 	private Double cMedicare;//公司医疗保险
 	private Double cUnemployedInsurance;//公司失业保险
 	private Double cHouseIinsurance;//公司住房保险
-	private Double cSickPayTotal;//累计带薪病假
 	private Double cInjuryInsurance;//公司工伤保险
 	private Double cBirthIinsurance;//公司生育保险
+	private Double cSickPayTotal;//累计带薪病假
 	private Double annualLleave;//年假累计
 	private String workPhone;//办公电话
 	private Integer internalNumber;//内部编号

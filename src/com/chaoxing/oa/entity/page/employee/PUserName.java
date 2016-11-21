@@ -1,5 +1,6 @@
 package com.chaoxing.oa.entity.page.employee;
 
+import java.math.BigDecimal;
 
 public class PUserName {
 	private int id;//ID
@@ -67,6 +68,8 @@ public class PUserName {
 	private String baoxianTongzhidan;//保险通知单
 	private String signedBy;//签字人
 	private String chargedBy;//负责人
+	private BigDecimal sickLleaveTotal;//病假累计
+	private BigDecimal annualLleave;//年假累计
 	
 	public String getUsername() {
 		return username;
@@ -457,6 +460,18 @@ public class PUserName {
 	}
 	public void setBaoxianTongzhidan(String baoxianTongzhidan) {
 		this.baoxianTongzhidan = baoxianTongzhidan;
+	}
+	public BigDecimal getSickLleaveTotal() {
+		return sickLleaveTotal;
+	}
+	public BigDecimal getAnnualLleave() {
+		return annualLleave;
+	}
+	public void setSickLleaveTotal(BigDecimal sickLleaveTotal) {
+		this.sickLleaveTotal = sickLleaveTotal;
+	}
+	public void setAnnualLleave(BigDecimal annualLleave) {
+		this.annualLleave = annualLleave;
 	}
 	@Override
 	public String toString() {

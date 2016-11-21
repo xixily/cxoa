@@ -1,18 +1,12 @@
 package com.chaoxing.oa.test;
 
 import java.io.File;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
-import com.chaoxing.oa.entity.page.common.POStructs;
 import com.chaoxing.oa.entity.page.employee.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.employee.PWagesDate;
 import com.chaoxing.oa.util.SXSSFWriter;
@@ -20,27 +14,55 @@ import com.chaoxing.oa.util.SXSSFWriter;
 public class Test {
 
 	public static void main(String[] args) {
-		Math.random();
-		List<Integer> list = new ArrayList<Integer>();
-		for (int i = 0; i <20 ;i++) {
-//			System.out.println((int)(Math.random()*10));
-			list.add((int)(Math.random()*10));
-		}
-		Iterator<Integer> it = list.iterator();
-		System.out.println("第一次循环");
-		while(it.hasNext()){
-			int i = it.next();
-			if(i%2 == 0){
-				System.out.println("被移除的："+i);
-				it.remove();
-//				list.remove(i);
-			}
-		}
-		it = list.iterator();
-		System.out.println("第二次循环");
-		while(it.hasNext()){
-			System.out.println("剩下的：" + it.next());
-		}
+		StringBuffer stb = new StringBuffer();
+		stb.append("[sdafdasfasdfsa], ");
+		System.out.println(stb.substring(0, stb.length()-2));
+//		BigDecimal bg = new BigDecimal(22.00f);
+//		System.out.println("201611".compareTo(null));
+////		bg.divide(new BigDecimal(21),4);
+////		System.out.println(bg.divide(new BigDecimal(21),3,BigDecimal.ROUND_HALF_UP).floatValue());
+////		System.out.println(bg.floatValue()==21);
+//		SimpleDateFormat df = new SimpleDateFormat("yyyyMM");
+//		Calendar cal = Calendar.getInstance();
+////		Integer year = cal.get(Calendar.YEAR);
+//		String afterDate = df.format(cal.getTime());
+//		System.out.println(afterDate);
+//		String[] t = afterDate.split("\\.");
+//		System.out.println(new BigDecimal("12").multiply(new BigDecimal(2)).subtract(new BigDecimal(4)));
+//		System.out.println(t);
+//		String afterDateC = afterDate.split(".")[0]+afterDate.split(".")[1];
+//		System.out.println(afterDateC);
+//		Calendar cal = Calendar.getInstance();
+//		System.out.println(cal.get(Calendar.YEAR));
+//		String sql = "TRUNCATE TABLE 考勤;"
+//				+"INSERT INTO 考勤(eId,入职时间,入职报表,转正时间,转正报表,离职时间,离职报表,级别) "
+//				+"SELECT id,入职时间,入职报表,转正时间,转正报表,离职时间,离职报表,级别 FROM username "
+//				+"WHERE (离职时间 IS NULL AND (入职报表<'201611' OR 入职报表 IS NULL )AND (入职时间 < '2016.11' OR 入职时间 IS NULL))"
+//				+"OR (离职时间=''  AND (入职报表<'201611' OR 入职报表 IS NULL )AND (入职时间 < '2016.11' OR 入职时间 IS NULL))"
+//				+"OR (离职报表 >= '201610')";
+//		System.out.println(sql);
+//		System.out.println("".equals(null));
+//		Math.random();
+//		List<Integer> list = new ArrayList<Integer>();
+//		for (int i = 0; i <20 ;i++) {
+////			System.out.println((int)(Math.random()*10));
+//			list.add((int)(Math.random()*10));
+//		}
+//		Iterator<Integer> it = list.iterator();
+//		System.out.println("第一次循环");
+//		while(it.hasNext()){
+//			int i = it.next();
+//			if(i%2 == 0){
+//				System.out.println("被移除的："+i);
+//				it.remove();
+////				list.remove(i);
+//			}
+//		}
+//		it = list.iterator();
+//		System.out.println("第二次循环");
+//		while(it.hasNext()){
+//			System.out.println("剩下的：" + it.next());
+//		}
 //		Float i = 1.39f;
 //		float b;
 //		System.out.println((float)i);

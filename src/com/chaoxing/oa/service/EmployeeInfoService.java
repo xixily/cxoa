@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import com.chaoxing.oa.entity.page.common.Json;
 import com.chaoxing.oa.entity.page.common.PComboBox;
 import com.chaoxing.oa.entity.page.common.PCompany;
 import com.chaoxing.oa.entity.page.common.PHouseholdType;
@@ -15,11 +16,9 @@ import com.chaoxing.oa.entity.page.common.Page;
 import com.chaoxing.oa.entity.page.common.QueryForm;
 import com.chaoxing.oa.entity.page.employee.PKaoQin;
 import com.chaoxing.oa.entity.page.employee.PMonthWages;
-import com.chaoxing.oa.entity.page.employee.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.employee.PShebao;
 import com.chaoxing.oa.entity.page.employee.PShebaoType;
 import com.chaoxing.oa.entity.page.employee.PWagesDate;
-import com.chaoxing.oa.entity.page.employee.PYidong;
 import com.chaoxing.oa.entity.page.employee.PshebaoDetail;
 import com.chaoxing.oa.entity.page.employee.Pwages;
 import com.chaoxing.oa.entity.page.system.PSystemConfig;
@@ -29,37 +28,37 @@ import com.chaoxing.oa.entity.po.employee.UserName;
 public interface EmployeeInfoService {
 //	public List<PRenshiEmployee> getRenshiUserName();
 
-	public Map<String, Object> getRenshiUserName(QueryForm queryForm, HttpSession session);
+	public Map<String, Object> findRenshiUserName(QueryForm queryForm, HttpSession session);
 	
-	public Map<String, Object> getRenshiUserName(QueryForm queryForm, HttpSession session, int isExport);
+	public Map<String, Object> findRenshiUserName(QueryForm queryForm, HttpSession session, int isExport);
 	
 	public Map<String, Object> findRenshiQuick(Page page, Integer type, HttpSession session);
 
 	public long getRenshiUserNameCount(String hql, Map<String, Object> params);
 
-	public Map<String, Object> getQueryForm();
+	public Map<String, Object> findQueryForm();
 	
-	public List<PCompany> getCompany();
+	public List<PCompany> findCompany();
 
-	public List<PComboBox> getForthLevel();
+	public List<PComboBox> findForthLevel();
 
 	public List<POStructs> findOStruct();
 	
-	public List<PLevel> getLevel();
+	public List<PLevel> findLevel();
 
-	public List<PComboBox> getInsuranceCompany();
+	public List<PComboBox> findInsuranceCompany();
 
-	public List<Pwages> getWagesList(int id,SessionInfo sessionInfo, String ifSecret);
+	public List<Pwages> findWagesList(int id,SessionInfo sessionInfo, String ifSecret);
 
 	public Pwages getWages(int id);
 
 	public int updateWages(Pwages pwages);
 
-	public Map<String, Object> getAllShebaoRadio(QueryForm queryForm);
+	public Map<String, Object> findAllShebaoRadio(QueryForm queryForm);
 
-	public List<PShebao> getShebaoRadioByCompany(String company);
+	public List<PShebao> findShebaoRadioByCompany(String company);
 
-	public List<PShebaoType> getShebaoType();
+	public List<PShebaoType> findShebaoType();
 
 	public int addWages(Pwages pwages);
 
@@ -67,23 +66,23 @@ public interface EmployeeInfoService {
 
 	public int updateShebao(PShebao pshebao);
 
-	public List<PHouseholdType> getHouseholdType();
+	public List<PHouseholdType> findHouseholdType();
 
 	public int addShebao(PShebao pshebao);
 
 	public int deleteShebao(PShebao pshebao);
 
-	public Map<String, Object> getShebaoSummary(QueryForm queryForm, HttpSession session);
+	public Map<String, Object> findShebaoSummary(QueryForm queryForm, HttpSession session);
 	
-	public Map<String, Object> getShebaoSummary(QueryForm queryForm, HttpSession session, int isExport);
+	public Map<String, Object> findShebaoSummary(QueryForm queryForm, HttpSession session, int isExport);
 	
 //	public List<PSystemConfig> findShebaoSumaryLock();
 
-	public Map<String, Object> getShebaoCompany(QueryForm queryForm, HttpSession session);
+	public Map<String, Object> findShebaoCompany(QueryForm queryForm, HttpSession session);
 	
-	public Map<String, Object> getShebaoCompany(QueryForm queryForm, HttpSession session, int isExport);
+	public Map<String, Object> findShebaoCompany(QueryForm queryForm, HttpSession session, int isExport);
 	
-	 public long getWageDistributionCount(String hql, Map<String, Object> params);
+	public long getWageDistributionCount(String hql, Map<String, Object> params);
 
 	public int updateWagesRadix(PshebaoDetail pwages);
 
@@ -105,7 +104,7 @@ public interface EmployeeInfoService {
 	
 	public long getMonthWagesCount(String string, Map<String, Object> params);
 
-	public Map<String, Object> queryWagesDate(QueryForm queryForm);
+	public Map<String, Object> findWagesDate(QueryForm queryForm);
 
 	public int updateWagesDates(List<PWagesDate> pwagesDates);
 
@@ -151,7 +150,23 @@ public interface EmployeeInfoService {
 
 	public long fafang();
 	
-	public Map<String, Object> getgongzihuizong(QueryForm queryForm);
+	public Map<String, Object> findgongzihuizong(QueryForm queryForm);
+	
+	public Json rmoveKaoqin();
+
+	public Json updateAllKaoqin();
+
+	public Json updateAllMonthWage();
+
+	public Json rmoveMonthWage();
+
+	public Map<String, Object> findMonthShebaoDetail(Page page, String date, HttpSession session, int i);
+
+	public Map<String, Object> findShebaoMX(Page page, String date, HttpSession session, int i);
+
+	public Map<String, Object> findAddorReduce(Page page, String date, HttpSession session, int i);
+	
+//	public Json 
 
 
 }

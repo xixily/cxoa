@@ -26,6 +26,7 @@ public class SessionInfo implements java.io.Serializable {
 	private String workPlace;//工作地点
 	private String ifSecret;//是否保密
 	List<String> resourceUrls;
+	private Object response;
 	public int getId() {
 		return id;
 	}
@@ -82,6 +83,12 @@ public class SessionInfo implements java.io.Serializable {
 	}
 	public String getIfSecret() {
 		return ifSecret;
+	}
+	public Object getResponse() {
+		return response;
+	}
+	public void setResponse(Object response) {
+		this.response = response;
 	}
 	public void setId(int id) {
 		this.id = id;

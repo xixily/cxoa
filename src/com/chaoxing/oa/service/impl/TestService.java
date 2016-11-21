@@ -1,23 +1,15 @@
 package com.chaoxing.oa.service.impl;
 
-import static org.junit.Assert.*;
-
-import java.util.List;
-import java.util.Set;
+import static org.junit.Assert.fail;
 
 import javax.annotation.Resource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.BeanUtils;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.chaoxing.oa.entity.page.common.QueryForm;
-import com.chaoxing.oa.entity.page.system.PMenu;
-import com.chaoxing.oa.entity.page.system.PUlList;
-import com.chaoxing.oa.entity.po.employee.UserName;
 import com.chaoxing.oa.service.RoleMenuService;
 import com.chaoxing.oa.service.RoleRightsService;
 import com.chaoxing.oa.service.UserServiceI;

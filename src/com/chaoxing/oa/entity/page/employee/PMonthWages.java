@@ -67,6 +67,7 @@ public class PMonthWages {
 	private Float jiangjin;//奖金
 	private Float bufaSalary;//补发工资
 	private Double lishiSalary;//历史工资
+	private String taxStructure;//报税架构
 	public Integer getId() {
 		return id;
 	}
@@ -238,7 +239,12 @@ public class PMonthWages {
 	public Double getLishiSalary() {
 		return lishiSalary;
 	}
-	
+	public String getTaxStructure() {
+		return taxStructure;
+	}
+	public void setTaxStructure(String taxStructure) {
+		this.taxStructure = taxStructure;
+	}
 	public void setLishiSalary(Double lishiSalary) {
 		this.lishiSalary = lishiSalary;
 	}

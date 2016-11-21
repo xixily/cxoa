@@ -68,7 +68,8 @@ $(document).ready(function() {
 		<th data-options="field:'ruzhiReport',width:80,sortable:true">入职报表</th>
 		<th data-options="field:'lizhiReport',width:80,sortable:true">离职报表</th>
 		<th data-options="field:'zhuanzhengReport',width:80,sortable:true">转正报表</th>
-		<th data-options="field:'bumentiaozhengReport',width:80,sortable:true">部门调整报表</th>
+		<th data-options="field:'bumentiaozhengReport',width:80,sortable:true">部门调整报表</tsh>
+		<th data-options="field:'contract',width:80,sortable:true">合同</th>
 		</tr>
 		</thead>
 	</table>

@@ -592,10 +592,10 @@ var employee = {
 //		})
 	},
 	deleteEmployee : function(confirmId) {
-//		console.log('deleteEmployee');
 		var userInfo = $('#employee_datas').datagrid('getSelected');
 		var url = "user/deleteUserName.action";
-		$.getJSON(url, userInfo, function(result) {
+		$.post(url, userInfo, function(result) {
+			result = eval("("+ result + ")");
 			confirmDialog.destoryDialog(confirmId);
 			$('#employee_datas').datagrid('reload');
 //			if (result.success) {
@@ -1592,6 +1592,23 @@ shebaoSummary : {
 					)
 //					$('#datagrid_shebaoCompany').datagrid('enableFilter', [{}]); 不能用
 	},
+	exportShebaoDetail: function(type){
+		var url = "file/exportShebaoDetail.action";
+		var exportParam = {};
+//		exportParams.date = date ? date : "";
+		exportParam.type = type ? type : "111";
+		downloadForm.createForm();
+		$("#export_query").form('submit', {
+			url : url,
+			queryParams : exportParam,
+			onSubmit : function() {
+				console.log("正在导出,请稍后");
+			},
+			onLoadSuccess : function() {
+				downloadForm.destoryForm();
+			}
+		});
+	},
 	exportShebaoCompany : function(type){
 		console.log('exportExcel:' + type);
 		var exportParam = {};
@@ -2327,9 +2344,9 @@ shebaoSummary : {
 				})
 			}
 		},
-		exportExcel : function(){
+		exportExcel : function(flag){
 			downloadForm.createForm();
-			var url = "file/exportOS.action";
+			var url = flag ? "file/exportOStruct.action":"file/exportOS.action";
 			$("#export_query").form('submit', {
 				url : url,
 				onSubmit : function() {

@@ -77,6 +77,8 @@ public class RenshiUserName implements Serializable {
 	private String lizhiReport;//离职报表
 	private String zhuanzhengReport;//转正报表
 	private String bumentiaozhengReport;//部门调整报表
+//	private BigDecimal sickLleaveTotal;//病假累计
+//	private BigDecimal annualLleave;//年假累计
 	
 	public RenshiUserName() {
 		super();

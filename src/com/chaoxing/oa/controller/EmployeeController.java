@@ -3,11 +3,8 @@ package com.chaoxing.oa.controller;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
@@ -16,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.chaoxing.oa.annotation.SystemControllerLog;
 import com.chaoxing.oa.entity.page.common.Json;
 import com.chaoxing.oa.entity.page.common.PComboBox;
 import com.chaoxing.oa.entity.page.common.PCompany;
@@ -40,7 +38,6 @@ import com.chaoxing.oa.system.SysConfig;
 import com.chaoxing.oa.system.cache.CacheManager;
 import com.chaoxing.oa.util.DateUtil;
 import com.chaoxing.oa.util.ResourceUtil;
-import com.chaoxing.oa.util.SFUtil;
 
 @Controller
 @RequestMapping("/employee")
@@ -57,8 +54,9 @@ public class EmployeeController {
 
 	@RequestMapping(value = "/renshiUser")
 	@ResponseBody
+	@SystemControllerLog(description="查询username")
 	public Map<String, Object> getRenshiUserName(QueryForm queryForm, HttpSession session){
-		Map<String, Object> userInfos = employeeInfoService.getRenshiUserName(queryForm, session);
+		Map<String, Object> userInfos = employeeInfoService.findRenshiUserName(queryForm, session);
 		return userInfos;
 	}
 	
@@ -66,7 +64,7 @@ public class EmployeeController {
 	@ResponseBody
 	public Json getFourthLevel(){
 		Json result = new Json();
-		List<PComboBox> lists = employeeInfoService.getForthLevel();
+		List<PComboBox> lists = employeeInfoService.findForthLevel();
 		if(lists.size()>0){
 			result.setSuccess(true);
 			result.setMsg("查询成功！");
@@ -159,7 +157,7 @@ public class EmployeeController {
 	@RequestMapping(value = "/getLevel")
 	@ResponseBody
 	public List<PLevel> getLevel(){
-		List<PLevel> lists = employeeInfoService.getLevel();
+		List<PLevel> lists = employeeInfoService.findLevel();
 		return lists;
 	}
 	
@@ -168,13 +166,13 @@ public class EmployeeController {
 	public List<PCompany> getCompany(){
 //			System.out.println("xml:" + xml);
 //			System.out.println("verifyCode:" + verifyCode);
-		return employeeInfoService.getCompany();
+		return employeeInfoService.findCompany();
 	}
 	
 	@RequestMapping(value = "/getInsuranceCompany")
 	@ResponseBody
 	public List<PComboBox> getInsuranceCompany(){
-		return employeeInfoService.getInsuranceCompany();
+		return employeeInfoService.findInsuranceCompany();
 	}
 	
 	@RequestMapping(value = "/getWagesList")
@@ -184,7 +182,7 @@ public class EmployeeController {
 		if(queryForm.getId()>0){
 			SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());	
 			String ifSecret = employeeInfoService.getUserInfo(queryForm).getIfSecret();
-			wagesList = employeeInfoService.getWagesList(queryForm.getId(),sessionInfo,ifSecret);
+			wagesList = employeeInfoService.findWagesList(queryForm.getId(),sessionInfo,ifSecret);
 		}
 		return wagesList;
 	}
@@ -248,7 +246,7 @@ public class EmployeeController {
 		Double oradix = pwage.getRadix();
 		String company = pwage.getCompany();
 		String houseHoldType = pwage.getHouseholdType();
-		List<PShebao> shebaoCompany = employeeInfoService.getShebaoRadioByCompany(company);
+		List<PShebao> shebaoCompany = employeeInfoService.findShebaoRadioByCompany(company);
 		BigDecimal rRadix;
 		if(pwage.getRadix()==0){
 			pwage.setSubEndowmentIinsurance(0d);
@@ -442,7 +440,7 @@ public class EmployeeController {
 	@RequestMapping(value = "/getShebao")
 	@ResponseBody
 	public Map<String, Object>  getAllShebaoRadio(QueryForm queryform){
-		Map<String, Object> pshebaos = employeeInfoService.getAllShebaoRadio(queryform);
+		Map<String, Object> pshebaos = employeeInfoService.findAllShebaoRadio(queryform);
 		return pshebaos;
 	}
 	
@@ -455,7 +453,7 @@ public class EmployeeController {
 			result.setMsg("没有公司名称！");
 			return result;
 		}
-		List<PShebao> pshebaos = employeeInfoService.getShebaoRadioByCompany(queryForm.getCompany());
+		List<PShebao> pshebaos = employeeInfoService.findShebaoRadioByCompany(queryForm.getCompany());
 		if(pshebaos.size() > 0){
 			result.setSuccess(true);
 			result.setObj(pshebaos);
@@ -471,7 +469,7 @@ public class EmployeeController {
 	public Json getShebaoRadioByType(String company){
 		Json result = new Json();
 		if(company!=null&&!company.equals("")){
-			List<PShebao> pshebaos = employeeInfoService.getShebaoRadioByCompany(company);
+			List<PShebao> pshebaos = employeeInfoService.findShebaoRadioByCompany(company);
 			if(pshebaos.size() > 0){
 				result.setSuccess(true);
 				result.setObj(pshebaos);
@@ -489,7 +487,7 @@ public class EmployeeController {
 	@RequestMapping(value = "/getShebaoType")
 	@ResponseBody
 	public List<PShebaoType> getShebaoType(){
-		return employeeInfoService.getShebaoType();
+		return employeeInfoService.findShebaoType();
 	}
 	
 	@RequestMapping(value = "/updateShebao")
@@ -511,7 +509,7 @@ public class EmployeeController {
 	@RequestMapping(value = "/getHouseholdType")
 	@ResponseBody
 	public List<PHouseholdType> getHouseholdType(){
-		return employeeInfoService.getHouseholdType();
+		return employeeInfoService.findHouseholdType();
 	}
 	
 	@RequestMapping(value = "/addShebao")
@@ -550,7 +548,7 @@ public class EmployeeController {
 	@RequestMapping(value = "/queryShebaoSummary")
 	@ResponseBody
 	public Map<String, Object> queryShebaoSummary(QueryForm queryForm, HttpSession session){
-		Map<String, Object> shebaoSummaries = employeeInfoService.getShebaoSummary(queryForm, session);
+		Map<String, Object> shebaoSummaries = employeeInfoService.findShebaoSummary(queryForm, session);
 		return shebaoSummaries;
 	}
 	
@@ -596,7 +594,7 @@ public class EmployeeController {
 	@ResponseBody
 	public Map<String, Object> getShebaoCompany(QueryForm queryForm, HttpSession session){
 		if(queryForm!=null&&queryForm.getCompany()!=null){
-			Map<String, Object> shebaoCompanys = employeeInfoService.getShebaoCompany(queryForm, session);
+			Map<String, Object> shebaoCompanys = employeeInfoService.findShebaoCompany(queryForm, session);
 			return shebaoCompanys;
 		}
 		return null;
@@ -897,7 +895,7 @@ public class EmployeeController {
 	@RequestMapping(value = "/queryWagesDate")
 	@ResponseBody
 	public Map<String, Object> queryWagesDate(QueryForm queryForm, HttpSession session){
-		Map<String, Object> userInfos = employeeInfoService.queryWagesDate(queryForm);
+		Map<String, Object> userInfos = employeeInfoService.findWagesDate(queryForm);
 		return userInfos;
 	}
 	
@@ -983,9 +981,9 @@ public class EmployeeController {
 		queryForm.setWagesMonth(date);
 		PSystemConfig ps = employeeInfoService.findSysconfig(null, SysConfig.KAOQIN_BUTTON).get(0);
 		if(ps!=null&&ps.getLocked()==0){
-		if(((Long)employeeInfoService.queryWagesDate(queryForm).get("total"))>27){
+		if(((Long)employeeInfoService.findWagesDate(queryForm).get("total"))>27){
 			queryForm.setWagesMonth(preDate);
-			if(((Long)employeeInfoService.queryWagesDate(queryForm).get("total"))>27){
+			if(((Long)employeeInfoService.findWagesDate(queryForm).get("total"))>27){
 				int savaNum = employeeInfoService.generateKaoqin(date,preDate,afterDate);
 				if(savaNum>0){
 					result.setSuccess(true);
@@ -1072,46 +1070,46 @@ public class EmployeeController {
 		return result;
 	}
 	
-	@RequestMapping(value = "testDir.action")
-	@ResponseBody
-	public Json getDir(HttpServletRequest request, HttpSession session){
-		Json result = new Json();
-//		String dir = request.
-//		request.getRealPath("");
-		Map<String, Object> mm = new HashMap<String, Object>();
-		System.out.println(request.getContextPath());
-		mm.put("requestt-contentPath", request.getServletContext().getRealPath("/"));
-//		mm.put("cxoa", request.getRealPath("cxoa"));
-//		mm.put("sss", request.getRealPath(""));
-		mm.put("getPathTranslated", request.getPathTranslated());
-		mm.put("getServletPath", request.getServletPath());
-//		mm.put("getRealPath:upload", request.getRealPath("\\uploadFolder\\"));
-		mm.put("classPath", this.getClass().getResource("").getFile().toString());
-		mm.put("SFUtil:classPath", SFUtil.class.getResource("/").getFile().toString());
-		mm.put("session-servletContext", session.getServletContext().getRealPath("/"));
-		result.setObj(mm);
-//		KuaidiList kl = new KuaidiList();
-//		kl.setAddService_name("增值服务名");
-//		kl.setAddService_value1("value1");
-//		kl.setAddService_value2("value2");
-//		kl.setContent("发票");
-//		kl.setCustid("66666");
-//		kl.setD_address("jxnu");
-//		kl.setD_company("江西师范大学");
-//		kl.setD_contact("Mrs deng");
-//		kl.setD_mobile("131346789");
-//		kl.setD_tel("0791-123456");
-//		kl.setDestcode("079");
-//		kl.setExpress_type(26);
-//		kl.setJ_address("BeiJing");
-//		kl.setJ_company("SJCX");
-//		kl.setJ_contact("Mrs deng");
-//		kl.setJ_tel("17745678913");
-//		kl.setMailno("123456789");
-//		kl.setRemark("备注");
-//		result.setObj(kl);
-		return result;
-	}
+//	@RequestMapping(value = "testDir.action")
+//	@ResponseBody
+//	public Json getDir(HttpServletRequest request, HttpSession session){
+//		Json result = new Json();
+////		String dir = request.
+////		request.getRealPath("");
+//		Map<String, Object> mm = new HashMap<String, Object>();
+//		System.out.println(request.getContextPath());
+//		mm.put("requestt-contentPath", request.getServletContext().getRealPath("/"));
+////		mm.put("cxoa", request.getRealPath("cxoa"));
+////		mm.put("sss", request.getRealPath(""));
+//		mm.put("getPathTranslated", request.getPathTranslated());
+//		mm.put("getServletPath", request.getServletPath());
+////		mm.put("getRealPath:upload", request.getRealPath("\\uploadFolder\\"));
+//		mm.put("classPath", this.getClass().getResource("").getFile().toString());
+//		mm.put("SFUtil:classPath", SFUtil.class.getResource("/").getFile().toString());
+//		mm.put("session-servletContext", session.getServletContext().getRealPath("/"));
+//		result.setObj(mm);
+////		KuaidiList kl = new KuaidiList();
+////		kl.setAddService_name("增值服务名");
+////		kl.setAddService_value1("value1");
+////		kl.setAddService_value2("value2");
+////		kl.setContent("发票");
+////		kl.setCustid("66666");
+////		kl.setD_address("jxnu");
+////		kl.setD_company("江西师范大学");
+////		kl.setD_contact("Mrs deng");
+////		kl.setD_mobile("131346789");
+////		kl.setD_tel("0791-123456");
+////		kl.setDestcode("079");
+////		kl.setExpress_type(26);
+////		kl.setJ_address("BeiJing");
+////		kl.setJ_company("SJCX");
+////		kl.setJ_contact("Mrs deng");
+////		kl.setJ_tel("17745678913");
+////		kl.setMailno("123456789");
+////		kl.setRemark("备注");
+////		result.setObj(kl);
+//		return result;
+//	}
 
 	@RequestMapping(value = "/getgongzihuizong")
 	@ResponseBody
@@ -1125,7 +1123,7 @@ public class EmployeeController {
 		queryForm.setUsername(queryform.getUsername());
 		queryForm.setConfigurable(queryform.getConfigurable());
 		queryForm.setConfigurable_value(queryform.getConfigurable_value());
-		Map<String, Object> pshebaos = employeeInfoService.getgongzihuizong(queryForm);
+		Map<String, Object> pshebaos = employeeInfoService.findgongzihuizong(queryForm);
 		return pshebaos;
 	}
 	
@@ -1141,8 +1139,29 @@ public class EmployeeController {
 	
 	@RequestMapping(value = "/testExport")
 	@ResponseBody
+//	@SystemControllerLog(description="进入TestExport...")
 	public Map<String, Object>  test(QueryForm queryForm, HttpSession session){
-		return employeeInfoService.findYidong(queryForm, session, false);
+		System.out.println("testExport in.....");
+		return null;
+//		return employeeInfoService.findYidong(queryForm, session, false);
+	}
+	
+	@RequestMapping(value = "/gtMonthKaoqin")
+	@ResponseBody
+	public Json gtKaoqin(){
+		Json result = new Json();
+		employeeInfoService.rmoveKaoqin();
+		employeeInfoService.updateAllKaoqin();
+		return result;
+	}
+	
+	@RequestMapping(value = "/gtMonthWage")
+	@ResponseBody
+	public Json generateWages(){
+		Json result = new Json();
+		employeeInfoService.rmoveMonthWage();
+		employeeInfoService.updateAllMonthWage();
+		return result;
 	}
 	
 }

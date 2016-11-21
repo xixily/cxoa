@@ -16,15 +16,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.chaoxing.oa.entity.page.common.POStructV;
+import com.chaoxing.oa.entity.page.common.Page;
 import com.chaoxing.oa.entity.page.common.QueryForm;
 import com.chaoxing.oa.entity.page.employee.PKaoQin;
 import com.chaoxing.oa.entity.page.employee.PMonthWages;
 import com.chaoxing.oa.entity.page.employee.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.employee.PSheBaoSummary;
-import com.chaoxing.oa.entity.page.employee.PYidong;
 import com.chaoxing.oa.entity.page.employee.PshebaoDetail;
 import com.chaoxing.oa.entity.page.hetong.PFahuo;
 import com.chaoxing.oa.entity.page.system.SessionInfo;
+import com.chaoxing.oa.entity.po.view.ShebaoAR;
+import com.chaoxing.oa.entity.po.view.ShebaoMX;
 import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.service.ExportExcelService;
 import com.chaoxing.oa.util.BarCode128C;
@@ -117,7 +119,7 @@ public class FileOperateController {
     
     @RequestMapping(value = "/exportEmployeeExcel")
     public ModelAndView exprotRenshiQuery(QueryForm queryForm, HttpServletRequest request, HttpServletResponse response, HttpSession session){
-    	Map<String, Object> res = employeeInfoService.getRenshiUserName(queryForm, session,1);
+    	Map<String, Object> res = employeeInfoService.findRenshiUserName(queryForm, session,1);
     	List<PRenshiEmployee> renshiEmployeeInfos = (List<PRenshiEmployee>) res.get("rows");
     	if(renshiEmployeeInfos!=null){
     		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
@@ -204,7 +206,7 @@ public class FileOperateController {
     
     @RequestMapping(value = "/exportShebaoCompany")
     public ModelAndView exportShebaoCompany(QueryForm queryForm, HttpServletRequest request, HttpServletResponse response, HttpSession session){
-    	Map<String, Object> res = employeeInfoService.getShebaoCompany(queryForm, session,1);
+    	Map<String, Object> res = employeeInfoService.findShebaoCompany(queryForm, session,1);
     	List<PshebaoDetail> pShebaoDetails = (List<PshebaoDetail>) res.get("rows");
     	if(pShebaoDetails!=null&&pShebaoDetails.size()>0){
     		String storeName = exportExcelService.getShebaoCompany(pShebaoDetails);  
@@ -222,7 +224,7 @@ public class FileOperateController {
     }
     
     @RequestMapping(value = "/exportOS")
-    public ModelAndView exportOStruct(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+    public ModelAndView exportOS(HttpServletRequest request, HttpServletResponse response, HttpSession session){
     	Map<String, Object> res = employeeInfoService.findAllStruct(null);
     	List<POStructV> pos = (List<POStructV>) res.get("rows");
     	if(pos!=null&&pos.size()>0){
@@ -239,9 +241,27 @@ public class FileOperateController {
     	return null;
     }
     
+    @RequestMapping(value = "/exportOStruct")
+    public ModelAndView exportOStruct(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+    	Map<String, Object> res = employeeInfoService.findAllStruct(null);
+    	List<POStructV> pos = (List<POStructV>) res.get("rows");
+    	if(pos!=null&&pos.size()>0){
+    		String storeName = exportExcelService.getPOStructExcel2(pos);  
+    		String realName = "组织结构表.xlsx";  
+    		String contentType = "application/octet-stream";  
+    		try {
+    			FileOperateUtil.download(request, response, storeName, contentType,realName);
+    		} catch (Exception e) {
+    			System.out.println("文件下载失败！");
+    			e.printStackTrace();
+    		} 
+    	}
+    	return null;
+    }
+    
     @RequestMapping(value = "/exportShebaoSummary")
     public ModelAndView exportShebaoSummary(QueryForm queryForm, HttpServletRequest request, HttpServletResponse response, HttpSession session){
-    	Map<String, Object> res = employeeInfoService.getShebaoSummary(queryForm, session,1);
+    	Map<String, Object> res = employeeInfoService.findShebaoSummary(queryForm, session,1);
     	List<PSheBaoSummary> pShebaoSummarys = (List<PSheBaoSummary>) res.get("rows");
     	if(pShebaoSummarys!=null&&pShebaoSummarys.size()>0){
     		String storeName = exportExcelService.getShebaoSummary(pShebaoSummarys);  
@@ -253,6 +273,45 @@ public class FileOperateController {
     			System.out.println("文件下载失败！");
     			e.printStackTrace();
     		} 
+    	}
+    	
+    	return null;
+    }
+    
+    @RequestMapping(value = "/exportShebaoDetail")
+    public ModelAndView exportShebaoDetail(String type, Page page, String date, HttpServletRequest request, HttpServletResponse response, HttpSession session){
+//    	Map<String, Object> res = employeeInfoService.findMonthShebaoDetail(page, date, session,1);
+    	if(null!=type && !"".equals(type)){
+    		if("111".equals(type)){
+    			Map<String, Object> res = employeeInfoService.findShebaoMX(page, date, session,1);
+    			List<ShebaoMX> shebaoMXs = (List<ShebaoMX>) res.get("rows");
+    			if(shebaoMXs!=null&&shebaoMXs.size()>0){
+    				String storeName = exportExcelService.getShebaoMX(shebaoMXs);  
+    				String realName = "社保明细表.xlsx";  
+    				String contentType = "application/octet-stream";  
+    				try {
+    					FileOperateUtil.download(request, response, storeName, contentType,realName);
+    				} catch (Exception e) {
+    					System.out.println("文件下载失败！");
+    					e.printStackTrace();
+    				} 
+    			}
+    		}    		
+    		if("112".equals(type) || "113".equals(type)){
+    			Map<String, Object> res = employeeInfoService.findAddorReduce(page, type, session,1);
+    			List<ShebaoAR> shebaoMXs = (List<ShebaoAR>) res.get("rows");
+    			if(shebaoMXs!=null&&shebaoMXs.size()>=0){
+    				String storeName = exportExcelService.getshebaoAR(shebaoMXs, type);  
+    				String realName = "社保明细表.xlsx";  
+    				String contentType = "application/octet-stream";  
+    				try {
+    					FileOperateUtil.download(request, response, storeName, contentType,realName);
+    				} catch (Exception e) {
+    					System.out.println("文件下载失败！");
+    					e.printStackTrace();
+    				} 
+    			}
+    		}
     	}
     	
     	return null;

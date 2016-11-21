@@ -1,6 +1,7 @@
 package com.chaoxing.oa.entity.po.employee;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -83,6 +84,9 @@ public class UserName implements Serializable {
 	private String baoxianTongzhidan;//保险通知单
 	private String signedBy;//签字人
 	private String chargedBy;//负责人
+	private BigDecimal sickLleaveTotal;//病假累计
+	private BigDecimal annualLleave;//年假累计
+//	private String
 	
 	@Id
 	@Column(name="ID", nullable=false)
@@ -505,6 +509,21 @@ public class UserName implements Serializable {
 	@Column(name = "负责人")
 	public String getChargedBy() {
 		return chargedBy;
+	}
+	@Column(name="病假累计", columnDefinition=" decimal(10,2) DEFAULT '0.00'")
+	public BigDecimal getSickLleaveTotal() {
+		return sickLleaveTotal;
+	}
+	
+	@Column(name="年假累计", columnDefinition=" decimal(10,2) DEFAULT '0.00'")
+	public BigDecimal getAnnualLleave() {
+		return annualLleave;
+	}
+	public void setSickLleaveTotal(BigDecimal sickLleaveTotal) {
+		this.sickLleaveTotal = sickLleaveTotal;
+	}
+	public void setAnnualLleave(BigDecimal annualLleave) {
+		this.annualLleave = annualLleave;
 	}
 	public void setChargedBy(String chargedBy) {
 		this.chargedBy = chargedBy;

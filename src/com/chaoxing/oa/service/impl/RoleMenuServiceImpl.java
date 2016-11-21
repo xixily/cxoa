@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,7 @@ import com.chaoxing.oa.service.RoleMenuService;
 @Service("roleMenuService")
 /*@Transactional*/
 public class RoleMenuServiceImpl implements RoleMenuService {
-	private static final Logger logger = Logger.getLogger(RoleMenuServiceImpl.class);
+//	private static final Logger logger = Logger.getLogger(RoleMenuServiceImpl.class);
 //	private BaseDaoI<RoleRights> rolerightsDao;
 	private BaseDaoI<Menu> menuDao;
 	private BaseDaoI<RoleResources> roleResourcesDao;
@@ -118,7 +117,7 @@ public class RoleMenuServiceImpl implements RoleMenuService {
 	@Override
 	public List<PMenu> findAllMenu() {
 		List<PMenu> l_menuInfos = new ArrayList<PMenu>();
-		Map<String, Object> params = new HashMap<String, Object>();
+//		Map<String, Object> params = new HashMap<String, Object>();
 		List<Menu> menus1 = menuDao.find("from Menu t where t.menuLevel=1");
 		for (Menu menu : menus1) {
 			PMenu menuInfo = new PMenu(); 

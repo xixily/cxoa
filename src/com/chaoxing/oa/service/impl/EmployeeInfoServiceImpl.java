@@ -17,7 +17,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.chaoxing.oa.annotation.SystemServiceLog;
 import com.chaoxing.oa.dao.BaseDaoI;
+import com.chaoxing.oa.entity.page.common.Json;
 import com.chaoxing.oa.entity.page.common.PComboBox;
 import com.chaoxing.oa.entity.page.common.PCompany;
 import com.chaoxing.oa.entity.page.common.PHouseholdType;
@@ -46,19 +48,25 @@ import com.chaoxing.oa.entity.po.commmon.OrganizationStructure;
 import com.chaoxing.oa.entity.po.commmon.ShebaoType;
 import com.chaoxing.oa.entity.po.commmon.WagesDate;
 import com.chaoxing.oa.entity.po.employee.KaoQin;
+import com.chaoxing.oa.entity.po.employee.MonthKaoqin;
+import com.chaoxing.oa.entity.po.employee.MonthSalary;
 import com.chaoxing.oa.entity.po.employee.MonthWages;
 import com.chaoxing.oa.entity.po.employee.Shebao;
 import com.chaoxing.oa.entity.po.employee.UserName;
 import com.chaoxing.oa.entity.po.employee.WageDistribution;
 //import com.chaoxing.oa.entity.po.system.Struct;
 import com.chaoxing.oa.entity.po.system.SystemConfig;
+import com.chaoxing.oa.entity.po.view.CacuSalary;
 import com.chaoxing.oa.entity.po.view.GongziHuiZong;
 import com.chaoxing.oa.entity.po.view.OStructureV;
 import com.chaoxing.oa.entity.po.view.RenshiUserName;
 import com.chaoxing.oa.entity.po.view.SheBaoSummary;
+import com.chaoxing.oa.entity.po.view.ShebaoAR;
+import com.chaoxing.oa.entity.po.view.ShebaoMX;
 import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.system.SysConfig;
 import com.chaoxing.oa.system.cache.CacheManager;
+import com.chaoxing.oa.util.DateUtil;
 import com.chaoxing.oa.util.ResourceUtil;
 import com.chaoxing.oa.util.SqlHelper;
 
@@ -99,6 +107,14 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	private BaseDaoI<OStructureV> oStructureVdao;
 	@Autowired
 	private BaseDaoI<GongziHuiZong> gongzihuizongDao;
+	@Autowired
+	private BaseDaoI<MonthKaoqin> kaoqinTDao;
+	@Autowired
+	private BaseDaoI<CacuSalary> cacuSalaryDao;
+	@Autowired
+	private BaseDaoI<ShebaoMX> shebaoMXDao;
+	@Autowired
+	private BaseDaoI<ShebaoAR> shebaoARDao;
 	
 
 //	@Override
@@ -120,12 +136,13 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 //	}
 
 	@Override
-	public Map<String, Object> getRenshiUserName(QueryForm queryForm, HttpSession session) {
-		return getRenshiUserName(queryForm, session, 0);
+	@SystemServiceLog(description="查找renshiUserName_service")
+	public Map<String, Object> findRenshiUserName(QueryForm queryForm, HttpSession session) {
+		return findRenshiUserName(queryForm, session, 0);
 	}
 	
 	@Override
-	public Map<String, Object> getRenshiUserName(QueryForm queryForm, HttpSession session, int isExport) {
+	public Map<String, Object> findRenshiUserName(QueryForm queryForm, HttpSession session, int isExport) {
 //		System.out.println(queryForm);
 		List<PRenshiEmployee> renshiEmployeeInfos = new ArrayList<PRenshiEmployee>();
 		Map<String, Object> userInfos = new HashMap<String, Object>();
@@ -150,9 +167,8 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		int pageSize = 30000;//最多导出30000条数据
 		if(isExport == 0){
 			intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
-			pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+			pageSize = (queryForm == null || queryForm.getRows() == 0 || queryForm.getRows()>500) ? 100 : queryForm.getRows();
 		}
-		System.out.println(hql.toString());
 		List<RenshiUserName> renshiUsernames = userNameDao.find(hql.toString(), params, intPage, pageSize);
 		for (RenshiUserName renshiUserName : renshiUsernames) {
 			if(renshiUserName!=null){
@@ -193,7 +209,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		int pageSize = 30000;//最多导出30000条数据
 		if(!isExport){
 			intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
-			pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+			pageSize = (queryForm == null || queryForm.getRows() == 0 || queryForm.getRows()>500) ? 100 : queryForm.getRows();
 		}
 		List<Object> olist = objectDao.find(hql.toString(),params, intPage, pageSize);
 		if(olist.size()>0){
@@ -274,7 +290,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 			String nowDate = df.format(nowcal.getTime());
 			
 			hql = new StringBuffer(column + "from RenshiUserName as t  where (t.leaveTime is null or t.leaveTime ='') ");
-			hql.append(" and t.terminationTime <= :hiredate");
+			hql.append(" and (t.terminationTime <= :hiredate or t.terminationTime is null or t.terminationTime = '') ");
 			params.put("hiredate",  nowDate);
 		
 		}
@@ -335,15 +351,15 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	}
 
 	@Override
-	public Map<String, Object> getQueryForm() {
+	public Map<String, Object> findQueryForm() {
 		Map<String, Object> results = new HashMap<String, Object>();
-		results.put("levels", getLevel());
-		results.put("companys", getCompany());
+		results.put("levels", findLevel());
+		results.put("companys", findCompany());
 		return results;
 	}
 	
 	@Override
-	public List<PLevel> getLevel() {
+	public List<PLevel> findLevel() {
 		List<Level> levels = levelDao.find("from Level");
 		List<PLevel> plevels = new ArrayList<PLevel>();
 		for (Level level : levels) {
@@ -356,7 +372,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		return plevels;
 	}
 	@Override
-	public List<PCompany> getCompany() {
+	public List<PCompany> findCompany() {
 		List<Company> cmopanys = companyDao.find("from Company");
 		List<PCompany> pcompanys = new ArrayList<PCompany>();
 		PCompany pcompany0 = new PCompany();
@@ -374,7 +390,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	}
 
 	@Override
-	public List<PComboBox> getForthLevel() {
+	public List<PComboBox> findForthLevel() {
 		List<OrganizationStructure> lists = organizationStructureDao.find("SELECT distinct o.thirdLevel from OrganizationStructure o");
 		List<PComboBox> listComs = new ArrayList<PComboBox>();
 		for (OrganizationStructure organizationStructure : lists) {
@@ -808,7 +824,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	}*/
 	
 	@Override
-	public List<PComboBox> getInsuranceCompany() {
+	public List<PComboBox> findInsuranceCompany() {
 		List<Object> lists = objectDao.find("select distinct(u.insuranceCompany) from UserName u");
 		List<PComboBox> pcbs = new ArrayList<PComboBox>();
 		PComboBox pcb0 = new PComboBox();
@@ -827,7 +843,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	}
 
 	@Override
-	public List<Pwages> getWagesList(int id,SessionInfo sessionInfo, String ifSecret) {
+	public List<Pwages> findWagesList(int id,SessionInfo sessionInfo, String ifSecret) {
 		Map<String,Object> params = new HashMap<String, Object>();
 		int roleId = sessionInfo.getRoleId();
 		params.put("employeeId", id);
@@ -913,7 +929,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	}
 	
 	@Override
-	public Map<String, Object> getAllShebaoRadio(QueryForm queryForm) {
+	public Map<String, Object> findAllShebaoRadio(QueryForm queryForm) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		List<PShebao> pshebaos = new ArrayList<PShebao>();
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -936,7 +952,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		}
 		hql.append(" order by t." + sort + " " + order);
 		int	intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
-		int	pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+		int	pageSize = (queryForm == null || queryForm.getRows() == 0|| queryForm.getRows()>500) ? 100 : queryForm.getRows();
 		
 		List<Shebao> shebaos = sheBaoDao.find(hql.toString(), params, intPage, pageSize);
 		long total = getShebaoCount(hql.toString(), params);
@@ -953,7 +969,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		return result;
 	}
 	@Override
-	public List<PShebao> getShebaoRadioByCompany(String company) {
+	public List<PShebao> findShebaoRadioByCompany(String company) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("company", company);
 		List<PShebao> pshebaos = new ArrayList<PShebao>();
@@ -968,7 +984,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		return pshebaos;
 	}
 	@Override
-	public List<PShebaoType> getShebaoType() {
+	public List<PShebaoType> findShebaoType() {
 //		return null;
 		List<PShebaoType> pshebaoTypes = new ArrayList<PShebaoType>();
 		List<ShebaoType> typeList = sheBaoTypeDao.find("from ShebaoType");
@@ -1021,7 +1037,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		return 0;
 	}
 	@Override
-	public List<PHouseholdType> getHouseholdType() {
+	public List<PHouseholdType> findHouseholdType() {
 		List<PHouseholdType> phouseTypes = new ArrayList<PHouseholdType>();
 		List<HouseholdType> houseTypes = househodlType.find("from HouseholdType");
 		for (HouseholdType householdType : houseTypes) {
@@ -1059,11 +1075,11 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		return 0;
 	}
 	@Override
-	public Map<String, Object> getShebaoSummary(QueryForm queryForm, HttpSession session) {
-		return getShebaoSummary(queryForm, session, 0);
+	public Map<String, Object> findShebaoSummary(QueryForm queryForm, HttpSession session) {
+		return findShebaoSummary(queryForm, session, 0);
 	}
 	@Override
-	public Map<String, Object> getShebaoSummary(QueryForm queryForm, HttpSession session, int isExport) {
+	public Map<String, Object> findShebaoSummary(QueryForm queryForm, HttpSession session, int isExport) {
 
 		List<PSheBaoSummary> pshebaoSummaries = new ArrayList<PSheBaoSummary>();
 		Map<String, Object> summaryInfos = new HashMap<String, Object>();
@@ -1089,7 +1105,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		int pageSize = 30000;//最多导出30000条数据
 		if(isExport == 0){
 			intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
-			pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+			pageSize = (queryForm == null || queryForm.getRows() == 0 || queryForm.getRows()>500) ? 100 : queryForm.getRows();
 		}
 		
 		List<SheBaoSummary> sheBaoSummaries = shebaoSummaryDao.find(hql.toString(), params, intPage, pageSize);
@@ -1157,12 +1173,12 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	}
 	
 	@Override
-	public Map<String, Object> getShebaoCompany(QueryForm queryForm, HttpSession session) {
-		return getShebaoCompany(queryForm, session, 0);
+	public Map<String, Object> findShebaoCompany(QueryForm queryForm, HttpSession session) {
+		return findShebaoCompany(queryForm, session, 0);
 	}
 	
 	@Override
-	public Map<String, Object> getShebaoCompany(QueryForm queryForm, HttpSession session,int isExport) {
+	public Map<String, Object> findShebaoCompany(QueryForm queryForm, HttpSession session,int isExport) {
 		Map<String, Object> shebaoCompanyInfos = new HashMap<String, Object>();
 		Map<String, Object> params = new HashMap<String, Object>();
 		List<WageDistribution> wageDistributions = new ArrayList<WageDistribution>();
@@ -1184,7 +1200,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 			int pageSize = 30000;//最多导出30000条数据
 			if(isExport == 0){
 				intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
-				pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+				pageSize = (queryForm == null || queryForm.getRows() == 0 || queryForm.getRows()>500) ? 100 : queryForm.getRows();
 			}
 			String sort = "username";
 			String order = SysConfig.DESC;
@@ -1211,6 +1227,138 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	}
 	
 	@Override
+	public Map<String, Object> findMonthShebaoDetail(Page page, String date, HttpSession session,int isExport) {
+		Map<String, Object> shebaoMonthDetails = new HashMap<String, Object>();
+		Map<String, Object> params = new HashMap<String, Object>();
+		List<WageDistribution> wageDistributions = new ArrayList<WageDistribution>();
+		List<PshebaoDetail> pwages = new ArrayList<PshebaoDetail>();
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMM");
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1);
+		String dateN = df.format(cal.getTime());
+		date = null != date && "".equals(date) ? date : dateN;
+		StringBuffer hql = new StringBuffer("from WageDistribution t where t.radix > 0 and t.rubaoTime like :date");
+//		StringBuffer hql2 = new StringBuffer("from WageDistribution t,username u where u.id = t.id t.radix > 0 and t.rubaoTime like :date");
+		params.put("date", "%" + date + "%");
+		long total = 0;
+		int intPage = 0;
+		int pageSize = 30000;//最多导出30000条数据
+		if(isExport == 0){
+			intPage = (page == null || page.getPage() == 0) ? 1 : page.getPage();
+			pageSize = (page == null || page.getRows() == 0 || page.getRows()>500) ? 100 : page.getRows();
+		}
+		String sort = "id";
+		String order = SysConfig.DESC;
+		if(page.getSort() != null){
+			sort = page.getSort();
+			if(page.getOrder() != null){
+				order = page.getOrder();
+			}
+		}
+		hql.append(" order by t." + sort + " " + order);
+		wageDistributions = wageDistributionDao.find(hql.toString(), params, intPage, pageSize);
+		for (WageDistribution wageDistribution : wageDistributions) {
+			if(wageDistribution!=null){
+				PshebaoDetail pwage = new PshebaoDetail();
+				BeanUtils.copyProperties(wageDistribution, pwage);
+				pwages.add(pwage);
+			}
+		}
+		total = getWageDistributionCount(hql.toString(), params);
+		shebaoMonthDetails.put("total", total);
+		shebaoMonthDetails.put("rows", pwages);
+		return shebaoMonthDetails;
+	}
+	
+	@Override
+	public Map<String, Object> findShebaoMX(Page page, String date, HttpSession session,int isExport) {
+		Map<String, Object> shebaoMonthDetails = new HashMap<String, Object>();
+		Map<String, Object> params = new HashMap<String, Object>();
+		List<ShebaoMX> shebaoMXs = new ArrayList<ShebaoMX>();
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMM");
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1);
+		String dateN = df.format(cal.getTime());
+		date = null != date && "".equals(date) ? date : dateN;
+		StringBuffer hql = new StringBuffer("from ShebaoMX t where t.radix > 0 and t.rubaoDate like :date");
+		params.put("date", "%" + date + "%");
+		int intPage = 0;
+		int pageSize = 30000;//最多导出30000条数据
+		if(isExport == 0){
+			intPage = (page == null || page.getPage() == 0) ? 1 : page.getPage();
+			pageSize = (page == null || page.getRows() == 0 || page.getRows()>500) ? 100 : page.getRows();
+		}
+		String sort = "id";
+		String order = SysConfig.DESC;
+		if(page.getSort() != null){
+			sort = page.getSort();
+			if(page.getOrder() != null){
+				order = page.getOrder();
+			}
+		}
+		hql.append(" order by t." + sort + " " + order);
+		shebaoMXs = shebaoMXDao.find(hql.toString(), params, intPage, pageSize);
+//		Iterator<ShebaoMX> it = shebaoMXs.iterator();
+//		while(it.hasNext()){
+//			ShebaoMX shebaoMX = it.next();
+//		}
+//		for (WageDistribution wageDistribution : shebaoMX) {
+//			if(wageDistribution!=null){
+//				PshebaoDetail pwage = new PshebaoDetail();
+//				BeanUtils.copyProperties(wageDistribution, pwage);
+//				pwages.add(pwage);
+//			}
+//		}
+//		total = getWageDistributionCount(hql.toString(), params);
+//		shebaoMonthDetails.put("total", total);
+		shebaoMonthDetails.put("rows", shebaoMXs);
+		return shebaoMonthDetails;
+	}
+	
+	@Override
+	public Map<String, Object> findAddorReduce(Page page, String type, HttpSession session,int isExport) {
+		Map<String, Object> shebaoMonthDetails = new HashMap<String, Object>();
+		Map<String, Object> params = new HashMap<String, Object>();
+		List<ShebaoAR> shebaoMXs = new ArrayList<ShebaoAR>();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM");
+		Calendar cal = Calendar.getInstance();
+		String dateAfter = df.format(cal.getTime()) + ".15";//2016.11
+		cal.add(Calendar.MONTH, -1);
+		String dateN = df.format(cal.getTime());//2016.10
+		String dateStr = dateN.split("\\.")[0] + dateN.split("\\.")[1];//201610
+		System.out.println(dateStr);
+		StringBuffer hql = null;
+		if("112".equals(type)){
+			hql = new StringBuffer("from ShebaoAR t where t.radix > 0 and t.rubaoDate like :date and t.insuranceCompany like '%否%'");
+			params.put("date", dateStr);
+		}
+		if("113".equals(type)){
+			hql = new StringBuffer("from ShebaoAR t where t.radix > 0 and (t.lizhiReport like :date or (t.lizhiDate > :dateAfter1 and t.lizhiDate < :dateAfter))");
+			params.put("date", dateStr);
+			params.put("dateAfter1", dateAfter);
+			params.put("dateAfter", dateAfter + ".15");
+		}
+		int intPage = 0;
+		int pageSize = 30000;//最多导出30000条数据
+		if(isExport == 0){
+			intPage = (page == null || page.getPage() == 0) ? 1 : page.getPage();
+			pageSize = (page == null || page.getRows() == 0 || page.getRows()>500) ? 100 : page.getRows();
+		}
+		String sort = "id";
+		String order = SysConfig.DESC;
+		if(page.getSort() != null){
+			sort = page.getSort();
+			if(page.getOrder() != null){
+				order = page.getOrder();
+			}
+		}
+		hql.append(" order by t." + sort + " " + order);
+		shebaoMXs = shebaoARDao.find(hql.toString(), params, intPage, pageSize);
+		shebaoMonthDetails.put("rows", shebaoMXs);
+		return shebaoMonthDetails;
+	}
+	
+	@Override
 	 public long getWageDistributionCount(String hql, Map<String, Object> params){
 			StringBuffer hqll = new StringBuffer("select count(*) from WageDistribution t where ");
 			hqll.append(hql.split("where")[1]);
@@ -1234,7 +1382,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		int pageSize = 30000;//最多导出30000条数据
 		if(isExport == 0){
 			intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
-			pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+			pageSize = (queryForm == null || queryForm.getRows() == 0 || queryForm.getRows()>500) ? 100 : queryForm.getRows();
 		}
 		String sort = "userId";
 		String order = SysConfig.DESC;
@@ -1320,7 +1468,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		int pageSize = 30000;//最多导出30000条数据
 		if(isExport == 0){
 			intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
-			pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+			pageSize = (queryForm == null || queryForm.getRows() == 0 || queryForm.getRows()>500) ? 100 : queryForm.getRows();
 		}
 		List<MonthWages> monthWages = monthWagesDao.find(hql.toString(), params, intPage, pageSize);
 		if(sessionInfo.getRoleId()<1 || sessionInfo.getRoleId()==100){
@@ -1369,6 +1517,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 					pMonthWage.setZhuanzhengReport(monthWage.getZhuanzhengReport());
 					pMonthWage.setLizhiReport(monthWage.getLizhiReport());
 					pMonthWage.setRuzhiReport(monthWage.getRuzhiReport());
+					pMonthWage.setTaxStructure(monthWage.getTaxStructure());
 					pMonthWages.add(pMonthWage);
 				}
 			}
@@ -1405,7 +1554,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	}
 	
 	@Override
-	public Map<String, Object> queryWagesDate(QueryForm queryForm) {
+	public Map<String, Object> findWagesDate(QueryForm queryForm) {
 		List<PWagesDate> pWagesDates = new ArrayList<PWagesDate>();
 		Map<String, Object> wagesDateInfos = new HashMap<String, Object>();
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -1430,7 +1579,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		}
 		hql.append(" order by t." + sort + " " + order);
 		int intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
-		int pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+		int pageSize = (queryForm == null || queryForm.getRows() == 0 || queryForm.getRows()>500) ? 100 : queryForm.getRows();
 		List<WagesDate> wagesDates = wagesDateDao.find(hql.toString(), params, intPage, pageSize);
 		for (WagesDate wagesDate : wagesDates) {
 			PWagesDate pWagesDate = new PWagesDate();
@@ -1754,7 +1903,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		return sheBaoDao.count(hqll.toString(), params);
 	}
 	@Override
-	public Map<String, Object> getgongzihuizong(QueryForm queryForm) {
+	public Map<String, Object> findgongzihuizong(QueryForm queryForm) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		List<PGongziHuiZong> pgongzihuizongs = new ArrayList<PGongziHuiZong>();
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -1779,7 +1928,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		}
 		hql.append(" order by t." + sort + " " + order);
 		int	intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
-		int	pageSize = (queryForm == null || queryForm.getRows() == 0) ? 100 : queryForm.getRows();
+		int	pageSize = (queryForm == null || queryForm.getRows() == 0 || queryForm.getRows()>500) ? 100 : queryForm.getRows();
 		
 		List<GongziHuiZong> gongzihuizongs =gongzihuizongDao.find(hql.toString(), params, intPage, pageSize);
 		
@@ -1796,4 +1945,276 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	
 		return result;
 	}
+
+	
+	
+	@Override
+	public Json rmoveKaoqin() {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM");
+		Calendar cal = Calendar.getInstance();
+		String afterDate = df.format(cal.getTime());
+		String afterDateC = afterDate.split("\\.")[0]+afterDate.split("\\.")[1];
+		cal.add(Calendar.MONTH, -1);
+		String date = df.format(cal.getTime());
+		cal.add(Calendar.MONTH, -1);
+		String sql1 = "TRUNCATE TABLE 当月考勤";
+		objectDao.prepareCall(sql1, null);
+		String sql2 = " INSERT INTO 当月考勤(userId,入职时间,入职报表,转正时间,转正报表,离职时间,离职报表,级别) "
+				+"SELECT id,入职时间,入职报表,转正时间,转正报表,离职时间,离职报表,级别 FROM username "
+				+"WHERE (离职时间 IS NULL AND (入职报表<'"+ afterDateC +"' OR 入职报表 IS NULL )AND (入职时间 < '" + afterDate +"' OR 入职时间 IS NULL))"
+				+"OR (离职时间=''  AND (入职报表<'"+afterDate.split("\\.")[0]+afterDate.split("\\.")[1]+"' OR 入职报表 IS NULL )AND (入职时间 < '" + afterDate +"' OR 入职时间 IS NULL))"
+				+"OR (离职报表 >= '"+date.split("\\.")[0]+date.split("\\.")[1]+"') ";
+		objectDao.prepareCall(sql2, null);
+		return null;
+	}
+
+	@Override
+	public Json updateAllKaoqin() {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM");
+		Calendar cal = Calendar.getInstance();
+		Integer year = cal.get(Calendar.YEAR);
+		String afterDate = df.format(cal.getTime());
+		cal.add(Calendar.MONTH, -1);
+		String date = df.format(cal.getTime());
+		String dateC = date.split("\\.")[0]+date.split("\\.")[1];
+		cal.add(Calendar.MONTH, -1);
+		String preDate = df.format(cal.getTime());
+		Map<String,String> days = new HashMap<String, String>();
+		/*取三个月的工作日时间*/
+		for (int i = 0; i < 3; i++) {
+			String d;
+			if(i==0){
+				d=afterDate;
+			}else if(i==1){
+				d=date;
+			}else{
+				d=preDate;
+			}
+			List<WagesDate> wageDate_in = wagesDateDao.find("from WagesDate t where date like '" + d + "%'");
+			int day = DateUtil.getWagesDate(year, Integer.valueOf(d.split("\\.")[1])).size();
+			if(null==wageDate_in || wageDate_in.size()!= day){
+				System.out.println("有问题啊");
+				return null;
+			}
+			for (int j = 0; j < wageDate_in.size(); j++) {
+				WagesDate wagesDate = wageDate_in.get(j);
+				days.put(wagesDate.getDate(), wagesDate.getRuzhiDay()+"_"+wagesDate.getLizhiDay());
+			}
+		}
+		/*
+		 * 1
+		TRUNCATE TABLE 考勤;
+		INSERT INTO 考勤(userId,入职时间,入职报表,转正时间,转正报表,离职时间,离职报表,级别)
+		SELECT id,入职时间,入职报表,转正时间,转正报表,离职时间,离职报表,级别 FROM username
+		WHERE (离职时间 IS NULL AND (入职报表<'201611' OR 入职报表 IS NULL )AND (入职时间 < '2016.11' OR 入职时间 IS NULL))
+		OR (离职时间=''  AND (入职报表<'201611' OR 入职报表 IS NULL )AND (入职时间 < '2016.11' OR 入职时间 IS NULL))
+		OR (离职报表 >= '201610')
+		 * 
+		 */
+//		String sql1 = "TRUNCATE TABLE 考勤";
+//		objectDao.prepareCall(sql1, null);
+//		String sql2 = " INSERT INTO 考勤(userId,入职时间,入职报表,转正时间,转正报表,离职时间,离职报表,级别) "
+//				+"SELECT id,入职时间,入职报表,转正时间,转正报表,离职时间,离职报表,级别 FROM username "
+//				+"WHERE (离职时间 IS NULL AND (入职报表<'"+ afterDateC +"' OR 入职报表 IS NULL )AND (入职时间 < '" + afterDate +"' OR 入职时间 IS NULL))"
+//				+"OR (离职时间=''  AND (入职报表<'"+afterDate.split("\\.")[0]+afterDate.split("\\.")[1]+"' OR 入职报表 IS NULL )AND (入职时间 < '" + afterDate +"' OR 入职时间 IS NULL))"
+//				+"OR (离职报表 >= '"+date.split("\\.")[0]+date.split("\\.")[1]+"') ";
+//		objectDao.prepareCall(sql2, null);
+		List<MonthKaoqin> kaoqints = kaoqinTDao.find("from MonthKaoqin");
+		List<MonthKaoqin> kaoqints_update = new ArrayList<MonthKaoqin>();
+		MonthKaoqin kaoqint=null;
+		String ruzDate=null;
+		String ruzReport=null;
+		String lizhiDate=null;
+		String lizReport=null;
+		String zhuanzDate=null;
+		String zhuanzReport=null;
+		String ruzhiYM=null;
+		String lizhiYM=null;
+		String zhuanzYM=null;
+		Iterator<MonthKaoqin> it = kaoqints.iterator();
+		int flag;
+		while(it.hasNext()){
+			flag = 0;
+			kaoqint = it.next();
+			ruzDate = kaoqint.getHiredate();
+			if(null == ruzDate || ruzDate.length()!=10){
+				continue;
+			}
+			ruzReport = kaoqint.getRuzhiReport()!=null && kaoqint.getRuzhiReport().length()>=6 ? kaoqint.getRuzhiReport().substring(0, 6):null;
+			lizhiDate = kaoqint.getLeaveTime();
+			lizReport = kaoqint.getLizhiReport()!=null && kaoqint.getLizhiReport().length()>=6 ? kaoqint.getLizhiReport().substring(0, 6):null;
+			zhuanzDate = kaoqint.getZhuanzhengTime();
+			zhuanzReport = kaoqint.getZhuanzhengReport()!=null && kaoqint.getZhuanzhengReport().length()>=6 ? kaoqint.getZhuanzhengReport().substring(0, 6):null;
+			ruzhiYM = ruzDate.split("\\.")[0] + "." + (ruzDate.split("\\.")[1].length()==2?ruzDate.split("\\.")[1]:"0" + ruzDate.split("\\.")[1]);
+			if(null!=lizhiDate && lizhiDate.length()>8){
+				lizhiYM = lizhiDate.split("\\.")[0] + "." + (lizhiDate.split("\\.")[1].length()==2?lizhiDate.split("\\.")[1]:"0" + lizhiDate.split("\\.")[1]);
+			}
+			if(null!=zhuanzDate && zhuanzDate.length()>8){
+				zhuanzYM = zhuanzDate.split("\\.")[0] + "." + (zhuanzDate.split("\\.")[1].length()==2?zhuanzDate.split("\\.")[1]:"0" + zhuanzDate.split("\\.")[1]);
+			}
+			if(dateC.equals(ruzReport)){//计算当月入职时间
+				if(preDate.equals(ruzhiYM)){
+					kaoqint.setChuqinDay(new BigDecimal("21").add(new BigDecimal(days.get(ruzDate).split("_")[0])));
+				}else if(date.equals(ruzhiYM)){
+					kaoqint.setChuqinDay(new BigDecimal(days.get(ruzDate).split("_")[0]));
+				}
+				if(kaoqint.getChuqinDay().compareTo(new BigDecimal(21))!=0){
+					flag = 1;
+				}
+			}
+			if(dateC.equals(lizReport)){//计算离职时间
+				if(date.equals(lizhiYM)&& !date.equals(ruzhiYM)){
+//					System.out.println(kaoqint.getUserId());
+					if(null!=lizhiDate && lizhiDate.length()==10){
+						kaoqint.setChuqinDay(kaoqint.getChuqinDay().subtract(new BigDecimal("21")).add(new BigDecimal(days.get(lizhiDate).split("_")[1])));
+					}
+				}else if(date.equals(lizhiYM)&& date.equals(ruzhiYM)){
+					if(null!=lizhiDate && lizhiDate.length()==10){
+						BigDecimal bd = new BigDecimal(days.get(ruzDate).split("_")[0]).subtract(new BigDecimal(days.get(lizhiDate).split("_")[0])).add(new BigDecimal(1));
+						if(bd.floatValue()>21){
+							bd = new BigDecimal("21");
+						}
+						kaoqint.setChuqinDay(bd);
+					}
+				}else if(date.compareTo(lizhiYM)==-1){
+					kaoqint.setChuqinDay(new BigDecimal(0));
+				}
+				if(kaoqint.getChuqinDay().compareTo(new BigDecimal(21))!=0){
+					flag = 1;
+				}
+			}
+			if(dateC.equals(zhuanzReport)){//计算转正时间 （只计算当月的转正天数）
+				if(date.equals(zhuanzYM)){
+					kaoqint.setZhuanzhengChaeDay(Integer.valueOf(days.get(zhuanzDate).split("_")[0]));
+				}
+				if(kaoqint.getZhuanzhengChaeDay()!=0){
+					flag = 1;
+				}
+			}
+			if(flag==1){
+				kaoqints_update.add(kaoqint);
+			}
+		}
+		kaoqinTDao.bigUpdate(kaoqints_update);
+		return null;
+	}
+
+	@Override
+	public Json rmoveMonthWage() {
+		Json result = new Json();
+		String sql = "TRUNCATE TABLE 当月考勤";
+		try {
+			objectDao.prepareCall(sql, null);
+			result.setSuccess(true);
+		} catch (Exception e) {
+			result.setMsg("");
+		}
+		return result;
+	}
+
+	@Override
+	public Json updateAllMonthWage() {
+		Json result = new Json();
+		List<CacuSalary> cacuSalaies = cacuSalaryDao.find("from CacuSalary t");
+		List<MonthSalary> monthSalaries = new ArrayList<MonthSalary>();
+		Iterator<CacuSalary> it = cacuSalaies.iterator();
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMM");
+		Calendar cal = Calendar.getInstance();
+		String afterDate = df.format(cal.getTime());//201611
+		while (it.hasNext()) {
+			CacuSalary cacuSalary = it.next();
+			MonthSalary monthSalary = new MonthSalary();
+			monthSalary.setUserId(cacuSalary.getUserId());
+			if(null!=cacuSalary.getZhuanzhengReport() && afterDate.compareTo(cacuSalary.getZhuanzhengReport())<=0){
+				cacuSalary.setSalary(cacuSalary.getLishiSalary());
+			}
+			caculateWages(cacuSalary,monthSalary);
+			monthSalaries.add(monthSalary);
+		}
+		
+		return result;
+	}
+
+	private void caculateWages(CacuSalary cacuSalary, MonthSalary monthSalary) {
+		BigDecimal salary = null != cacuSalary.getSalary()?cacuSalary.getSalary():new BigDecimal(0);
+		BigDecimal hourSalary = salary.divide(new BigDecimal(168), 4, BigDecimal.ROUND_HALF_UP);//小时工资
+		BigDecimal lishiSalary = null!=cacuSalary.getLishiSalary()?cacuSalary.getLishiSalary():new BigDecimal(0);
+		BigDecimal chuqin = cacuSalary.getChuqinDay();
+		Integer zhuanzheng = cacuSalary.getZhuanzhengChaeDay();
+		BigDecimal shijia = cacuSalary.getShiJiaHour();
+		BigDecimal bingjia = cacuSalary.getBingJiaHour();
+		BigDecimal chidao = cacuSalary.getChidaoYingkouDay();
+		BigDecimal kuanggong = cacuSalary.getKuangGongHour();
+		BigDecimal bingjiaTotal = cacuSalary.getSickLleaveTotal();
+		BigDecimal kaoqinTotal = new BigDecimal(0);
+		BigDecimal zhuanzChae = new BigDecimal(0);
+		BigDecimal selfTax = new BigDecimal(0);
+		BigDecimal yingfa = null;
+		BigDecimal shifa = null;
+		BigDecimal subTotal = null;
+		BigDecimal cbTotal = null;
+		BigDecimal buFaTotal = null;
+		//计算考勤总额
+		if(shijia.floatValue()>0){//事假n*hourSalary
+			kaoqinTotal = hourSalary.multiply(shijia);
+		}
+		if(bingjia.floatValue()>0 && bingjia.add(bingjiaTotal).floatValue()>24){//add 病假 total<24 then 0 else (total-24)*hours
+			kaoqinTotal = kaoqinTotal.add(hourSalary.multiply(new BigDecimal(bingjia.add(bingjiaTotal).floatValue() - 24)).divide(new BigDecimal(2)));
+		}
+		if(chidao.floatValue()<=3){//迟到 n<=3 sum = 20n;n>3 sum =50n-150;
+			kaoqinTotal = kaoqinTotal.add(chidao.multiply(new BigDecimal(20)));
+		}else{
+			kaoqinTotal = kaoqinTotal.add(chidao.multiply(new BigDecimal(50)).subtract(new BigDecimal(150)));
+		}
+		if(kuanggong.floatValue()>0){//旷工 扣三倍工资
+			kaoqinTotal = kaoqinTotal.add(hourSalary.multiply(kuanggong).multiply(new BigDecimal(3)));
+		}
+		monthSalary.setKaoqinTotal(kaoqinTotal);
+		//转正差额
+		if(zhuanzheng.floatValue()>0){//(salary-lishiSalary)*(chuqin-zhuanzheng)
+			zhuanzChae = salary.subtract(lishiSalary).multiply(chuqin.subtract(new BigDecimal(zhuanzheng)));
+		}
+		monthSalary.setZhuanzChae(zhuanzChae);
+		//代扣总额
+		Double subTotal_double = cacuSalary.getSubEndowmentIinsurance() + cacuSalary.getSubHouseIinsurance() + cacuSalary.getSubMedicare() + cacuSalary.getSubUnemployedInsurance();
+		subTotal = new BigDecimal(subTotal_double);
+		Double cTotal_double = cacuSalary.getcBirthIinsurance() + cacuSalary.getcEndowmentIinsurance() + cacuSalary.getcHouseIinsurance() + cacuSalary.getcInjuryInsurance() +
+				cacuSalary.getcMedicare() + cacuSalary.getcUnemployedInsurance();
+		cbTotal = new BigDecimal(cTotal_double);
+		Double buFa_double = cacuSalary.getSecrecySubsidy() + cacuSalary.getCommunicationSubsidy() + cacuSalary.getLunchSubsidy();
+		buFaTotal = new BigDecimal(buFa_double);
+		monthSalary.setSubTotal(subTotal);
+		monthSalary.setcTotal(cbTotal);
+		//应发总额
+		if(chuqin.floatValue() == 21){
+			yingfa = salary;
+		}else{
+			yingfa = salary.divide(new BigDecimal(21)).multiply(chuqin);
+		}
+		yingfa = yingfa.subtract(kaoqinTotal).subtract(subTotal).subtract(zhuanzChae).add(buFaTotal);
+		monthSalary.setYingfaTotal(yingfa);
+		//个税
+		BigDecimal jichu = yingfa.subtract(new BigDecimal(3500));
+		Float jichu_double = jichu.floatValue();
+		if(jichu_double>0 && jichu_double<=1500){
+			selfTax = jichu.multiply(new BigDecimal(0.03));
+		}else if(jichu_double>1500 && jichu_double<=4500){
+			selfTax = jichu.multiply(new BigDecimal(0.1)).subtract(new BigDecimal(105));
+		}else if(jichu_double>4500 && jichu_double<=9000){
+			selfTax = jichu.multiply(new BigDecimal(0.2)).subtract(new BigDecimal(555));
+		}else if(jichu_double>9000 && jichu_double<=35000){
+			selfTax = jichu.multiply(new BigDecimal(0.25)).subtract(new BigDecimal(1005));
+		}else if(jichu_double>35000 && jichu_double<=55000){
+			selfTax = jichu.multiply(new BigDecimal(0.3)).subtract(new BigDecimal(2755));
+		}else if(jichu_double>55000 && jichu_double<=85000){
+			selfTax = jichu.multiply(new BigDecimal(0.35)).subtract(new BigDecimal(5505));
+		}else if(jichu_double>85000){
+			selfTax = jichu.multiply(new BigDecimal(0.45)).subtract(new BigDecimal(13505));
+		}
+		monthSalary.setSelfTax(selfTax);
+		//实发
+		shifa = yingfa.subtract(selfTax).setScale(2, BigDecimal.ROUND_HALF_UP);
+		monthSalary.setShifaTotal(shifa);
+	}
+
 }
