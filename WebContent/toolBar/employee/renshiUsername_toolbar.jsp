@@ -75,6 +75,15 @@ int month = cal.get(Calendar.MONTH) + 1;
             <div data-options="iconCls:'icon-excel'" onclick="employee.employee.exportExcel(423)">导出<%= "" + year + "-"+ (month + 1) %>月异动信息(实习)</div>
         </div>
     </div>
+	 <div>
+        <span>异动表</span>
+        <div>
+            <div data-options="iconCls:'icon-excel'" onclick="employee.employee.exportYDExcel(211)">导出<%= "" + year+ "-"+ (month - 1) %>新员工入职人表</div>
+            <div data-options="iconCls:'icon-excel'" onclick="employee.employee.exportYDExcel(212)">导出<%= "" + year+ "-"+ (month - 1) %>离职人员表</div>
+            <div data-options="iconCls:'icon-excel'" onclick="employee.employee.exportYDExcel(213)">导出<%= "" + year + "-"+ (month - 1) %>员工转正人员表</div>
+            <div data-options="iconCls:'icon-excel'" onclick="employee.employee.exportYDExcel(214)">导出<%= "" + year + "-"+ (month + 1) %>部门调整表</div>
+        </div>
+    </div>
     <div class="menu-sep"></div>
     <div data-options="iconCls:'icon-excel'" onclick="employee.shebaoSummary.exportShebaoDetail(111)">导出<%= "" + year+ "-"+ (month - 1) %>月社保明细</div>
     <div data-options="iconCls:'icon-excel'" onclick="employee.shebaoSummary.exportShebaoDetail(112)">导出<%= "" + year+ "-"+ (month) %>社保增员</div>

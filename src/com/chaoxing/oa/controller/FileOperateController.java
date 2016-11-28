@@ -324,7 +324,7 @@ public class FileOperateController {
     		List<ShebaoAR> shebaoMXs = (List<ShebaoAR>) res.get("rows");
     		if(shebaoMXs!=null&&shebaoMXs.size()>=0){
     			String storeName = exportExcelService.getYidong(shebaoMXs, type);  
-    			String realName = "211".equals(type)?"入职表.xlsx":"212".equals(type)?"离职表.xlsx":"213".equals(type)?"转正表.xlsx":"214".equals(type)?"部门调整表.xlsx":"异动表";  
+    			String realName = "211".equals(type)?"新员工入职人员登记表.xlsx":"212".equals(type)?"离职人员登记表.xlsx":"213".equals(type)?"员工转正人员登记表.xlsx":"214".equals(type)?"部门调整登记表.xlsx":"异动表";  
     			String contentType = "application/octet-stream";  
     			try {
     				FileOperateUtil.download(request, response, storeName, contentType,realName);

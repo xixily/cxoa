@@ -137,6 +137,22 @@ var employee = {
 				}
 			});
 		},
+		exportYDExcel: function(type){
+			var url = "file/exportYiDong.action";
+			var exportParam = {};
+			exportParam.type = type ? type : "211";
+			downloadForm.createForm();
+			$("#export_query").form('submit', {
+				url : url,
+				queryParams : exportParam,
+				onSubmit : function() {
+					console.log("正在导出,请稍后");
+				},
+				onLoadSuccess : function() {
+					downloadForm.destoryForm();
+				}
+			});
+		},
 	},
 	initEmployee : function(data, user) {
 //		console.log("employee.initEmployee!");
