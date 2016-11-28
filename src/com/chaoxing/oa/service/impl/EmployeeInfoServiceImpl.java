@@ -1322,21 +1322,39 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		List<ShebaoAR> shebaoMXs = new ArrayList<ShebaoAR>();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM");
 		Calendar cal = Calendar.getInstance();
-		String dateAfter = df.format(cal.getTime()) + ".15";//2016.11
+		String dateAfter = df.format(cal.getTime());//2016.11
+		String dateAfterStr = dateAfter.split("\\.")[0] + dateAfter.split("\\.")[1];//201611
+		System.out.println("---------------------------" + dateAfterStr);
 		cal.add(Calendar.MONTH, -1);
 		String dateN = df.format(cal.getTime());//2016.10
 		String dateStr = dateN.split("\\.")[0] + dateN.split("\\.")[1];//201610
 		System.out.println(dateStr);
 		StringBuffer hql = null;
 		if("112".equals(type)){
-			hql = new StringBuffer("from ShebaoAR t where t.radix > 0 and t.rubaoDate like :date and t.insuranceCompany like '%否%'");
-			params.put("date", dateStr);
-		}
-		if("113".equals(type)){
-			hql = new StringBuffer("from ShebaoAR t where t.radix > 0 and (t.lizhiReport like :date or (t.lizhiDate > :dateAfter1 and t.lizhiDate < :dateAfter))");
-			params.put("date", dateStr);
-			params.put("dateAfter1", dateAfter);
+			hql = new StringBuffer("from ShebaoAR t where t.dueSocialSecurity like :date and t.insurance like '%否%'");
+			params.put("date", dateAfterStr+ "%");
+			System.out.println(params);
+		}else if("113".equals(type)){
+			hql = new StringBuffer("from ShebaoAR t where t.radix > 0 and (t.lizhiDate > :dateAfter1 and t.lizhiDate < :dateAfter)");
+			params.put("dateAfter1", dateN + ".15");
 			params.put("dateAfter", dateAfter + ".15");
+			System.out.println(params);
+		}else if("211".equals(type)){
+			hql = new StringBuffer("from ShebaoAR t where t.ruzhiReport like :datestr");
+			params.put("datestr",dateStr + "%");
+			System.out.println(params);
+		}else if("212".equals(type)){
+			hql = new StringBuffer("from ShebaoAR t where t.lizhiReport like :datestr");
+			params.put("datestr",dateStr + "%");
+			System.out.println(params);
+		}else if("213".equals(type)){
+			hql = new StringBuffer("from ShebaoAR t where t.zhuanzhengReport like :datestr");
+			params.put("datestr",dateStr + "%");
+			System.out.println(params);
+		}else if("214".equals(type)){
+			hql = new StringBuffer("from ShebaoAR t where t.bumentiaozhengReport like :datestr");
+			params.put("datestr",dateStr + "%");
+			System.out.println(params);
 		}
 		int intPage = 0;
 		int pageSize = 30000;//最多导出30000条数据
@@ -1354,6 +1372,13 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		}
 		hql.append(" order by t." + sort + " " + order);
 		shebaoMXs = shebaoARDao.find(hql.toString(), params, intPage, pageSize);
+		Iterator<ShebaoAR> it = shebaoMXs.iterator();
+		while(it.hasNext()){
+			ShebaoAR sbAr = it.next();
+			if(!"off".equals(sbAr.getIfSecret())){
+				sbAr.setSalary(new BigDecimal("-1"));
+			}
+		}
 		shebaoMonthDetails.put("rows", shebaoMXs);
 		return shebaoMonthDetails;
 	}

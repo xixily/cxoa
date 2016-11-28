@@ -316,6 +316,27 @@ public class FileOperateController {
     	
     	return null;
     }
+    
+    @RequestMapping(value = "/exportYiDong")
+    public ModelAndView exportYiDong(String type, Page page, String date, HttpServletRequest request, HttpServletResponse response, HttpSession session){
+    	if(null!=type && !"".equals(type)){
+    		Map<String, Object> res = employeeInfoService.findAddorReduce(page, type, session,1);
+    		List<ShebaoAR> shebaoMXs = (List<ShebaoAR>) res.get("rows");
+    		if(shebaoMXs!=null&&shebaoMXs.size()>=0){
+    			String storeName = exportExcelService.getYidong(shebaoMXs, type);  
+    			String realName = "211".equals(type)?"入职表.xlsx":"212".equals(type)?"离职表.xlsx":"213".equals(type)?"转正表.xlsx":"214".equals(type)?"部门调整表.xlsx":"异动表";  
+    			String contentType = "application/octet-stream";  
+    			try {
+    				FileOperateUtil.download(request, response, storeName, contentType,realName);
+    			} catch (Exception e) {
+    				System.out.println("文件下载失败！");
+    				e.printStackTrace();
+    			} 
+    		}
+    	}
+    	
+    	return null;
+    }
     @RequestMapping(value = "/codeImage")
     public ModelAndView getcodeImage(PFahuo pfahuo, HttpServletRequest request, HttpServletResponse response, HttpSession session){
     	if(null != pfahuo.getMailno()&&""!=pfahuo.getMailno()&&!"".equals(pfahuo.getOrderid())){

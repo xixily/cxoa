@@ -555,6 +555,10 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 				sxffWriter.createCell();
 				sxffWriter.setStringData(shebaoMX.getUsername());
 				sxffWriter.createCell();
+				sxffWriter.setStringData(shebaoMX.getEmail());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(shebaoMX.getCellCoreEmail());
+				sxffWriter.createCell();
 				sxffWriter.setStringData(String.valueOf(shebaoMX.getRadix()));
 				sxffWriter.createCell();
 				sxffWriter.setStringData(String.valueOf(shebaoMX.getSubEndowmentIinsurance()));
@@ -610,6 +614,8 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 				sxffWriter.createCell();
 				sxffWriter.setStringData(shebaoMX.getUsername());
 				sxffWriter.createCell();
+				sxffWriter.setStringData(shebaoMX.getIdCard());
+				sxffWriter.createCell();
 				sxffWriter.setStringData(shebaoMX.getFirstLevel());
 				sxffWriter.createCell();
 				sxffWriter.setStringData(shebaoMX.getSecondLevel());
@@ -639,32 +645,34 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 				sxffWriter.setStringData(shebaoMX.getInsurance());
 				sxffWriter.createCell();
 				sxffWriter.setStringData(String.valueOf(shebaoMX.getRadix()));
-				sxffWriter.createCell();
-				sxffWriter.setStringData(String.valueOf(shebaoMX.getSubEndowmentIinsurance()));
-				sxffWriter.createCell();
-				sxffWriter.setStringData(String.valueOf(shebaoMX.getSubUnemployedInsurance()));
-				sxffWriter.createCell();
-				sxffWriter.setStringData(String.valueOf(shebaoMX.getSubMedicare()));
-				sxffWriter.createCell();
-				sxffWriter.setStringData(String.valueOf(shebaoMX.getSubHouseIinsurance()));
-				sxffWriter.createCell();
-				sxffWriter.setStringData(String.valueOf(shebaoMX.getcEndowmentIinsurance()));
-				sxffWriter.createCell();
-				sxffWriter.setStringData(String.valueOf(shebaoMX.getcUnemployedInsurance()));
-				sxffWriter.createCell();
-				sxffWriter.setStringData(String.valueOf(shebaoMX.getcInjuryInsurance()));
-				sxffWriter.createCell();
-				sxffWriter.setStringData(String.valueOf(shebaoMX.getcBirthIinsurance()));
-				sxffWriter.createCell();
-				sxffWriter.setStringData(String.valueOf(shebaoMX.getcHouseIinsurance()));
-				sxffWriter.createCell();
-				sxffWriter.setStringData(String.valueOf(shebaoMX.getcMedicare()));
+//				sxffWriter.createCell();
+//				sxffWriter.setStringData(String.valueOf(shebaoMX.getSubEndowmentIinsurance()));
+//				sxffWriter.createCell();
+//				sxffWriter.setStringData(String.valueOf(shebaoMX.getSubUnemployedInsurance()));
+//				sxffWriter.createCell();
+//				sxffWriter.setStringData(String.valueOf(shebaoMX.getSubMedicare()));
+//				sxffWriter.createCell();
+//				sxffWriter.setStringData(String.valueOf(shebaoMX.getSubHouseIinsurance()));
+//				sxffWriter.createCell();
+//				sxffWriter.setStringData(String.valueOf(shebaoMX.getcEndowmentIinsurance()));
+//				sxffWriter.createCell();
+//				sxffWriter.setStringData(String.valueOf(shebaoMX.getcUnemployedInsurance()));
+//				sxffWriter.createCell();
+//				sxffWriter.setStringData(String.valueOf(shebaoMX.getcInjuryInsurance()));
+//				sxffWriter.createCell();
+//				sxffWriter.setStringData(String.valueOf(shebaoMX.getcBirthIinsurance()));
+//				sxffWriter.createCell();
+//				sxffWriter.setStringData(String.valueOf(shebaoMX.getcHouseIinsurance()));
+//				sxffWriter.createCell();
+//				sxffWriter.setStringData(String.valueOf(shebaoMX.getcMedicare()));
 				sxffWriter.createCell();
 				sxffWriter.setStringData(String.valueOf(shebaoMX.getCompany()));
 				sxffWriter.createCell();
 				sxffWriter.setStringData(String.valueOf(shebaoMX.getInsuranceCompany()));
-				sxffWriter.createCell();
-				sxffWriter.setStringData(String.valueOf(shebaoMX.getProbationalSalary()));
+				if("112".equals(type)){
+					sxffWriter.createCell();
+					sxffWriter.setStringData(String.valueOf(shebaoMX.getSalary()));
+				}
 				sxffWriter.createCell();
 				sxffWriter.setStringData(shebaoMX.getTelNum());
 				sxffWriter.createCell();
@@ -673,8 +681,104 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 				sxffWriter.setStringData(shebaoMX.getAccount());
 				sxffWriter.createCell();
 				sxffWriter.setStringData(shebaoMX.getRubaoDate());
+				if("112".equals(type)){
+					sxffWriter.createCell();
+					sxffWriter.setStringData(shebaoMX.getDueSocialSecurity());
+				}
+				if("113".equals(type)){
+					sxffWriter.createCell();
+					sxffWriter.setStringData(shebaoMX.getLizhiDate());
+				}
+			}
+			sxffWriter.flush();
+			return filePath;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				sxffWriter.destroy();
+			} catch (IOException e) {
+				System.out.println("销毁失败！");
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	@Override
+	public String getYidong(List<ShebaoAR> shebaoMXs, String type) {
+		SXSSFWriter sxffWriter = null;
+		try {
+			sxffWriter = new SXSSFWriter("shebaoMX");
+			//文件绝对路径
+			String filePath = SXSSFWriter.DEFAULT_FOLDER + sxffWriter.getFileName();
+			sxffWriter.createNewSheet("异动excel表");
+			createYidongHeader(sxffWriter, type);
+			Iterator<ShebaoAR> it = shebaoMXs.iterator();
+			while(it.hasNext()){
+				ShebaoAR shebaoMX = it.next();
+				sxffWriter.createRow();
 				sxffWriter.createCell();
-				sxffWriter.setStringData(shebaoMX.getLizhiDate());
+				sxffWriter.setStringData(String.valueOf(shebaoMX.getId()));
+				sxffWriter.createCell();
+				sxffWriter.setStringData(shebaoMX.getUsername());
+				if("214".equals(type)){
+					String departReport = null!=shebaoMX.getBumentiaozhengReport()?shebaoMX.getBumentiaozhengReport():null;
+					String departOld = null;
+					String departNew = null;
+					if(departReport!=null){
+						int flag = departReport.indexOf("：")!=-1 ? departReport.indexOf("：") : departReport.indexOf(":");
+						String departDetail = departReport.substring(flag+1);
+						departOld = departDetail.split("\\|")[0];
+						departNew = departDetail.split("\\|").length>1 ? departDetail.split("\\|")[1] : null;
+					}
+					sxffWriter.createCell();
+					sxffWriter.setStringData(departOld);
+					sxffWriter.createCell();
+					sxffWriter.setStringData(departNew);
+					sxffWriter.createCell();
+					sxffWriter.setStringData(shebaoMX.getBumentiaozhengReport().length()>6?shebaoMX.getBumentiaozhengReport().substring(0, 6):shebaoMX.getBumentiaozhengReport());
+					sxffWriter.createCell();
+					sxffWriter.setStringData(shebaoMX.getBumentiaozhengReport());
+				}else{
+					sxffWriter.createCell();
+					sxffWriter.setStringData(shebaoMX.getFourthLevel());
+					sxffWriter.createCell();
+					sxffWriter.setStringData(shebaoMX.getPosition());
+					if("211".equals(type)){
+						sxffWriter.createCell();
+						sxffWriter.setStringData(shebaoMX.getHiredate());
+					}else if("212".equals(type)){
+						sxffWriter.createCell();
+						sxffWriter.setStringData(shebaoMX.getHiredate());
+						sxffWriter.createCell();
+						sxffWriter.setStringData(shebaoMX.getLizhiDate());
+					}else if("213".equals(type)){
+						sxffWriter.createCell();
+						sxffWriter.setStringData(String.valueOf(shebaoMX.getSalary()));
+					}
+					if("211".equals(type)){
+						sxffWriter.createCell();
+						sxffWriter.setStringData(shebaoMX.getZhuanzhengDate());
+						sxffWriter.createCell();
+						sxffWriter.setStringData(String.valueOf(shebaoMX.getSalary()));
+					}
+					if("211".equals(type) || "213".equals(type)){
+						sxffWriter.createCell();
+						sxffWriter.setStringData("");
+					}
+					if("211".equals(type) || "213".equals(type)){
+						sxffWriter.createCell();
+						sxffWriter.setStringData(shebaoMX.getCompany());
+					}
+					if("213".equals(type)){
+						sxffWriter.createCell();
+						sxffWriter.setStringData(shebaoMX.getZhuanzhengDate());
+					}
+					sxffWriter.createCell();
+					sxffWriter.setStringData(shebaoMX.getRemarks());
+					
+				}
 			}
 			sxffWriter.flush();
 			return filePath;
@@ -695,6 +799,8 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 		sxffWriter.createRow();
 		sxffWriter.createCell();
 		sxffWriter.setStringData("姓名");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("身份证号");
 		sxffWriter.createCell();
 		sxffWriter.setStringData("公司");
 		sxffWriter.createCell();
@@ -725,7 +831,7 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 		sxffWriter.setStringData("保险");
 		sxffWriter.createCell();
 		sxffWriter.setStringData("基数");
-		sxffWriter.createCell();
+		/*sxffWriter.createCell();
 		sxffWriter.setStringData("养老");
 		sxffWriter.createCell();
 		sxffWriter.setStringData("失业");
@@ -744,13 +850,15 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 		sxffWriter.createCell();
 		sxffWriter.setStringData("公司住房保险");
 		sxffWriter.createCell();
-		sxffWriter.setStringData("公司医疗保险");
+		sxffWriter.setStringData("公司医疗保险");*/
 		sxffWriter.createCell();
 		sxffWriter.setStringData("公司名称");
 		sxffWriter.createCell();
 		sxffWriter.setStringData("保险公司");
-		sxffWriter.createCell();
-		sxffWriter.setStringData("试用期工资");
+		if("112".equals(type)){
+			sxffWriter.createCell();
+			sxffWriter.setStringData("试用期工资");
+		}
 		sxffWriter.createCell();
 		sxffWriter.setStringData("联系电话");
 		sxffWriter.createCell();
@@ -759,9 +867,69 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 		sxffWriter.setStringData("职工账号");
 		sxffWriter.createCell();
 		sxffWriter.setStringData("入保时间");
+		if("112".equals(type)){
+			sxffWriter.createCell();
+			sxffWriter.setStringData("计划入保时间");
+		}
 		if("113".equals(type)){
 			sxffWriter.createCell();
 			sxffWriter.setStringData("离职时间");
+		}
+		
+	}
+	
+	private void createYidongHeader(SXSSFWriter sxffWriter, String type) {
+		sxffWriter.createRow();
+		sxffWriter.createCell();
+		sxffWriter.setStringData("序号");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("姓名");
+		if("214".equals(type)){
+			sxffWriter.createCell();
+			sxffWriter.setStringData("原部门");
+			sxffWriter.createCell();
+			sxffWriter.setStringData("变更后部门");
+			sxffWriter.createCell();
+			sxffWriter.setStringData("时间");
+			sxffWriter.createCell();
+			sxffWriter.setStringData("部门调整报表");
+		}else{
+			sxffWriter.createCell();
+			sxffWriter.setStringData("部门");
+			sxffWriter.createCell();
+			sxffWriter.setStringData("职位");
+			if("211".equals(type)){
+				sxffWriter.createCell();
+				sxffWriter.setStringData("入职时间");
+			}else if("212".equals(type)){
+				sxffWriter.createCell();
+				sxffWriter.setStringData("入职时间");
+				sxffWriter.createCell();
+				sxffWriter.setStringData("离职时间");
+			}else if("213".equals(type)){
+				sxffWriter.createCell();
+				sxffWriter.setStringData("转正前工资");
+			}
+			if("211".equals(type)){
+				sxffWriter.createCell();
+				sxffWriter.setStringData("转正时间");
+				sxffWriter.createCell();
+				sxffWriter.setStringData("试用期工资");
+			}
+			if("211".equals(type) || "213".equals(type)){
+				sxffWriter.createCell();
+				sxffWriter.setStringData("转正工资");
+			}
+			if("211".equals(type) || "213".equals(type)){
+				sxffWriter.createCell();
+				sxffWriter.setStringData("公司名称");
+			}
+			if("213".equals(type)){
+				sxffWriter.createCell();
+				sxffWriter.setStringData("转正时间");
+			}
+			sxffWriter.createCell();
+			sxffWriter.setStringData("备注");
 		}
 		
 	}
@@ -772,6 +940,10 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 		sxffWriter.setStringData("公司名称");
 		sxffWriter.createCell();
 		sxffWriter.setStringData("姓名");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("邮箱");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("细胞核邮箱");
 		sxffWriter.createCell();
 		sxffWriter.setStringData("基数");
 		sxffWriter.createCell();

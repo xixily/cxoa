@@ -2296,7 +2296,7 @@ shebaoSummary : {
 				$.post('employee/updateOrsaveOS.action',data,function(result){
 					result = eval("(" + result + ")");
 					if(result.success){
-						t.treegrid('reload');
+//						t.treegrid('reload');
 						t.treegrid({onLoadSuccess:function(){
 //							if(jiagouEdit){
 //								t.treegrid('expandTo',jiagouEdit);

@@ -48,6 +48,16 @@ public class ShebaoAR implements Serializable {
 	private Double cHouseIinsurance;//公司住房保险
 	private Double cInjuryInsurance;//公司工伤保险
 	private Double cBirthIinsurance;//公司生育保险
+	private BigDecimal salary;
+	private String ifSecret;
+	private String idCard;
+	private String dueSocialSecurity;
+	private String hiredate;//入职时间
+	private String ruzhiReport;//入职报表
+	private String zhuanzhengReport;//转正报表
+	private String zhuanzhengDate;//转正报表
+	private String remarks;//备注
+	private String bumentiaozhengReport;//部门调整报表
 	
 	@Id
 	@Column
@@ -193,6 +203,76 @@ public class ShebaoAR implements Serializable {
 	@Column(name="公司生育保险")
 	public Double getcBirthIinsurance() {
 		return cBirthIinsurance;
+	}
+	@Column(name="工资总额")
+	public BigDecimal getSalary() {
+		return salary;
+	}
+	@Column(name="工资保密")
+	public String getIfSecret() {
+		return ifSecret;
+	}
+	@Column(name="身份证号码")
+	public String getIdCard() {
+		return idCard;
+	}
+	@Column(name="计划入保时间")
+	public String getDueSocialSecurity() {
+		return dueSocialSecurity;
+	}
+	@Column(name="入职时间")
+	public String getHiredate() {
+		return hiredate;
+	}
+	@Column(name="入职报表")
+	public String getRuzhiReport() {
+		return ruzhiReport;
+	}
+	@Column(name="转正报表")
+	public String getZhuanzhengReport() {
+		return zhuanzhengReport;
+	}
+	@Column(name="备注")
+	public String getRemarks() {
+		return remarks;
+	}
+	@Column(name="部门调整报表")
+	public String getBumentiaozhengReport() {
+		return bumentiaozhengReport;
+	}
+	@Column(name="转正时间")
+	public String getZhuanzhengDate() {
+		return zhuanzhengDate;
+	}
+	public void setZhuanzhengDate(String zhuanzhengDate) {
+		this.zhuanzhengDate = zhuanzhengDate;
+	}
+	public void setBumentiaozhengReport(String bumentiaozhengReport) {
+		this.bumentiaozhengReport = bumentiaozhengReport;
+	}
+	public void setHiredate(String hiredate) {
+		this.hiredate = hiredate;
+	}
+	public void setRuzhiReport(String ruzhiReport) {
+		this.ruzhiReport = ruzhiReport;
+	}
+	public void setZhuanzhengReport(String zhuanzhengReport) {
+		this.zhuanzhengReport = zhuanzhengReport;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+	public void setDueSocialSecurity(String dueSocialSecurity) {
+		this.dueSocialSecurity = dueSocialSecurity;
+	}
+	public void setIdCard(String idCard) {
+		this.idCard = idCard;
+	}
+	public void setSalary(BigDecimal salary) {
+		this.salary = salary;
+	}
+	public void setIfSecret(String ifSecret) {
+		this.ifSecret = ifSecret;
 	}
 	public void setId(Integer id) {
 		this.id = id;

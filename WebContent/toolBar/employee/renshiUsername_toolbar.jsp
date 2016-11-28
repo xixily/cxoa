@@ -77,7 +77,7 @@ int month = cal.get(Calendar.MONTH) + 1;
     </div>
     <div class="menu-sep"></div>
     <div data-options="iconCls:'icon-excel'" onclick="employee.shebaoSummary.exportShebaoDetail(111)">导出<%= "" + year+ "-"+ (month - 1) %>月社保明细</div>
-    <div data-options="iconCls:'icon-excel'" onclick="employee.shebaoSummary.exportShebaoDetail(112)">导出<%= "" + year+ "-"+ (month - 1) %>社保增员</div>
+    <div data-options="iconCls:'icon-excel'" onclick="employee.shebaoSummary.exportShebaoDetail(112)">导出<%= "" + year+ "-"+ (month) %>社保增员</div>
     <div data-options="iconCls:'icon-excel'" onclick="employee.shebaoSummary.exportShebaoDetail(113)">导出<%= "" + year+ "-"+ (month - 1) %>社保减员</div>
     <div data-options="iconCls:'icon-excel'" onclick="employee.employee.exportExcel(0)">根据当前查询条件导出</div>
 </div>

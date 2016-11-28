@@ -17,6 +17,8 @@ public interface ExportExcelService {
 //	public String getRenshiQueryExport(List<PRenshiEmployee> renshiEmployees);
 	//人事信息
 	public String getRenshiQueryExport(List<PRenshiEmployee> renshiEmployees, boolean flag);
+	
+	public String getYidong(List<ShebaoAR> shebaoMXs, String type);
 
 	//考勤信息
 	public String getKaoqinExportExcel(List<PKaoQin> pKaoqins);
