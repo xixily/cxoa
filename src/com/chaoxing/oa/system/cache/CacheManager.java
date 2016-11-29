@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 import org.apache.log4j.Logger;
 
@@ -17,7 +17,7 @@ public class CacheManager {
 //	@Autowired
 //	private BaseDaoI<SystemConfig> systemConfigDao;//从系统配置库里面加载初始化信息
 	private static String COMMON_CACHE = "common";
-	private static Map<String, Map<String, Object>> cacheMap = new ConcurrentHashMap<String, Map<String, Object>>();// 缓存容器 
+	private static Map<String, Map<String, Object>> cacheMap = new ConcurrentSkipListMap<String, Map<String, Object>>();// 缓存容器 
 	
 	/**
 	 * 单例构造
@@ -66,7 +66,7 @@ public class CacheManager {
 		}
 		Map<String, Object> cc = cacheMap.get(mapKey);
 		if(null == cc){
-			cacheMap.put(mapKey, new ConcurrentHashMap<String, Object>());
+			cacheMap.put(mapKey, new ConcurrentSkipListMap<String, Object>());
 		}
 		cacheMap.get(mapKey).put(valueKey, value);
 	}

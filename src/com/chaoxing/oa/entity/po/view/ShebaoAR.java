@@ -58,6 +58,7 @@ public class ShebaoAR implements Serializable {
 	private String zhuanzhengDate;//转正报表
 	private String remarks;//备注
 	private String bumentiaozhengReport;//部门调整报表
+	private String s_remarks;//涨薪记录
 	
 	@Id
 	@Column
@@ -243,6 +244,13 @@ public class ShebaoAR implements Serializable {
 	@Column(name="转正时间")
 	public String getZhuanzhengDate() {
 		return zhuanzhengDate;
+	}
+	@Column(name="涨薪记录")
+	public String getS_remarks() {
+		return s_remarks;
+	}
+	public void setS_remarks(String s_remarks) {
+		this.s_remarks = s_remarks;
 	}
 	public void setZhuanzhengDate(String zhuanzhengDate) {
 		this.zhuanzhengDate = zhuanzhengDate;

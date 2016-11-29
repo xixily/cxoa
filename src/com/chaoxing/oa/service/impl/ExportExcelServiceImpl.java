@@ -671,7 +671,11 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 				sxffWriter.setStringData(String.valueOf(shebaoMX.getInsuranceCompany()));
 				if("112".equals(type)){
 					sxffWriter.createCell();
-					sxffWriter.setStringData(String.valueOf(shebaoMX.getSalary()));
+					if(null!=shebaoMX.getSalary() && shebaoMX.getSalary().equals("-1")){
+						sxffWriter.setStringData("<工资保密>");
+					}else{
+						sxffWriter.setStringData(String.valueOf(shebaoMX.getSalary()));
+					}
 				}
 				sxffWriter.createCell();
 				sxffWriter.setStringData(shebaoMX.getTelNum());
@@ -755,17 +759,27 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 						sxffWriter.setStringData(shebaoMX.getLizhiDate());
 					}else if("213".equals(type)){
 						sxffWriter.createCell();
-						sxffWriter.setStringData(String.valueOf(shebaoMX.getSalary()));
+						if(null!=shebaoMX.getSalary() && shebaoMX.getSalary().equals("-1")){
+							sxffWriter.setStringData("<工资保密>");
+						}else{
+							sxffWriter.setStringData(String.valueOf(shebaoMX.getSalary()));
+						}
 					}
 					if("211".equals(type)){
 						sxffWriter.createCell();
 						sxffWriter.setStringData(shebaoMX.getZhuanzhengDate());
 						sxffWriter.createCell();
-						sxffWriter.setStringData(String.valueOf(shebaoMX.getSalary()));
+						if(null!=shebaoMX.getSalary() && shebaoMX.getSalary().equals("-1")){
+							sxffWriter.setStringData("<工资保密>");
+						}else{
+							sxffWriter.setStringData(String.valueOf(shebaoMX.getSalary()));
+						}
 					}
 					if("211".equals(type) || "213".equals(type)){
 						sxffWriter.createCell();
 						sxffWriter.setStringData("");
+						sxffWriter.createCell();
+						sxffWriter.setStringData(shebaoMX.getS_remarks());
 					}
 					if("211".equals(type) || "213".equals(type)){
 						sxffWriter.createCell();
@@ -919,6 +933,8 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 			if("211".equals(type) || "213".equals(type)){
 				sxffWriter.createCell();
 				sxffWriter.setStringData("转正工资");
+				sxffWriter.createCell();
+				sxffWriter.setStringData("涨薪记录");
 			}
 			if("211".equals(type) || "213".equals(type)){
 				sxffWriter.createCell();

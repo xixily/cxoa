@@ -1324,11 +1324,11 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		Calendar cal = Calendar.getInstance();
 		String dateAfter = df.format(cal.getTime());//2016.11
 		String dateAfterStr = dateAfter.split("\\.")[0] + dateAfter.split("\\.")[1];//201611
-		System.out.println("---------------------------" + dateAfterStr);
+//		System.out.println("---------------------------" + dateAfterStr);
 		cal.add(Calendar.MONTH, -1);
 		String dateN = df.format(cal.getTime());//2016.10
 		String dateStr = dateN.split("\\.")[0] + dateN.split("\\.")[1];//201610
-		System.out.println(dateStr);
+//		System.out.println(dateStr);
 		StringBuffer hql = null;
 		if("112".equals(type)){
 			hql = new StringBuffer("from ShebaoAR t where t.dueSocialSecurity like :date and t.insurance like '%否%'");
@@ -1377,6 +1377,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 			ShebaoAR sbAr = it.next();
 			if(!"off".equals(sbAr.getIfSecret())){
 				sbAr.setSalary(new BigDecimal("-1"));
+				sbAr.setS_remarks("<工资保密>");
 			}
 		}
 		shebaoMonthDetails.put("rows", shebaoMXs);
