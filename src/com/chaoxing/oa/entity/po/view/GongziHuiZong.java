@@ -11,8 +11,6 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
-//@Table(name = "工资汇总情况", schema="")
-
 @Table(name = "工资汇总情况", schema="")
 
 @DynamicInsert(true)
@@ -41,6 +39,8 @@ public class GongziHuiZong  implements Serializable {
 	private String lizhiReport;
 	private String zhuanzhengReport;
 	private String bumenttiaozhengReport;
+	private String leaveDate;
+	private String ifSecret;
 	
 	@Id
 	@Column(name = "ID")
@@ -130,6 +130,20 @@ public class GongziHuiZong  implements Serializable {
 	@Column(name="部门调整报表")
 	public String getBumenttiaozhengReport() {
 		return bumenttiaozhengReport;
+	}
+	@Column(name="离职时间")
+	public String getLeaveDate() {
+		return leaveDate;
+	}
+	@Column(name="工资保密")
+	public String getIfSecret() {
+		return ifSecret;
+	}
+	public void setLeaveDate(String leaveDate) {
+		this.leaveDate = leaveDate;
+	}
+	public void setIfSecret(String ifSecret) {
+		this.ifSecret = ifSecret;
 	}
 	public void setLishiSalary(Float lishiSalary) {
 		this.lishiSalary = lishiSalary;

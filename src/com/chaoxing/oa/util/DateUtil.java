@@ -27,6 +27,10 @@ public class DateUtil {
 	public static String format(Date date) {
 		return format(date, "yyyy-MM-dd HH:mm:ss");
 	}
+	
+//	public static String format(String type){
+//		ret
+//	}
 
 	/**
 	 * 将Date类型转换为字符串
@@ -41,10 +45,59 @@ public class DateUtil {
 		if (date == null) {
 			return "null";
 		}
-		if (pattern == null || pattern.equals("") || pattern.equals("null")) {
+		if (pattern == null || "".equals(pattern) || pattern.equals("null")) {
 			pattern = "yyyy-MM-dd HH:mm:ss";
 		}
 		return new java.text.SimpleDateFormat(pattern).format(date);
+	}
+	
+	/**
+	 * 将Date类型转换为字符串
+	 * 
+	 * @param date
+	 *            日期类型
+	 * @param pattern
+	 *            字符串格式
+	 * @return 日期字符串
+	 */
+	public static String format(Calendar cal) {
+		return format(cal,null);
+	}
+	/**
+	 * 将Date类型转换为字符串
+	 * 
+	 * @param date
+	 *            日期类型
+	 * @param pattern
+	 *            字符串格式
+	 * @return 日期字符串
+	 */
+	public static String formatForMonth(int amount,String... arg) {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, amount);
+		String pattern = null;
+		if(arg.length>0){
+			pattern = arg[0].toString();
+		}
+		return format(cal,pattern);
+	}
+	/**
+	 * 将Date类型转换为字符串
+	 * 
+	 * @param date
+	 *            日期类型
+	 * @param pattern
+	 *            字符串格式
+	 * @return 日期字符串
+	 */
+	public static String format(Calendar cal, String pattern) {
+		if (cal == null) {
+			return "null";
+		}
+		if (pattern == null || "".equals(pattern) || pattern.equals("null")) {
+			pattern = "yyyy-MM-dd HH:mm:ss";
+		}
+		return new java.text.SimpleDateFormat(pattern).format(cal.getTime());
 	}
 
 	/**
@@ -68,7 +121,7 @@ public class DateUtil {
 	 * @return 日期类型
 	 */
 	public static Date format(String date, String pattern) {
-		if (pattern == null || pattern.equals("") || pattern.equals("null")) {
+		if (pattern == null || "".equals(pattern) || pattern.equals("null")) {
 			pattern = "yyyy-MM-dd HH:mm:ss";
 		}
 		if (date == null || date.equals("") || date.equals("null")) {
@@ -154,51 +207,4 @@ public class DateUtil {
 	        	}
 	        return pwagesDates; 
 	    }
-//	public static List<PWagesDate> getWagesDate(int year,int month){
-//	 	List<PWagesDate> pwagesDates = new ArrayList<PWagesDate>();
-//	 	int[] days = new int[31];
-//        SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
-//        Calendar cal = Calendar.getInstance();    
-//        cal.set(Calendar.YEAR, year);    
-//        cal.set(Calendar.MONTH,  month - 1);    
-//        cal.set(Calendar.DATE, 1);    
-//        int i = 0;
-//        while(cal.get(Calendar.YEAR) == year && cal.get(Calendar.MONTH) < month){
-//        	int day = cal.get(Calendar.DAY_OF_WEEK);
-//        	PWagesDate pwagesDate = new PWagesDate();
-//        	if(!(day == Calendar.SUNDAY || day == Calendar.SATURDAY)){
-//        		i++;
-//        		}
-//        	pwagesDate.setDate(df.format(cal.getTime()));
-//        	if(i==0){
-//        		days[i] = 21;
-//        		pwagesDate.setRuzhiDay(21);
-//        		pwagesDate.setLizhiDay(0);
-//        		}else{
-//        			pwagesDate.setRuzhiDay(22-i > 0?22-i:0);
-//        			pwagesDate.setLizhiDay(i-1>21?21:i-1);
-//        			}
-//        	pwagesDates.add(pwagesDate);
-//        	cal.add(Calendar.DATE, 1);
-//        	}
-//        cal.add(Calendar.DATE, -1);
-//        while(cal.get(Calendar.YEAR) == year && cal.get(Calendar.MONTH) == (month-1)){
-//        	int day = cal.get(Calendar.DAY_OF_WEEK);
-//        	PWagesDate pwagesDate = new PWagesDate();
-//        	if(!(day == Calendar.SUNDAY || day == Calendar.SATURDAY)){
-//        		i++;
-//        		}
-//        	pwagesDate.setDate(df.format(cal.getTime()));
-//        	if(i==0){
-//        		pwagesDate.setRuzhiDay(21);
-//        		pwagesDate.setLizhiDay(0);
-//        		}else{
-//        			pwagesDate.setRuzhiDay(22-i > 0?22-i:0);
-//        			pwagesDate.setLizhiDay(i-1>21?21:i-1);
-//        			}
-//        	pwagesDates.add(pwagesDate);
-//        	cal.add(Calendar.DATE, 1);
-//        	}
-//        return pwagesDates;
-//        }
 }

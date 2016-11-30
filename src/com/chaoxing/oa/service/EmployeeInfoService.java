@@ -166,6 +166,8 @@ public interface EmployeeInfoService {
 
 	public Map<String, Object> findAddorReduce(Page page, String date, HttpSession session, int i);
 	
+	public Map<String, Object> findYidong(Page page, String date, HttpSession session, int i);
+	
 //	public Json 
 
 

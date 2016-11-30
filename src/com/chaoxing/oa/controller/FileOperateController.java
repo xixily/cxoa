@@ -27,6 +27,7 @@ import com.chaoxing.oa.entity.page.hetong.PFahuo;
 import com.chaoxing.oa.entity.page.system.SessionInfo;
 import com.chaoxing.oa.entity.po.view.ShebaoAR;
 import com.chaoxing.oa.entity.po.view.ShebaoMX;
+import com.chaoxing.oa.entity.po.view.Yidong;
 import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.service.ExportExcelService;
 import com.chaoxing.oa.util.BarCode128C;
@@ -320,11 +321,15 @@ public class FileOperateController {
     @RequestMapping(value = "/exportYiDong")
     public ModelAndView exportYiDong(String type, Page page, String date, HttpServletRequest request, HttpServletResponse response, HttpSession session){
     	if(null!=type && !"".equals(type)){
-    		Map<String, Object> res = employeeInfoService.findAddorReduce(page, type, session,1);
-    		List<ShebaoAR> shebaoMXs = (List<ShebaoAR>) res.get("rows");
-    		if(shebaoMXs!=null&&shebaoMXs.size()>=0){
-    			String storeName = exportExcelService.getYidong(shebaoMXs, type);  
-    			String realName = "211".equals(type)?"新员工入职人员登记表.xlsx":"212".equals(type)?"离职人员登记表.xlsx":"213".equals(type)?"员工转正人员登记表.xlsx":"214".equals(type)?"部门调整登记表.xlsx":"异动表";  
+//    		Map<String, Object> res = employeeInfoService.findAddorReduce(page, type, session,1);
+    		Map<String, Object> res = employeeInfoService.findYidong(page, type, session,1);
+    		List<Yidong> yidongs = (List<Yidong>) res.get("rows");
+    		if(yidongs!=null&&yidongs.size()>=0){
+    			String storeName = exportExcelService.getYidong(yidongs, type);  
+    			String realName = "211".equals(type)|| "311".equals(type)?"新员工入职人员登记表.xlsx":
+    				"212".equals(type) || "312".equals(type)?"离职人员登记表.xlsx":
+    					"213".equals(type)||"313".equals(type)?"员工转正人员登记表.xlsx":
+    						"214".equals(type)|| "314".equals(type)?"部门调整登记表.xlsx":"异动表.xlsx";  
     			String contentType = "application/octet-stream";  
     			try {
     				FileOperateUtil.download(request, response, storeName, contentType,realName);

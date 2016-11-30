@@ -49,6 +49,8 @@
 					<th data-options="field:'zhuanzhengReport',width:100,sortable:true">转正报表</th>
 					<th data-options="field:'bumenttiaozhengReport',width:100,sortable:true">部门调整报表</th>
 					<th data-options="field:'tiaoxinReport',width:100,sortable:true">调薪报表</th>
+					<th data-options="field:'leaveDate',width:100,sortable:true">离职时间</th>
+					<th data-options="field:'ifSecret',width:100,sortable:true">工资保密</th>
 				</tr>
 			</thead>
 		</table>

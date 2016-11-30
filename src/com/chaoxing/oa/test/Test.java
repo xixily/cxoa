@@ -1,22 +1,40 @@
 package com.chaoxing.oa.test;
 
 import java.io.File;
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.chaoxing.oa.entity.page.employee.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.employee.PWagesDate;
+import com.chaoxing.oa.util.DateUtil;
 import com.chaoxing.oa.util.SXSSFWriter;
 
 public class Test {
 
 	public static void main(String[] args) {
-		StringBuffer stb = new StringBuffer();
-		stb.append("[sdafdasfasdfsa], ");
-		System.out.println(stb.substring(0, stb.length()-2));
+		String s_remarks = "试用3200，转正4000";
+		System.out.println(s_remarks.substring(s_remarks.indexOf("正")+1, s_remarks.length()));
+//		StringBuffer stb = new StringBuffer();
+//		stb.append("[sdafdasfasdfsa], ");
+//		
+//		System.out.println(stb.substring(0, stb.length()-2));
+//		
+//		String str = "201610部门调整：前场/教图事业部/浙江/（浙江）范凯|前场/教图事业部/浙江/（浙江）徐鸽";
+////		str.split("|");
+//		for (String st : str.substring(str.indexOf("：")+1).split("\\|")) {
+//			System.out.println(st);
+//		}
+//		String str2 = "30145";
+//		System.out.println(str2.contains("3"));
+//		System.out.println(DateUtil.format(new Date(),"yyyyMM"));
+//		Date date = new Date();
+//		Calendar.getInstance().add(Calendar.MONTH, -1);
+//		SimpleDateFormat.
+//		System.out.println(new SimpleDateFormat("yyyyMM").format(Calendar.getInstance().getTime()));
+//		System.out.println(DateUtil.format(Calendar.getInstance(),"yyyyMM"));
 //		BigDecimal bg = new BigDecimal(22.00f);
 //		System.out.println("201611".compareTo(null));
 ////		bg.divide(new BigDecimal(21),4);

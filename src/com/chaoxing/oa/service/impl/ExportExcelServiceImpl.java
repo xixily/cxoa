@@ -15,6 +15,7 @@ import com.chaoxing.oa.entity.page.employee.PSheBaoSummary;
 import com.chaoxing.oa.entity.page.employee.PshebaoDetail;
 import com.chaoxing.oa.entity.po.view.ShebaoAR;
 import com.chaoxing.oa.entity.po.view.ShebaoMX;
+import com.chaoxing.oa.entity.po.view.Yidong;
 import com.chaoxing.oa.service.ExportExcelService;
 import com.chaoxing.oa.util.SXSSFWriter;
 
@@ -710,7 +711,7 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 	}
 	
 	@Override
-	public String getYidong(List<ShebaoAR> shebaoMXs, String type) {
+	public String getYidong(List<Yidong> yidongs, String type) {
 		SXSSFWriter sxffWriter = null;
 		try {
 			sxffWriter = new SXSSFWriter("shebaoMX");
@@ -718,16 +719,18 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 			String filePath = SXSSFWriter.DEFAULT_FOLDER + sxffWriter.getFileName();
 			sxffWriter.createNewSheet("异动excel表");
 			createYidongHeader(sxffWriter, type);
-			Iterator<ShebaoAR> it = shebaoMXs.iterator();
+			Iterator<Yidong> it = yidongs.iterator();
+			String s_remarks = "";
 			while(it.hasNext()){
-				ShebaoAR shebaoMX = it.next();
+				Yidong yidong = it.next();
+				s_remarks = yidong.getS_remarks();
 				sxffWriter.createRow();
 				sxffWriter.createCell();
-				sxffWriter.setStringData(String.valueOf(shebaoMX.getId()));
+				sxffWriter.setStringData(String.valueOf(yidong.getId()));
 				sxffWriter.createCell();
-				sxffWriter.setStringData(shebaoMX.getUsername());
+				sxffWriter.setStringData(yidong.getUsername());
 				if("214".equals(type)){
-					String departReport = null!=shebaoMX.getBumentiaozhengReport()?shebaoMX.getBumentiaozhengReport():null;
+					String departReport = null!=yidong.getBumentiaozhengReport()?yidong.getBumentiaozhengReport():null;
 					String departOld = null;
 					String departNew = null;
 					if(departReport!=null){
@@ -741,56 +744,56 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 					sxffWriter.createCell();
 					sxffWriter.setStringData(departNew);
 					sxffWriter.createCell();
-					sxffWriter.setStringData(shebaoMX.getBumentiaozhengReport().length()>6?shebaoMX.getBumentiaozhengReport().substring(0, 6):shebaoMX.getBumentiaozhengReport());
+					sxffWriter.setStringData(yidong.getBumentiaozhengReport().length()>6?yidong.getBumentiaozhengReport().substring(0, 6):yidong.getBumentiaozhengReport());
 					sxffWriter.createCell();
-					sxffWriter.setStringData(shebaoMX.getBumentiaozhengReport());
+					sxffWriter.setStringData(yidong.getBumentiaozhengReport());
 				}else{
 					sxffWriter.createCell();
-					sxffWriter.setStringData(shebaoMX.getFourthLevel());
+					sxffWriter.setStringData(yidong.getFourthLevel());
 					sxffWriter.createCell();
-					sxffWriter.setStringData(shebaoMX.getPosition());
+					sxffWriter.setStringData(yidong.getPosition());
 					if("211".equals(type)){
 						sxffWriter.createCell();
-						sxffWriter.setStringData(shebaoMX.getHiredate());
+						sxffWriter.setStringData(yidong.getHiredate());
 					}else if("212".equals(type)){
 						sxffWriter.createCell();
-						sxffWriter.setStringData(shebaoMX.getHiredate());
+						sxffWriter.setStringData(yidong.getHiredate());
 						sxffWriter.createCell();
-						sxffWriter.setStringData(shebaoMX.getLizhiDate());
+						sxffWriter.setStringData(yidong.getLizhiDate());
 					}else if("213".equals(type)){
 						sxffWriter.createCell();
-						if(null!=shebaoMX.getSalary() && shebaoMX.getSalary().equals("-1")){
+						if(null!=yidong.getTotalSalary() && yidong.getTotalSalary()==-1){
 							sxffWriter.setStringData("<工资保密>");
 						}else{
-							sxffWriter.setStringData(String.valueOf(shebaoMX.getSalary()));
+							sxffWriter.setStringData(String.valueOf(yidong.getTotalSalary()));
 						}
 					}
 					if("211".equals(type)){
 						sxffWriter.createCell();
-						sxffWriter.setStringData(shebaoMX.getZhuanzhengDate());
+						sxffWriter.setStringData(yidong.getZhuanzhengDate());
 						sxffWriter.createCell();
-						if(null!=shebaoMX.getSalary() && shebaoMX.getSalary().equals("-1")){
+						if(null!=yidong.getTotalSalary() && yidong.getTotalSalary().equals("-1")){
 							sxffWriter.setStringData("<工资保密>");
 						}else{
-							sxffWriter.setStringData(String.valueOf(shebaoMX.getSalary()));
+							sxffWriter.setStringData(String.valueOf(yidong.getTotalSalary()));
 						}
 					}
 					if("211".equals(type) || "213".equals(type)){
 						sxffWriter.createCell();
-						sxffWriter.setStringData("");
+						sxffWriter.setStringData(s_remarks.substring(s_remarks.indexOf("正")+1, s_remarks.length()));
 						sxffWriter.createCell();
-						sxffWriter.setStringData(shebaoMX.getS_remarks());
+						sxffWriter.setStringData(yidong.getS_remarks());
 					}
 					if("211".equals(type) || "213".equals(type)){
 						sxffWriter.createCell();
-						sxffWriter.setStringData(shebaoMX.getCompany());
+						sxffWriter.setStringData(yidong.getCompany());
 					}
 					if("213".equals(type)){
 						sxffWriter.createCell();
-						sxffWriter.setStringData(shebaoMX.getZhuanzhengDate());
+						sxffWriter.setStringData(yidong.getZhuanzhengDate());
 					}
 					sxffWriter.createCell();
-					sxffWriter.setStringData(shebaoMX.getRemarks());
+					sxffWriter.setStringData(yidong.getRemarks());
 					
 				}
 			}

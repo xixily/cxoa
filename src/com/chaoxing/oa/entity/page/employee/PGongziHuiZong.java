@@ -16,6 +16,9 @@ public class PGongziHuiZong {
 	private String lizhiReport;
 	private String zhuanzhengReport;
 	private String bumenttiaozhengReport;
+	private String leaveDate;
+	private String ifSecret;
+	
 	public int getId() {
 		return id;
 	}
@@ -87,6 +90,18 @@ public class PGongziHuiZong {
 	}
 	public String getBumenttiaozhengReport() {
 		return bumenttiaozhengReport;
+	}
+	public String getLeaveDate() {
+		return leaveDate;
+	}
+	public void setLeaveDate(String leaveDate) {
+		this.leaveDate = leaveDate;
+	}
+	public String getIfSecret() {
+		return ifSecret;
+	}
+	public void setIfSecret(String ifSecret) {
+		this.ifSecret = ifSecret;
 	}
 	public void setLishiSalary(Float lishiSalary) {
 		this.lishiSalary = lishiSalary;

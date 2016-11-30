@@ -10,6 +10,7 @@ import com.chaoxing.oa.entity.page.employee.PSheBaoSummary;
 import com.chaoxing.oa.entity.page.employee.PshebaoDetail;
 import com.chaoxing.oa.entity.po.view.ShebaoAR;
 import com.chaoxing.oa.entity.po.view.ShebaoMX;
+import com.chaoxing.oa.entity.po.view.Yidong;
 
 public interface ExportExcelService {
 
@@ -18,7 +19,7 @@ public interface ExportExcelService {
 	//人事信息
 	public String getRenshiQueryExport(List<PRenshiEmployee> renshiEmployees, boolean flag);
 	
-	public String getYidong(List<ShebaoAR> shebaoMXs, String type);
+	public String getYidong(List<Yidong> shebaoMXs, String type);
 
 	//考勤信息
 	public String getKaoqinExportExcel(List<PKaoQin> pKaoqins);

@@ -63,6 +63,7 @@ import com.chaoxing.oa.entity.po.view.RenshiUserName;
 import com.chaoxing.oa.entity.po.view.SheBaoSummary;
 import com.chaoxing.oa.entity.po.view.ShebaoAR;
 import com.chaoxing.oa.entity.po.view.ShebaoMX;
+import com.chaoxing.oa.entity.po.view.Yidong;
 import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.system.SysConfig;
 import com.chaoxing.oa.system.cache.CacheManager;
@@ -115,6 +116,8 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	private BaseDaoI<ShebaoMX> shebaoMXDao;
 	@Autowired
 	private BaseDaoI<ShebaoAR> shebaoARDao;
+	@Autowired
+	private BaseDaoI<Yidong> yidongDao;
 	
 
 //	@Override
@@ -1333,28 +1336,22 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		if("112".equals(type)){
 			hql = new StringBuffer("from ShebaoAR t where t.dueSocialSecurity like :date and t.insurance like '%否%'");
 			params.put("date", dateAfterStr+ "%");
-			System.out.println(params);
 		}else if("113".equals(type)){
 			hql = new StringBuffer("from ShebaoAR t where t.radix > 0 and (t.lizhiDate > :dateAfter1 and t.lizhiDate < :dateAfter)");
 			params.put("dateAfter1", dateN + ".15");
 			params.put("dateAfter", dateAfter + ".15");
-			System.out.println(params);
 		}else if("211".equals(type)){
 			hql = new StringBuffer("from ShebaoAR t where t.ruzhiReport like :datestr");
 			params.put("datestr",dateStr + "%");
-			System.out.println(params);
 		}else if("212".equals(type)){
 			hql = new StringBuffer("from ShebaoAR t where t.lizhiReport like :datestr");
 			params.put("datestr",dateStr + "%");
-			System.out.println(params);
 		}else if("213".equals(type)){
 			hql = new StringBuffer("from ShebaoAR t where t.zhuanzhengReport like :datestr");
 			params.put("datestr",dateStr + "%");
-			System.out.println(params);
 		}else if("214".equals(type)){
 			hql = new StringBuffer("from ShebaoAR t where t.bumentiaozhengReport like :datestr");
 			params.put("datestr",dateStr + "%");
-			System.out.println(params);
 		}
 		int intPage = 0;
 		int pageSize = 30000;//最多导出30000条数据
@@ -1382,6 +1379,72 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		}
 		shebaoMonthDetails.put("rows", shebaoMXs);
 		return shebaoMonthDetails;
+	}
+	
+	@Override
+	public Map<String, Object> findYidong(Page page, String type, HttpSession session,int isExport) {
+		Map<String, Object> yidongDetails = new HashMap<String, Object>();
+		Map<String, Object> params = new HashMap<String, Object>();
+		List<Yidong> yidongs = new ArrayList<Yidong>();
+		String dateAfterStr = DateUtil.format(Calendar.getInstance(), "yyyyMM");//201611
+		String dateStr = DateUtil.formatForMonth(-1,"yyyyMM");//201610
+		StringBuffer hql = null;
+		if("211".equals(type) || "311".equals(type)){
+			hql = new StringBuffer("from Yidong t where t.ruzhiReport like :datestr");
+			if("211".equals(type)){
+				params.put("datestr",dateStr + "%");
+			}else{
+				params.put("datestr",dateAfterStr + "%");
+			}
+		}else if("212".equals(type) || "312".equals(type)){
+			hql = new StringBuffer("from Yidong t where t.lizhiReport like :datestr");
+			if("212".equals(type)){
+				params.put("datestr",dateStr + "%");
+			}else{
+				params.put("datestr",dateAfterStr + "%");
+			}
+		}else if("213".equals(type) || "313".equals(type)){
+			hql = new StringBuffer("from Yidong t where t.zhuanzhengReport like :datestr");
+			params.put("datestr",dateStr + "%");
+			if("213".equals(type)){
+				params.put("datestr",dateStr + "%");
+			}else{
+				params.put("datestr",dateAfterStr + "%");
+			}
+		}else if("214".equals(type) || "314".equals(type)){
+			hql = new StringBuffer("from Yidong t where t.bumentiaozhengReport like :datestr");
+			if("214".equals(type)){
+				params.put("datestr",dateStr + "%");
+			}else{
+				params.put("datestr",dateAfterStr + "%");
+			}
+		}
+		int intPage = 0;
+		int pageSize = 30000;//最多导出30000条数据
+		if(isExport == 0){
+			intPage = (page == null || page.getPage() == 0) ? 1 : page.getPage();
+			pageSize = (page == null || page.getRows() == 0 || page.getRows()>500) ? 100 : page.getRows();
+		}
+		String sort = "id";
+		String order = SysConfig.DESC;
+		if(page.getSort() != null){
+			sort = page.getSort();
+			if(page.getOrder() != null){
+				order = page.getOrder();
+			}
+		}
+		hql.append(" order by t." + sort + " " + order);
+		yidongs = yidongDao.find(hql.toString(), params, intPage, pageSize);
+		Iterator<Yidong> it = yidongs.iterator();
+		while(it.hasNext()){
+			Yidong yidong = it.next();
+			if(!"off".equals(yidong.getIfSecret())){
+				yidong.setTotalSalary(-1f);
+				yidong.setS_remarks("<工资保密>");
+			}
+		}
+		yidongDetails.put("rows", yidongs);
+		return yidongDetails;
 	}
 	
 	@Override

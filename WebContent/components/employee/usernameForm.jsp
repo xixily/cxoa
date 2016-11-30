@@ -7,7 +7,7 @@
 </style><!-- 768 -->
 <div class="easyui-panel" style="width:1060px;overflow: hidden" >
     <div style="padding:2px">
-        <form id="updateUsesrname_form" class="easyui-form"  method="post" data-options="novalidate:true">
+        <form id="updateUsesrname_form" class="easyui-form"  method="post" data-options="validate:true">
             <table cellpadding="2">
                 <tr>
                     <td>姓名:</td>
