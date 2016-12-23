@@ -10,6 +10,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.chaoxing.oa.entity.page.system.SessionInfo;
+import com.chaoxing.oa.util.IpUtil;
 import com.chaoxing.oa.util.ResourceUtil;
 
 public class SessionInterceptor implements HandlerInterceptor {
@@ -50,7 +51,7 @@ public class SessionInterceptor implements HandlerInterceptor {
 		String requestUri = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String url = requestUri.substring(contextPath.length());
-		logger.debug(url);
+//		logger.debug(url);
 		if (excludeUrls.contains(url)) {
 			return true;
 		} else {

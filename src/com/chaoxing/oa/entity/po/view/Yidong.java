@@ -30,6 +30,8 @@ public class Yidong implements Serializable {
 	private String remarks;//备注
 	private String ifSecret;//是否保密
 	private Float totalSalary;//工资汇总
+	private String level;
+	private Float lishiSalary;
 	
 	@Id
 	@Column(name="职员编号")
@@ -107,6 +109,20 @@ public class Yidong implements Serializable {
 	@Column
 	public Float getTotalSalary() {
 		return totalSalary;
+	}
+	@Column(name="级别")
+	public String getLevel() {
+		return level;
+	}
+	@Column(name="历史工资")
+	public Float getLishiSalary() {
+		return lishiSalary;
+	}
+	public void setLishiSalary(Float lishiSalary) {
+		this.lishiSalary = lishiSalary;
+	}
+	public void setLevel(String level) {
+		this.level = level;
 	}
 	public void setId(Integer id) {
 		this.id = id;

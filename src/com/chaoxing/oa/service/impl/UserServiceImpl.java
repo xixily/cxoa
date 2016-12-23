@@ -87,6 +87,7 @@ public class UserServiceImpl implements UserServiceI {
 			pusername.setSecondLevel(ogs.getSecondLevel());
 			pusername.setThirdLevel(ogs.getThirdLevel());
 			pusername.setFourthLevel(ogs.getFourthLevel());
+			pusername.setCellCore(ogs.getCellCore());
 			pusername.setId(username.getId());
 		}
 		return pusername;

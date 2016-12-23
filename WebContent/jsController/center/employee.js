@@ -153,36 +153,35 @@ var employee = {
 				}
 			});
 		},
-	},
-	initEmployee : function(data, user) {
+		initEmployee : function(data, user) {
 //		console.log("employee.initEmployee!");
-		$('#employee_datas')
-				.datagrid(
-						{
-							title : '职工信息列表',
-							iconCls : 'icon-edit',// 图标
-							height : 'auto',
+			$('#employee_datas')
+					.datagrid(
+					{
+						title : '职工信息列表',
+						iconCls : 'icon-edit',// 图标
+						height : 'auto',
 //							fitColumns : true,
-							singleSelect : true,
-							url : 'employee/renshiUser.action',
-							singleSelect : true,// 是否单选
-							pagination : true,// 分页控件
-							pageSize : 15,
-							striped : true,
-							pageList : [ 10, 15, 20, 30, 50, 100, 200],
-							rownumbers : true,// 行号
-							rowStyler : function(index, row) {
-								if (row.leaveTime && row.leaveTime != '') {
-									return 'background-color:#E88282;color:#fff;font-weight:bold;';
-								}
-								if(/实习生/.test(row.level)){
-									return 'background-color:yellow;';
-								}	
+						singleSelect : true,
+						url : 'employee/renshiUser.action',
+						singleSelect : true,// 是否单选
+						pagination : true,// 分页控件
+						pageSize : 15,
+						striped : true,
+						pageList : [ 10, 15, 20, 30, 50, 100, 200],
+						rownumbers : true,// 行号
+						rowStyler : function(index, row) {
+							if (row.leaveTime && row.leaveTime != '') {
+								return 'background-color:#E88282;color:#fff;font-weight:bold;';
+							}
+							if(/实习生/.test(row.level)){
+								return 'background-color:yellow;';
+							}
 //								if(index%2 == 0)
 //								{
 //									return 'background-color:rgb(245,245,245);';
 //								}
-							},
+						},
 //							columns : [ [
 //							              {
 //								field : 'id',
@@ -411,12 +410,14 @@ var employee = {
 //								sortable : true,
 //								width : 100
 //							} ] ],
-							toolbar : '#renshi_toolbar',
-							onDblClickCell : function(index, field, value) {
-								employee.view();
-							}
-						});
+						toolbar : '#renshi_toolbar',
+						onDblClickCell : function(index, field, value) {
+							employee.view();
+						}
+					});
+		},
 	},
+
 	queryEmployee : function(data, src) {
 		$('#employee_datas').datagrid({
 			url : 'employee/renshiUser.action',

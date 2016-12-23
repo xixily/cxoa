@@ -196,7 +196,8 @@ public class SqlHelper {
 			sql.append("and " + tableName + "." + name + "=:" + name +" ");
 			params.put(name,(Boolean) value);
 		}else{
-			return;
+			sql.append("and " + tableName + "." + name + "=:" + name +" ");
+			params.put(name,(Object) value);
 		}
 	}
 	

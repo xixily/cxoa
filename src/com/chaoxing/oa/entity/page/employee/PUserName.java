@@ -60,6 +60,7 @@ public class PUserName {
 	private String secondLevel;//二级
 	private String thirdLevel;//三级
 	private String fourthLevel;//四级
+	private String cellCore;//细胞核
 	private String zhuanruGongsiTime;//转入本公司时间
 	private String ruzhiReport;//入职报表
 	private String lizhiReport;//离职报表
@@ -400,6 +401,12 @@ public class PUserName {
 	}
 	public String getFourthLevel() {
 		return fourthLevel;
+	}
+	public String getCellCore() {
+		return cellCore;
+	}
+	public void setCellCore(String cellCore) {
+		this.cellCore = cellCore;
 	}
 	public void setFirstLevel(String firstLevel) {
 		this.firstLevel = firstLevel;

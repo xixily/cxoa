@@ -112,7 +112,7 @@
 				<!-- 不需要权限验证的地址 -->
 				<property name="excludeUrls">
 					<list>
-						<value>/user/login.action</value>
+						<!-- <value>/user/login.action</value>
 						<value>/user/logout.action</value>
 						<value>/menu/allMenu.action</value>
 						<value>/system/allMenu.action</value>
@@ -123,7 +123,49 @@
 						<value>/system/queryMenus.action</value>
 						<value>/user/modifyPassword.action</value>
 						<value>/employee/getHouseholdType.action</value>
-						<value>/employee/getLevel.action</value>
+						<value>/employee/getLevel.action</value> -->
+						<value>/user/updateUserName.action</value>
+						<value>/user/deleteUserName.action</value>
+						<value>/user/addUserName.action</value>
+						<value>/test/update.action</value>
+						<value>/hetong/updateFapiao.action</value>
+						<value>/hetong/sendKuaidi.action</value>
+						<value>/hetong/sendKuaidi.action</value>
+						<value>/file/*</value>
+						<value>/file/exportYiDong.action</value>
+						<value>/file/exportShebaoSummary.action</value>
+						<value>/file/exportShebaoDetail.action</value>
+						<value>/file/exportShebaoCompany.action</value>
+						<value>/file/exportOStruct.action</value>
+						<value>/file/exportOS.action</value>
+						<value>/file/exportMonthWagesExcel.action</value>
+						<value>/file/exportKaoqinExcel.action</value>
+						<value>/file/exportEmployeeExcel.action</value>
+						<value>/employee/updateWagesRadix.action</value>
+						<value>/employee/updateWagesDate.action</value>
+						<value>/employee/updateWages.action</value>
+						<value>/employee/updateWages.action</value>
+						<value>/employee/updateShebaoDetail.action</value>
+						<value>/employee/updateShebao.action</value>
+						<value>/employee/updateOrsaveOS.action</value>
+						<value>/employee/updateMonthWages.action</value>
+						<value>/employee/updateKaoqin.action</value>
+						<value>/employee/updateGridWages.action</value>
+						<value>/employee/unluckeShebaoSummary.action</value>
+						<value>/employee/luckedShebaoSummary.action</value>
+						<value>/employee/lockedKaoqin.action</value>
+						<value>/employee/generateWagesDates.action</value>
+						<value>/employee/generateMonthWages.action</value>
+						<value>/employee/generateKaoqin.action</value>
+						<value>/employee/deleteWagesDate.action</value>
+						<value>/employee/deleteWages.action</value>
+						<value>/employee/deleteShebao.action</value>
+						<value>/employee/deleteOS.action</value>
+						<value>/employee/deleteMonthWages.action</value>
+						<value>/employee/deleteKaoqin.action</value>
+						<value>/employee/addWages.action</value>
+						<value>/employee/addShebao.action</value>
+						<value>/employee/addMonthWages.action</value>
 					</list>
 				</property>
 			</bean>

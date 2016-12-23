@@ -76,7 +76,7 @@ int month = cal.get(Calendar.MONTH) + 1;
         </div>
     </div>
 	 <div>
-        <span>异动表201610</span>
+        <span>异动表<%= "" + year+(month - 1) %></span>
         <div>
             <div data-options="iconCls:'icon-excel'" onclick="employee.employee.exportYDExcel(211)">导出<%= "" + year+ "-"+ (month - 1) %>新员工入职人表</div>
             <div data-options="iconCls:'icon-excel'" onclick="employee.employee.exportYDExcel(212)">导出<%= "" + year+ "-"+ (month - 1) %>离职人员表</div>
@@ -85,7 +85,7 @@ int month = cal.get(Calendar.MONTH) + 1;
         </div>
     </div>
 	 <div>
-        <span>异动表201611</span>
+        <span>异动表<%= ""+year+month %></span>
         <div>
             <div data-options="iconCls:'icon-excel'" onclick="employee.employee.exportYDExcel(311)">导出<%= "" + year+ "-"+ (month) %>新员工入职人表</div>
             <div data-options="iconCls:'icon-excel'" onclick="employee.employee.exportYDExcel(312)">导出<%= "" + year+ "-"+ (month) %>离职人员表</div>
@@ -113,6 +113,7 @@ int month = cal.get(Calendar.MONTH) + 1;
     <div>
     <div data-options="inconCLs:'icon-search'" onclick="employee.employee.quickQuery(111)">查询<%= "" + year+ "-"+ (month - 1) %>入职，工资为0</div>
     <div data-options="inconCLs:'icon-search'" onclick="employee.employee.quickQuery(112)">查询<%= "" + year + "-"+ month %>入职，工资为0</div>
+    <div data-options="inconCLs:'icon-search'" onclick="employee.employee.quickQuery(401)">查询转正报表<%= "" + year+(month - 1) %>，工资为空</div>
     <div data-options="inconCLs:'icon-search'" onclick="employee.employee.quickQuery(113)">查询卡号有现金的人员名单</div>
     </div>
     </div>

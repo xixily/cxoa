@@ -1,0 +1,69 @@
+<div id="ht_manager_guidance">
+    <div id="guidance">
+        <h4 style="text-align: center">细胞核列表</h4>
+        <table id="ht_guidance_table"
+               data-height="568"
+               data-show-header="true"
+               data-show-columns="true"
+               data-search="true"
+               data-striped="true"
+               data-show-footer="true"
+               data-detail-view="true"
+               data-detail-formatter="hetong.htManager.zhidao.detailFormatter"
+               data-buttons-align="left"
+               data-search-align="left"
+               data-query-params="queryParams"
+               data-query-params-type=""
+               data-show-toggle="true"
+               data-show-refresh="true"
+               data-response-handler="responseHandler"
+               data-pagination="true"
+               data-side-pagination="client"
+               data-cache="false"
+               data-url="./public/hetong/getAllCells.action">
+            <thead>
+            <tr>
+                <!--<th data-field="chargerId" data-visible="false" data-sortable="true">职员编号</th>-->
+                <th data-field="cellCore" data-sortable="true"  data-footer-formatter="<a>总计</a>">姓名</th>
+                <th data-field="cemail" data-visible="false" data-sortable="true"  data-footer-formatter="<a>- -</a>">邮箱</th>
+                <th data-field="lastYear" data-visible="false" data-sortable="true"  data-footer-formatter="hetong.htManager.zhidao.footerFormatter_2015"><span app-text="lastYear">2015</span>收款（元）</th>
+                <th data-field="thisYear" data-visible="false" data-sortable="true" data-footer-formatter="hetong.htManager.zhidao.footerFormatter_2016"><span app-text="thisYear">2016</span>收款（元）</th>
+                <th data-field="yingshou" data-sortable="true" data-footer-formatter="hetong.htManager.zhidao.footerFormatter_yingshou">应收</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+
+    <div id="cellsview" style="display: none">
+        <div id="ht_cells_toolbar">
+            <form action="#" class="form-inline" role="form">
+                <div class="input-group">
+                    <div id="ht_customer_find" class="input-group-btn">
+                        <button class="btn btn-default fropdown-toggle" data-toggle="dropdown" data-target="#ht_find_user_ul" type="button">
+                            <span id="ht_find_user" target="text"><input type="hidden" name="chargerId" value="黄云"/>黄云</span><span class="caret"></span>
+                        </button>
+                        <span id="ht_find_user_ul">
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a><span class="sr-only">1313</span>黄云</a></li>
+                                <li><a><span class="sr-only">2425</span>陆承彬</a></li>
+                                <li><a><span class="sr-only">331</span>潘阳</a></li>
+                                <li><a><span class="sr-only">414</span>杨自奎</a></li>
+                                <li><a><span class="sr-only">214</span>魏燕龙</a></li>
+                                <li><a><span class="sr-only">114</span>姚元飞</a></li>
+                                <li><a><span class="sr-only">112</span>曾超</a></li>
+                            </ul>
+                        </span>
+                        <button type="button" class="btn btn-default" onclick=" $('#cellsview').hide();$('#guidance').show();"><i class="fa fa-arrow-circle-left"> </i> 返回</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <table id="ht_customer_table">
+        </table>
+    </div>
+    <script type="text/javascript">
+        $('#ht_guidance_table').bootstrapTable({
+            onDblClickRow: hetong.htManager.zhidao.onDblClickRow
+        });
+    </script>
+</div>

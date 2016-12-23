@@ -79,7 +79,7 @@ $(document).ready(function() {
 						<option value="signedTime">签定时间</option>
 						<option value="terminationTime">终止时间</option>
 						<option value="registeredAddress">户口地址</option>
-						<option value="Postcode">邮编</option>
+						<option value="postcode">邮编</option>
 						<option value="remarks">备注</option>
 						<option value="contractNumber">合同编号</option>
 						<option value="dueSocialSecurity">计划入保时间</option>
@@ -88,7 +88,7 @@ $(document).ready(function() {
 						<option value="recruitmentSources">招聘来源</option>
 						<option value="contractRenewal">合同续签</option>
 						<option value="originalNumber">原编号</option>
-						<option value="secrecyAgreement">保密协议</option>
+						<option value="secrecyAgreement">岗位说明书</option>
 						<option value="panCard">办理工资卡</option>
 						<option value="email">邮箱</option>
 						<option value="reportForm">报表</option>

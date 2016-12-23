@@ -1,5 +1,7 @@
 package com.chaoxing.oa.entity.sqlpo;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +17,8 @@ import org.hibernate.annotations.DynamicUpdate;
 @Table(name="发货情况")
 @DynamicInsert(true)
 @DynamicUpdate(true)
-public class Fahuo {
+public class Fahuo implements Serializable {
+	private static final long serialVersionUID = -406853805188298899L;
 	private Integer orderid;//序号
 	private Integer hetongCode;//合同编号
 	private String d_contact;//收件人

@@ -197,11 +197,25 @@ public class BaseDaoImpl<T> implements BaseDaoI<T> {
 		}
 	}
 	
+	@Override
 	public List<T> findSql(String sql){
 		SQLQuery sq = this.getCurrentSession().createSQLQuery(sql);
 		return sq.list();
 	}
 	
+	@Override
+	public List<T> findSql(String sql, Map<String, Object> params){
+		SQLQuery sq = this.getCurrentSession().createSQLQuery(sql);
+		if (params != null && !params.isEmpty()) {
+			for (String key : params.keySet()) {
+				sq.setParameter(key, params.get(key));
+			}
+		}
+		return sq.list();
+	}
+	
+	
+	@Override
 	public void prepareCall(String sql, Map<String, Object> params) throws HibernateException{
 		SQLQuery sq = this.getCurrentSession().createSQLQuery(sql);
 		if (params != null && !params.isEmpty()) {

@@ -284,10 +284,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 				hql.append(" and w.salary=0 and t.hiredate like :hiredate");
 				params.put("hiredate", "%" + date + "%");
 			}
-		}
-		//查询本月合同到期名单	
-		if(type == 301)
-		{
+		}else if(type == 301){//查询本月合同到期名单
 			Calendar nowcal = Calendar.getInstance();
 			nowcal.add(Calendar.MONTH, 1);
 			String nowDate = df.format(nowcal.getTime());
@@ -296,13 +293,17 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 			hql.append(" and (t.terminationTime <= :hiredate or t.terminationTime is null or t.terminationTime = '') ");
 			params.put("hiredate",  nowDate);
 		
-		}
-		//查询没有身份证的员工名单
-		if(type == 302)
-		{
+		}else if(type == 302){//查询没有身份证的员工名单
 			hql = new StringBuffer(column + "from RenshiUserName as t  where (t.leaveTime is null or t.leaveTime ='') ");
 			hql.append(" and length(t.identityCard) < 18");
 				
+		}else if(type == 401){
+			hql = new StringBuffer(column + "from RenshiUserName as t,WageDistribution as w where t.id=w.employeeId ");
+			Calendar cc = Calendar.getInstance();
+			cc.add(Calendar.MONDAY, -1);
+			hql.append(" and t.zhuanzhengReport like :zhuanzheng");
+			params.put("zhuanzheng", DateUtil.format(cc, "yyyyMM") + "%");
+			hql.append(" and (w.lishiSalary is null or w.lishiSalary='')");
 		}
 		SessionInfo userInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
 		if(userInfo.getRoleId() > 1 && !(userInfo.getRoleId()==100)){

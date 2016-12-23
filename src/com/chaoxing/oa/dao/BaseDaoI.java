@@ -40,6 +40,10 @@ public interface BaseDaoI<T> {
 
 	public int executeHql(String hql, Map<String, Object> params);
 	
+	public List<T> findSql(String sql) throws HibernateException;
+	
+	public List<T> findSql(String sql, Map<String, Object> params) throws HibernateException;
+	
 	public void prepareCall(String sql, Map<String, Object> params) throws HibernateException;
 	
 	public void bigSave(List<T> objs);

@@ -43,7 +43,7 @@ public class LogInterceptor implements HandlerInterceptor {
 		String requestUri = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String url = requestUri.substring(contextPath.length());
-		if (excludeUrls.contains(url)) {
+		if (!excludeUrls.contains(url)) {
 			if(request.isRequestedSessionIdValid()){
 				SessionInfo sessionInfo = (SessionInfo) request.getSession().getAttribute(ResourceUtil.getSessionInfoName());
 				if(null != sessionInfo){

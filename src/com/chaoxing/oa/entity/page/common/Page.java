@@ -1,14 +1,14 @@
 package com.chaoxing.oa.entity.page.common;
 
 public class Page {
-	private int page;
-	private int rows;
+	private Integer page;
+	private Integer rows;
 	private String sort;
 	private String order;
-	public int getPage() {
+	public Integer getPage() {
 		return page;
 	}
-	public int getRows() {
+	public Integer getRows() {
 		return rows;
 	}
 	public String getSort() {
@@ -17,10 +17,10 @@ public class Page {
 	public String getOrder() {
 		return order;
 	}
-	public void setPage(int page) {
+	public void setPage(Integer page) {
 		this.page = page;
 	}
-	public void setRows(int rows) {
+	public void setRows(Integer rows) {
 		this.rows = rows;
 	}
 	public void setSort(String sort) {

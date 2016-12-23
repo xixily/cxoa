@@ -3,7 +3,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	if(session.logined){
-		employee.initEmployee();
+		employee.employee.initEmployee();
 	}
 })
 </script>

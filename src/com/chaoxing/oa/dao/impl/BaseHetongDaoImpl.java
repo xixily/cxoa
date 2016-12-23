@@ -29,7 +29,10 @@
 ////	}
 ////
 //	private Session getCurrentSession() {
-//		return this.SQLsessionFactory.getCurrentSession();
+//		Session session = this.SQLsessionFactory.getCurrentSession();
+//		clearSession(session);
+//		return session;
+////		return this.SQLsessionFactory.getCurrentSession();
 //	}
 //
 //	public SessionFactory getSQLsessionFactory() {
@@ -47,7 +50,9 @@
 //	@Override
 //	public Serializable save(T o) throws HibernateException{
 //			try {
+//				
 //				return this.getCurrentSession().save(o);
+//				
 //			} catch (HibernateException e) {
 //				throw e;
 //			}
@@ -227,6 +232,13 @@
 //			sq.executeUpdate();
 //		} catch (HibernateException e) {
 //			throw e;
+//		}
+//	}
+//	
+//	private void clearSession(Session session){
+//		if(null != session){
+//			session.flush();
+//			session.clear();
 //		}
 //	}
 //}

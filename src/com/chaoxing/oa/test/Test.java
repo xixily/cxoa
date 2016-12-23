@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.chaoxing.oa.entity.page.employee.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.employee.PWagesDate;
@@ -15,8 +17,38 @@ import com.chaoxing.oa.util.SXSSFWriter;
 public class Test {
 
 	public static void main(String[] args) {
-		String s_remarks = "试用3200，转正4000";
-		System.out.println(s_remarks.substring(s_remarks.indexOf("正")+1, s_remarks.length()));
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.MONTH, 0);
+		cal.set(cal.get(Calendar.YEAR), 0, 1, 0, 0, 0);
+		System.out.println(DateUtil.format(cal, null));
+//		String s_remarks = "试用3200.8，转正4000";
+//		
+////		String str = "1000万元";
+//		String str = "试用3200.232，转正4000.012,0.854,0.312";
+////        String regex = "\\d*\\.\\d";
+//        String regex = "[1-9]\\d*\\.\\d*|[1-9]\\d*|0\\.\\d*[1-9]\\d*";
+//        Pattern p = Pattern.compile(regex);
+//        Matcher m = p.matcher(str);
+//        int i = 0;
+//        while(m.find()) {
+//        	System.out.println(++i);
+//            if(!"".equals(m.group()))
+//                System.out.println(m.group());
+//        }
+//		String regEx = "\\d";
+//		String reg = "[^0-9]+";
+//		String regEx = "\\d*\\.\\d*\\|\\d*|0\\.\\d*$/";
+//		Pattern p = Pattern.compile(regEx);
+//		Pattern p = Pattern.compile(reg);
+//		Matcher m = p.matcher(s_remarks);
+////		System.out.println(m.replaceAll("").trim());
+//		while(m.find()){
+//			if(!"".equals(m.group())){
+//				System.out.println(m.group());
+//			}
+////			System.out.println(m.group()+",");
+//		}
+//		System.out.println(s_remarks.substring(s_remarks.indexOf("正")+1, s_remarks.length()));
 //		StringBuffer stb = new StringBuffer();
 //		stb.append("[sdafdasfasdfsa], ");
 //		

@@ -94,7 +94,7 @@ function login(){
 				$('#login_dlg').dialog('close');
 				initClickHandler();
 				west.initWestTree();
-				employee.initEmployee();
+				employee.employee.initEmployee();
 			}
 		}
 	});

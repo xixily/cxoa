@@ -10,6 +10,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.chaoxing.oa.entity.page.system.SessionInfo;
+import com.chaoxing.oa.util.IpUtil;
 import com.chaoxing.oa.util.ResourceUtil;
 
 public class SecurityInterceptor implements HandlerInterceptor {
@@ -50,23 +51,40 @@ public class SecurityInterceptor implements HandlerInterceptor {
 		String requestUri = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String url = requestUri.substring(contextPath.length());
+		String ip = IpUtil.getIpAddr(request);//ip 过滤
 		logger.debug(url);
+		boolean ipFlag = false;
 		if (excludeUrls.contains(url)) {
 			return true;
 		} else {
-			SessionInfo sessionInfo = (SessionInfo) request.getSession().getAttribute(ResourceUtil.getSessionInfoName());
-			if (sessionInfo.getRoleId()==0) {// 超管不需要验证权限
-				return true;
-			} else {
-				List<String> urls = sessionInfo.getResourceUrls();
-				if (urls.contains(url)) {
+			if(url.contains("/public/")){
+				ipFlag = true;
+			}
+			if(!ipFlag){
+				if(ip.contains("192.168.") || ip.contains("127.0.") || ip.contains("localhost")){
+					ipFlag = true;
+				}else{
+					ipFlag = false;
+				}
+			}
+			if(ipFlag){
+				SessionInfo sessionInfo = (SessionInfo) request.getSession().getAttribute(ResourceUtil.getSessionInfoName());
+				if (sessionInfo.getRoleId()==0) {// 超管不需要验证权限
 					return true;
 				} else {
-					request.setAttribute("msg", "{msg:'您没有访问此资源的权限！请联系超管赋予您" + url + "的资源访问权限！'}");
-//					request.setAttribute("msg", "您没有访问此资源的权限！<br/>请联系超管赋予您<br/>[" + url + "]<br/>的资源访问权限！");
+					List<String> urls = sessionInfo.getResourceUrls();
+					if (urls.contains(url)) {
+						return true;
+					} else {
+						request.setAttribute("msg", "{msg:'您没有访问此资源的权限！请联系超管赋予您" + url + "的资源访问权限！'}");
+						request.getRequestDispatcher("/error/noSecurity.jsp").forward(request, response);
+						return false;
+					}
+				}
+			}else{
+				request.setAttribute("msg", "{msg:'您的ip不允许访问该资源，请使用公司内部IP访问该资源.'}");
 					request.getRequestDispatcher("/error/noSecurity.jsp").forward(request, response);
 					return false;
-				}
 			}
 		}
 	}
