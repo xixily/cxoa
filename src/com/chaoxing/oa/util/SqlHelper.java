@@ -3,6 +3,7 @@ package com.chaoxing.oa.util;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.Map;
 
 /**
@@ -195,6 +196,9 @@ public class SqlHelper {
 		}else if("boolean".equalsIgnoreCase(type)){
 			sql.append("and " + tableName + "." + name + "=:" + name +" ");
 			params.put(name,(Boolean) value);
+		}else if("BigDecimal".equalsIgnoreCase(type)){
+			sql.append("and " + tableName + "." + name + "=:" + name +" ");
+			params.put(name,(BigDecimal) value);
 		}else{
 			sql.append("and " + tableName + "." + name + "=:" + name +" ");
 			params.put(name,(Object) value);

@@ -8,34 +8,55 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chaoxing.oa.dao.BaseDaoI;
+import com.chaoxing.oa.entity.page.common.Page;
 import com.chaoxing.oa.entity.page.employee.PRenshiEmployee;
+import com.chaoxing.oa.entity.page.hetong.PCustomerDepart;
+import com.chaoxing.oa.entity.page.hetong.PFapiao;
+import com.chaoxing.oa.entity.page.hetong.PItemPrice;
 import com.chaoxing.oa.entity.page.pub.hetong.Cells;
 import com.chaoxing.oa.entity.page.pub.hetong.PFapiaoDetail;
 import com.chaoxing.oa.entity.page.pub.hetong.PGuidanceView;
+import com.chaoxing.oa.entity.page.pub.hetong.PucfView;
 import com.chaoxing.oa.entity.page.pub.hetong.UserDepart;
+import com.chaoxing.oa.entity.po.hetong.CustomerDepart;
+import com.chaoxing.oa.entity.po.hetong.FaPiao;
+import com.chaoxing.oa.entity.po.hetong.ItemPrice;
 import com.chaoxing.oa.entity.po.view.RenshiUserName;
+import com.chaoxing.oa.entity.po.view.pub.UcfView;
 import com.chaoxing.oa.service.PubHetongService;
 import com.chaoxing.oa.util.DateUtil;
 import com.chaoxing.oa.util.ResourceUtil;
+import com.chaoxing.oa.util.SqlHelper;
 
 @Service(value="pubHetongService")
 public class PubHetongServiceImpl implements PubHetongService {
+	Logger log = Logger.getLogger(this.getClass());
 	@Autowired
 	private BaseDaoI<Object> objectDao;
 	@Autowired
 	private BaseDaoI<RenshiUserName> rusernameDao;
+	@Autowired
+	private BaseDaoI<CustomerDepart> cdepartDao;
+	@Autowired
+	private BaseDaoI<UcfView> ucfViewDao;
+	@Autowired
+	private BaseDaoI<ItemPrice> itemPriceDao;
+	@Autowired
+	private BaseDaoI<FaPiao> fapiaoDao;
+	
 	@Override
 	public void findCellcoreTotal(String email) {
 		
 	}
 	
 	@Override
-	public List<PGuidanceView> findCellCores(String email) {
+	public List<PGuidanceView> findCellCoresCount(String email) {
 		Map<String,Object> params = new HashMap<String, Object>();
 		String sql = "SELECT t1.细胞核,t1.细胞核邮箱, t2.去年 ,t3.今年, (t4.合同款 - t1.回款) 应收 FROM"
 				+ "(SELECT 细胞核邮箱,细胞核,SUM(IFNULL(回款情况,0)) 回款 FROM 用户合同发票 "
@@ -74,7 +95,6 @@ public class PubHetongServiceImpl implements PubHetongService {
 				pgv.setThisYear(thisyear);
 				pgv.setYingshou(yingshou);
 				pgv.setGemail(email);
-				System.out.println(pgv);
 				pgvs.add(pgv);
 			}
 		}
@@ -82,7 +102,7 @@ public class PubHetongServiceImpl implements PubHetongService {
 	}
 
 	@Override
-	public List<Cells> findCoreCells(String cemail) {
+	public List<Cells> findCoreCellsCount(String cemail) {
 		Map<String,Object> params = new HashMap<String, Object>();
 		String sql = "SELECT t1.负责人,t1.邮箱, t2.去年 ,t3.今年, (t4.合同款 - t1.回款) 应收 FROM"
 				+ "(SELECT 邮箱,负责人,SUM(IFNULL(回款情况,0)) 回款 FROM 用户合同发票 "
@@ -127,9 +147,40 @@ public class PubHetongServiceImpl implements PubHetongService {
 		}
 		return cells;
 	}
+	
 
 	@Override
-	public List<UserDepart> findUserList(String email, String charger) {
+	public Map<String, Object> findUcfView(Page page, PucfView pucf) {
+		StringBuffer hql = new StringBuffer("from UcfView t where ");
+		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<PucfView> pucfs = new ArrayList<PucfView>();
+		long count = 0;
+		try{
+			hql.append(SqlHelper.prepareAndSql(pucf, params, true));
+			int intPage = 0;
+			int pageSize = 30000;//最多导出30000条数据
+			intPage = (page == null || page.getPage() == 0) ? 1 : page.getPage();
+			pageSize = (page == null || page.getRows() == 0 || page.getRows()>500) ? 500 : page.getRows();
+			List<UcfView> ucfs = ucfViewDao.find(hql.toString(),params, intPage, pageSize);
+			count = getCount(hql.toString(),params);
+			Iterator<UcfView> it = ucfs.iterator();
+			while(it.hasNext()){
+				UcfView ucf = it.next();
+				PucfView puc = new PucfView();
+				BeanUtils.copyProperties(ucf, puc);
+				pucfs.add(puc);
+			}
+		}catch(Exception e){
+			log.error("pubHetongService[findUcfView] has a error with message:[" + e + "]");
+		}
+		result.put("rows", pucfs);
+		result.put("total", count);
+		return result;
+	}
+
+	@Override
+	public List<UserDepart> findUserListCount(String email, String charger) {
 		Map<String,Object> params = new HashMap<String, Object>();
 		String sql = "SELECT t1.用户名称,t1.自动编号,t2.去年 ,t3.今年, (t4.合同款 - t1.回款) 应收 FROM"
 				+ "(SELECT 自动编号,用户名称,SUM(IFNULL(回款情况,0)) 回款 FROM 用户合同发票 "
@@ -177,7 +228,7 @@ public class PubHetongServiceImpl implements PubHetongService {
 	}
 
 	@Override
-	public List<PFapiaoDetail> findUserContracts(Integer autoCode) {
+	public List<PFapiaoDetail> findUserContractsCount(Integer autoCode) {
 		Map<String,Object> params = new HashMap<String, Object>();
 		String sql = "SELECT 负责人,自动编号,汇款时间,发票品名,回款情况 FROM 用户合同发票  WHERE 自动编号= :autoCode";
 		params.put("autoCode", autoCode);
@@ -214,7 +265,94 @@ public class PubHetongServiceImpl implements PubHetongService {
 	}
 
 	@Override
-	public void findContractFapiao(Integer id) {
+	public void findContractFapiaoCount(Integer id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void findUserList() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void findUserContracts() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Map<String, Object> findContractFapiaos(Page page, PFapiao pfapiao) {
+		StringBuffer hql = new StringBuffer("from FaPiao t where ");
+		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<PFapiao> pfapiaos = new ArrayList<PFapiao>();
+		long count = 0;
+		try{
+			hql.append(SqlHelper.prepareAndSql(pfapiao, params, true));
+			int intPage = 0;
+			int pageSize = 30000;//最多导出30000条数据
+			intPage = (page == null || page.getPage() == 0) ? 1 : page.getPage();
+			pageSize = (page == null || page.getRows() == 0 || page.getRows()>500) ? 500 : page.getRows();
+			List<FaPiao> fapiaos = fapiaoDao.find(hql.toString(),params, intPage, pageSize);
+			count = getCount(hql.toString(),params);
+			Iterator<FaPiao> it = fapiaos.iterator();
+			while(it.hasNext()){
+				FaPiao fapiao = it.next();
+				PFapiao pf = new PFapiao();
+				BeanUtils.copyProperties(fapiao, pf);
+				pfapiaos.add(pf);
+			}
+		}catch(Exception e){
+			log.error("pubHetongService[findContractFapiaos] has a error with message:[" + e + "]");
+		}
+		result.put("rows", pfapiaos);
+		result.put("total", count);
+		return result;
+	}
+	
+
+	@Override
+	public Map<String, Object> findContractItemPrice(Page page, PItemPrice ptprice) {
+		StringBuffer hql = new StringBuffer("from ItemPrice t where ");
+		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<PItemPrice> pitps = new ArrayList<PItemPrice>();
+		long count = 0;
+		try{
+			hql.append(SqlHelper.prepareAndSql(ptprice, params, true));
+			int intPage = 0;
+			int pageSize = 30000;//最多导出30000条数据
+			intPage = (page == null || page.getPage() == 0) ? 1 : page.getPage();
+			pageSize = (page == null || page.getRows() == 0 || page.getRows()>500) ? 500 : page.getRows();
+			List<ItemPrice> itemPrices = itemPriceDao.find(hql.toString(),params, intPage, pageSize);
+			count = getCount(hql.toString(),params);
+			Iterator<ItemPrice> it = itemPrices.iterator();
+			while(it.hasNext()){
+				ItemPrice item = it.next();
+				PItemPrice pitem = new PItemPrice();
+				BeanUtils.copyProperties(item, pitem);
+				pitps.add(pitem);
+			}
+		}catch(Exception e){
+			log.error("pubHetongService[findContractItemPrice] has a error with message:[" + e + "]");
+		}
+		result.put("rows", pitps);
+		result.put("total", count);
+		return result;
+	}
+
+	@Override
+	public PCustomerDepart getUserList(Integer id) {
+		PCustomerDepart pcd = new PCustomerDepart();
+		CustomerDepart cd = cdepartDao.get(CustomerDepart.class, id);
+		BeanUtils.copyProperties(cd, pcd);
+		return pcd;
+	}
+
+	@Override
+	public void getContractDetail(Integer id) {
 		// TODO Auto-generated method stub
 		
 	}

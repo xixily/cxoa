@@ -20,7 +20,9 @@ public class Test {
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.MONTH, 0);
 		cal.set(cal.get(Calendar.YEAR), 0, 1, 0, 0, 0);
-		System.out.println(DateUtil.format(cal, null));
+//		System.out.println(DateUtil.format(cal, null));
+		Date date = new Date();
+//		System.out.println(date.toLocaleString());
 //		String s_remarks = "试用3200.8，转正4000";
 //		
 ////		String str = "1000万元";

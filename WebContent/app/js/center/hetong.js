@@ -44,9 +44,11 @@ var hetong = {
             onDblClickRow: function(row, $element, field){
                 var url = 'hetong/cellsView';
                 if(url && url!=''){
-                	  var cellViews = $('#cellsview');
-                      var table = cellViews.find('table');
-                      table.bootstrapTable('destroy');
+                    var cellViews = $('#cellsview');
+                    var table = cellViews.find('table');
+                    if(table && table.length>0){
+                        table.bootstrapTable('destroy');
+                    }
                     $('#guidance').hide();
                     $('#cellsview').show();
                     getBufferView(url,function(view){
@@ -54,7 +56,7 @@ var hetong = {
                         var cvContainer = $('#cellsview');
                         cvContainer.html("");
                         var ul = view.find('form ul');
-                        var data = new Array();
+                        var data = $('#ht_guidance_table').bootstrapTable('getData');
                         $.each(data, function(i, obj){
                             var li = $('<li><a><span class="sr-only">'+ obj.email +'</span>' + obj.username + '</a>');
                             li.appendTo(ul);

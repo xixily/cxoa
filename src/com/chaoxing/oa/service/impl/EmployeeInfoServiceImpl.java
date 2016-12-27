@@ -1424,7 +1424,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		int pageSize = 30000;//最多导出30000条数据
 		if(isExport == 0){
 			intPage = (page == null || page.getPage() == 0) ? 1 : page.getPage();
-			pageSize = (page == null || page.getRows() == 0 || page.getRows()>500) ? 100 : page.getRows();
+			pageSize = (page == null || page.getRows() == 0 || page.getRows()>500) ? 500 : page.getRows();
 		}
 		String sort = "id";
 		String order = SysConfig.DESC;

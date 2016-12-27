@@ -16,6 +16,9 @@ public class PCustomerDepart {
 	private String secondLevel;//二级
 	private String thirdLevel;//三级
 	private String fourthLevel;//四级
+	private String email;
+	private String cellCoreEmail;
+	private String gemail;
 	public Integer getId() {
 		return id;
 	}
@@ -61,6 +64,15 @@ public class PCustomerDepart {
 	public String getFourthLevel() {
 		return fourthLevel;
 	}
+	public String getEmail() {
+		return email;
+	}
+	public String getCellCoreEmail() {
+		return cellCoreEmail;
+	}
+	public String getGemail() {
+		return gemail;
+	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -105,6 +117,15 @@ public class PCustomerDepart {
 	}
 	public void setFourthLevel(String fourthLevel) {
 		this.fourthLevel = fourthLevel;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public void setCellCoreEmail(String cellCoreEmail) {
+		this.cellCoreEmail = cellCoreEmail;
+	}
+	public void setGemail(String gemail) {
+		this.gemail = gemail;
 	}
 	
 }
