@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,11 +18,26 @@ import com.chaoxing.oa.util.SXSSFWriter;
 public class Test {
 
 	public static void main(String[] args) {
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.MONTH, 0);
-		cal.set(cal.get(Calendar.YEAR), 0, 1, 0, 0, 0);
-//		System.out.println(DateUtil.format(cal, null));
-		Date date = new Date();
+		List<String> lis = new ArrayList<String>();
+		lis.add("");
+		int looper = 100;
+		for (int i = 0; i < 10; i++) {
+			lis.add((looper+i)+"");
+		}
+		Iterator<String> it = lis.iterator();
+		while(it.hasNext()){
+			System.out.println(it.next());
+			it.remove();
+			lis.size();
+			System.out.println("list size:"+lis.size());
+		}
+		System.out.println("list size:"+lis.size());
+//		Calendar cal = Calendar.getInstance();
+//		cal.set(Calendar.MONTH, 0);
+//		cal.set(cal.get(Calendar.YEAR), 0, 1, 0, 0, 0);
+////		System.out.println(DateUtil.format(cal, null));
+//		Date date = new Date();
+//		System.out.println(DateUtil.format(date));
 //		System.out.println(date.toLocaleString());
 //		String s_remarks = "试用3200.8，转正4000";
 //		

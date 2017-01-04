@@ -5,8 +5,12 @@ var hetong = {
     htManager:{
         zhidao: {
             coldefine: {
-                cellCore: '姓名',
-                cemail: '邮箱',
+                cellCore: '细胞核',
+                charger:'负责人',
+                email:'邮箱',
+                dname:'单位名称',
+                autoCode:'自动编号',
+                cemail: '细胞核邮箱',
                 gemail: '指导邮箱',
                 lastYear: '2015',
                 thisYear: '2016',
@@ -16,7 +20,7 @@ var hetong = {
                 var html = [];
                 $.each(row, function (key, value) {
                     if(typeof value == "number") value += " 元";
-                    html.push('<p><b>' + hetong.htManager.zhidao.coldefine[key] + ':</b> ' + value + '</p>');
+                    html.push('<p><b>' + (hetong.htManager.zhidao.coldefine[key]?hetong.htManager.zhidao.coldefine[key]:key) + ':</b> ' + value + '</p>');
                 });
                 return html.join('');
             },
@@ -41,8 +45,9 @@ var hetong = {
                 })
                 return '<a>'+ round2(sum,2)+'</a>';
             },
-            onDblClickRow: function(row, $element, field){
-                var url = 'hetong/cellsView';
+            onCoreClickRow: function(row, $element, field){
+                var url = 'hetong/cells';
+                session.table.coreClickRow = row;
                 if(url && url!=''){
                     var cellViews = $('#cellsview');
                     var table = cellViews.find('table');
@@ -52,31 +57,111 @@ var hetong = {
                     $('#guidance').hide();
                     $('#cellsview').show();
                     getBufferView(url,function(view){
+//                        var row = $('#ht_guidance_table').bootstrapTable('getSelections');
                         var view = $(view);
                         var cvContainer = $('#cellsview');
                         cvContainer.html("");
                         var ul = view.find('form ul');
                         var data = $('#ht_guidance_table').bootstrapTable('getData');
+                        view.find('#ht_find_cells').html('<input type="hidden" name="email" value="'+ (row.email ? row.email:row.cemail) + '"/>'+ (row.username ? row.username:row.cellCore));
                         $.each(data, function(i, obj){
-                            var li = $('<li><a><span class="sr-only">'+ obj.email +'</span>' + obj.username + '</a>');
+                            var email = obj.email ? obj.email:obj.cemail;
+                            var username = obj.username ? obj.username:obj.cellCore;
+                            var li = $('<li><a><span class="sr-only">'+ email +'</span>' + username + '</a>');
                             li.appendTo(ul);
-                            if(0 === i){
-                                view.find('#ht_find_cells').html('<input type="hidden" name="email" value="'+ row.email + '"/>'+ row.username);
-                            }
+//                            if(0 === i){
+//                                view.find('#ht_find_cells').html('<input type="hidden" name="email" value="'+ email + '"/>'+ username);
+//                            }
                         })
-                        view.appendTo($('#cellsview'));
+                        view.appendTo(cvContainer);
                         $('#ht_cellsView_table').bootstrapTable({
-                            url:'public/hetong/getAllCells.action',
+                            url:'public/hetong/getCoreCells.action',
                             queryParams: function(params){
-                                params.email = row.email;
+//                                if(!params.email){
+                                    params.email = row.cemail;
+//                                }
+                                return params;
+                            },
+                            onClickRow: hetong.htManager.zhidao.onCellsClickRow
+                        });
+                    })
+                }
+            },
+            onCellsClickRow: function(row, $element, field){
+                var url = 'hetong/users';
+                if(url && url!=''){
+                    var cellViews = $('#user_list_view');
+                    cellViews.html("");
+                    $('#user_list_view').show();
+                    $('#cellsview').hide();
+                    getBufferView(url,function(view){
+                        var view = $(view);
+                        var cvContainer = $('#user_list_view');
+                        var ul = view.find('form ul');
+                        var data = $('#ht_cellsView_table').bootstrapTable('getData');
+                        view.find('#ht_find_ulist').html('<input type="hidden" name="email" value="'+ row.email + '"/>'+ row.charger);
+                        $.each(data, function(i, obj){
+                            var email = obj.email;
+                            var username = obj.charger;
+                            var li = $('<li><a><span class="sr-only">'+ email +'</span>' + username + '</a>');
+                            li.appendTo(ul);
+                        })
+                        view.appendTo(cvContainer);
+                        $('#ht_ulist_table').bootstrapTable({
+                            url:'public/hetong/getUserList.action',
+                            queryParams: function(params){
+//                                if(!params.email){
+                                params.email = row.cemail;
+//                                }
+                                return params;
+                            },
+                            onClickRow: hetong.htManager.zhidao.onUlistClickRow
+                        });
+                    })
+                }
+            },
+            onUlistClickRow: function(row, $element, field){
+                var url = 'hetong/contracts';
+                if(url && url!=''){
+                    var cellViews = $('#ht_detail');
+                    cellViews.html("");
+                    $('#user_list_view').hide();
+                    $('#ht_detail').show();
+                    getBufferView(url,function(view){
+                        var view = $(view);
+                        var cvContainer = $('#ht_detail');
+                        var ul = view.find('ul.dropdown-menu');
+                        var data  = $('#ht_ulist_table').bootstrapTable('getData');
+                        view.find('#ht_contract_find').html('<input type="hidden" name="autoCode" value="'+ row.autoCode + '"/>'+ (row.dname.length<8?row.dname:(row.dname.substring(0,6)+"…")));
+                        $.each(data, function(i, obj){
+                            var autoCode = obj.autoCode;
+                            var dname = obj.dname;
+                            var li = $('<li><a><span class="sr-only">'+ autoCode +'</span>' + (dname.length<8?dname:(dname.substring(0,6)+'…')) + '</a>');
+                            li.appendTo(ul);
+                        })
+                        view.appendTo(cvContainer);
+                        $('#ht_sk_table').bootstrapTable({
+                            url:'public/hetong/getShoukuan.action',
+                            query:{id:row.autoCode},
+                            queryParams: function(params){
+                                if(row.autoCode){
+                                    params.id = row.autoCode;
+                                }
+                                return params;
+                            },
+                        });
+                        $('#ht_ys_table').bootstrapTable({
+                            url:'public/hetong/getYingshou.action',
+                            query:{id:row.autoCode},
+                            queryParams: function(params){
+                                if(row.autoCode){
+                                    params.id = row.autoCode;
+                                }
                                 return params;
                             }
                         });
                     })
                 }
-                console.log(row);
-                console.log($element);
-                console.log(field);
             },
             onDblClickRow2: function(row, $element, field){
                 var cellViews = $('#cellsview');
@@ -145,6 +230,18 @@ var hetong = {
                         }
                     ]
                 });
+            },
+            toggleCellCore: function(email){
+                $('#ht_cellsView_table').bootstrapTable('refresh',{
+                    silent:true,
+                    query:{email:email}
+                })
+            },
+            toggleUserList: function(email){
+                $('#ht_ulist_table').bootstrapTable('refresh',{
+                    silent:true,
+                    query:{email:email}
+                })
             }
         },
         testTable: function(){

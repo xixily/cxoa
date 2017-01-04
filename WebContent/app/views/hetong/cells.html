@@ -1,25 +1,22 @@
 <div id="cells_view">
+    <h4 style="text-align:center">销售列表</h4>
     <div id="ht_cells_toolbar">
         <form action="#" class="form-inline" role="form">
             <div class="input-group">
-                <div id="ht_customer_find" class="input-group-btn">
-                    <button class="btn btn-default fropdown-toggle" data-toggle="dropdown" data-target="#ht_find_user_ul" type="button">
+                <div id="ht_cells_find" class="input-group-btn">
+                    <button class="btn btn-default fropdown-toggle" data-toggle="dropdown" type="button">
                         <span id="ht_find_cells" target="text"><input type="hidden" name="email" value=""/></span><span class="caret"></span>
                     </button>
-                        <span id="ht_find_cells_ul">
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a><span class="sr-only">_email_</span><span>_username_</span></a>
-                                </li>
-                            </ul>
-                        </span>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                        </li>
+                    </ul>
                     <button type="button" class="btn btn-default" onclick=" $('#cellsview').hide();$('#guidance').show();"><i class="fa fa-arrow-circle-left"> </i> 返回</button>
                 </div>
             </div>
         </form>
     </div>
     <table id="ht_cellsView_table"
-           data-toggle="table"
            data-height="568"
            data-show-header="true"
            data-show-columns="true"
@@ -38,14 +35,13 @@
            data-pagination="true"
            data-side-pagination="client"
            data-cache="false"
-           data-url="app/data/ud_data.json">
+           >
         <thead>
         <tr>
             <th data-field="dId" data-sortable="true" data-visible="false">自动编号</th>
-            <th data-field="dname" data-sortable="true">单位名称</th>
+            <th data-field="charger" data-sortable="true">负责人</th>
             <th data-field="email" data-sortable="true" data-visible="false">负责人邮箱</th>
             <th data-field="cemail" data-sortable="true" data-visible="false">细胞核邮箱</th>
-            <th data-field="charger" data-sortable="true" data-visible="false">负责人</th>
             <th data-field="lastYear" data-visible="false" data-sortable="true"  data-footer-formatter="hetong.htManager.zhidao.footerFormatter_2015"><span app-text="lastYear">2015</span>收款（元）</th>
             <th data-field="thisYear" data-visible="false" data-sortable="true" data-footer-formatter="hetong.htManager.zhidao.footerFormatter_2016"><span app-text="thisYear">2016</span>收款（元）</th>
             <th data-field="yingshou" data-sortable="true" data-footer-formatter="hetong.htManager.zhidao.footerFormatter_yingshou">应收</th>
@@ -54,7 +50,7 @@
     </table>
     <script type="text/javascript">
         $(document).ready(function(){
-            $('#ht_find_cells_ul a').bind('click',function(event){
+            $('#ht_cells_find li a').bind('click',function(event){
                 var text = $(this).html();
                 var value = $(this).find('.sr-only').html();
                 var hidden = $('<input type="hidden" name="email" value="' + value +'"/>');
@@ -63,6 +59,7 @@
                 closest.append(hidden[0]);
                 hetong.htManager.findCharger(value);
                 event.stopImmediatePropagation();
+                hetong.htManager.zhidao.toggleCellCore(value);
             })
         })
     </script>

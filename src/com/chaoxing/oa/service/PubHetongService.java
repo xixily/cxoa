@@ -5,14 +5,17 @@ import java.util.Map;
 
 import com.chaoxing.oa.entity.page.common.Page;
 import com.chaoxing.oa.entity.page.employee.PRenshiEmployee;
+import com.chaoxing.oa.entity.page.hetong.PContract;
 import com.chaoxing.oa.entity.page.hetong.PCustomerDepart;
 import com.chaoxing.oa.entity.page.hetong.PFapiao;
 import com.chaoxing.oa.entity.page.hetong.PItemPrice;
 import com.chaoxing.oa.entity.page.pub.hetong.Cells;
 import com.chaoxing.oa.entity.page.pub.hetong.PFapiaoDetail;
 import com.chaoxing.oa.entity.page.pub.hetong.PGuidanceView;
+import com.chaoxing.oa.entity.page.pub.hetong.PYingshou;
 import com.chaoxing.oa.entity.page.pub.hetong.PucfView;
-import com.chaoxing.oa.entity.page.pub.hetong.UserDepart;
+import com.chaoxing.oa.entity.page.pub.hetong.UserList;
+import com.chaoxing.oa.entity.po.hetong.ItemPrice;
 
 public interface PubHetongService {
 
@@ -31,13 +34,16 @@ public interface PubHetongService {
 	public  List<Cells> findCoreCellsCount(String cemail);
 	
 	//查找用户单位列表
-	public List<UserDepart> findUserListCount(String email, String charger);
+	public List<UserList> findUserListCount(String email, String charger);
 	
 	//查找用户单位合同列表
 	public List<PFapiaoDetail> findUserContractsCount(Integer autoCode);
 	
 	//查找合同发票信息
 	public void findContractFapiaoCount(Integer id);
+	
+	//查找应收统计
+	public List<PYingshou> findYingshouCount(Integer id);
 	
 	
 	
@@ -49,11 +55,17 @@ public interface PubHetongService {
 	
 	public void findUserList();
 	
-	public void findUserContracts();
+	public Map<String,Object> findContracts(PContract pcontract);
+	
+//	public Map<String,Object> findUserFapiao(Integer id);
 	
 	public Map<String, Object> findContractFapiaos(Page page, PFapiao pfapiao);
 	
 	public Map<String, Object> findContractItemPrice(Page page, PItemPrice ptprice);
+	
+	public List<PFapiao>  findUserFapiao(Integer id);
+	
+	public List<PItemPrice>  findUserItemprice(Integer id);
 	
 	public PCustomerDepart getUserList(Integer id);
 	
@@ -62,4 +74,5 @@ public interface PubHetongService {
 	public void getFapiaoDetail(Integer id);
 	
 	public PRenshiEmployee getUserByEmai(String email);
+
 }

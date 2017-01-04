@@ -2,8 +2,8 @@ package com.chaoxing.oa.entity.page.pub.hetong;
 
 import java.math.BigDecimal;
 
-public class UserDepart {
-	private Integer dId;
+public class UserList {
+	private Integer autoCode;
 	private Integer chargerId;
 	private String dname;
 	private String charger;
@@ -13,8 +13,8 @@ public class UserDepart {
 	private BigDecimal lastYear;
 	private BigDecimal yingshou;
 	
-	public Integer getdId() {
-		return dId;
+	public Integer getAutoCode() {
+		return autoCode;
 	}
 	public Integer getChargerId() {
 		return chargerId;
@@ -40,8 +40,8 @@ public class UserDepart {
 	public BigDecimal getYingshou() {
 		return yingshou;
 	}
-	public void setdId(Integer dId) {
-		this.dId = dId;
+	public void setAutoCode(Integer autoCode) {
+		this.autoCode = autoCode;
 	}
 	public void setChargerId(Integer chargerId) {
 		this.chargerId = chargerId;

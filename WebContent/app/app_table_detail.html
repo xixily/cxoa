@@ -334,6 +334,20 @@
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#ht_manager_sk" data-toggle="tab">收款</a></li>
                 <li role="presentation"><a href="#ht_manager_ys" data-toggle="tab">应收</a></li>
+                <div id="ht_contracts_toggle" class="btn-group pull-right">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        <input type="hidden" name="email"/>
+                        XXX<span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                    <button type="button" class="btn btn-default pull-right" onclick=" $('#ht_detail').hide();$('#user_list_view').show();"><i class="fa fa-arrow-circle-left"> </i> 返回</button>
+                </div>
             </ul>
             <div id="ht_customer" class="tab-content">
                 <!--<h4 style="text-align: center">用户单位列表</h4>-->

@@ -13,8 +13,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-@Entity
-@Table(name = "合同情况", schema = "")
+//@Entity
+//@Table(name = "合同情况", schema = "")
 @DynamicInsert(true)
 @DynamicUpdate(true)
 public class Contract implements Serializable{

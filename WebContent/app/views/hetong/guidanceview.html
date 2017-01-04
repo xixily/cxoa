@@ -35,35 +35,19 @@
     </div>
 
     <div id="cellsview" style="display: none">
-        <div id="ht_cells_toolbar">
-            <form action="#" class="form-inline" role="form">
-                <div class="input-group">
-                    <div id="ht_customer_find" class="input-group-btn">
-                        <button class="btn btn-default fropdown-toggle" data-toggle="dropdown" data-target="#ht_find_user_ul" type="button">
-                            <span id="ht_find_user" target="text"><input type="hidden" name="chargerId" value="黄云"/>黄云</span><span class="caret"></span>
-                        </button>
-                        <span id="ht_find_user_ul">
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a><span class="sr-only">1313</span>黄云</a></li>
-                                <li><a><span class="sr-only">2425</span>陆承彬</a></li>
-                                <li><a><span class="sr-only">331</span>潘阳</a></li>
-                                <li><a><span class="sr-only">414</span>杨自奎</a></li>
-                                <li><a><span class="sr-only">214</span>魏燕龙</a></li>
-                                <li><a><span class="sr-only">114</span>姚元飞</a></li>
-                                <li><a><span class="sr-only">112</span>曾超</a></li>
-                            </ul>
-                        </span>
-                        <button type="button" class="btn btn-default" onclick=" $('#cellsview').hide();$('#guidance').show();"><i class="fa fa-arrow-circle-left"> </i> 返回</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <table id="ht_customer_table">
-        </table>
+    </div>
+
+    <div id="user_list_view" style="display:none">
+    </div>
+
+    <div id="ht_detail" style="display:none">
+
     </div>
     <script type="text/javascript">
-        $('#ht_guidance_table').bootstrapTable({
-            onDblClickRow: hetong.htManager.zhidao.onDblClickRow
-        });
+        $(document).ready(function(){
+            $('#ht_guidance_table').bootstrapTable({
+                onClickRow: hetong.htManager.zhidao.onCoreClickRow
+            });
+        })
     </script>
 </div>

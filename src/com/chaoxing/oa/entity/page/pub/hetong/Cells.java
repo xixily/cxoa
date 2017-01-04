@@ -6,7 +6,7 @@ public class Cells {
 	private Integer id;
 	private String email;
 	private String cemail;
-	private String username;
+	private String charger;
 	private BigDecimal lastYear;
 	private BigDecimal thisYear;
 	private BigDecimal yingshou;
@@ -19,8 +19,8 @@ public class Cells {
 	public String getCemail() {
 		return cemail;
 	}
-	public String getUsername() {
-		return username;
+	public String getCharger() {
+		return charger;
 	}
 	public BigDecimal getLastYear() {
 		return lastYear;
@@ -40,8 +40,8 @@ public class Cells {
 	public void setCemail(String cemail) {
 		this.cemail = cemail;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setCharger(String charger) {
+		this.charger = charger;
 	}
 	public void setLastYear(BigDecimal lastYear) {
 		this.lastYear = lastYear;

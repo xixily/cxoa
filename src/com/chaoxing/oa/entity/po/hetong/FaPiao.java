@@ -1,6 +1,8 @@
 package com.chaoxing.oa.entity.po.hetong;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,25 +14,25 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-//@Entity
-//@Table(name="发票情况")
+@Entity
+@Table(name="发票情况")
 @DynamicInsert(true)
 @DynamicUpdate(true)
 public class FaPiao implements Serializable{
-	private static final long serialVersionUID = 6160133666108543609L;
+	private static final long serialVersionUID = 6234792052500321106L;
 	private Integer id;
-	private String date;
+	private Date date;
 	private String company;
 	private String departMement;
 	private String type;
 	private String name;
-	private Float money;
+	private BigDecimal money;
 	private String remark;
 	private Integer hetongNumber;
-	private Float huiKuan;
+	private BigDecimal huiKuan;
 	private String capitalMoney;
 	private String Applicant;
-	private String remittanceDate;
+	private Date remittanceDate;
 	private Integer queryStatus; 
 	private String fundType; 
 	private String account;
@@ -42,7 +44,7 @@ public class FaPiao implements Serializable{
 		return id;
 	}
 	@Column(name = "开票时间")
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 	@Column(name = "开票公司")
@@ -62,7 +64,7 @@ public class FaPiao implements Serializable{
 		return name;
 	}
 	@Column(name = "金额")
-	public Float getMoney() {
+	public BigDecimal getMoney() {
 		return money;
 	}
 	@Column(name = "备注")
@@ -74,7 +76,7 @@ public class FaPiao implements Serializable{
 		return hetongNumber;
 	}
 	@Column(name = "回款情况")
-	public Float getHuiKuan() {
+	public BigDecimal getHuiKuan() {
 		return huiKuan;
 	}
 	@Column(name = "大写金额")
@@ -86,7 +88,7 @@ public class FaPiao implements Serializable{
 		return Applicant;
 	}
 	@Column(name = "汇款时间")
-	public String getRemittanceDate() {
+	public Date getRemittanceDate() {
 		return remittanceDate;
 	}
 	@Column(name = "查询情况")
@@ -108,7 +110,7 @@ public class FaPiao implements Serializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 	public void setCompany(String company) {
@@ -123,7 +125,7 @@ public class FaPiao implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public void setMoney(Float money) {
+	public void setMoney(BigDecimal money) {
 		this.money = money;
 	}
 	public void setRemark(String remark) {
@@ -132,7 +134,7 @@ public class FaPiao implements Serializable{
 	public void setHetongNumber(Integer hetongNumber) {
 		this.hetongNumber = hetongNumber;
 	}
-	public void setHuiKuan(Float huiKuan) {
+	public void setHuiKuan(BigDecimal huiKuan) {
 		this.huiKuan = huiKuan;
 	}
 	public void setCapitalMoney(String capitalMoney) {
@@ -141,7 +143,7 @@ public class FaPiao implements Serializable{
 	public void setApplicant(String applicant) {
 		Applicant = applicant;
 	}
-	public void setRemittanceDate(String remittanceDate) {
+	public void setRemittanceDate(Date remittanceDate) {
 		this.remittanceDate = remittanceDate;
 	}
 	public void setQueryStatus(Integer queryStatus) {

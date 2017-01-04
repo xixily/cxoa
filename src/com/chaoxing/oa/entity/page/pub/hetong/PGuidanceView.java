@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 public class PGuidanceView {
 	private String cellCore;
+	private String email;
 	private String cemail;
 	private String gemail;
 	private BigDecimal lastYear;
@@ -12,6 +13,10 @@ public class PGuidanceView {
 	
 	public String getCellCore() {
 		return cellCore;
+	}
+
+	public String getEmail() {
+		return email;
 	}
 
 	public String getCemail() {
@@ -38,6 +43,10 @@ public class PGuidanceView {
 		this.cellCore = cellCore;
 	}
 
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 	public void setCemail(String cemail) {
 		this.cemail = cemail;
 	}

@@ -12,8 +12,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-@Entity
-@Table(name = "公司代码")
+//@Entity
+//@Table(name = "公司代码")
 @DynamicInsert(true)
 @DynamicUpdate(true)
 public class CompanyInfo implements Serializable {

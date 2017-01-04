@@ -1,7 +1,7 @@
 package com.chaoxing.oa.entity.po.hetong;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,15 +13,15 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-//@Entity
-//@Table(name = "合同情况", schema = "")
+@Entity
+@Table(name = "合同情况", schema = "")
 @DynamicInsert(true)
 @DynamicUpdate(true)
 public class Contract implements Serializable{
 	private static final long serialVersionUID = 211351489592348383L;
 	private Integer id;
-	private Timestamp dengjiTime;
-	private Timestamp signedTime;
+	private Date dengjiTime;
+	private Date signedTime;
 	private String company;
 	private String depart;
 	private String guidangCode;
@@ -32,7 +32,7 @@ public class Contract implements Serializable{
 	private String area;
 	private String province;
 	private String operator;
-	private Timestamp sealedTime;
+	private Date sealedTime;
 	private String coopStatus;
 	private String guidangDate;
 	private String youjiStatus;
@@ -42,7 +42,7 @@ public class Contract implements Serializable{
 	private String remarksText;
 	private Float year;
 	private Float kaipiaoMoney;
-	private Timestamp toCaiwuTime;
+	private Date toCaiwuTime;
 	private String payMethod;
 	private Integer cid;//用户单位表外键
 	private String suozaijuan;
@@ -56,7 +56,7 @@ public class Contract implements Serializable{
 	private Integer videoLibs;
 	private Integer duxiu;
 	private Integer MEDALINK;
-	private Timestamp terminateTime;
+	private Date terminateTime;
 	private String xingzhi;
 	private String firstLevel;//一级
 	private String secondLevel;//二级
@@ -71,11 +71,11 @@ public class Contract implements Serializable{
 		return id;
 	}
 	@Column(name = "登记时间")
-	public Timestamp getDengjiTime() {
+	public Date getDengjiTime() {
 		return dengjiTime;
 	}
 	@Column(name = "签定时间")
-	public Timestamp getSignedTime() {
+	public Date getSignedTime() {
 		return signedTime;
 	}
 	@Column(name = "所属公司")
@@ -119,7 +119,7 @@ public class Contract implements Serializable{
 		return operator;
 	}
 	@Column(name = "盖章时间")
-	public Timestamp getSealedTime() {
+	public Date getSealedTime() {
 		return sealedTime;
 	}
 	@Column(name = "对方盖章情况")
@@ -159,7 +159,7 @@ public class Contract implements Serializable{
 		return kaipiaoMoney;
 	}
 	@Column(name = "转财务时间")
-	public Timestamp getToCaiwuTime() {
+	public Date getToCaiwuTime() {
 		return toCaiwuTime;
 	}
 	@Column(name = "付款方式")
@@ -215,7 +215,7 @@ public class Contract implements Serializable{
 		return MEDALINK;
 	}
 	@Column(name = "合同终止时间")
-	public Timestamp getTerminateTime() {
+	public Date getTerminateTime() {
 		return terminateTime;
 	}
 	@Column(name = "性质")
@@ -249,10 +249,10 @@ public class Contract implements Serializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public void setDengjiTime(Timestamp dengjiTime) {
+	public void setDengjiTime(Date dengjiTime) {
 		this.dengjiTime = dengjiTime;
 	}
-	public void setSignedTime(Timestamp signedTime) {
+	public void setSignedTime(Date signedTime) {
 		this.signedTime = signedTime;
 	}
 	public void setCompany(String company) {
@@ -285,7 +285,7 @@ public class Contract implements Serializable{
 	public void setOperator(String operator) {
 		this.operator = operator;
 	}
-	public void setSealedTime(Timestamp sealedTime) {
+	public void setSealedTime(Date sealedTime) {
 		this.sealedTime = sealedTime;
 	}
 	public void setCoopStatus(String coopStatus) {
@@ -315,7 +315,7 @@ public class Contract implements Serializable{
 	public void setKaipiaoMoney(Float kaipiaoMoney) {
 		this.kaipiaoMoney = kaipiaoMoney;
 	}
-	public void setToCaiwuTime(Timestamp toCaiwuTime) {
+	public void setToCaiwuTime(Date toCaiwuTime) {
 		this.toCaiwuTime = toCaiwuTime;
 	}
 	public void setPayMethod(String payMethod) {
@@ -357,7 +357,7 @@ public class Contract implements Serializable{
 	public void setMEDALINK(Integer mEDALINK) {
 		MEDALINK = mEDALINK;
 	}
-	public void setTerminateTime(Timestamp terminateTime) {
+	public void setTerminateTime(Date terminateTime) {
 		this.terminateTime = terminateTime;
 	}
 	public void setXingzhi(String xingzhi) {

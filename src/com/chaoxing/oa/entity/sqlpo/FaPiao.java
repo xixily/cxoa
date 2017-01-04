@@ -1,6 +1,7 @@
 package com.chaoxing.oa.entity.sqlpo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,12 +13,11 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-@Entity
-@Table(name="发票情况")
+//@Entity
+//@Table(name="发票情况")
 @DynamicInsert(true)
 @DynamicUpdate(true)
 public class FaPiao implements Serializable{
-	private static final long serialVersionUID = 6160133666108543609L;
 	private Integer id;
 	private String date;
 	private String company;
@@ -30,7 +30,7 @@ public class FaPiao implements Serializable{
 	private Float huiKuan;
 	private String capitalMoney;
 	private String Applicant;
-	private String remittanceDate;
+	private Date remittanceDate;
 	private Integer queryStatus; 
 	private String fundType; 
 	private String account;
@@ -86,7 +86,7 @@ public class FaPiao implements Serializable{
 		return Applicant;
 	}
 	@Column(name = "汇款时间")
-	public String getRemittanceDate() {
+	public Date getRemittanceDate() {
 		return remittanceDate;
 	}
 	@Column(name = "查询情况")
@@ -141,7 +141,7 @@ public class FaPiao implements Serializable{
 	public void setApplicant(String applicant) {
 		Applicant = applicant;
 	}
-	public void setRemittanceDate(String remittanceDate) {
+	public void setRemittanceDate(Date remittanceDate) {
 		this.remittanceDate = remittanceDate;
 	}
 	public void setQueryStatus(Integer queryStatus) {

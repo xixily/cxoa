@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chaoxing.oa.entity.page.common.Json;
+import com.chaoxing.oa.entity.page.common.Page;
 import com.chaoxing.oa.entity.page.employee.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.hetong.PCustomerDepart;
+import com.chaoxing.oa.entity.page.hetong.PFapiao;
 import com.chaoxing.oa.entity.page.system.SessionInfo;
 import com.chaoxing.oa.service.PubHetongService;
 import com.chaoxing.oa.util.ResourceUtil;
@@ -80,8 +82,8 @@ public class PubHetongController {
 		if(null!=level && "细胞核".equals(level)){
 			result.setObj(pubHetongService.findCoreCellsCount(semail));
 		}else if(null!=level && "指导".equals(level)){
-			if(null!=email && "".equals(email)){
-				result.setObj(pubHetongService.findCellCoresCount(email));
+			if(null!=email && !"".equals(email)){
+				result.setObj(pubHetongService.findCoreCellsCount(email));
 				result.setSuccess(true);
 			}else{
 				result.setMsg("缺少email！~");
@@ -102,7 +104,8 @@ public class PubHetongController {
 			semail = "chuanming@chaoxing.com";
 			PRenshiEmployee pemployee = pubHetongService.getUserByEmai(email);
 			if(semail.equals(pemployee.getEmail()) || semail.equals(pemployee.getCellCoreEmail()) || semail.equals(pemployee.getGuidanceEmail())){
-				pubHetongService.findUserListCount(email, pemployee.getUsername());
+				result.setObj(pubHetongService.findUserListCount(email, pemployee.getUsername()));
+				result.setSuccess(true);
 			}
 		}else{
 			result.setMsg("email信息为空，无法查询！~");
@@ -120,7 +123,7 @@ public class PubHetongController {
 			level = "指导";
 			String email = sessionInfo.getEmail();
 			email = "chuanming@chaoxing.com";
-			PRenshiEmployee pemployee = pubHetongService.getUserByEmai(email);
+//			PRenshiEmployee pemployee = pubHetongService.getUserByEmai(email);
 			pubHetongService.findUserList();
 			
 			PCustomerDepart pcd = pubHetongService.getUserList(id);
@@ -128,6 +131,11 @@ public class PubHetongController {
 				pubHetongService.findUserContractsCount(id);
 			}
 			pubHetongService.findUserContractsCount(id);
+			Page page = new Page();
+			page.setPage(1);
+			PFapiao pfapiao = new PFapiao();
+			pfapiao.setId(id);
+			pubHetongService.findContractFapiaos(page, pfapiao);
 			if(null!=level && "指导".equals(level)){
 				result.setObj(pubHetongService.findCellCoresCount(email));
 				result.setSuccess(true);
@@ -138,6 +146,51 @@ public class PubHetongController {
 			else{
 				result.setMsg("只有指导可以查看他下面的细胞核情况~。");
 			}
+		}else{
+			result.setMsg("Id 不存在。");
+		}
+		return result;
+	}
+	
+	
+	@RequestMapping(value="getShoukuan")
+	@ResponseBody
+	public Json getShoukuan(Integer id, HttpSession session){
+		Json result = new Json();
+		if(null!=id && id!=0){
+			SessionInfo sessionInfo = getSessionInfo(session);
+			String email = sessionInfo.getEmail();
+			email = "chuanming@chaoxing.com";
+			PCustomerDepart pcd = pubHetongService.getUserList(id);
+//			if(email.equals(pcd.getEmail()) || email.equals(pcd.getCellCoreEmail()) || email.equals(pcd.getGemail())){
+				result.setObj(pubHetongService.findUserFapiao(id));
+				result.setSuccess(true);
+//			}else{
+//				result.setMsg("你没有查看这个用户单位的权限。");
+//			}
+		}else{
+			result.setMsg("Id 不存在。");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value="getYingshou")
+	@ResponseBody
+	public Json getYingshou(Integer id, HttpSession session){
+		Json result = new Json();
+		
+		if(null!=id && id!=0){
+			SessionInfo sessionInfo = getSessionInfo(session);
+			String email = sessionInfo.getEmail();
+			email = "chuanming@chaoxing.com";
+			PCustomerDepart pcd = pubHetongService.getUserList(id);
+//			if(email.equals(pcd.getEmail()) || email.equals(pcd.getCellCoreEmail()) || email.equals(pcd.getGemail())){
+//				result.setObj(pubHetongService.findYingshouCount(id));
+				result.setObj(pubHetongService.findYingshouCount(id));
+				result.setSuccess(true);
+//			}else{
+//				result.setMsg("你没有查看这个用户单位的权限。");
+//			}
 		}else{
 			result.setMsg("Id 不存在。");
 		}

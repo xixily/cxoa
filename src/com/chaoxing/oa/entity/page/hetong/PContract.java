@@ -1,11 +1,11 @@
 package com.chaoxing.oa.entity.page.hetong;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class PContract {
 	private Integer id;
-	private Timestamp dengjiTime;
-	private Timestamp signedTime;
+	private Date dengjiTime;
+	private Date signedTime;
 	private String company;
 	private String depart;
 	private String guidangCode;
@@ -16,7 +16,7 @@ public class PContract {
 	private String area;
 	private String province;
 	private String operator;
-	private Timestamp sealedTime;
+	private Date sealedTime;
 	private String coopStatus;
 	private String guidangDate;
 	private String youjiStatus;
@@ -26,7 +26,7 @@ public class PContract {
 	private String remarksText;
 	private Float year;
 	private Float kaipiaoMoney;
-	private Timestamp toCaiwuTime;
+	private Date toCaiwuTime;
 	private String payMethod;
 	private Integer cid;//用户单位表外键
 	private String suozaijuan;
@@ -40,7 +40,7 @@ public class PContract {
 	private Integer videoLibs;
 	private Integer duxiu;
 	private Integer MEDALINK;
-	private Timestamp terminateTime;
+	private Date terminateTime;
 	private String xingzhi;
 	private String firstLevel;//一级
 	private String secondLevel;//二级
@@ -51,10 +51,10 @@ public class PContract {
 	public Integer getId() {
 		return id;
 	}
-	public Timestamp getDengjiTime() {
+	public Date getDengjiTime() {
 		return dengjiTime;
 	}
-	public Timestamp getSignedTime() {
+	public Date getSignedTime() {
 		return signedTime;
 	}
 	public String getCompany() {
@@ -87,7 +87,7 @@ public class PContract {
 	public String getOperator() {
 		return operator;
 	}
-	public Timestamp getSealedTime() {
+	public Date getSealedTime() {
 		return sealedTime;
 	}
 	public String getCoopStatus() {
@@ -117,7 +117,7 @@ public class PContract {
 	public Float getKaipiaoMoney() {
 		return kaipiaoMoney;
 	}
-	public Timestamp getToCaiwuTime() {
+	public Date getToCaiwuTime() {
 		return toCaiwuTime;
 	}
 	public String getPayMethod() {
@@ -159,7 +159,7 @@ public class PContract {
 	public Integer getMEDALINK() {
 		return MEDALINK;
 	}
-	public Timestamp getTerminateTime() {
+	public Date getTerminateTime() {
 		return terminateTime;
 	}
 	public String getXingzhi() {
@@ -186,10 +186,10 @@ public class PContract {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public void setDengjiTime(Timestamp dengjiTime) {
+	public void setDengjiTime(Date dengjiTime) {
 		this.dengjiTime = dengjiTime;
 	}
-	public void setSignedTime(Timestamp signedTime) {
+	public void setSignedTime(Date signedTime) {
 		this.signedTime = signedTime;
 	}
 	public void setCompany(String company) {
@@ -222,7 +222,7 @@ public class PContract {
 	public void setOperator(String operator) {
 		this.operator = operator;
 	}
-	public void setSealedTime(Timestamp sealedTime) {
+	public void setSealedTime(Date sealedTime) {
 		this.sealedTime = sealedTime;
 	}
 	public void setCoopStatus(String coopStatus) {
@@ -252,7 +252,7 @@ public class PContract {
 	public void setKaipiaoMoney(Float kaipiaoMoney) {
 		this.kaipiaoMoney = kaipiaoMoney;
 	}
-	public void setToCaiwuTime(Timestamp toCaiwuTime) {
+	public void setToCaiwuTime(Date toCaiwuTime) {
 		this.toCaiwuTime = toCaiwuTime;
 	}
 	public void setPayMethod(String payMethod) {
@@ -294,7 +294,7 @@ public class PContract {
 	public void setMEDALINK(Integer mEDALINK) {
 		MEDALINK = mEDALINK;
 	}
-	public void setTerminateTime(Timestamp terminateTime) {
+	public void setTerminateTime(Date terminateTime) {
 		this.terminateTime = terminateTime;
 	}
 	public void setXingzhi(String xingzhi) {

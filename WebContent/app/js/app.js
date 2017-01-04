@@ -7,6 +7,7 @@ $(function() {
     sideBarClick();
     initClickHandler();
     enterKeyLisener();
+    init();
 });
 $(function() {//监听屏幕变化，重组slider 导航条
     $(window).bind("load resize", function() {
@@ -14,13 +15,13 @@ $(function() {//监听屏幕变化，重组slider 导航条
         var width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
         if (width < 768) {
             $('div.navbar-collapse').addClass('collapse');
-            topOffset = 100; // 2-row-menu
+            topOffset = 112; // 2-row-menu
         } else {
             $('div.navbar-collapse').removeClass('collapse');
         }
 
         var height = ((this.window.innerHeight > 0) ? this.window.innerHeight : this.screen.height) - 1;
-        height = height - topOffset;
+//        height = height - topOffset;
         if (height < 1) height = 1;
         if (height > topOffset) {
             $("#page-wrapper").css("min-height", (height) + "px");
@@ -41,6 +42,7 @@ $(function() {//监听屏幕变化，重组slider 导航条
             break;
         }
     }
+    responsiveHandler.run();
 });
 //var handler = window;
 (function($){
@@ -187,8 +189,8 @@ $(function() {//监听屏幕变化，重组slider 导航条
     $.messager = {
         alert: function(title,content,okfn){
             var options = appDialog.getDefaults();
-            options.title = title;
-            options.content = content;
+            options.title = title ? title : options.title;
+            options.content = content ? content : options.content;
             if(okfn && typeof okfn == 'function') options.buttons[0].handler = okfn;
 //            if(buttons && buttons.length>0){
 //                var btn = options.buttons[0];
@@ -269,7 +271,8 @@ session = {
     sidebar:{},
     opened:'',
     logined:false,
-    equipment : 'computer'
+    equipment : 'computer',
+    table:{}
 }
 
 /**
@@ -327,6 +330,17 @@ app = {
 
 basePath="./"
 imgPath = "./app/images/";
+
+/**
+ * 初始化菜单
+ */
+function init(){
+    var height = ((this.window.innerHeight > 0) ? this.window.innerHeight : this.screen.height) - 1;
+    if (height < 1) height = 1;
+    if (height > 112) {
+        $("#page-wrapper").css("min-height", (height) + "px");
+    }
+}
 
 function getView(view, callback, errorCallback) {
     $.ajax({
@@ -510,5 +524,27 @@ function round2(number,fractiondigits){
 }
 
 function responseHandler(res) {
-    return res.obj;
+    if(!res.success){
+        $.messager.alert('错误提示：',res.msg);
+    }
+    return res.success ? res.obj ? res.obj:new Array():new Array();' '
+}
+
+function queryParams(){
+
+}
+
+function show(){
+    alert('toggle');
+}
+var responsiveHandler = {
+    run: function(){
+        $.each(responsiveHandler.handler,function(i,obj){
+          if(typeof obj == 'function'){
+              $(obj);
+          }
+        })
+    },
+    handler: {
+    }
 }
