@@ -17,7 +17,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name="roleResources", schema="")
+@Table(name="角色资源", schema="")
 @DynamicUpdate(true)
 @DynamicInsert(true)
 public class RoleResources implements Serializable {
@@ -25,8 +25,9 @@ public class RoleResources implements Serializable {
 	private int id;
 	private UserRole roleId;
 	private Menu menuId;
-	private String url;
-	private String sortCode;
+//	private String url;
+//	private String sortCode;
+	
 	@Id
 	@Column
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -44,17 +45,17 @@ public class RoleResources implements Serializable {
 	public Menu getMenuId() {
 		return menuId;
 	}
-	@Column
-	public String getUrl() {
-		return url;
-	}
-	@Column
-	public String getSortCode() {
-		return sortCode;
-	}
-	public void setSortCode(String sortCode) {
-		this.sortCode = sortCode;
-	}
+//	@Column
+//	public String getUrl() {
+//		return url;
+//	}
+//	@Column
+//	public String getSortCode() {
+//		return sortCode;
+//	}
+//	public void setSortCode(String sortCode) {
+//		this.sortCode = sortCode;
+//	}
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -64,8 +65,8 @@ public class RoleResources implements Serializable {
 	public void setMenuId(Menu menuId) {
 		this.menuId = menuId;
 	}
-	public void setUrl(String url) {
-		this.url = url;
-	}
+//	public void setUrl(String url) {
+//		this.url = url;
+//	}
 	
 }

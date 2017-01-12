@@ -2198,11 +2198,10 @@ shebaoSummary : {
 			confirmDialog.createDialog(
 					'您确定工资已经发放完毕了吗？',function(confirmId){
 							confirmDialog.destoryDialog(confirmId);
-							$.messager.alert('提示','发放完毕功能有待改进，暂不开放~');
-//							$.post('employee/fangfa.action',null,function(result){
-//								result = eval("("+result+")");
-//								$.messager.alert('发放提示',result.msg); 
-//							})
+							$.post('employee/fangfa.action',null,function(result){
+								result = eval("("+result+")");
+								$.messager.alert('发放提示',result.msg); 
+							})
 						});
 		}
 	},

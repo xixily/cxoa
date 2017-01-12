@@ -33,6 +33,10 @@ public class CustomerDepart implements Serializable {
 	private String secondLevel;//二级
 	private String thirdLevel;//三级
 	private String fourthLevel;//四级
+	private String email;
+	private String cemail;
+	private String gemail;
+	private String hemail;
 	@Id
 	@Column(name = "自动编号")
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -94,6 +98,34 @@ public class CustomerDepart implements Serializable {
 	@Column(name = "小组")
 	public String getFourthLevel() {
 		return fourthLevel;
+	}
+	@Column(name="销售邮箱")
+	public String getEmail() {
+		return email;
+	}
+	@Column(name="细胞核邮箱")
+	public String getCemail() {
+		return cemail;
+	}
+	@Column(name="省级指导邮箱")
+	public String getGemail() {
+		return gemail;
+	}
+	@Column(name="行业指导邮箱")
+	public String getHemail() {
+		return hemail;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public void setGemail(String gemail) {
+		this.gemail = gemail;
+	}
+	public void setCemail(String cemail) {
+		this.cemail = cemail;
+	}
+	public void setHemail(String hemail) {
+		this.hemail = hemail;
 	}
 	public void setId(Integer id) {
 		this.id = id;

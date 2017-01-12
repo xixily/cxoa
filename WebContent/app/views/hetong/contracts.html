@@ -1,20 +1,14 @@
 <div id="ht_contracts_detail">
-    <ul class="nav nav-tabs" role="tablist">
+    <ul class="nav nav-tabs" role="tablist" style="margin-top: 16px;">
         <li role="presentation" class="active"><a href="#contracts_detail_sk" data-toggle="tab">收款</a></li>
         <li role="presentation"><a href="#contracts_detail_ys" data-toggle="tab">应收</a></li>
         <div id="ht_contracts_toggle" class="btn-group pull-right">
             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                <span id="ht_contract_find" target="text">
-                <input type="hidden" name="email"/>
+                <span id="ht_contract_find_text" target="text">
                 </span>
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
-                <!--<li><a href="#">Action</a></li>-->
-                <!--<li><a href="#">Another action</a></li>-->
-                <!--<li><a href="#">Something else here</a></li>-->
-                <!--<li class="divider"></li>-->
-                <!--<li><a href="#">Separated link</a></li>-->
             </ul>
             <button type="button" class="btn btn-default pull-right" onclick=" $('#ht_detail').hide();$('#user_list_view').show();"><i class="fa fa-arrow-circle-left"> </i> 返回</button>
         </div>
@@ -37,7 +31,9 @@
                    data-pagination="true"
                    data-side-pagination="client"
                    data-cache="false"
-                   data-url="public/hetong/getShoukuan.action">
+                   data-page-size="50"
+                   data-page-list="[15,30,50,100]"
+                   >
                 <thead>
                 <tr>
                     <th data-field="remittanceDate" data-sortable="true">时间</th>
@@ -67,7 +63,7 @@
                    data-pagination="true"
                    data-side-pagination="client"
                    data-cache="false"
-                   data-url="public/hetong/getYingshou.action">
+                   >
                 <thead>
                 <tr>
                     <th data-field="cid" data-visible="false" data-sortable="true">合同编号</th>
@@ -82,4 +78,15 @@
             </table>
         </div>
     </div>
+    <script>
+        $(document).ready(function(){
+            $('#ht_contracts_toggle .dropdown-menu a').bind('click',function(event){
+                var data =$(this).parent().data('data');
+                var text = $(this).html();
+                var closest = $('#ht_contract_find_text');
+                closest.html(text);
+                hetong.htManager.zhidao.toggleContracts(data);
+            })
+        })
+    </script>
 </div>

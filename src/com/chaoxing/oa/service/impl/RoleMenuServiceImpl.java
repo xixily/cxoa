@@ -3,11 +3,13 @@ package com.chaoxing.oa.service.impl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,23 +17,22 @@ import com.chaoxing.oa.dao.BaseDaoI;
 import com.chaoxing.oa.entity.page.system.PMenu;
 import com.chaoxing.oa.entity.page.system.PUlList;
 import com.chaoxing.oa.entity.po.system.Menu;
-import com.chaoxing.oa.entity.po.system.RoleResources;
+import com.chaoxing.oa.entity.po.view.RoleResourcesV;
 //import com.chaoxing.oa.entity.po.RoleRights;
 import com.chaoxing.oa.service.RoleMenuService;
 
 @Service("roleMenuService")
 /*@Transactional*/
 public class RoleMenuServiceImpl implements RoleMenuService {
-//	private static final Logger logger = Logger.getLogger(RoleMenuServiceImpl.class);
-//	private BaseDaoI<RoleRights> rolerightsDao;
+	private static final Logger logger = Logger.getLogger(RoleMenuServiceImpl.class);
 	private BaseDaoI<Menu> menuDao;
-	private BaseDaoI<RoleResources> roleResourcesDao;
+	private BaseDaoI<RoleResourcesV> roleResourcesDao;
 	
-	public BaseDaoI<RoleResources> getRoleResourcesDao() {
+	public BaseDaoI<RoleResourcesV> getRoleResourcesDao() {
 		return roleResourcesDao;
 	}
 	@Autowired
-	public void setRoleResourcesDao(BaseDaoI<RoleResources> roleResourcesDao) {
+	public void setRoleResourcesDao(BaseDaoI<RoleResourcesV> roleResourcesDao) {
 		this.roleResourcesDao = roleResourcesDao;
 	}
 	public BaseDaoI<Menu> getMenuDao() {
@@ -42,74 +43,40 @@ public class RoleMenuServiceImpl implements RoleMenuService {
 		this.menuDao = menuDao;
 	}
 
-//	public BaseDaoI<RoleRights> getRolerightsDao() {
-//		return rolerightsDao;
-//	}
-
-//	@Autowired
-//	public void setRolerightsDao(BaseDaoI<RoleRights> rolerightsDao) {
-//		this.rolerightsDao = rolerightsDao;
-//	}
-
-//	@Override
-//	public List< PMenu> findMenu(int roleId,HttpSession session) {
-//		List<PMenu> l_menuInfos = new ArrayList<PMenu>();
-//		List<RoleRights> roleMenus;
-//		List<RoleRights> ulMenus;
-//		Map<String, Object> params = new HashMap<String, Object>();
-//		params.put("roleId", roleId);
-//		StringBuffer hql = new StringBuffer("");
-//		//TODO 如果是系统管理员的话，后面就没有条件，直接取所有菜单
-//		roleMenus = rolerightsDao.find("from RoleRights r where r.roleId.roleId=:roleId and r.menuLevel = 1 order by r.menuId",params);
-//		ulMenus = rolerightsDao.find("from RoleRights r where r.roleId.roleId=:roleId and r.menuLevel = 2",params);
-//		for (RoleRights roleMenu : roleMenus) {
-//				PMenu menuInfo = new PMenu(); 
-//				menuInfo.setUserId(roleMenu.getRoleId().getRoleId());
-//				menuInfo.setMenuId(roleMenu.getMenuId());
-//				menuInfo.setMenuName(roleMenu.getMenuName());
-//				for (RoleRights ulMenu : ulMenus) {
-//					if(ulMenu.getPreMenuId().getMenuId()== menuInfo.getMenuId()){
-//						PUlList ulList = new PUlList();
-//						ulList.setDomId(ulMenu.getMenuId());
-//						ulList.setText(ulMenu.getMenuName());
-////						ulList.setState("closed");
-////						ulList.setIconCls("");
-//						ulList.setUrl(roleMenu.getUrl());
-////						ulMenus.remove(ulMenu);
-//						menuInfo.getUls().add(ulList);
-//					}
-//				}
-//				l_menuInfos.add(menuInfo);
-//		}
-//		return l_menuInfos;
-//	}
-	
 	@Override
 	public List<PMenu> findMenuByRole(int roleId, HttpSession session) {
 		List<PMenu> l_menuInfos = new ArrayList<PMenu>();
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("roleId", roleId);
-		List<RoleResources> roleResources = roleResourcesDao.find("from RoleResources r where r.roleId.roleId=:roleId and menuId.menuLevel=1 ",params);
-		List<RoleResources> roleResources2 = roleResourcesDao.find("from RoleResources r where r.roleId.roleId=:roleId and menuId.menuLevel=2 ",params);
-		for (RoleResources roleRe : roleResources) {
-			PMenu menuInfo = new PMenu(); 
-//			UserRole urole = roleRe.getRoleId();
-			menuInfo.setUserId(roleRe.getRoleId().getRoleId());
-			menuInfo.setMenuId(roleRe.getMenuId().getMenuId());
-			menuInfo.setMenuName(roleRe.getMenuId().getMenuName());
-			for (RoleResources roleR : roleResources2) {
-				if(roleR.getMenuId().getPreMenuId().getMenuId()== menuInfo.getMenuId()){
+		List<RoleResourcesV> roleResources = roleResourcesDao.find("from RoleResourcesV r where r.roleId=:roleId and r.menuLevel=1 ORDER BY r.sortCode ASC ",params);
+		List<RoleResourcesV> roleResources2 = roleResourcesDao.find("from RoleResourcesV r where r.roleId=:roleId and r.menuLevel=2 ORDER BY r.sortCode ASC",params);
+		Iterator<RoleResourcesV> it1 = roleResources.iterator();
+		Iterator<RoleResourcesV> it2;
+		PMenu pm ;
+		while(it1.hasNext()){
+			RoleResourcesV roleV = it1.next();
+			pm = new PMenu();
+			pm.setMenuId(roleV.getMenuId());
+			pm.setUserId(roleV.getRoleId());
+			pm.setMenuName(roleV.getMenuName());
+			it2 = roleResources2.iterator();
+			RoleResourcesV roleV2 ;
+			while(it2.hasNext()){
+				roleV2 = it2.next();
+				if(roleV2.getPreMenuId() == pm.getMenuId()){
 					PUlList ulList = new PUlList();
-					ulList.setSortCode(roleR.getSortCode());
-					ulList.setDomId(roleR.getMenuId().getMenuId());
-					ulList.setText(roleR.getMenuId().getMenuName());
-					ulList.setIconCls(roleR.getMenuId().getIconCls());
-					ulList.setUrl(roleR.getUrl());
-					menuInfo.getUls().add(ulList);
+					ulList.setSortCode(roleV2.getSortCode());
+					ulList.setDomId(roleV2.getMenuId());
+					ulList.setText(roleV2.getMenuName());
+					ulList.setIconCls(roleV2.getIconCls());
+					ulList.setUrl(roleV2.getUrl());
+					pm.getUls().add(ulList);
+					it2.remove();
 				}
 			}
-			l_menuInfos.add(menuInfo);
+			l_menuInfos.add(pm);
 		}
+		
 		Collections.sort(l_menuInfos);
 		return l_menuInfos;
 	}
@@ -118,7 +85,7 @@ public class RoleMenuServiceImpl implements RoleMenuService {
 	public List<PMenu> findAllMenu() {
 		List<PMenu> l_menuInfos = new ArrayList<PMenu>();
 //		Map<String, Object> params = new HashMap<String, Object>();
-		List<Menu> menus1 = menuDao.find("from Menu t where t.menuLevel=1");
+		List<Menu> menus1 = menuDao.find("from Menu t where t.menuLevel=1 and t.sortCode not like('Pub%')");
 		for (Menu menu : menus1) {
 			PMenu menuInfo = new PMenu(); 
 //			menuInfo.setUserId(menu.getRoleId().getRoleId());
@@ -143,33 +110,45 @@ public class RoleMenuServiceImpl implements RoleMenuService {
 		Collections.sort(l_menuInfos);
 		return l_menuInfos;
 	}
-
-	/*@Override
-	public List<PMenu> findAllMenu() {
+	
+	/**
+	 * sortCode 为Pub开头的，就是公共
+	 */
+	@Override
+	public List<PMenu> findPubMenuByRole(int roleId) {
 		List<PMenu> l_menuInfos = new ArrayList<PMenu>();
-		List<RoleRights> roleMenus;
-		List<RoleRights> ulMenus;
-		roleMenus = rolerightsDao.find("from RoleRights r where r.menuLevel = 1 order by r.menuId");
-		ulMenus = rolerightsDao.find("from RoleRights r where r.menuLevel = 2 ");
-		for (RoleRights roleMenu : roleMenus) {
-				PMenu menuInfo = new PMenu(); 
-				menuInfo.setUserId(roleMenu.getRoleId().getRoleId());
-				menuInfo.setMenuId(roleMenu.getMenuId());
-				menuInfo.setMenuName(roleMenu.getMenuName());
-				l_menuInfos.add(menuInfo);
-				for (RoleRights ulMenu : ulMenus) {
-					if(ulMenu.getPreMenuId().getMenuId()== menuInfo.getMenuId()){
-						PUlList ulList = new PUlList();
-						ulList.setDomId(ulMenu.getMenuId());
-						ulList.setText(ulMenu.getMenuName());
-//						ulList.setState("closed");
-//						ulList.setIconCls("");
-						ulList.setUrl(ulMenu.getUrl());
-//						ulMenus.remove(ulMenu);
-						menuInfo.getUls().add(ulList);
-					}
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("roleId", roleId);
+		List<RoleResourcesV> roleResources = roleResourcesDao.find("from RoleResourcesV r where r.roleId=:roleId and r.menuLevel=1 and r.sortCode LIKE('Pub%') order by r.sortCode ASC ",params);
+		List<RoleResourcesV> roleResources2 = roleResourcesDao.find("from RoleResourcesV r where r.roleId=:roleId and r.menuLevel=2 and sortCode LIKE('Pub%') order by r.sortCode ASC ",params);
+		Iterator<RoleResourcesV> it1 = roleResources.iterator();
+		Iterator<RoleResourcesV> it2;
+		PMenu pm ;
+		while(it1.hasNext()){
+			RoleResourcesV roleV = it1.next();
+			pm = new PMenu();
+			pm.setMenuId(roleV.getMenuId());
+			pm.setUserId(roleV.getRoleId());
+			pm.setMenuName(roleV.getMenuName());
+			it2 = roleResources2.iterator();
+			RoleResourcesV roleV2 ;
+			while(it2.hasNext()){
+				roleV2 = it2.next();
+				if(roleV2.getPreMenuId() == pm.getMenuId()){
+					PUlList ulList = new PUlList();
+					ulList.setSortCode(roleV2.getSortCode());
+					ulList.setDomId(roleV2.getMenuId());
+					ulList.setText(roleV2.getMenuName());
+					ulList.setIconCls(roleV2.getIconCls());
+					ulList.setUrl(roleV2.getUrl());
+					pm.getUls().add(ulList);
+					it2.remove();
 				}
+			}
+			l_menuInfos.add(pm);
 		}
+		Collections.sort(l_menuInfos);
 		return l_menuInfos;
-	}*/
+	}
+	
 }

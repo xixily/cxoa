@@ -60,54 +60,59 @@ public class SFUtil implements Runnable{
 		return sfUtil;
 	}
 	
+//	public static void main(String[] args) {
+//		PFahuo pf = new PFahuo();
+//		Integer a = (int) (Math.random()*10000000);
+//		pf.setOrderid(a);
+//		pf.setArea("0796");
+//		pf.setAreaCode("0796");
+//		pf.setContent("就是想发个快递");
+//		pf.setD_address("江西师范大学（瑶湖校区）邓 17744543034");
+//		pf.setD_company("江西师范大学");
+//		pf.setD_contact("小邓");
+//		pf.setD_tel("18146612837");
+//		pf.setD_post_code("330022");
+//		pf.setD_city("南昌");
+//		pf.setRemark("这是一个很长很长的故事i·~~");
+//		pf.setSender("邓~");
+//		Order order = new Order();
+//		BeanUtils.copyProperties(pf, order);
+//		
+//		order.setJ_tel("17744543034");
+//		order.setJ_company("世纪超星公司");
+//		order.setJ_contact("小邓");
+//		order.setJ_address("北京市海淀区 上地东里3区4号楼 601");
+//		
+//		order.setExpress_type(1);
+//		order.setPay_method(1);
+//		order.setCustid("0103289539");
+//		Cargo cargo = new Cargo();
+//		cargo.setName("发票");
+//		cargo.setCount(1);
+//		List<Cargo> cargos = new ArrayList<Cargo>();
+//		cargos.add(cargo);
+//		Json result = SFUtil.sendOrder(order, cargos, null);
+//		if(result.isSuccess()){
+//			OrderResponse or = (OrderResponse) result.getObj();
+//			String mailno = or.getMailno();
+//			or.getOrderid();
+//			BarCode128C.getCode128CPicture(mailno, 22, "d:/code3.jpg");
+//		}
+//		System.out.println(result.getMsg());
+////		查询订单 6320318
+//		Json result2 = SFUtil.queryOrder(String.valueOf(pf.getOrderid()));
+////		Json result2 = s.queryOrder("4624347");
+//		System.out.println((OrderResponse)result2.getObj());
+////		Json result3 = s.queryRoute("4624347");
+////		System.out.println(result3.getMsg());
+////		System.out.println("路由查询结果" + (OrderResponse)result3.getObj());
+//		
+//		
+//	}
+	
 	public static void main(String[] args) {
-		PFahuo pf = new PFahuo();
-		Integer a = (int) (Math.random()*10000000);
-		pf.setOrderid(a);
-		pf.setArea("0796");
-		pf.setAreaCode("0796");
-		pf.setContent("就是想发个快递");
-		pf.setD_address("江西师范大学（瑶湖校区）邓 17744543034");
-		pf.setD_company("江西师范大学");
-		pf.setD_contact("小邓");
-		pf.setD_tel("18146612837");
-		pf.setD_post_code("330022");
-		pf.setD_city("南昌");
-		pf.setRemark("这是一个很长很长的故事i·~~");
-		pf.setSender("邓~");
-		Order order = new Order();
-		BeanUtils.copyProperties(pf, order);
-		
-		order.setJ_tel("17744543034");
-		order.setJ_company("世纪超星公司");
-		order.setJ_contact("小邓");
-		order.setJ_address("北京市海淀区 上地东里3区4号楼 601");
-		
-		order.setExpress_type(1);
-		order.setPay_method(1);
-		order.setCustid("0103289539");
-		Cargo cargo = new Cargo();
-		cargo.setName("发票");
-		cargo.setCount(1);
-		List<Cargo> cargos = new ArrayList<Cargo>();
-		cargos.add(cargo);
-		Json result = SFUtil.sendOrder(order, cargos, null);
-		if(result.isSuccess()){
-			OrderResponse or = (OrderResponse) result.getObj();
-			String mailno = or.getMailno();
-			or.getOrderid();
-			BarCode128C.getCode128CPicture(mailno, 22, "d:/code3.jpg");
-		}
-		System.out.println(result.getMsg());
-//		查询订单 6320318
-		Json result2 = SFUtil.queryOrder(String.valueOf(pf.getOrderid()));
-//		Json result2 = s.queryOrder("4624347");
-		System.out.println((OrderResponse)result2.getObj());
-//		Json result3 = s.queryRoute("4624347");
-//		System.out.println(result3.getMsg());
-//		System.out.println("路由查询结果" + (OrderResponse)result3.getObj());
-		
-		
+		Json result = queryOrder("44031");
+		System.out.println(result);
 	}
 	
 	/**

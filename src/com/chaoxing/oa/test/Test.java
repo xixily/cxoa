@@ -18,20 +18,33 @@ import com.chaoxing.oa.util.SXSSFWriter;
 public class Test {
 
 	public static void main(String[] args) {
-		List<String> lis = new ArrayList<String>();
-		lis.add("");
-		int looper = 100;
-		for (int i = 0; i < 10; i++) {
-			lis.add((looper+i)+"");
-		}
-		Iterator<String> it = lis.iterator();
-		while(it.hasNext()){
-			System.out.println(it.next());
-			it.remove();
-			lis.size();
-			System.out.println("list size:"+lis.size());
-		}
-		System.out.println("list size:"+lis.size());
+//		List<String> lis = new ArrayList<String>();
+//		lis.add("");
+//		int looper = 100;
+//		for (int i = 0; i < 10; i++) {
+//			lis.add((looper+i)+"");
+//		}
+//		Iterator<String> it = lis.iterator();
+//		while(it.hasNext()){
+//			System.out.println(it.next());
+//			it.remove();
+//			lis.size();
+//			System.out.println("list size:"+lis.size());
+//		}
+//		System.out.println("list size:"+lis.size());
+		
+		
+		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM");
+		Calendar cal = Calendar.getInstance();
+		String afterDate = df.format(cal.getTime());
+		cal.add(Calendar.MONTH, -1);
+		String date = df.format(cal.getTime());
+		cal.add(Calendar.MONTH, -1);
+		String preDate = df.format(cal.getTime());
+		System.out.println(afterDate);
+		System.out.println(date);
+		System.out.println(preDate);
+		
 //		Calendar cal = Calendar.getInstance();
 //		cal.set(Calendar.MONTH, 0);
 //		cal.set(cal.get(Calendar.YEAR), 0, 1, 0, 0, 0);

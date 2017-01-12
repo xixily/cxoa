@@ -627,7 +627,7 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 				sxffWriter.createCell();
 				sxffWriter.setStringData(shebaoMX.getThirdLevel());
 				sxffWriter.createCell();
-				sxffWriter.setStringData(shebaoMX.getFirstLevel());
+				sxffWriter.setStringData(shebaoMX.getFourthLevel());
 				sxffWriter.createCell();
 				sxffWriter.setStringData(shebaoMX.getPosition());
 				sxffWriter.createCell();

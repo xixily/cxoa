@@ -1815,7 +1815,8 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	@Override
 	public long fafang() {
 		try {
-			objectDao.prepareCall("UPDATE 职员工资分布表 z,当月工资表 m SET z.病假累计=(z.病假累计 + m.病假小时数),z.年假累计=(z.年假累计 + m.年假天数) WHERE z.职员编号=m.职工编号 AND (m.病假小时数>0 OR m.年假天数>0)", null);
+			objectDao.prepareCall("UPDATE 职员工资分布表 z,考勤表 m SET z.病假累计=(IFNULL(z.病假累计,0) + IFNULL(m.病假小时数,0)),z.年假累计=(IFNULL(z.年假累计,0) + IFNULL(m.年假天数,0)) WHERE z.职员编号=m.userid AND (m.病假小时数>0 OR m.年假天数>0)",null);
+//			objectDao.prepareCall("UPDATE 职员工资分布表 z,当月工资表 m SET z.病假累计=(z.病假累计 + m.病假小时数),z.年假累计=(z.年假累计 + m.年假天数) WHERE z.职员编号=m.职工编号 AND (m.病假小时数>0 OR m.年假天数>0)", null);
 //			objectDao.executeHql("update WageDistribution,MonthWages m set t.sickLleaveTotal=(t.sickLleaveTotal + m.bingJiaHour),t.annualLleave=(t.annualLleave + m.nianJiaDay) where t.employeeId = m.employeeId");
 //			objectDao.executeHql("update WageDistribution t,MonthWages m set t.sickLleaveTotal=(t.sickLleaveTotal + m.bingJiaHour),t.annualLleave=(t.annualLleave + m.nianJiaDay) where t.employeeId = m.employeeId");
 			return 1;

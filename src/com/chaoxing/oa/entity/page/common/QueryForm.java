@@ -89,6 +89,14 @@ public class QueryForm {
 	 */
 	private String downLoadFileName;
 	private String levelc;
+	
+	public QueryForm(String email) {
+		super();
+		this.email = email;
+	}
+	public QueryForm() {
+		super();
+	}
 	public String getLevelc() {
 		return levelc;
 	}

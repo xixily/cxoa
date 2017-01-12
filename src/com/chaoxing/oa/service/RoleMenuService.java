@@ -14,5 +14,9 @@ public interface RoleMenuService {
 	public List<PMenu> findAllMenu();
 	
 	public List<PMenu> findMenuByRole(int roleId,HttpSession session);
+	
+	public List<PMenu> findPubMenuByRole(int roleId);
+
+//	public void findRoleMenus(int role);
 
 }

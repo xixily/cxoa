@@ -18,6 +18,7 @@ public class SqlHelper {
 	 * @param params 
 	 * @param isLike "like" 还是 "="
 	 * @param expect 数组，被排除的字段
+	 * @see  1=1 and id=:id;
 	 * @return
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException

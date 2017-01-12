@@ -27,4 +27,6 @@ public interface UserServiceI {
 
 	public long updatePassword(QueryForm queryForm);
 
+	public PUserName findUserByEmail(String email);
+
 }

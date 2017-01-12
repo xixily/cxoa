@@ -63,7 +63,7 @@ public interface PubHetongService {
 	
 	public Map<String, Object> findContractItemPrice(Page page, PItemPrice ptprice);
 	
-	public List<PFapiao>  findUserFapiao(Integer id);
+	public List<PFapiao>  findUserFapiao(UserList userList);
 	
 	public List<PItemPrice>  findUserItemprice(Integer id);
 	

@@ -16,7 +16,7 @@ import com.chaoxing.oa.entity.page.employee.PUserName;
 import com.chaoxing.oa.entity.page.system.SessionInfo;
 import com.chaoxing.oa.entity.po.commmon.OrganizationStructure;
 import com.chaoxing.oa.entity.po.employee.UserName;
-import com.chaoxing.oa.entity.po.system.RoleResources;
+import com.chaoxing.oa.entity.po.view.RoleResourcesV;
 import com.chaoxing.oa.service.UserServiceI;
 
 @Service("userService")
@@ -26,13 +26,13 @@ public class UserServiceImpl implements UserServiceI {
 
 	private BaseDaoI<UserName> usernameDao;
 	private BaseDaoI<OrganizationStructure> ogsDao;
-	private BaseDaoI<RoleResources> roleReDao;
+	private BaseDaoI<RoleResourcesV> roleReDao;
 	
-	public BaseDaoI<RoleResources> getRoleReDao() {
+	public BaseDaoI<RoleResourcesV> getRoleReDao() {
 		return roleReDao;
 	}
 	@Autowired
-	public void setRoleReDao(BaseDaoI<RoleResources> roleReDao) {
+	public void setRoleReDao(BaseDaoI<RoleResourcesV> roleReDao) {
 		this.roleReDao = roleReDao;
 	}
 	public BaseDaoI<OrganizationStructure> getOgsDao() {
@@ -167,8 +167,8 @@ public class UserServiceImpl implements UserServiceI {
 		Map<String,Object> params = new HashMap<String, Object>();
 		List<String> lists = new ArrayList<String>();
 		params.put("roleId", roleId);
-		List<RoleResources> roleRes = roleReDao.find("from RoleResources t where t.roleId.roleId=:roleId",params);
-		for (RoleResources roleResources : roleRes) {
+		List<RoleResourcesV> roleRes = roleReDao.find("from RoleResourcesV t where t.roleId =:roleId",params);
+		for (RoleResourcesV roleResources : roleRes) {
 			lists.add(roleResources.getUrl());
 		}
 		return lists;
@@ -181,6 +181,21 @@ public class UserServiceImpl implements UserServiceI {
 		params.put("email", queryForm.getEmail());
 		params.put("password", queryForm.getPassword());
 		return usernameDao.executeHql(hql,params);
+	}
+	
+	@Override
+	public PUserName findUserByEmail(String email) {
+		String hql = "from UserName where email=:email ";
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("email", email);
+		List<UserName> user = usernameDao.find(hql,params);
+		PUserName pu = null;
+		if(user.size()>0){
+			UserName u = user.get(0);
+			pu = new PUserName();
+			BeanUtils.copyProperties(u, pu);
+		}
+		return pu;
 	}
 	
 }

@@ -47,7 +47,7 @@ public class PMenu implements Comparable<PMenu>{
 		if(this.sortCode!=null&&o.getSortCode()!=null){
 			return this.sortCode.compareTo(o.getSortCode());
 		}
-		return -1;
+		return 1;
 	}
 	
 }

@@ -30,8 +30,8 @@
     </thead>
 </table>
 <div id ="wagesDate_toolbar">
-<a id="btn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-databse_edit'" onclick="employee.kaoqin.generateWagesDate()">根据日历表生成工作日</a>
-<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="employee.kaoqin.wagesDateDelete()">删除</a>
+<a id="btn"  class="easyui-linkbutton" data-options="iconCls:'icon-databse_edit'" onclick="employee.kaoqin.generateWagesDate()">根据日历表生成工作日</a>
+<a  class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="employee.kaoqin.wagesDateDelete()">删除</a>
 <span>时间:</span>
 <input class="easyui-datebox" data-options="prompt:'请选择时间...',
 formatter:function(date){
@@ -49,7 +49,7 @@ onSelect: function(date){
 "  style="width:80px;">
 </div>
 <%-- <div id ="wagesDate_footbar">
-<!-- <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="employee.kaoqin.wagesDateDblCickRow()">编辑</a> -->
+<!-- <a  class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="employee.kaoqin.wagesDateDblCickRow()">编辑</a> -->
 <span>请选择时间:</span>
 <input class="easyui-datebox" data-options="prompt:'请选择时间...',
 formatter:function(date){

@@ -1,4 +1,4 @@
-<div id="user_list_view">
+<div id="user_list_view_">
     <h4 style="text-align:center">用户单位列表</h4>
     <div id="ht_ulist_toolbar">
         <form action="#" class="form-inline" role="form">
@@ -36,6 +36,8 @@
            data-pagination="true"
            data-side-pagination="client"
            data-cache="false"
+           data-page-size="50"
+           data-page-list="[15,30,50,100]"
            >
         <thead>
         <tr>
@@ -57,7 +59,7 @@
                 closest.html(text);
                 closest.append(hidden[0]);
                 hetong.htManager.findCharger(value);
-                event.stopImmediatePropagation();
+//                event.stopImmediatePropagation();
                 hetong.htManager.zhidao.toggleUserList(value);
             })
         })

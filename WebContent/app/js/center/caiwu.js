@@ -163,9 +163,9 @@ var caiwu = {
                             }
                         }
                     } else {
-                        var data = appDialog.getDefaults();
+                        var data = $.appDialog.getDefaults();
                         data.content = '获取页面信息失败~！';
-                        var dialog = createDialog(appDialog.getDefaults(), function (event) {
+                        var dialog = $.appDialog.createDialog($.appDialog.getDefaults(), function (event) {
                             console.log('保存按钮：' + event);
                         });
                         dialog.modal('show');

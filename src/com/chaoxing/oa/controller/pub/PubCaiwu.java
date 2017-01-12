@@ -26,7 +26,7 @@ public class PubCaiwu {
 	
 	@RequestMapping(value="/owners/{ownerId}",method=RequestMethod.GET)
 	public String getOwner(@PathVariable String ownerId, Model model){
-		
+		System.out.println("路径值参："+ownerId);
 		return null;
 	}
 	

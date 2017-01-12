@@ -3,11 +3,46 @@
  * required $ or jQuery first
  */
 $(function() {
-    $('#side-menu').metisMenu();
-    sideBarClick();
-    initClickHandler();
-    enterKeyLisener();
-    init();
+    menuInit(function(){
+        $('#side-menu').metisMenu();
+        sideBarClick();
+        initClickHandler();
+        enterKeyLisener();
+        //默认打开合同管理
+        try{
+            var uls = $('#side-menu ul>li');
+            var width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
+            $.each(uls, function(k,oo){
+                if(oo.innerText.isLike("合同管理")){
+                    var url = $(oo).find('a').attr('href').split('\.')[0];;
+                    if (width < 768) {
+                        $.open(url,function(success){
+                            if(success){
+                                try{
+                                    $('#container [id*="_head"]').find("[app-action]").trigger('click');
+                                    var action = $('#container [app-init]').attr('app-init');
+                                    if(action && action!=''){
+                                        var actionHandler = eval(action);//jQuery.gloabEval()全局方法
+                                        if (actionHandler) {
+                                            actionHandler();
+                                        } else {
+                                            console.log('action handler [' + action + '] is not support!');
+                                        }
+                                    }
+                                }catch(e){
+                                    console.log("没有找到app-action");
+                                }
+                            }
+                        });
+                    }else{
+                        $(oo).parent().parent().find('>a').trigger('click')
+                        $(oo).find('a').trigger('click');
+                    }
+                }
+            })
+        }catch(e){
+        }
+    });
 });
 $(function() {//监听屏幕变化，重组slider 导航条
     $(window).bind("load resize", function() {
@@ -42,7 +77,7 @@ $(function() {//监听屏幕变化，重组slider 导航条
             break;
         }
     }
-    responsiveHandler.run();
+//    responsiveHandler.run();
 });
 //var handler = window;
 (function($){
@@ -63,10 +98,19 @@ $(function() {//监听屏幕变化，重组slider 导航条
         var url = (typeof jq == "string") ? jq : jq.attr("href");
         if(url && url!=''){
             if(!session.sidebar.opened || session.sidebar.opened != url){
+                session.sidebar.opened = url;
+                try{
+                    $('#loading').removeClass('hide');
+                    $('#container').html('');
+                }catch(e){
+                }
                 getBufferView(url,function(view){
                     var view = $(view);
+                    try{
+                        $('#loading').addClass('hide');
+                    }catch(e){
+                    }
                     containerAppend(view,callback);
-                    session.sidebar.opened = url;
                 })
             }
         }
@@ -139,6 +183,8 @@ $(function() {//监听屏幕变化，重组slider 导航条
         ]
     }
 
+    appDialog.addButtonFn = addButtonFn;
+
     /**
      *{默认点击背景不会关闭}
      * @param options {title,content,backdrop,closeAble,buttons:[]}
@@ -185,6 +231,9 @@ $(function() {//监听屏幕变化，重组slider 导航条
         return dialog;
     }
 
+    appDialog.createDialog = createDialog;
+
+    $.appDialog = appDialog;
     //创建消息提示dialog,方法调用规则（参照easyui）
     $.messager = {
         alert: function(title,content,okfn){
@@ -223,26 +272,28 @@ $(function() {//监听屏幕变化，重组slider 导航条
             timeout: timeout,
             type: "POST",
             success: function (data) {
-                if (typeof callback == "function") {
-                    callback(data);
-                }
-                if (data && !data.Succeed && data.SessionTimeout == 1) {
-                    alert("会话已经失效，请您重新登录");
-                    window.location.href = "./";
-                    return;
-                }
+            	if(data && data.success){
+            		if (typeof callback == "function") {
+                        data.obj ? callback(data.obj):callback(data);
+                    }
+            	}else{
+            		var msg = data.msg?data.msg:"请求失败！";
+            		$.messager.alert('Post请求：', msg)
+            	}
             },
             error: function(xhr,status,error){
                 if (errorCallback && (typeof errorCallback == "function")) {
                     errorCallback(xhr, status, error);
                 } else {
                     if (xhr.statusText != 'success') {
-                        $().toastmessage('showErrorToast', '请求超时或网络问题,' + status || error);
+                    	$.messager.alert("请求反馈：","请求超时或者网络异常" + status||error);
                     }
                 }
             },
         })
     }
+
+    $.appPost = appPost;
 
     function appGet(url, params, callback, errorCallback, async, timeout){
         timeout = timeout ? timeout : 20000;
@@ -254,8 +305,30 @@ $(function() {//监听屏幕变化，重组slider 导航条
             dataType: "json",
             timeout: timeout,
             type: "GET",
+            success: function (data) {
+                if (typeof callback == "function") {
+                    data.obj ? callback(data.obj):callback(data);
+                }
+                if (data && !data.Succeed && data.SessionTimeout == 1) {
+                    $.messager.alert('Get请求：','请求失败！~')
+//                    alert("会话已经失效，请您重新登录");
+//                    window.location.href = "./";
+                    return;
+                }
+            },
+            error: function(xhr,status,error){
+                if (errorCallback && (typeof errorCallback == "function")) {
+                    errorCallback(xhr, status, error);
+                } else {
+                    if (xhr.statusText != 'success') {
+                    	$.messager.alert("请求反馈：","请求超时或网络问题," + status||error);
+                    }
+                }
+            }
         })
     }
+
+    $.appGet = appGet;
 })($);
 
 /**
@@ -274,7 +347,72 @@ session = {
     equipment : 'computer',
     table:{}
 }
+///为字符串添加模糊比较的方法
+String.prototype.isLike = function(exp/*类似于SQL中的模糊查询字符串*/, i/*是否区分大小写*/, start/*以该字符串开始*/, end/*以该字符串结束*/) {
+    var str = this;
+    i = (i == null ? false : i);
+    start = (start ? "^" : "");
+    end = (end ? "$" : "");
+    if (exp.constructor == String) {
+        /*首先将表达式中的‘_’替换成‘.’，但是‘[_]’表示对‘_’的转义，所以做特殊处理*/
+        var s = exp.replace(/_/g, function(m, i) {
+            if (i == 0 || i == exp.length - 1) {
+                return ".";
+            }
+            else {
+                if (exp.charAt(i - 1) == "[" && exp.charAt(i + 1) == "]") {
+                    return m;
+                }
+                return ".";
+            }
+        });
+        /*将表达式中的‘%’替换成‘.’，但是‘[%]’表示对‘%’的转义，所以做特殊处理*/
+        s = s.replace(/%/g, function(m, i) {
+            if (i == 0 || i == s.length - 1) {
+                return ".*";
+            }
+            else {
+                if (s.charAt(i - 1) == "[" && s.charAt(i + 1) == "]") {
+                    return m;
+                }
+                return ".*";
+            }
+        });
 
+        /*将表达式中的‘[_]’、‘[%]’分别替换为‘_’、‘%’*/
+
+        s = s.replace(/\[_\]/g, "_").replace(/\[%\]/g, "%");
+
+        /*对表达式处理完后构造一个新的正则表达式，用以判断当前字符串是否和给定的表达式相似*/
+
+        /*var regex = new RegExp("^" + s, i ? "" : "i");*/
+        var regex = new RegExp(start + s + end, i ? "" : "i");
+        return regex.test(this);
+    }
+    return false;
+};
+
+///为数组添加模糊查询方法
+Array.prototype.selectLike = function(exp/*类似于SQL中的模糊查询字符串*/, fun, start, end) {
+    var arr = [];
+    start = (start?true:false);
+    end = (end?true:false);
+    if (fun && fun.constructor == Function) {
+        for (var i = 0; i < this.length; i++) {
+            if (fun(this[i], exp)) {
+                arr.push(i);
+            }
+        }
+    }
+    else {
+        for (var i = 0; i < this.length; i++) {
+            if (this[i].isLike(exp, false, start, end)) {
+                arr.push(i);
+            }
+        }
+    }
+    return arr;
+};
 /**
  * getCaiwu() {获取财务id}
  * getBaoxiao() {获取报销id}
@@ -334,12 +472,53 @@ imgPath = "./app/images/";
 /**
  * 初始化菜单
  */
-function init(){
+function menuInit(callback){
     var height = ((this.window.innerHeight > 0) ? this.window.innerHeight : this.screen.height) - 1;
     if (height < 1) height = 1;
     if (height > 112) {
         $("#page-wrapper").css("min-height", (height) + "px");
     }
+   //获得菜单信息
+    $.appPost('public/user/getMenus.action',undefined,function(data){
+        $.each(data, function(i, obj){
+            var uls = obj.uls;
+            var li = $('<li>');
+            var a = $('<a href="#">' +
+                    '<i class="'+ (obj.iconCls?obj.iconCls:'fa fa-edit fa-fw') +'"></i>'+ obj.menuName +
+                    (uls.length>0 ?'<span class="fa arrow"></span>':'') +
+                    '</a>');
+            a.appendTo(li);
+            //二级菜单
+            if(uls && uls.length>0){
+                var ul = $('<ul class="nav nav-second-level"></ul>');
+                var second_li;
+                $.each(uls,function(j,o){
+                    second_li = $('<li>' +
+                            '<a href="'+ o.url +'">'+ o.text +'</a>' +
+                            '</li>');
+                    second_li.appendTo(ul);
+                })
+                ul.appendTo(li);
+            }
+            li.appendTo($('#side-menu'));
+
+        })
+        if(callback && typeof callback == 'function'){
+            callback();
+        }
+    });
+}
+
+function logout(){
+    $.getJSON('user/logout.action', function(result) {
+        if (result.success) {
+            console.log('登出成功！');
+            location.replace('/cxoa/app_login.jsp');
+        } else {
+            console.log('登出成功！');
+            location.replace('/cxoa/app_login.jsp');
+        }
+    });
 }
 
 function getView(view, callback, errorCallback) {
@@ -364,7 +543,7 @@ function getView(view, callback, errorCallback) {
                 errorCallback(xhr, status, error);
             } else {
                 if (xhr.statusText != 'success') {
-                    $().toastmessage('showErrorToast', '请求超时或网络问题,' + status || error);
+                    $.messager.alert('页面请求：', '请求超时或网络问题,' + status || error);
                 }
             }
         }

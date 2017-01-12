@@ -3,24 +3,26 @@
  */
 var hetong = {
     htManager:{
+        coldefine: {
+            cellCore: '细胞核',
+            charger:'负责人',
+            email:'邮箱',
+            dname:'单位名称',
+            autoCode:'自动编号',
+            cemail: '细胞核邮箱',
+            gemail: '指导邮箱',
+            lastYear: '2015',
+            thisYear: '2016',
+            yingshou: '应收'
+        },
         zhidao: {
-            coldefine: {
-                cellCore: '细胞核',
-                charger:'负责人',
-                email:'邮箱',
-                dname:'单位名称',
-                autoCode:'自动编号',
-                cemail: '细胞核邮箱',
-                gemail: '指导邮箱',
-                lastYear: '2015',
-                thisYear: '2016',
-                yingshou: '应收'
-            },
             detailFormatter: function(index, row, element){
                 var html = [];
                 $.each(row, function (key, value) {
                     if(typeof value == "number") value += " 元";
-                    html.push('<p><b>' + (hetong.htManager.zhidao.coldefine[key]?hetong.htManager.zhidao.coldefine[key]:key) + ':</b> ' + value + '</p>');
+                    if(value && ''!==value){
+                        html.push('<p><b>' + (hetong.htManager.coldefine[key]?hetong.htManager.coldefine[key]:key) + ':</b> ' + value + '</p>');
+                    }
                 });
                 return html.join('');
             },
@@ -111,7 +113,7 @@ var hetong = {
                             url:'public/hetong/getUserList.action',
                             queryParams: function(params){
 //                                if(!params.email){
-                                params.email = row.cemail;
+                                params.email = row.email;
 //                                }
                                 return params;
                             },
@@ -132,27 +134,27 @@ var hetong = {
                         var cvContainer = $('#ht_detail');
                         var ul = view.find('ul.dropdown-menu');
                         var data  = $('#ht_ulist_table').bootstrapTable('getData');
-                        view.find('#ht_contract_find').html('<input type="hidden" name="autoCode" value="'+ row.autoCode + '"/>'+ (row.dname.length<8?row.dname:(row.dname.substring(0,6)+"…")));
+                        view.find('#ht_contract_find_text').html('<input type="hidden" name="autoCode" value="'+ row.autoCode + '"/>'+ (row.dname.length<8?row.dname:(row.dname.substring(0,6)+"…")));
                         $.each(data, function(i, obj){
-                            var autoCode = obj.autoCode;
                             var dname = obj.dname;
-                            var li = $('<li><a><span class="sr-only">'+ autoCode +'</span>' + (dname.length<8?dname:(dname.substring(0,6)+'…')) + '</a>');
+                            var li = $('<li><a>' + (dname.length<8?dname:(dname.substring(0,6)+'…')) + '</a>');
+                            li.data('data',obj);
                             li.appendTo(ul);
                         })
                         view.appendTo(cvContainer);
                         $('#ht_sk_table').bootstrapTable({
+                            cache:false,
                             url:'public/hetong/getShoukuan.action',
-                            query:{id:row.autoCode},
                             queryParams: function(params){
                                 if(row.autoCode){
-                                    params.id = row.autoCode;
+                                    params.autoCode = row.autoCode;
                                 }
                                 return params;
                             },
                         });
                         $('#ht_ys_table').bootstrapTable({
+                            cache:false,
                             url:'public/hetong/getYingshou.action',
-                            query:{id:row.autoCode},
                             queryParams: function(params){
                                 if(row.autoCode){
                                     params.id = row.autoCode;
@@ -233,15 +235,31 @@ var hetong = {
             },
             toggleCellCore: function(email){
                 $('#ht_cellsView_table').bootstrapTable('refresh',{
-                    silent:true,
-                    query:{email:email}
+                    query:{email:email},
+                    onLoadSuccess:function(){
+                        $('#ht_cells_find').toggleClass('open');
+                    }
                 })
             },
             toggleUserList: function(email){
                 $('#ht_ulist_table').bootstrapTable('refresh',{
-                    silent:true,
-                    query:{email:email}
+                    query:{email:email},
+                    onLoadSuccess:function(){
+                        $('#ht_customer_find').toggleClass('open');
+                    }
                 })
+            },
+            toggleContracts: function(data){
+                $('#ht_sk_table').bootstrapTable('refresh',{
+                    query:{
+                        autoCode:data.autoCode
+                    }
+                });
+                $('#ht_ys_table').bootstrapTable('refresh',{
+                    query:{
+                        id:data.autoCode
+                    }
+                });
             }
         },
         testTable: function(){

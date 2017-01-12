@@ -189,8 +189,8 @@ public class PubHetongServiceImpl implements PubHetongService {
 	@Override
 	public List<UserList> findUserListCount(String email, String charger) {
 		Map<String,Object> params = new HashMap<String, Object>();
-		String sql = "SELECT t1.用户名称,t1.自动编号,t2.去年 ,t3.今年, (t4.合同款 - t1.回款) 应收 FROM"
-				+ "(SELECT 自动编号,用户名称,SUM(IFNULL(回款情况,0)) 回款 FROM 用户合同发票 "
+		String sql = "SELECT t1.用户名称,t1.自动编号,单位编号,t2.去年 ,t3.今年, (t4.合同款 - t1.回款) 应收 FROM"
+				+ "(SELECT 自动编号,单位编号,用户名称,SUM(IFNULL(回款情况,0)) 回款 FROM 用户合同发票 "
 				+ "WHERE 邮箱=:email "
 				+ "GROUP BY 自动编号) t1 LEFT JOIN "
 				+ "(SELECT 自动编号,SUM(IFNULL(回款情况,0)) 去年 FROM 用户合同发票 "
@@ -208,22 +208,25 @@ public class PubHetongServiceImpl implements PubHetongService {
 		List<UserList> uds = new ArrayList<UserList>();
 		String dname;
 		Integer dId;
+		Integer dwId;
 		BigDecimal lastyear;
 		BigDecimal thisyear;
 		BigDecimal yingshou;
 		while(it.hasNext()){
 			Object[] obs = (Object[]) it.next();
-			if(obs.length>=5){
+			if(obs.length>=6){
 				UserList ud = new UserList();
 				dname = null!=obs[0] ? String.valueOf(obs[0]) : "";
 				dId = null!=obs[1] ? (Integer)obs[1] : -1;
-				lastyear = null!=obs[2] ? (BigDecimal)obs[2] : new BigDecimal(0);
-				thisyear = null!=obs[3] ? (BigDecimal)obs[3] : new BigDecimal(0);
-				yingshou = null!=obs[4] ? (BigDecimal)obs[4] : new BigDecimal(0);
+				dwId = null!=obs[2] ? (Integer)obs[2] : -1;
+				lastyear = null!=obs[3] ? (BigDecimal)obs[3] : new BigDecimal(0);
+				thisyear = null!=obs[4] ? (BigDecimal)obs[4] : new BigDecimal(0);
+				yingshou = null!=obs[5] ? (BigDecimal)obs[5] : new BigDecimal(0);
 				ud.setDname(dname);
 				ud.setEmail(email);
 				ud.setCharger(charger);
 				ud.setAutoCode(dId);
+				ud.setDwCode(dwId);
 				ud.setLastYear(lastyear);
 				ud.setThisYear(thisyear);
 				ud.setYingshou(yingshou);
@@ -283,7 +286,7 @@ public class PubHetongServiceImpl implements PubHetongService {
 		PContract pcontract = new PContract();
 		pcontract.setCid(id);
 		List<PContract> pcontracts = (List<PContract>) findContracts(pcontract).get("rows");
-		List<PFapiao> pfapiaos = findUserFapiao(id);
+		List<PFapiao> pfapiaos = findUserFapiao(new UserList(id));
 		List<PItemPrice> pitems = findUserItemprice(id);
 		List<PYingshou> plis = new ArrayList<PYingshou>();
 		Iterator<PContract> it = pcontracts.iterator();
@@ -320,7 +323,7 @@ public class PubHetongServiceImpl implements PubHetongService {
 			while(it3.hasNext()){
 				pitem = it3.next();
 				if(ctid.equals(pitem.getCtid())){
-					pinming.append(pitem.getName()+",");
+					pinming.append(pitem.getName()+"，");
 					it3.remove();
 				}
 			}
@@ -431,10 +434,10 @@ public class PubHetongServiceImpl implements PubHetongService {
 	
 
 	@Override
-	public List<PFapiao> findUserFapiao(Integer id) {
+	public List<PFapiao> findUserFapiao(UserList userList) {
 		String hql = "from FaPiao t where t.hetongNumber in (select t2.id from Contract t2 where t2.cid=:id)";
 		Map<String,Object> params = new HashMap<String, Object>();
-		params.put("id", id);
+		params.put("id", userList.getAutoCode());
 		List<FaPiao> fapiaos = fapiaoDao.find(hql, params);
 		List<PFapiao> pfapiaos = new ArrayList<PFapiao>();
 		Iterator<FaPiao> it = fapiaos.iterator();

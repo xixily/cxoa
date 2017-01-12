@@ -31,6 +31,8 @@
            data-query-params-type=""
            data-show-toggle="true"
            data-show-refresh="true"
+           data-page-size="50"
+           data-page-list="[15,30,50,100]"
            data-response-handler="responseHandler"
            data-pagination="true"
            data-side-pagination="client"
@@ -42,8 +44,8 @@
             <th data-field="charger" data-sortable="true">负责人</th>
             <th data-field="email" data-sortable="true" data-visible="false">负责人邮箱</th>
             <th data-field="cemail" data-sortable="true" data-visible="false">细胞核邮箱</th>
-            <th data-field="lastYear" data-visible="false" data-sortable="true"  data-footer-formatter="hetong.htManager.zhidao.footerFormatter_2015"><span app-text="lastYear">2015</span>收款（元）</th>
-            <th data-field="thisYear" data-visible="false" data-sortable="true" data-footer-formatter="hetong.htManager.zhidao.footerFormatter_2016"><span app-text="thisYear">2016</span>收款（元）</th>
+            <th data-field="lastYear" data-visible="true" data-sortable="true"  data-footer-formatter="hetong.htManager.zhidao.footerFormatter_2015"><span app-text="lastYear">2015</span>收款（元）</th>
+            <th data-field="thisYear" data-visible="true" data-sortable="true" data-footer-formatter="hetong.htManager.zhidao.footerFormatter_2016"><span app-text="thisYear">2016</span>收款（元）</th>
             <th data-field="yingshou" data-sortable="true" data-footer-formatter="hetong.htManager.zhidao.footerFormatter_yingshou">应收</th>
         </tr>
         </thead>
@@ -58,7 +60,7 @@
                 closest.html(text);
                 closest.append(hidden[0]);
                 hetong.htManager.findCharger(value);
-                event.stopImmediatePropagation();
+//                event.stopImmediatePropagation();
                 hetong.htManager.zhidao.toggleCellCore(value);
             })
         })

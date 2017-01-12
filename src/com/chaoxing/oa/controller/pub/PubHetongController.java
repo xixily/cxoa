@@ -13,6 +13,7 @@ import com.chaoxing.oa.entity.page.common.Page;
 import com.chaoxing.oa.entity.page.employee.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.hetong.PCustomerDepart;
 import com.chaoxing.oa.entity.page.hetong.PFapiao;
+import com.chaoxing.oa.entity.page.pub.hetong.UserList;
 import com.chaoxing.oa.entity.page.system.SessionInfo;
 import com.chaoxing.oa.service.PubHetongService;
 import com.chaoxing.oa.util.ResourceUtil;
@@ -35,10 +36,10 @@ public class PubHetongController {
 	@RequestMapping(value="/getAllSubordinate")
 	@ResponseBody
 	public Json getAllSubordinate(String email, Integer id, HttpSession session){
+		Json result = new Json();
 		SessionInfo sessionInfo = getSessionInfo(session);
-//		String semail = sessionInfo.getEmail();
+		email = (null!=email && !"".equals(email)) ? email:sessionInfo.getEmail();
 		String level = sessionInfo.getLevel();
-		level = "指导";
 		if(null!=level && "指导".equals(level)){
 			if(null==email || "".equals(email)){
 				return getAllCells(session);
@@ -47,8 +48,10 @@ public class PubHetongController {
 			}
 		}else if(null!=level && "细胞核".equals(level)){
 			return getCoreCells(email, session);
+		}else{
+			result.setMsg("对不起，您不是细胞核或者指导，无法查看。");
 		}
-		return null;
+		return result;
 	}
 	
 	@RequestMapping(value = "/getAllCellCores")
@@ -57,9 +60,7 @@ public class PubHetongController {
 		SessionInfo sessionInfo = getSessionInfo(session);
 		Json result = new Json();
 		String level = sessionInfo.getLevel();
-		level = "指导";
-//		String email = sessionInfo.getEmail();
-		String email = "chuanming@chaoxing.com";
+		String email = sessionInfo.getEmail();
 		if(null!=level && "指导".equals(level)){
 			result.setObj(pubHetongService.findCellCoresCount(email));
 			result.setSuccess(true);
@@ -74,13 +75,12 @@ public class PubHetongController {
 	public Json getCoreCells(String email, HttpSession session){
 		Json result = new Json();
 		SessionInfo sessionInfo = getSessionInfo(session);
+		email = (null!=email&&!"".equals(email)?email:sessionInfo.getEmail());
 		String level = sessionInfo.getLevel();
-		level = "指导";
 		String semail = sessionInfo.getEmail();
-		semail = "chuanming@chaoxing.com";
-		
 		if(null!=level && "细胞核".equals(level)){
 			result.setObj(pubHetongService.findCoreCellsCount(semail));
+			result.setSuccess(true);
 		}else if(null!=level && "指导".equals(level)){
 			if(null!=email && !"".equals(email)){
 				result.setObj(pubHetongService.findCoreCellsCount(email));
@@ -98,8 +98,9 @@ public class PubHetongController {
 	@ResponseBody
 	public Json getUserList(String email, HttpSession session){
 		Json result = new Json();
+		SessionInfo sessionInfo = getSessionInfo(session);
+		email = (null!=email&&!"".equals(email)?email:sessionInfo.getEmail());
 		if(null!=email && !"".equals(email)){
-			SessionInfo sessionInfo = getSessionInfo(session);
 			String semail = sessionInfo.getEmail();
 			semail = "chuanming@chaoxing.com";
 			PRenshiEmployee pemployee = pubHetongService.getUserByEmai(email);
@@ -125,7 +126,6 @@ public class PubHetongController {
 			email = "chuanming@chaoxing.com";
 //			PRenshiEmployee pemployee = pubHetongService.getUserByEmai(email);
 			pubHetongService.findUserList();
-			
 			PCustomerDepart pcd = pubHetongService.getUserList(id);
 			if(email.equals(pcd.getEmail()) || email.equals(pcd.getCellCoreEmail()) || email.equals(pcd.getGemail())){
 				pubHetongService.findUserContractsCount(id);
@@ -155,19 +155,18 @@ public class PubHetongController {
 	
 	@RequestMapping(value="getShoukuan")
 	@ResponseBody
-	public Json getShoukuan(Integer id, HttpSession session){
+	public Json getShoukuan(UserList userList, HttpSession session){
 		Json result = new Json();
-		if(null!=id && id!=0){
+		if(null!=userList.getAutoCode() && userList.getAutoCode()!=0){
 			SessionInfo sessionInfo = getSessionInfo(session);
 			String email = sessionInfo.getEmail();
-			email = "chuanming@chaoxing.com";
-			PCustomerDepart pcd = pubHetongService.getUserList(id);
-//			if(email.equals(pcd.getEmail()) || email.equals(pcd.getCellCoreEmail()) || email.equals(pcd.getGemail())){
-				result.setObj(pubHetongService.findUserFapiao(id));
+			PCustomerDepart pcd = pubHetongService.getUserList(userList.getAutoCode());
+			if(email.equals(pcd.getEmail()) || email.equals(pcd.getCellCoreEmail()) || email.equals(pcd.getGemail())){
+				result.setObj(pubHetongService.findUserFapiao(userList));
 				result.setSuccess(true);
-//			}else{
-//				result.setMsg("你没有查看这个用户单位的权限。");
-//			}
+			}else{
+				result.setMsg("你没有查看这个用户单位的权限。");
+			}
 		}else{
 			result.setMsg("Id 不存在。");
 		}
@@ -182,15 +181,14 @@ public class PubHetongController {
 		if(null!=id && id!=0){
 			SessionInfo sessionInfo = getSessionInfo(session);
 			String email = sessionInfo.getEmail();
-			email = "chuanming@chaoxing.com";
 			PCustomerDepart pcd = pubHetongService.getUserList(id);
-//			if(email.equals(pcd.getEmail()) || email.equals(pcd.getCellCoreEmail()) || email.equals(pcd.getGemail())){
-//				result.setObj(pubHetongService.findYingshouCount(id));
+			if(email.equals(pcd.getEmail()) || email.equals(pcd.getCellCoreEmail()) || email.equals(pcd.getGemail())){
+				result.setObj(pubHetongService.findYingshouCount(id));
 				result.setObj(pubHetongService.findYingshouCount(id));
 				result.setSuccess(true);
-//			}else{
-//				result.setMsg("你没有查看这个用户单位的权限。");
-//			}
+			}else{
+				result.setMsg("你没有查看这个用户单位的权限。");
+			}
 		}else{
 			result.setMsg("Id 不存在。");
 		}

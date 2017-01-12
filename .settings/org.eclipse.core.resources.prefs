@@ -1,10 +1,9 @@
 eclipse.preferences.version=1
 encoding//WebContent/app/views/caiwu/baoxiaoManager.html=UTF-8
 encoding//WebContent/app/views/hetong/cells.html=UTF-8
-encoding//WebContent/app/views/hetong/concatDetail.html=UTF-8
 encoding//WebContent/app/views/hetong/contracts.html=UTF-8
-encoding//WebContent/app/views/hetong/customerList.html=UTF-8
 encoding//WebContent/app/views/hetong/guidanceview.html=UTF-8
+encoding//WebContent/app/views/hetong/users.html=UTF-8
 encoding//WebContent/login.jsp=UTF-8
 encoding//WebContent/tabs/employee/jiagou.html=UTF-8
 encoding//WebContent/tabs/system/menus.html=UTF-8

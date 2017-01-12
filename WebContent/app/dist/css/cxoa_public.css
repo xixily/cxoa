@@ -475,3 +475,10 @@ table.dataTable thead .sorting:after {
 /*.media-list a{*/
   /*text-decoration: none;*/
 /*}*/
+.loading{
+  text-align: center;
+  margin: 24px auto;
+}
+.loading.hide{
+  display: none;
+}

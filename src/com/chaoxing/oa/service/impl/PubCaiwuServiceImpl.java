@@ -35,6 +35,7 @@ public class PubCaiwuServiceImpl implements PubCaiwuService {
 
 	@Override
 	public Map<String, Object> findBaoxiao(PBaoxiao pbaoxiao, Page page, int id) {
+		System.out.println("当前登录人ID："+id);
 		List<Baoxiao> baoxiaos = new ArrayList<Baoxiao>();
 		List<PBaoxiao> pbs = new ArrayList<PBaoxiao>();
 		Map<String, Object> results = new HashMap<String, Object>();
@@ -126,13 +127,11 @@ public class PubCaiwuServiceImpl implements PubCaiwuService {
 		Date thisYear = cal.getTime();
 		cal.add(Calendar.YEAR, -1);
 		Date lastYear = cal.getTime();
-//		int thisyear = cal.get(Calendar.YEAR);
 		Map<String, Object> params = new HashMap<String, Object>();
-		StringBuffer hql = new StringBuffer("select sum(t.baoxMoney) from Baoxiao t where t.baoxTime>=:lastYear and t.baoxTime<:thisYear");
-//		params.put("thisYear", thisyear + "-01" + "-01");
-//		params.put("afterYear", (thisyear+1) + "-01" + "-01");
+		StringBuffer hql = new StringBuffer("select sum(t.baoxMoney) from Baoxiao t where t.uid=:id and t.baoxTime>=:lastYear and t.baoxTime<:thisYear");
 		params.put("thisYear", thisYear);
 		params.put("lastYear", lastYear);
+		params.put("id", id);
 		List<Object> lis = objectDao.find(hql.toString(), params);
 		Double value1 = 0.0d;
 		if(null!=lis && lis.size()>0){

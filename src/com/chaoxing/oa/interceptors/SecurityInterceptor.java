@@ -69,6 +69,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
 			}
 			if(ipFlag){
 				SessionInfo sessionInfo = (SessionInfo) request.getSession().getAttribute(ResourceUtil.getSessionInfoName());
+				if(null == sessionInfo) return false;
 				if (sessionInfo.getRoleId()==0) {// 超管不需要验证权限
 					return true;
 				} else {
@@ -76,13 +77,14 @@ public class SecurityInterceptor implements HandlerInterceptor {
 					if (urls.contains(url)) {
 						return true;
 					} else {
-						request.setAttribute("msg", "{msg:'您没有访问此资源的权限！请联系超管赋予您" + url + "的资源访问权限！'}");
+						request.setAttribute("msg", "{\"msg\":\"对不起，您没有访问此资源的权限。\"}");
+//						request.setAttribute("msg", "{\"msg\":\"您没有访问此资源的权限！请联系超管赋予您[" + url + "]的资源访问权限！\"}");
 						request.getRequestDispatcher("/error/noSecurity.jsp").forward(request, response);
 						return false;
 					}
 				}
 			}else{
-				request.setAttribute("msg", "{msg:'您的ip不允许访问该资源，请使用公司内部IP访问该资源.'}");
+				request.setAttribute("msg", "{\"msg\":\"您的ip不允许访问该资源，请使用公司内部IP访问该资源。\"}");
 					request.getRequestDispatcher("/error/noSecurity.jsp").forward(request, response);
 					return false;
 			}
