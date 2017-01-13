@@ -102,11 +102,16 @@ public class PubHetongController {
 		email = (null!=email&&!"".equals(email)?email:sessionInfo.getEmail());
 		if(null!=email && !"".equals(email)){
 			String semail = sessionInfo.getEmail();
-			semail = "chuanming@chaoxing.com";
 			PRenshiEmployee pemployee = pubHetongService.getUserByEmai(email);
-			if(semail.equals(pemployee.getEmail()) || semail.equals(pemployee.getCellCoreEmail()) || semail.equals(pemployee.getGuidanceEmail())){
-				result.setObj(pubHetongService.findUserListCount(email, pemployee.getUsername()));
-				result.setSuccess(true);
+			if(null!=pemployee){
+				if(semail.equals(pemployee.getEmail()) || semail.equals(pemployee.getCellCoreEmail()) || semail.equals(pemployee.getGuidanceEmail())){
+					result.setObj(pubHetongService.findUserListCount(email, pemployee.getUsername()));
+					result.setSuccess(true);
+				}else{
+					result.setMsg("您没有查看该销售用户列表的权限");
+				}
+			}else{
+				result.setMsg("对不起，没有找到该员工信息。");
 			}
 		}else{
 			result.setMsg("email信息为空，无法查询！~");
@@ -127,7 +132,7 @@ public class PubHetongController {
 //			PRenshiEmployee pemployee = pubHetongService.getUserByEmai(email);
 			pubHetongService.findUserList();
 			PCustomerDepart pcd = pubHetongService.getUserList(id);
-			if(email.equals(pcd.getEmail()) || email.equals(pcd.getCellCoreEmail()) || email.equals(pcd.getGemail())){
+			if(email.equals(pcd.getEmail()) || email.equals(pcd.getCemail()) || email.equals(pcd.getGemail())){
 				pubHetongService.findUserContractsCount(id);
 			}
 			pubHetongService.findUserContractsCount(id);
@@ -161,7 +166,7 @@ public class PubHetongController {
 			SessionInfo sessionInfo = getSessionInfo(session);
 			String email = sessionInfo.getEmail();
 			PCustomerDepart pcd = pubHetongService.getUserList(userList.getAutoCode());
-			if(email.equals(pcd.getEmail()) || email.equals(pcd.getCellCoreEmail()) || email.equals(pcd.getGemail())){
+			if(email.equals(pcd.getEmail()) || email.equals(pcd.getCemail()) || email.equals(pcd.getGemail())){
 				result.setObj(pubHetongService.findUserFapiao(userList));
 				result.setSuccess(true);
 			}else{
@@ -182,7 +187,7 @@ public class PubHetongController {
 			SessionInfo sessionInfo = getSessionInfo(session);
 			String email = sessionInfo.getEmail();
 			PCustomerDepart pcd = pubHetongService.getUserList(id);
-			if(email.equals(pcd.getEmail()) || email.equals(pcd.getCellCoreEmail()) || email.equals(pcd.getGemail())){
+			if(email.equals(pcd.getEmail()) || email.equals(pcd.getCemail()) || email.equals(pcd.getGemail())){
 				result.setObj(pubHetongService.findYingshouCount(id));
 				result.setObj(pubHetongService.findYingshouCount(id));
 				result.setSuccess(true);

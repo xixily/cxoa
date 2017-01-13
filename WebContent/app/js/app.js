@@ -277,16 +277,22 @@ $(function() {//监听屏幕变化，重组slider 导航条
                         data.obj ? callback(data.obj):callback(data);
                     }
             	}else{
-            		var msg = data.msg?data.msg:"请求失败！";
-            		$.messager.alert('Post请求：', msg)
+            		var msg = data.msg?data.msg:"请求被拒绝或者请求失败！";
+            		$.messager.alert('请求失败：', msg)
             	}
             },
             error: function(xhr,status,error){
                 if (errorCallback && (typeof errorCallback == "function")) {
                     errorCallback(xhr, status, error);
                 } else {
-                    if (xhr.statusText != 'success') {
+                    if (xhr.statusText != 'success' && xhr.statusText != 'OK') {
                     	$.messager.alert("请求反馈：","请求超时或者网络异常" + status||error);
+                    }else{
+                        try{
+                            $.messager.alert("请求反馈：",xhr.responseText);
+                        }catch(e){
+                            console.log(e);
+                        }
                     }
                 }
             },
@@ -704,7 +710,7 @@ function round2(number,fractiondigits){
 
 function responseHandler(res) {
     if(!res.success){
-        $.messager.alert('错误提示：',res.msg);
+        $.messager.alert('请求失败：',res.msg);
     }
     return res.success ? res.obj ? res.obj:new Array():new Array();' '
 }

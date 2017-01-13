@@ -95,7 +95,7 @@ var caiwu = {
                         var data = appDialog.getDefaults();
                         data.content = '获取页面信息失败~！';
                         var dialog = createDialog(appDialog.getDefaults(), function (event) {
-                            console.log('保存按钮：' + event);
+//                            console.log('保存按钮：' + event);
                         });
                         dialog.modal('show');
                     }
@@ -109,7 +109,7 @@ var caiwu = {
             var body = $("#" + app.getBaoxiao() + "body");
             var data = $("#" + app.getBaoxiao() + "body").data(app.getQueryParams());
             data.page +=1;
-            console.log(data);
+//            console.log(data);
 //            var page = body.data(app.getPage());
 //            data.page = (page.page+=1);
 //            data.size = page.size;
@@ -166,7 +166,7 @@ var caiwu = {
                         var data = $.appDialog.getDefaults();
                         data.content = '获取页面信息失败~！';
                         var dialog = $.appDialog.createDialog($.appDialog.getDefaults(), function (event) {
-                            console.log('保存按钮：' + event);
+//                            console.log('保存按钮：' + event);
                         });
                         dialog.modal('show');
                     }
