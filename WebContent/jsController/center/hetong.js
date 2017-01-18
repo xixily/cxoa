@@ -269,6 +269,23 @@ var hetong = {
 								$.messager.alert("生成提示：",result.msg);
 							});
 						});
+			},
+			exportQuery: function(){
+				var url = "file/exportFahuoQuery.action";
+				var form = $('#fahuoQuery_form');
+				var data = getDataOfForm(form);
+				var exportParam = data.data ? data.data:{};
+				downloadForm.createForm();
+				$("#export_query").form('submit', {
+					url : url,
+					queryParams : exportParam,
+					onSubmit : function() {
+						console.log("正在导出,请稍后...");
+					},
+					onLoadSuccess : function() {
+						downloadForm.destoryForm();
+					}
+				});
 			}
 		},
 		fapiao : {

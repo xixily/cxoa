@@ -8,6 +8,7 @@ import com.chaoxing.oa.entity.page.employee.PMonthWages;
 import com.chaoxing.oa.entity.page.employee.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.employee.PSheBaoSummary;
 import com.chaoxing.oa.entity.page.employee.PshebaoDetail;
+import com.chaoxing.oa.entity.page.hetong.PFahuo;
 import com.chaoxing.oa.entity.po.view.ShebaoAR;
 import com.chaoxing.oa.entity.po.view.ShebaoMX;
 import com.chaoxing.oa.entity.po.view.Yidong;
@@ -40,6 +41,9 @@ public interface ExportExcelService {
 	public String getPOStructExcel(List<POStructV> pos);
 
 	public String getPOStructExcel2(List<POStructV> pos);
+
+	//发货管理
+	public String getFahuo(List<PFahuo> pFahuos);
 
 
 

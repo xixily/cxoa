@@ -30,6 +30,7 @@ import com.chaoxing.oa.entity.po.view.ShebaoMX;
 import com.chaoxing.oa.entity.po.view.Yidong;
 import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.service.ExportExcelService;
+import com.chaoxing.oa.service.HetongService;
 import com.chaoxing.oa.util.BarCode128C;
 import com.chaoxing.oa.util.FileOperateUtil;
 import com.chaoxing.oa.util.ResourceUtil;
@@ -39,6 +40,8 @@ import com.chaoxing.oa.util.ResourceUtil;
 public class FileOperateController {
 	private EmployeeInfoService employeeInfoService;
 	private ExportExcelService exportExcelService;
+	@Autowired
+	private HetongService hetongService;
 	
 	
 	public ExportExcelService getExportDao() {
@@ -342,6 +345,26 @@ public class FileOperateController {
     	
     	return null;
     }
+    
+    @RequestMapping(value = "/exportFahuoQuery")
+    public ModelAndView exportFahuo(PFahuo pFahuo, HttpServletRequest request, HttpServletResponse response, HttpSession session){
+    	Map<String, Object> res = hetongService.findFahuo(pFahuo, new Page(), 1);
+    	List<PFahuo> pFahuos = (List<PFahuo>) res.get("rows");
+    	if(pFahuos!=null&&pFahuos.size()>0){
+    		String storeName = exportExcelService.getFahuo(pFahuos); 
+    		String realName = "发货管理.xlsx";  
+    		String contentType = "application/octet-stream";  
+    		try {
+    			FileOperateUtil.download(request, response, storeName, contentType,realName);
+    		} catch (Exception e) {
+    			System.out.println("文件下载失败！");
+    			e.printStackTrace();
+    		} 
+    	}
+    	
+    	return null;
+    }
+    
     @RequestMapping(value = "/codeImage")
     public ModelAndView getcodeImage(PFahuo pfahuo, HttpServletRequest request, HttpServletResponse response, HttpSession session){
     	if(null != pfahuo.getMailno()&&""!=pfahuo.getMailno()&&!"".equals(pfahuo.getOrderid())){

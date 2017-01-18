@@ -13,6 +13,7 @@
 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-email_go',plain:true" onclick="hetong.fahuo.sendKuaidi()">发送快递</a>
 <span class="btn-separator"></span>
 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-printer',plain:true" onclick="hetong.fahuo.printOnClient()">打印</a>
+<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-excel',plain:true" onclick="hetong.fahuo.exportQuery()">导出查询结果</a>
 <%--<span class="btn-separator"></span>--%>
 <%--&lt;%&ndash;<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-printer',plain:true" onclick="hetong.fahuo.createCode128C()">重新生成条形码</a>&ndash;%&gt;--%>
 <%--<span class="btn-separator"></span>--%>

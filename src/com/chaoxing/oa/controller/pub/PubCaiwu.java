@@ -22,7 +22,7 @@ import com.chaoxing.oa.util.ResourceUtil;
 @RequestMapping("/public/caiwu")
 public class PubCaiwu {
 	@Autowired
-	private PubCaiwuService publicService;
+	private PubCaiwuService publicCaiwuService;
 	
 	@RequestMapping(value="/owners/{ownerId}",method=RequestMethod.GET)
 	public String getOwner(@PathVariable String ownerId, Model model){
@@ -34,9 +34,9 @@ public class PubCaiwu {
 	@ResponseBody
 	public Map<String, Object> findBaoxiao(PBaoxiao pbaoxiao, Page page, HttpSession session){
 		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
-		Map<String, Object> results = publicService.findBaoxiao(pbaoxiao,page,sessionInfo.getId());
-		Double lastyear = publicService.getLastYear(sessionInfo.getId());
-		Double thisyear = publicService.getThisYear(session.getId());
+		Map<String, Object> results = publicCaiwuService.findBaoxiao(pbaoxiao,page,sessionInfo.getId());
+		Double lastyear = publicCaiwuService.getLastYear(sessionInfo.getId());
+		Double thisyear = publicCaiwuService.getThisYear(session.getId());
 		results.put("lastYearTotal", lastyear);
 		results.put("thisYearTotal", thisyear);
 		results.put("success", true);

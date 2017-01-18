@@ -264,7 +264,7 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> 用户信息</a>
+                        <li><a href="#" onclick="$('#user_info_modal').modal('toggle');"><i class="fa fa-user fa-fw"></i> 用户信息</a>
                         </li>
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> 设置</a>
                         </li>
@@ -330,6 +330,72 @@
         <!-- 主div -->
         <div id="loading" class="loading">
             <span>正在加载数据,请稍后...<img style="display: inline-block" src="images/loading.gif" alt="正在加载..." class="img-responsive" width="16"/></span>
+        </div>
+        <div id="user_info">
+            <div id="user_info_modal" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <p style="text-align:center">个人信息</p>
+                        </div>
+                        <!--<div class="modal-header">-->
+                            <!--<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
+                            <!--&lt;!&ndash;<h4 class="modal-title">Modal title</h4>&ndash;&gt;-->
+                        <!--</div>-->
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-xs-5"></div>
+                                <div class="col-xs-6" style="margin-bottom: 16px;">
+                                    <img src="images/111.jpg" alt="头像..." class="img-rounded" width="90" height="90">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2"></div>
+                                <div class="col-xs-9">
+                                    <form class="form-horizontal" role="form">
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-2 control-label">姓名</label>
+                                            <div class="col-sm-10">
+                                                <input name="username" id="username" type="text" class="form-control" value="邓雪锋" placeholder="姓名..." readonly="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email" class="col-sm-2 control-label">邮箱</label>
+                                            <div class="col-sm-10">
+                                                <input type="email" name="email" id="email" class="form-control" value="dengxuefeng@chaoxing.com" placeholder="邮箱..." readonly="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="position" class="col-sm-2 control-label">职位</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" name="position" id="position" class="form-control" value="Java工程师" placeholder="Email" readonly="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="level" class="col-sm-2 control-label">级别</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" name="level" id="level" class="form-control" value="细胞核" placeholder="级别..." readonly="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="workSpace" class="col-sm-2 control-label">工作地点</label>
+                                            <div class="col-sm-10">
+                                                <input type="text"  name="workPlace" id="workSpace" class="form-control" value="北京金隅嘉华大厦C710" readonly="">
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary">确认</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
         </div>
         <div id="container" style="display: none">
             <div id="ht_customer">

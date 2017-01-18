@@ -16,6 +16,7 @@ import com.chaoxing.oa.entity.page.employee.PMonthWages;
 import com.chaoxing.oa.entity.page.employee.PRenshiEmployee;
 import com.chaoxing.oa.entity.page.employee.PSheBaoSummary;
 import com.chaoxing.oa.entity.page.employee.PshebaoDetail;
+import com.chaoxing.oa.entity.page.hetong.PFahuo;
 import com.chaoxing.oa.entity.po.view.ShebaoAR;
 import com.chaoxing.oa.entity.po.view.ShebaoMX;
 import com.chaoxing.oa.entity.po.view.Yidong;
@@ -287,6 +288,7 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 		}
 		return null;
 	}
+	
 	@Override
 	public String getMonthWagesExcel(List<PMonthWages> pMonthWages) {
 		SXSSFWriter sxffWriter = null;
@@ -1180,9 +1182,73 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 		return null;
 	}
 
+	
+	@Override
+	public String getFahuo(List<PFahuo> pFahuos) {
+		SXSSFWriter sxffWriter = null;
+		try {
+			sxffWriter = new SXSSFWriter("pFahuoExcel");
+			//文件绝对路径
+			String filePath = SXSSFWriter.DEFAULT_FOLDER + sxffWriter.getFileName();
+			sxffWriter.createNewSheet("发货excel表");
+			createFahuoHeader(sxffWriter);
+			Iterator<PFahuo> it = pFahuos.iterator();
+			while(it.hasNext()){
+				PFahuo pfahuo = it.next();
+				sxffWriter.createRow();
+				sxffWriter.createCell();
+				sxffWriter.setStringData(String.valueOf(pfahuo.getOrderid()));
+				sxffWriter.createCell();
+				sxffWriter.setStringData(String.valueOf(pfahuo.getHetongCode()));
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pfahuo.getD_contact());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pfahuo.getD_company());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pfahuo.getD_address());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pfahuo.getD_tel());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pfahuo.getjDate());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pfahuo.getMailno());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pfahuo.getRemark());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pfahuo.getD_post_code());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pfahuo.getContent());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pfahuo.getArea());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pfahuo.getSender());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pfahuo.getD_city());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pfahuo.getArea());
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pfahuo.getRecorder());
+			}
+//			insertCell(PKaoQin.class,pKaoqins);
+			sxffWriter.flush();
+			return filePath;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				sxffWriter.destroy();
+			} catch (IOException e) {
+				System.out.println("销毁失败！");
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
 	private void createPOStruct(SXSSFWriter sxffWriter) {
 		createPOStruct(sxffWriter,false);
 	}
+	
 	private void createPOStruct(SXSSFWriter sxffWriter, boolean flag) {
 		sxffWriter.createRow();
 		sxffWriter.createCell();
@@ -1315,6 +1381,7 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 	private void createKaoqinHeader(SXSSFWriter sxffWriter) {
 		createKaoqinHeader(sxffWriter, 0);
 	}
+	
 	private void createKaoqinHeader(SXSSFWriter sxffWriter, int isMonthWages) {
 		sxffWriter.createRow();
 		sxffWriter.createCell();
@@ -1448,6 +1515,42 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 			sxffWriter.createCell();
 			sxffWriter.setStringData("考勤备注");
 		}
+	}
+	
+	private void createFahuoHeader(SXSSFWriter sxffWriter) {
+		sxffWriter.createRow();
+		sxffWriter.createCell();
+		sxffWriter.setStringData("序号");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("合同编号");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("收件人");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("邮寄单位");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("邮寄地址");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("联系电话");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("邮寄时间");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("邮寄凭证号");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("备注");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("邮编");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("内容");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("区号");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("发货人");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("城市");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("地区");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("录库人");
 	}
 	
 	private void createHeader(SXSSFWriter sxffWriter, boolean flag) {

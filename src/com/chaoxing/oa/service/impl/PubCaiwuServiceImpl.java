@@ -20,7 +20,7 @@ import com.chaoxing.oa.system.SysConfig;
 import com.chaoxing.oa.util.DateUtil;
 import com.chaoxing.oa.util.SqlHelper;
 
-@Service("publicService")
+@Service("publicCaiwuService")
 public class PubCaiwuServiceImpl implements PubCaiwuService {
 	@Autowired
 	private BaseDaoI<Baoxiao> baoxiaoDao;
