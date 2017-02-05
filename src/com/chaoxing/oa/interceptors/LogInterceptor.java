@@ -76,7 +76,7 @@ public class LogInterceptor implements HandlerInterceptor {
 			log.setRequestIp(request.getRemoteAddr());
 			log.setUserId(sessionInfo.getId());
 			if (excludeUrls.contains(url)) {
-				System.out.println("文件下载，文件下载");
+//				System.out.println("文件下载，文件下载");
 				return;
 			}
 			if(null != sessionInfo.getResponse()){

@@ -1767,19 +1767,22 @@ shebaoSummary : {
 		$('#shebaoCompany_cgongs').html(row.cInjuryInsurance);
 		$('#shebaoCompany_cshengy').html(row.cBirthIinsurance);
 	},
-	updateType : function(){
-		var shebaoType = $('#shebaoComany_sbtype').combobox('getValue');
+	generateCompanyType : function(){
+		var type = $('#shebaoComany_sbtype').combobox('getValue');
+		var company = $('#shebaoCompany_company').text();
 		var data = {};
-		if(shebaoType){
-			data.shebaoType = shebaoType;
-			$.post('',data,function(result){
-				result = eval("("+ result + ")");
-				if(result.success){
-					
-				}
-				$.messager.alert('提示：',result.msg);
-			})
-			
+		if(type && ''!= type && company){
+			data.type = type;
+			data.company = company;
+			var message = "确定要更新[" + company + "][" + type + "]的所有职员的" + type + "保险信息？";
+			confirmDialog.createDialog(
+					message,function(confirmId){
+						$.post('employee/generateCompanyType.action',data,function(result){
+							var result =  eval("(" + result + ")");
+							confirmDialog.destoryDialog(confirmId);
+							$.messager.alert('消息', result.msg, 'info');
+						});
+					})
 		}else{
 			$.messager.alert('提示','请选择社保类型~');
 		}

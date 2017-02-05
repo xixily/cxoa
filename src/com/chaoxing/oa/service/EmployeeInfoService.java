@@ -82,6 +82,8 @@ public interface EmployeeInfoService {
 	
 	public Map<String, Object> findShebaoCompany(QueryForm queryForm, HttpSession session, int isExport);
 	
+	public int updateShebaoCompanyType(String company, String type);
+	
 	public long getWageDistributionCount(String hql, Map<String, Object> params);
 
 	public int updateWagesRadix(PshebaoDetail pwages);

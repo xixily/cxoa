@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta name="keywords" content="超星办公平台登录" />
 	<meta name="description" content="超星办公平台登录" />
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
 	
 	<!-- Custom Fonts -->
 	<link href="app/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">

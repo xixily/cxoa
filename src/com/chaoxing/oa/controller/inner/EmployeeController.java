@@ -600,6 +600,23 @@ public class EmployeeController {
 		return null;
 	}
 	
+	@RequestMapping(value = "/generateCompanyType")
+	@ResponseBody
+	public Json generateCompanyType(String company, String type, HttpSession session){
+		Json result = new Json();
+		if(null!=company && !"".equals(company) && null!=type && !"".equals(type)){
+			if(employeeInfoService.updateShebaoCompanyType(company, type)>0){
+				result.setSuccess(true);
+				result.setMsg("社保信息["+ company +"]["+ type + "]更新成功！");
+			}else{
+				result.setMsg("社保信息["+ company +"]["+ type + "]更新失败");
+			}
+		}else{
+			result.setMsg("社保类型为空，或者公司名称为空！");
+		}
+		return result;
+	}
+	
 	@RequestMapping(value = "/queryKaoqin")
 	@ResponseBody
 	public Map<String, Object> queryKaoqin(QueryForm queryForm, HttpSession session){

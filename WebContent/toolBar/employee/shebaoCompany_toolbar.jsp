@@ -33,7 +33,8 @@
                     url:'employee/getShebaoType.action',
                     required:true
                     "/>
-<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" onclick="employee.shebaoSummary.updateType()">重新计算公司社保类型</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-excel" onclick="employee.shebaoSummary.generateCompanyType()">重新计算公司社保类型</a>
+<%--<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" onclick="employee.shebaoSummary.updateType()">重新计算公司社保类型</a>--%>
 </div>
 <span class="btn-separator" style="margin:0 6px;"></span>
 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-excel" onclick="employee.shebaoSummary.exportShebaoCompany(0)">导出当前公司社保表</a>

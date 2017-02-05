@@ -118,7 +118,7 @@ function initClickHandler() {
             return false;
         }
         var data = getDataOfForm(frm);
-        console.log('o%', data);
+//        console.log('o%', data);
         if (data.succeed) {
             var actionHandler = eval(action);//jQuery.gloabEval()全局方法
             if (actionHandler) {

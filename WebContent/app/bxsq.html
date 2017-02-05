@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>超星OA财务报销申请单</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-10">
+            <h3 class="text-center">报销申请单</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 col-md-3">报销申请人：</div>
+        <div class="col-xs-4 col-md-3">执行人：</div>
+        <div class="col-xs-4 col-md-3">职位：</div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6 div-md-4">填报时间：</div>
+        <div class="col-xs-6 div-md-4">批次号：</div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-10">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th rowspan="2">序号</th>
+                        <th colspan="4">报销人填表情况</th>
+                        <th colspan="3">财务审核情况</th>
+                    </tr>
+                    <tr>
+                        <th>报销项目</th>
+                        <th>票据张数</th>
+                        <th>票据金额/元</th>
+                        <th>备注</th>
+                        <th>票据张数</th>
+                        <th>核报金额/元</th>
+                        <th>备注</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row"><span>1</span><a href="#" style="margin-left: 12px;"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></th>
+                        <td>交通费用</td>
+                        <td>3</td>
+                        <td>120</td>
+                        <td>打车费用</td>
+                        <!-- 财务允报金额 -->
+                        <td>3</td>
+                        <td>120</td>
+                        <td>允许报销</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><span>2</span><a href="#" style="margin-left: 12px;"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></th>
+                        <td>餐费</td>
+                        <td>3</td>
+                        <td>120</td>
+                        <td>餐费</td>
+                        <!-- 财务允报金额 -->
+                        <td>3</td>
+                        <td>120</td>
+                        <td>允许报销</td>
+                    </tr>
+                    <tr id="add_tr" align="center">
+                        <td colspan="8">
+                            <a href="#" onclick="">
+                                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" colspan="2">合计：（大写）</th>
+                        <td>陆</td>
+                        <td>贰佰肆拾圆整</td>
+                        <td>打车费，餐费</td>
+                        <!-- 财务允报金额 -->
+                        <td>陆</td>
+                        <td>贰佰肆拾圆整</td>
+                        <td>打车费，餐费</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" colspan="2">公司总（副）经理</th>
+                        <td colspan="3">史昊</td>
+                        <!-- 财务允报金额 -->
+                        <td>审核人</td>
+                        <td colspan="2">李晓娟</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- jQuery -->
+<script src="vendor/jquery/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var lastRow = Number($($('#add_tr').prev().find('span')[0]).text());
+    })
+</script>
+</body>
+</html>

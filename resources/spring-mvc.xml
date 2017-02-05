@@ -168,6 +168,7 @@
 						<value>/employee/addWages.action</value>
 						<value>/employee/addShebao.action</value>
 						<value>/employee/addMonthWages.action</value>
+						<value>/employee/generateCompanyType.action</value>
 					</list>
 				</property>
 			</bean>
