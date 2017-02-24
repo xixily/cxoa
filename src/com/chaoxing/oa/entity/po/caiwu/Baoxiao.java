@@ -13,72 +13,46 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-
 @Entity
 @Table(name = "报销表", schema="")
 @DynamicInsert(true)
 @DynamicUpdate(true)
 public class Baoxiao implements Serializable{
-	private static final long serialVersionUID = 3551927366660915601L;
+	private static final long serialVersionUID = -8310260669695764416L;
 	private Long id;
-//	private Long piciNum;//
-	private Date jTime;//邮寄时间
 	private Integer uid;//报销人ID
-	private String username;//报销人
-	private String email;//报销人邮箱
-	private Integer cellCoreId;//细胞核ID
+	private Float money;//申报金额
+	private Float huankuan;//还借款金额
 	private Integer number;//报销张数
-	private Float money;//金额
-	private Float huankuan;//还款金额
+	private String explain;//说明
 	private String bank;//银行
 	private String account;//账号
-	private String explain;//说明
 	private Integer approid;//批准人ID
-	private String approver;//批准人
-	private String aproEmail;//批准人邮箱
 	private Date aproTime;//批准时间
+	private String approRemark;//领导意见
+	private Date jTime;//邮寄时间
+	private String kdno;//快递单号
+	private Integer reciverId;//收票人Id
 	private Date reciveTime;//收票时间
-	private Date baoxTime;//报销时间
-	private Float baoxMoney;//允许报销金额
+	private String rcRemarks;//收票备注
+	private Integer checkerId;//审核人Id
+	private Integer cpid;//出票人id
 	private Float tuipiao;//退票金额
 	private String caiwuRemarks;//财务备注
+	private Float koujk;//扣借款
+	private Float baoxMoney;//汇款金额
+	private Date baoxTime;//汇款时间
 	private Integer status;//状态
+	private String kunhao;//捆号
+	private Date createTime;//创建时间
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Long getId() {
 		return id;
 	}
-//	@Column(name="批次号")
-//	public Long getPiciNum() {
-//		return piciNum;
-//	}
-	@Column(name="邮寄时间",columnDefinition="timestamp NULL")
-	public Date getjTime() {
-		return jTime;
-	}
-//	@Column(name="报销人ID",columnDefinition="int(11) NOT NULL ")
-//	@Column(name="报销人ID",columnDefinition="int(11) constraint FK_USERNAME_BAOXIAO_BXID FOREIGN KEY REFERENCES username(id) NOT NULL ")//外键关联
-//	@ManyToOne(targetEntity=UserName.class)
-//	@JoinColumn(referencedColumnName="id",name="uid")
-	@Column(name="报销人ID")
+	@Column(name="报销人id")
 	public Integer getUid() {
 		return uid;
-	}
-	@Column(name="报销人")
-	public String getUsername() {
-		return username;
-	}
-	@Column(name="报销人邮箱")
-	public String getEmail() {
-		return email;
-	}
-	@Column(name="细胞核ID")
-	public Integer getCellCoreId() {
-		return cellCoreId;
-	}
-	@Column(name="报销张数")
-	public Integer getNumber() {
-		return number;
 	}
 	@Column(name="申报金额")
 	public Float getMoney() {
@@ -88,6 +62,14 @@ public class Baoxiao implements Serializable{
 	public Float getHuankuan() {
 		return huankuan;
 	}
+	@Column(name="报销张数")
+	public Integer getNumber() {
+		return number;
+	}
+	@Column(name="说明")
+	public String getExplain() {
+		return explain;
+	}
 	@Column(name="银行")
 	public String getBank() {
 		return bank;
@@ -96,40 +78,45 @@ public class Baoxiao implements Serializable{
 	public String getAccount() {
 		return account;
 	}
-	@Column(name="说明")
-	public String getExplain() {
-		return explain;
-	}
 	@Column(name="批准人id")
-//	@ManyToOne(targetEntity=UserName.class)
-//	@JoinColumn(name="approid",referencedColumnName="id")
-//	@Column(name="批准人ID",columnDefinition="int(11) constraint FK_USERNAME_BAOXIAO_APPROID FOREIGN KEY REFERENCES username(id) NOT NULL ")//外键关联
 	public Integer getApproid() {
 		return approid;
 	}
-	@Column(name="批准人")
-	public String getApprover() {
-		return approver;
-	}
-	@Column(name="批准人邮箱")
-	public String getAproEmail() {
-		return aproEmail;
-	}
-	@Column(name="批准时间",columnDefinition="timestamp NULL")
+	@Column(name="批准时间")
 	public Date getAproTime() {
 		return aproTime;
 	}
-	@Column(name="收票时间",columnDefinition="timestamp NULL")
+	@Column(name="领导意见")
+	public String getApproRemark() {
+		return approRemark;
+	}
+	@Column(name="邮寄时间")
+	public Date getjTime() {
+		return jTime;
+	}
+	@Column(name="快递单号")
+	public String getKdno() {
+		return kdno;
+	}
+	@Column(name="收票人id")
+	public Integer getReciverId() {
+		return reciverId;
+	}
+	@Column(name="收票时间")
 	public Date getReciveTime() {
 		return reciveTime;
 	}
-	@Column(name="报销时间",columnDefinition="timestamp NULL")
-	public Date getBaoxTime() {
-		return baoxTime;
+	@Column(name="收票备注")
+	public String getRcRemarks() {
+		return rcRemarks;
 	}
-	@Column(name="报销金额")
-	public Float getBaoxMoney() {
-		return baoxMoney;
+	@Column(name="审核人id")
+	public Integer getCheckerId() {
+		return checkerId;
+	}
+	@Column(name="出票人id")
+	public Integer getCpid() {
+		return cpid;
 	}
 	@Column(name="退票金额")
 	public Float getTuipiao() {
@@ -139,33 +126,35 @@ public class Baoxiao implements Serializable{
 	public String getCaiwuRemarks() {
 		return caiwuRemarks;
 	}
-	@Column
+	@Column(name="扣除借款金额")
+	public Float getKoujk() {
+		return koujk;
+	}
+	@Column(name="汇款金额")
+	public Float getBaoxMoney() {
+		return baoxMoney;
+	}
+	@Column(name="汇款时间")
+	public Date getBaoxTime() {
+		return baoxTime;
+	}
+	@Column(name="status")
 	public Integer getStatus() {
 		return status;
+	}
+	@Column(name="捆号")
+	public String getKunhao() {
+		return kunhao;
+	}
+	@Column(name="创建时间")
+	public Date getCreateTime() {
+		return createTime;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-//	public void setPiciNum(Long piciNum) {
-//		this.piciNum = piciNum;
-//	}
-	public void setjTime(Date jTime) {
-		this.jTime = jTime;
-	}
 	public void setUid(Integer uid) {
 		this.uid = uid;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public void setCellCoreId(Integer cellCoreId) {
-		this.cellCoreId = cellCoreId;
-	}
-	public void setNumber(Integer number) {
-		this.number = number;
 	}
 	public void setMoney(Float money) {
 		this.money = money;
@@ -173,35 +162,47 @@ public class Baoxiao implements Serializable{
 	public void setHuankuan(Float huankuan) {
 		this.huankuan = huankuan;
 	}
+	public void setNumber(Integer number) {
+		this.number = number;
+	}
+	public void setExplain(String explain) {
+		this.explain = explain;
+	}
 	public void setBank(String bank) {
 		this.bank = bank;
 	}
 	public void setAccount(String account) {
 		this.account = account;
 	}
-	public void setExplain(String explain) {
-		this.explain = explain;
-	}
 	public void setApproid(Integer approid) {
 		this.approid = approid;
-	}
-	public void setApprover(String approver) {
-		this.approver = approver;
-	}
-	public void setAproEmail(String aproEmail) {
-		this.aproEmail = aproEmail;
 	}
 	public void setAproTime(Date aproTime) {
 		this.aproTime = aproTime;
 	}
+	public void setApproRemark(String approRemark) {
+		this.approRemark = approRemark;
+	}
+	public void setjTime(Date jTime) {
+		this.jTime = jTime;
+	}
+	public void setKdno(String kdno) {
+		this.kdno = kdno;
+	}
+	public void setReciverId(Integer reciverId) {
+		this.reciverId = reciverId;
+	}
 	public void setReciveTime(Date reciveTime) {
 		this.reciveTime = reciveTime;
 	}
-	public void setBaoxTime(Date baoxTime) {
-		this.baoxTime = baoxTime;
+	public void setRcRemarks(String rcRemarks) {
+		this.rcRemarks = rcRemarks;
 	}
-	public void setBaoxMoney(Float baoxMoney) {
-		this.baoxMoney = baoxMoney;
+	public void setCheckerId(Integer checkerId) {
+		this.checkerId = checkerId;
+	}
+	public void setCpid(Integer cpid) {
+		this.cpid = cpid;
 	}
 	public void setTuipiao(Float tuipiao) {
 		this.tuipiao = tuipiao;
@@ -209,8 +210,25 @@ public class Baoxiao implements Serializable{
 	public void setCaiwuRemarks(String caiwuRemarks) {
 		this.caiwuRemarks = caiwuRemarks;
 	}
+	public void setKoujk(Float koujk) {
+		this.koujk = koujk;
+	}
+	public void setBaoxMoney(Float baoxMoney) {
+		this.baoxMoney = baoxMoney;
+	}
+	public void setBaoxTime(Date baoxTime) {
+		this.baoxTime = baoxTime;
+	}
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+	public void setKunhao(String kunhao) {
+		this.kunhao = kunhao;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 	
+	
+
 }

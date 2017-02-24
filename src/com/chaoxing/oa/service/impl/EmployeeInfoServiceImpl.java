@@ -1243,6 +1243,19 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 			return 0;
 		}
 	}
+	
+	@Override
+	public int updateShebaoCompany(String company) {
+		Map<String,Object> params = new HashMap<String, Object>();
+		params.put("company", company);
+		String sql = "{CALL generate_company_shebaotype_pr( :company)}";
+		try {
+			objectDao.prepareCall(sql, params);
+			return 1;
+		} catch (HibernateException e) {
+			return 0;
+		}
+	}
 
 	@Override
 	public Map<String, Object> findMonthShebaoDetail(Page page, String date, HttpSession session,int isExport) {

@@ -86,7 +86,7 @@ $(function() {//监听屏幕变化，重组slider 导航条
         try{
             container.html("");
             jq.appendTo(container);
-            container.find("[id*='_body']").html("");
+            container.find("[id*='_body']").html("");//掏空body里面的内容
             callback(true);
         }catch(e){
             callback(false);
@@ -162,7 +162,7 @@ $(function() {//监听屏幕变化，重组slider 导航条
         }
         var DEFAULTS = [
             {
-                text: '关闭',
+                text: '取消',
                 class: 'btn-default',
                 bstarget:{
                     name: 'data-dismiss',
@@ -171,7 +171,7 @@ $(function() {//监听屏幕变化，重组slider 导航条
                 handler: function(event){//dom 点击事件
                 }
             },{
-                text: '确认更改',
+                text: '确定',
                 class: 'btn-default',
                 bstarget:{
                     name: 'data-dismiss',
@@ -206,8 +206,8 @@ $(function() {//监听屏幕变化，重组slider 导航条
                 "</div>" +
                 "<div class=\"modal-body\"></div>" +
                 "<div class=\"modal-footer\">" +
-                "<button app-target='modal-cancel' class=\"btn btn-default\" type='button' data-dismiss='modal'>关闭</button>" +
-                "<button app-target='modal-save' type='button' class=\"btn btn-primary\" data-dismiss='modal'>保存更改</button>" +
+                "<button app-target='modal-cancel' class=\"btn btn-default\" type='button' data-dismiss='modal'>取消</button>" +
+                "<button app-target='modal-save' type='button' class=\"btn btn-primary\" data-dismiss='modal'>确定</button>" +
                 "</div>" +
                 "</div>" +
                 "</div>" +
@@ -251,6 +251,13 @@ $(function() {//监听屏幕变化，重组slider 导航条
 //                })
 //            }
             createDialog(options).modal('show');
+        },
+        confirm:function(title,content,okfn,cancelfn){
+            var options = appDialog.getDefaults();
+            options.buttons = [];
+            options.title = title ? title : options.title;
+            options.content = content ? content : options.content;
+            createDialog(options, okfn, cancelfn).modal('show');
         },
         show: function(title,content,options){
 
@@ -351,7 +358,8 @@ session = {
     opened:'',
     logined:false,
     equipment : 'computer',
-    table:{}
+    table:{},
+    app_back:''
 }
 ///为字符串添加模糊比较的方法
 String.prototype.isLike = function(exp/*类似于SQL中的模糊查询字符串*/, i/*是否区分大小写*/, start/*以该字符串开始*/, end/*以该字符串结束*/) {
@@ -430,6 +438,12 @@ app = {
     ID_DEFAULTS : {
         CAIWU: 'cw_',
         BAOXIAO: 'cw_bx_',
+        YIPIZHUN: 'cw_ypz_',
+        DAISHOUPIAO: 'cw_dsp_',
+        DAICHUPIAO: 'cw_dcp_',
+        DAIHUIKUAN: 'cw_dhk_',
+        YIHUIKUAN: 'cw_yhk_',
+        YIBAOXIAO: 'cw_ybx_',
         HETONG: 'ht_',
         HETONGGUANLI: 'ht_gl_'
     },
@@ -448,6 +462,24 @@ app = {
     },
     getBaoxiao : function(){
         return app.ID_DEFAULTS.BAOXIAO;
+    },
+    getYiPiZhun: function(){
+        return app.ID_DEFAULTS.YIPIZHUN;
+    },
+    getDaiShouPiao: function(){
+        return app.ID_DEFAULTS.DAISHOUPIAO;
+    },
+    getDaiChuPiao: function(){
+        return app.ID_DEFAULTS.DAICHUPIAO;
+    },
+    getDaiHuiKuan: function(){
+        return app.ID_DEFAULTS.DAIHUIKUAN;
+    },
+    getYiHuiKuan: function(){
+        return app.ID_DEFAULTS.YIHUIKUAN;
+    },
+    getYiBaoxiao : function(){
+        return app.ID_DEFAULTS.YIBAOXIAO;
     },
     getHetong : function(){
         return app.ID_DEFAULTS.HETONG;
@@ -562,7 +594,7 @@ function getView(view, callback, errorCallback) {
  * @param callback
  */
 function getBufferView(view, callback){
-    session.views ? session.veiws=[]:undefined;
+    session.views ? session.views=[]:undefined;
     if(!session.views[view]){
         getView(view + ".html", function(data){
             session.views[view] =  data;
@@ -592,7 +624,7 @@ function sideBarClick(){
         $.open(url,function(success){
             if(success){
                 try{
-                    $('#container [id*="_head"]').find("[app-action]").trigger('click');
+                    $('#container [id*="_head_init"]').find("[app-action]").trigger('click');
                     var action = $('#container [app-init]').attr('app-init');
                     if(action && action!=''){
                         var actionHandler = eval(action);//jQuery.gloabEval()全局方法
@@ -604,6 +636,7 @@ function sideBarClick(){
                     }
                 }catch(e){
                     console.log("没有找到app-action");
+//                    return false;
                 }
             }
         });
@@ -644,6 +677,7 @@ function enterKeyLisener(){
     $(document).on("keypress", "form", function(event) {
         var theEvent = event || window.event;
         var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+//        var src = $(event.currentTarget);
         if(13 === code){
             var form = $(event.currentTarget);
             var actionHandler = form.find("[app-action]")
@@ -657,6 +691,12 @@ function enterKeyLisener(){
             }
         }
 //        console.log(code+ ":" + (typeof code));
+    });
+    
+    //避免textarea因为按Enter键换行，被form按键监听到。
+    $(document).on("keypress", "form textarea", function(event) {
+        var theEvent = event || window.event;
+        theEvent.stopImmediatePropagation();
     });
 }
 /**

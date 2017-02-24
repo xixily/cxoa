@@ -61,6 +61,9 @@ public class PUserName {
 	private String thirdLevel;//三级
 	private String fourthLevel;//四级
 	private String cellCore;//细胞核
+	private String cellCoreEmail;//细胞核邮箱
+	private String guidance;//指导
+	private String guidanceEmail;//指导邮箱
 	private String zhuanruGongsiTime;//转入本公司时间
 	private String ruzhiReport;//入职报表
 	private String lizhiReport;//离职报表
@@ -479,6 +482,24 @@ public class PUserName {
 	}
 	public void setAnnualLleave(BigDecimal annualLleave) {
 		this.annualLleave = annualLleave;
+	}
+	public String getCellCoreEmail() {
+		return cellCoreEmail;
+	}
+	public String getGuidance() {
+		return guidance;
+	}
+	public String getGuidanceEmail() {
+		return guidanceEmail;
+	}
+	public void setCellCoreEmail(String cellCoreEmail) {
+		this.cellCoreEmail = cellCoreEmail;
+	}
+	public void setGuidance(String guidance) {
+		this.guidance = guidance;
+	}
+	public void setGuidanceEmail(String guidanceEmail) {
+		this.guidanceEmail = guidanceEmail;
 	}
 	@Override
 	public String toString() {

@@ -36,6 +36,9 @@
     <!-- Custom Fonts -->
     <link href="app/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <!-- bootstrapValidator CSS-->
+    <link href="app/vendor/bootstrapvalidator-master/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -70,6 +73,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <!--<span class="hidden-xs">-->
                 <span class="hidden-xs">
                 <a class="navbar-brand" href="index.html"><img src="app/images/logo.png" alt="超星OA" style="display: inline-block;height: 130%"/>超星OA办公平台</a>
                 </span>
@@ -289,33 +293,7 @@
             <div id="app_sidebar" class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse collapse">
                     <ul class="nav" id="side-menu">
-                        <!--<li>-->
-                            <!--<a href="index.html"><i class="fa fa-home fa-fw"></i> 主页</a>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<a href="#"><i class="fa fa-edit fa-fw"></i> 合同<span class="fa arrow"></span></a>-->
-                            <!--<ul class="nav nav-second-level">-->
-                                <!--<li>-->
-                                    <!--<a href="hetong/guidanceview.html">合同管理</a>-->
-                                <!--</li>-->
-                                <!--<li>-->
-                                    <!--<a href="#">合同申请</a>-->
-                                <!--</li>-->
-                            <!--</ul>-->
-                            <!--&lt;!&ndash; /.nav-second-level &ndash;&gt;-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<a href="#"><i class="fa fa-rmb fa-fw"></i> 财务<span class="fa arrow"></span></a>-->
-                            <!--<ul class="nav nav-second-level">-->
-                                <!--<li>-->
-                                    <!--<a href="caiwu/baoxiaoManager.html">财务管理</a>-->
-                                <!--</li>-->
-                                <!--<li>-->
-                                    <!--<a href="#">财务申请</a>-->
-                                <!--</li>-->
-                            <!--</ul>-->
-                            <!--&lt;!&ndash; /.nav-second-level &ndash;&gt;-->
-                        <!--</li>-->
+                    
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
@@ -346,7 +324,12 @@
         <a href="#" title="返回顶部" style="display: inline-block;"> <i class="glyphicon glyphicon-arrow-up"></i></a>
         <!--<li class="divider"></li>-->
         <div style="height: 1px;border: 0px;margin: 0px;background-color:#abb9d3;width: 100%"></div>
-        <a href="#" title="添加" class="" style="display: inline-block;"> <i class="glyphicon glyphicon-pencil" style="margin: 3px 3px;"></i></a>
+        <a href="javascript:void(0)" title="添加" class="" style="display: inline-block;"> <i class="glyphicon glyphicon-pencil" style="margin: 3px 3px;"></i></a>
+        <div style="height: 1px;border: 0px;margin: 0px;background-color:#abb9d3;width: 100%"></div>
+<!--
+        <a href="javascript:void(0)" title="返回" onclick="try{$('[app-abck='+ session.app_back +']').trigger('click');}catch(e){alert('返回失败')}" title="添加" class="" style="display: inline-block;"> <i class="fa  fa-reply" style="margin: 3px 3px;"></i></a>
+-->
+        <a href="javascript:void(0)" title="返回" onclick="app_back()" title="添加" class="" style="display: inline-block;"> <i class="fa  fa-reply" style="margin: 3px 3px;"></i></a>
     </div>
 </div>
 <!-- /#wrapper -->
@@ -372,31 +355,21 @@
 <script src="app/js/utils/formHelp.js"></script>
 <script src="app/js/center/caiwu.js"></script>
 <script src="app/js/center/hetong1.0.0.js"></script>
+<!-- bootstrap-table -->
 <script src="app/vendor/bt-table/dist/bootstrap-table.js"></script>
 <script src="app/vendor/bt-table/dist/locale/bootstrap-table-zh-CN.min.js"></script>
-<!--<script type="text/javascript" src="app/js/utils/CXJSBridge.js"></script>
+<!-- bootstrapValidator-->
+<script src="app/vendor/bootstrapvalidator-master/bootstrapValidator.min.js"></script>
 <script>
-    var user;  //用户信息对象
-    function _jsBridgeReady(){  //此方法在学习通页面一打开就会自动运行，原理相当于jquery的onready()方法一毛一样；
+    function app_back(){
         try{
-            jsBridge.bind('CLIENT_LOGIN_STATUS', function(object){  //客户端回调，通知用户的登录状态
-                if(object.status == 1){//当前是已经登录的状态
-                    jsBridge.postNotification("CLIENT_GET_USERINFO", {"accountKey":"" } ) ; //发送给客户端，获取用户信息
-                }
-            });
-        }catch(e){}
-        try{
-            jsBridge.bind('CLIENT_GET_USERINFO', function(object){ //客户端回调，返回给页面用户信息
-                user = object;
-                alert(user.email+"   "+user.name + "  "+user.phone);
-            });
-        }catch(e){}
-        //上边代码先把回调函数注册上，下边代码再给客户端发消息
-        jsBridge.postNotification("CLIENT_LOGIN_STATUS", {"accountKey":""} ) ; //发送给客户端是否是登录状态
+            $('[app-back="'+ session.app_back +'"]').trigger('click');
+        }catch(e){
+            alert('返回失败，请尝试其他方式。');
+        }
     }
 
-</script>-->
-<script>
+//自动隐藏导航头，现在已经取消。
 //    $("#nav_bar").autoHidingNavbar({animationDuration:200,navbarOffset:-82});
 </script>
 </body>

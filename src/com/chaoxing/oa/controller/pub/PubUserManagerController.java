@@ -23,7 +23,6 @@ import com.chaoxing.oa.entity.page.system.PMenu;
 import com.chaoxing.oa.entity.page.system.SessionInfo;
 import com.chaoxing.oa.service.RoleMenuService;
 import com.chaoxing.oa.service.UserServiceI;
-import com.chaoxing.oa.test.DesCode;
 import com.chaoxing.oa.util.DES;
 import com.chaoxing.oa.util.IpUtil;
 import com.chaoxing.oa.util.ResourceUtil;
@@ -70,9 +69,9 @@ public class PubUserManagerController {
 //				appUser.setEmail("1huangyun@chaoxing.com");
 //				appUser.setEmail("zengchao@chaoxing.com");
 				appUser.setEmail("chuanming@chaoxing.com");
-				appUser.setEmail("shihao@chaoxing.com");
+//				appUser.setEmail("shihao@chaoxing.com");
 //				appUser.setEmail("hailan@chaoxing.com");
-				appUser.setEmail("congcong@chaoxing.com");
+//				appUser.setEmail("congcong@chaoxing.com");
 				appUser.setName(DES.getName(jo));
 				appUser.setUid(DES.getUid(jo));
 				appUser.setPhone(DES.getPhone(jo));
@@ -81,10 +80,11 @@ public class PubUserManagerController {
 					if(null != pu){
 						SessionInfo sessionInfo = new SessionInfo();
 						BeanUtils.copyProperties(pu, sessionInfo);
-						System.out.println("登录成功~！："+sessionInfo);
 						sessionInfo.setResourceUrls(userService.finRoleResoures(sessionInfo.getRoleId()));
 						sessionInfo.setIp(IpUtil.getIpAddr(request));
+						sessionInfo.setLoginMethod(false);
 						session.setAttribute(ResourceUtil.getSessionInfoName(), sessionInfo);
+						System.out.println(sessionInfo);
 						modelView.setViewName("redirect:/app_index.html");
 					}else{
 						modelView = new ModelAndView("error/app_nosession");

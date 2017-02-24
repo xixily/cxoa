@@ -5,7 +5,7 @@ var session = {
     logined : false,
     user : {},
 	jiagou : [],
-	menus:[]
+	menus:[],
 //    testText : '我在这里存放全局缓存数据'
 };
 function SFservice(){

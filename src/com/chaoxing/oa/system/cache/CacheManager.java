@@ -27,20 +27,30 @@ public class CacheManager {
 		this.updateTime = System.currentTimeMillis();
 	}
 	
+	private static synchronized void cacheInit(){
+		if(null == cacheManager){
+			cacheManager = new CacheManager();
+		}
+	}
+	
 	/**
 	 * 单例初始化
 	 * @return CacheManager
 	 */
 	public static CacheManager getInstance() {
 		if(null == cacheManager){
-			synchronized (CacheManager.class) {
-				if(null == cacheManager){
-					cacheManager = new CacheManager();
-				}
-			}
+			cacheInit();
+//			synchronized (CacheManager.class) {
+//				if(null == cacheManager){
+//					cacheManager = new CacheManager();
+//				}
+//			}
 		}
 		return cacheManager;
 	}
+	
+	
+	
 	
 	//TODO 做一些初始化预设缓存
 	private void loadCache() {

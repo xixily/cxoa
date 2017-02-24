@@ -216,7 +216,7 @@ public class BaseDaoImpl<T> implements BaseDaoI<T> {
 	
 	
 	@Override
-	public void prepareCall(String sql, Map<String, Object> params) throws HibernateException{
+	public int prepareCall(String sql, Map<String, Object> params) throws HibernateException{
 		SQLQuery sq = this.getCurrentSession().createSQLQuery(sql);
 		if (params != null && !params.isEmpty()) {
 			for (String key : params.keySet()) {
@@ -224,7 +224,7 @@ public class BaseDaoImpl<T> implements BaseDaoI<T> {
 			}
 		}
 		try {
-			sq.executeUpdate();
+			return sq.executeUpdate();
 		} catch (HibernateException e) {
 			throw e;
 		}

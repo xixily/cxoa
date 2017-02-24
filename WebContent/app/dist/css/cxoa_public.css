@@ -480,5 +480,17 @@ table.dataTable thead .sorting:after {
   margin: 24px auto;
 }
 .loading.hide{
-  display: none;
+  display: none !important;
+}
+#bx_info,#add_form .form-group{
+  margin-bottom: 0px;
+}
+#bx_info,#add_form input{
+  margin: 5px 0;
+}
+.bx-check{
+  padding-left: 0px;
+}
+.bx-check button{
+  margin: 10px 0;
 }

@@ -20,6 +20,11 @@ public class SessionInfo implements java.io.Serializable {
 	private String degree;//学历
 	private String phoneNumber;//电话号码
 	private int departmentId;//部门ID
+	private String fourthLevel;//小组
+	private String cellCore;//细胞核
+	private String cellCoreEmail;//细胞核邮箱
+	private String guidance;//指导
+	private String guidanceEmail;//指导邮箱
 	private String graduatedSchool;//毕业学校
 	private String major;//专业
 	private String level;//级别
@@ -27,6 +32,7 @@ public class SessionInfo implements java.io.Serializable {
 	private String ifSecret;//是否保密
 	List<String> resourceUrls;
 	private Object response;
+	private boolean loginMethod=true;//默认登录方式是账户密码登录，否则是学习通跳转。
 	public int getId() {
 		return id;
 	}
@@ -41,6 +47,15 @@ public class SessionInfo implements java.io.Serializable {
 	}
 	public String getUsername() {
 		return username;
+	}
+	public String getSex() {
+		return sex;
+	}
+	public int getRoleId() {
+		return roleId;
+	}
+	public int getRoleLevel() {
+		return roleLevel;
 	}
 	public String getPosition() {
 		return position;
@@ -63,11 +78,23 @@ public class SessionInfo implements java.io.Serializable {
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
-	public String getSex() {
-		return sex;
-	}
 	public int getDepartmentId() {
 		return departmentId;
+	}
+	public String getFourthLevel() {
+		return fourthLevel;
+	}
+	public String getCellCore() {
+		return cellCore;
+	}
+	public String getCellCoreEmail() {
+		return cellCoreEmail;
+	}
+	public String getGuidance() {
+		return guidance;
+	}
+	public String getGuidanceEmail() {
+		return guidanceEmail;
 	}
 	public String getGraduatedSchool() {
 		return graduatedSchool;
@@ -84,11 +111,11 @@ public class SessionInfo implements java.io.Serializable {
 	public String getIfSecret() {
 		return ifSecret;
 	}
+	public List<String> getResourceUrls() {
+		return resourceUrls;
+	}
 	public Object getResponse() {
 		return response;
-	}
-	public void setResponse(Object response) {
-		this.response = response;
 	}
 	public void setId(int id) {
 		this.id = id;
@@ -105,21 +132,17 @@ public class SessionInfo implements java.io.Serializable {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public void setPosition(String position) {
-		this.position = position;
+	public void setSex(String sex) {
+		this.sex = sex;
 	}
-	public int getRoleId() {
-		return roleId;
-	}
-	
-	public int getRoleLevel() {
-		return roleLevel;
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 	public void setRoleLevel(int roleLevel) {
 		this.roleLevel = roleLevel;
 	}
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
+	public void setPosition(String position) {
+		this.position = position;
 	}
 	public void setCompany(String company) {
 		this.company = company;
@@ -139,11 +162,23 @@ public class SessionInfo implements java.io.Serializable {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
 	public void setDepartmentId(int departmentId) {
 		this.departmentId = departmentId;
+	}
+	public void setFourthLevel(String fourthLevel) {
+		this.fourthLevel = fourthLevel;
+	}
+	public void setCellCore(String cellCore) {
+		this.cellCore = cellCore;
+	}
+	public void setCellCoreEmail(String cellCoreEmail) {
+		this.cellCoreEmail = cellCoreEmail;
+	}
+	public void setGuidance(String guidance) {
+		this.guidance = guidance;
+	}
+	public void setGuidanceEmail(String guidanceEmail) {
+		this.guidanceEmail = guidanceEmail;
 	}
 	public void setGraduatedSchool(String graduatedSchool) {
 		this.graduatedSchool = graduatedSchool;
@@ -160,18 +195,29 @@ public class SessionInfo implements java.io.Serializable {
 	public void setIfSecret(String ifSecret) {
 		this.ifSecret = ifSecret;
 	}
-	public List<String> getResourceUrls() {
-		return resourceUrls;
-	}
 	public void setResourceUrls(List<String> resourceUrls) {
 		this.resourceUrls = resourceUrls;
 	}
-	@Override
-	public String toString() {
-		return "SessionInfo [id=" + id + ", ip=" + ip + ", email=" + email + ", username="
-				+ username + ", roleId=" + roleId + "]";
+	public void setResponse(Object response) {
+		this.response = response;
+	}
+	public boolean isLoginMethod() {
+		return loginMethod;
+	}
+	public void setLoginMethod(boolean loginMethod) {
+		this.loginMethod = loginMethod;
 	}
 	
-
-
+	@Override
+	public String toString() {
+		return "SessionInfo [id=" + id + ", ip=" + ip + ", email=" + email + ", password=" + password + ", username="
+				+ username + ", sex=" + sex + ", roleId=" + roleId + ", roleLevel=" + roleLevel + ", position="
+				+ position + ", company=" + company + ", identityCard=" + identityCard + ", borthDay=" + borthDay
+				+ ", nation=" + nation + ", degree=" + degree + ", phoneNumber=" + phoneNumber + ", departmentId="
+				+ departmentId + ", fourthLevel=" + fourthLevel + ", cellCore=" + cellCore + ", cellCoreEmail="
+				+ cellCoreEmail + ", guidance=" + guidance + ", guidanceEmail=" + guidanceEmail + ", graduatedSchool="
+				+ graduatedSchool + ", major=" + major + ", level=" + level + ", workPlace=" + workPlace + ", ifSecret="
+				+ ifSecret + ", resourceUrls=" + resourceUrls + ", response=" + response + ", loginMethod="
+				+ loginMethod + "]";
+	}
 }

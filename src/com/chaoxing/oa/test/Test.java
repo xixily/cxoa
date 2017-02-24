@@ -33,17 +33,31 @@ public class Test {
 //		}
 //		System.out.println("list size:"+lis.size());
 		
+//		char[] str = new char [2147483646];
 		
-		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM");
-		Calendar cal = Calendar.getInstance();
-		String afterDate = df.format(cal.getTime());
-		cal.add(Calendar.MONTH, -1);
-		String date = df.format(cal.getTime());
-		cal.add(Calendar.MONTH, -1);
-		String preDate = df.format(cal.getTime());
-		System.out.println(afterDate);
-		System.out.println(date);
-		System.out.println(preDate);
+		System.out.println(Integer.MAX_VALUE);
+//		int i = 708600000;
+//		boolean flag = true;
+//		char[] str;
+//		while(flag){
+//			try{
+//				str = new char [i++];
+//				System.out.println("正常：" + (i+1));
+//			}catch(Exception e){
+//				System.out.println(i);
+//				flag = false;
+//			}
+//		}
+//		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM");
+//		Calendar cal = Calendar.getInstance();
+//		String afterDate = df.format(cal.getTime());
+//		cal.add(Calendar.MONTH, -1);
+//		String date = df.format(cal.getTime());
+//		cal.add(Calendar.MONTH, -1);
+//		String preDate = df.format(cal.getTime());
+//		System.out.println(afterDate);
+//		System.out.println(date);
+//		System.out.println(preDate);
 		
 //		Calendar cal = Calendar.getInstance();
 //		cal.set(Calendar.MONTH, 0);

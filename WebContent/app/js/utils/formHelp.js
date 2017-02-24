@@ -18,7 +18,7 @@
     function clear(target){
 		$('input,select,textarea', target).each(function(){
 			var t = this.type, tag = this.tagName.toLowerCase();
-			if (t == 'text' || t == 'hidden' || t == 'password' || tag == 'textarea'){
+			if (t == 'text' || t == 'hidden' || t == 'password' || t == 'textarea' || t == 'number' || t == 'email' || t == 'date'){
 				this.value = '';
 			} else if (t == 'file'){
 				var file = $(this);

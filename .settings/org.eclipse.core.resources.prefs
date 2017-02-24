@@ -1,5 +1,7 @@
 eclipse.preferences.version=1
+encoding//WebContent/app/views/caiwu/baoxiaoApprove.html=UTF-8
 encoding//WebContent/app/views/caiwu/baoxiaoManager.html=UTF-8
+encoding//WebContent/app/views/caiwu/baoxiaoShenhe.html=UTF-8
 encoding//WebContent/app/views/hetong/cells.html=UTF-8
 encoding//WebContent/app/views/hetong/contracts.html=UTF-8
 encoding//WebContent/app/views/hetong/guidanceview.html=UTF-8

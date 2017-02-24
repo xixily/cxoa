@@ -18,6 +18,11 @@
 
 	<!-- 自动扫描controller包下的所有类，使其认为spring mvc的控制器 -->
 	<context:component-scan base-package="com.chaoxing.oa.controller" />
+	
+	<!-- 要配置一个缓存初始化 -->
+<!-- 	<bean id="sysCache" class="com.chaoxing.oa.system.cache.CacheUtil">
+	
+	</bean> -->
 
 	<!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
 	<!-- 能够将POJO对象自动转换为JSON对象 -->

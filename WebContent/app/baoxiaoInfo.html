@@ -52,6 +52,27 @@
             -webkit-transition: width 0.2s;	/* Safari 和 Chrome */
             -o-transition: width 0.2s;	/* Opera */
         }
+
+        .bx-list{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .bx-check{
+            /*padding-top: 15px;*/
+        }
+        .bx-check button{
+            margin: 10px 0;
+        }
+        .bx-list li {
+            margin:2px 5px;
+            /*margin-bottom: 10px;*/
+            /*padding-bottom: 5px;*/
+            /*border-bottom: 1px dotted #999999;*/
+        }
+        .media-body a:hover{
+
+        }
     </style>
 </head>
 
@@ -338,6 +359,18 @@
                 <div class="col-xs-6"><span style="font-size: 12px;color: gray">去年报销金额：5633 元</span></div>
                 <div class="col-xs-6"><span style="font-size: 12px;color: gray">今年报销金额：5633 元</span></div>
             </div>
+
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                </div><!-- /input-group -->
+            </div>
             <!-- 查找输入组 -->
             <div class="row" style="padding-top: 10px;">
                 <div class="col-lg-12">
@@ -375,12 +408,12 @@
             <!-- 列表组-->
             <div class="row" style="margin-top: 10px;">
                 <!-- 列表信息 -->
-                <div class="col-lg-12" id="bx_list">
+                <div class="col-xs-12 col-lg-12 " id="bx_list">
                     <ul class="media-list">
                         <li class="media media-blue">
                             <a class="media-left" href="#">
-                                <img src="images/111.jpg" alt="响应式图片" width="132" height="132">
-                                <!--<img src="images/113.jpg" class="img-responsive" alt="123" width="132" height="132">-->
+                                <img src="images/111.jpg" alt="响应式图片" width="102" height="102">
+                                <!--<img src="images/113.jpg" class="img-responsive" alt="123" width="102" height="102">-->
                             </a>
                             <a href="javascript:showbxInfo()" class="media-body" style="">
                                 <!--<a href="javascript:$('#bx_list').css('width','50%');$('#bx_info').css('height','')" class="media-body" style="">-->
@@ -418,7 +451,7 @@
                                 <div class="row">
                                     <div class="col-xs-12 col-lg-12">
                                         <i class="fa fa-user"></i> 备注：
-                                        <span class="t-input">123456</span>
+                                        <span class="t-input">就在昨天一只虫子被大象踩了，对这天降横祸虫子是完全没有办法去摆脱。</span>
                                     </div>
                                 </div>
                             </a>
@@ -427,7 +460,7 @@
                         </li>
                         <li class="media media-blue">
                             <a class="media-left" href="#">
-                                <img src="images/112.jpg" alt="响应式图片" width="132" height="132">
+                                <img src="images/112.jpg" class="img-responsive" alt="响应式图片" width="102" height="102">
                             </a>
                             <a href="javascript:showbxInfo()" class="media-body" style="">
                                 <!--<h4 class="media-heading">发票单</h4>-->
@@ -475,55 +508,54 @@
                         </li>
                         <li class="media media-purple">
                             <a class="media-left" href="#">
-                                <img src="images/113.jpg" alt="响应式图片" width="132" height="132">
-                                <!--<img src="images/113.jpg" class="img-responsive" alt="123" width="132" height="132">-->
+                                <img src="images/113.jpg" alt="响应式图片" width="102" height="102">
                             </a>
-                            <a href="javascript:showbxInfo()" class="media-body" style="">
+                            <div href="javascript:showbxInfo()" class="media-body" style="width: 100%">
                                 <!--<h4 class="media-heading">发票单</h4>-->
-                                <div class="container">
+                                <a class="" href="javascript:showbxInfo()">
                                     <div class="row">
-                                        <div class="col-xs-12 col-lg-12">
-                                            <i class="fa fa-user"></i> 报销批次：
-                                            <span class="t-input">12</span>
+                                        <div class="col-xs-9 col-md-10">
+                                            <div>
+                                                <i class="fa fa-user"></i> 报销批次：
+                                                <span class="t-input">12</span>
+                                            </div>
+                                            <div>
+                                                <i class="fa fa-user"></i> 报销人：
+                                                <span class="t-input">邓雪锋</span>
+                                            </div>
+                                            <div>
+                                                <i class="fa fa-user"></i> 细胞核：
+                                                <span class="t-input">史昊</span>
+                                            </div>
+                                            <div>
+                                                <i class="fa fa-user"></i> 金额：
+                                                <span class="t-input">125.6元</span>
+                                            </div>
+                                            <div>
+                                                <i class="fa fa-user"></i> 汇款时间：
+                                                <span class="t-input">2016.10.26</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-3 col-md-2 bx-check">
+                                            <button class="btn btn-default btn-sm"><i class="fa fa-check"></i></button>
+                                            <br/>
+                                            <button class="btn btn-default btn-sm"><i class="fa fa-times"></i></button>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-xs-12 col-lg-12">
-                                            <i class="fa fa-user"></i> 报销人：
-                                            <span class="t-input">邓雪锋</span>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-12 col-lg-12">
-                                            <i class="fa fa-user"></i> 细胞核：
-                                            <span class="t-input">史昊</span>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-12 col-lg-12">
-                                            <i class="fa fa-user"></i> 金额：
-                                            <span class="t-input">125.6元</span>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-12 col-lg-12">
-                                            <i class="fa fa-user"></i> 汇款时间：
-                                            <span class="t-input">2016.10.26</span>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-12 col-lg-12">
+                                        <div class="col-xs-12 col-md-12">
                                             <i class="fa fa-user"></i> 备注：
-                                            <span class="t-input"></span>
+                                            <span class="t-input">就在昨天一只虫子被大象踩了，对这天降横祸虫子是完全没有办法去摆脱。</span>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+
+                            </div>
                         </li>
                         <li class="media media-blue">
                             <a class="media-left" href="#">
-                                <img src="images/111.jpg" alt="响应式图片" width="132" height="132">
-                                <!--<img src="images/113.jpg" class="img-responsive" alt="123" width="132" height="132">-->
+                                <img src="images/111.jpg" alt="响应式图片" width="102" height="102">
+                                <!--<img src="images/113.jpg" class="img-responsive" alt="123" width="102" height="102">-->
                             </a>
                             <a href="javascript:showbxInfo()" class="media-body" style="">
                                 <!--<h4 class="media-heading">发票单</h4>-->
@@ -571,8 +603,8 @@
                         </li>
                         <li class="media media-blue">
                             <a class="media-left" href="#">
-                                <img src="images/112.jpg" alt="响应式图片" width="132" height="132">
-                                <!--<img src="images/113.jpg" class="img-responsive" alt="123" width="132" height="132">-->
+                                <img src="images/112.jpg" alt="响应式图片" width="102" height="102">
+                                <!--<img src="images/113.jpg" class="img-responsive" alt="123" width="102" height="102">-->
                             </a>
                             <a href="javascript:showbxInfo()" class="media-body" style="">
                                 <!--<h4 class="media-heading">发票单</h4>-->
@@ -620,8 +652,8 @@
                         </li>
                         <li class="media media-purple">
                             <a class="media-left" href="#">
-                                <img src="images/113.jpg" alt="响应式图片" width="132" height="132">
-                                <!--<img src="images/113.jpg" class="img-responsive" alt="123" width="132" height="132">-->
+                                <img src="images/113.jpg" alt="响应式图片" width="102" height="102">
+                                <!--<img src="images/113.jpg" class="img-responsive" alt="123" width="102" height="102">-->
                             </a>
                             <a href="javascript:showbxInfo()" class="media-body" style="">
                                 <!--<h4 class="media-heading">发票单</h4>-->
@@ -675,57 +707,68 @@
                     </ul>
                 </div>
                 <!-- 报销信息-->
-                <div id="bx_info" class="col-lg-6" style="height: 0px;overflow: hidden;">
-                    <!--<div class="panel-heading">报销单信息</div>-->
-                    <!--<h4 style="text-align: center">报销单信息</h4>-->
-                    <div class="col-sm-2">
-                        <!--<i class="fa fa-arrow-circle-right"></i>-->
-                        <div class="center-vertical" style="width: 16px;height:20px;">
-                            <i class="glyphicon glyphicon-hand-rightl"></i>
-                        </div>
-                    </div>
-                    <div class="col-sm-10">
-                        <form class="form-horizontal" role="form" style="margin-top: 10px;">
+                <div id="bx_info" class="col-xs-11 col-lg-6" style="height: 0px;overflow: hidden;">
+                    <form id="bx_sq" class="form-horizontal" role="form">
+                        <legend>
+                            <span>报销信息</span>
+                            <div class="pull-right">
+                        <span>
+                        <button type="button" class="btn btn-default btn-sm"  style="margin:10px 10px 0px;" onclick="var parent = $(this).parent();parent.toggleClass('hide');parent.siblings().toggleClass('hide')">
+                            <i class="fa fa-edit"></i>
+                            编辑
+                        </button>
+                        </span>
+                        <span class="hide">
+                        <button type="button" class="btn btn-default btn-sm"  style="margin:10px 10px 0px;" onclick="var parent = $(this).parent();parent.toggleClass('hide');parent.siblings().toggleClass('hide')">
+                            <i class="fa fa-check"></i>
+                            保存
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm"  style="margin:10px 10px 0px;" onclick="var parent = $(this).parent();parent.toggleClass('hide');parent.siblings().toggleClass('hide')">
+                            <i class="fa fa-times"></i>
+                            取消
+                        </button>
+                        </span>
+                            </div>
+                        </legend>
+                        <fieldset disabled>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">批次号:</label>
-                                <div class="col-sm-6">
-                                    <input type="number" class="form-control input-sm" placeholder="批次号...">
+                                <label class="col-xs-4 col-sm-2 control-label" for="_id">批次号:</label>
+                                <div class="col-xs-8 col-sm-4">
+                                    <input type="number" class="form-control input-sm" id="_id" name="_id" placeholder="批次号..." disabled>
+                                </div>
+                                <label class="col-xs-4 col-sm-2 control-label" for="username">报销人:</label>
+                                <div class="col-xs-8 col-sm-4">
+                                    <input type="text" class="form-control input-sm" id="username" name="username" placeholder="报销人...">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">邮寄时间:</label>
-                                <div class="col-sm-6">
-                                    <input type="date" class="form-control input-sm" placeholder="邮寄时间...">
+                                <label class="col-xs-4 col-sm-2 control-label">邮寄时间:</label>
+                                <div class="col-xs-8 col-sm-4">
+                                    <input type="date" class="form-control input-sm" name="jTime" placeholder="邮寄时间...">
+                                </div>
+                                <label class="col-xs-4 col-sm-2 control-label" for="email">报销人邮箱:</label>
+                                <div class="col-xs-8 col-sm-4">
+                                    <input type="email" class="form-control input-sm" id="email" name="email" placeholder="报销人...">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">报销人:</label>
-                                <div class="col-sm-6">
-                                    <input type="email" class="form-control input-sm" placeholder="报销人...">
+                                <label class="col-xs-4 col-sm-2 control-label" for="number">报销张数:</label>
+                                <div class="col-xs-8 col-sm-4">
+                                    <input type="number" max="30" min="0" id="number" class="form-control input-sm" name="number" placeholder="报销张数...">
+                                </div>
+                                <label class="col-xs-4 col-sm-2 control-label" for="money">报销金额:</label>
+                                <div class="col-xs-8 col-sm-4">
+                                    <input type="number"  class="form-control input-sm" id="money" name="money" placeholder="报销金额...">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">报销张数:</label>
-                                <div class="col-sm-6">
-                                    <input type="number" max="30" min="0" class="form-control input-sm" placeholder="报销张数...">
+                                <label class="col-xs-4 col-sm-2  control-label">还借款金额:</label>
+                                <div class="col-xs-8 col-sm-4">
+                                    <input type="number" class="form-control input-sm" name="huankuan" placeholder="还款金额...">
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">报销金额:</label>
-                                <div class="col-sm-6">
-                                    <input type="number"  class="form-control input-sm" placeholder="报销金额...">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">还款金额:</label>
-                                <div class="col-sm-6">
-                                    <input type="number" class="form-control input-sm" placeholder="还款金额...">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">银行:</label>
-                                <div class="col-sm-6">
-                                    <select name="bank" id="bx_bank" class="form-control input-sm">
+                                <label class="col-xs-4 col-sm-2  control-label" for="bx_bank2">银行:</label>
+                                <div class="col-xs-8 col-sm-4">
+                                    <select name="bank" id="bx_bank2" class="form-control input-sm">
                                         <option value="jtyh">交通银行</option>
                                         <option value="gs">工商银行</option>
                                         <option value="gd">光大银行</option>
@@ -737,49 +780,312 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">卡号:</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control input-sm" placeholder="卡号...">
+                                <label class="col-xs-4 col-sm-2 control-label">卡号:</label>
+                                <div class="col-xs-8 col-sm-4">
+                                    <input type="text" class="form-control input-sm" name="account" placeholder="卡号...">
+                                </div>
+                                <label class="col-xs-4 col-sm-2 control-label" for="explain">说明:</label>
+                                <div class="col-xs-8 col-sm-4">
+                                    <textarea name="explain" id="explain" cols="30" rows="1" class="form-control"></textarea>
+                                    <!--<input type="text" class="form-control input-sm" name="account" placeholder="说明...">-->
+                                </div>
+                            </div>
+                            <!--<div class="form-group" style="margin-top: 10px;">-->
+                            <!--<div class="col-xs-2 col-md-2"></div>-->
+                            <!--<div class="col-xs-4 col-md-5">-->
+                            <!--<button class="btn btn-default"><i class="fa fa-check"></i>确认提交</button>-->
+                            <!--</div>-->
+                            <!--<div class="col-xs-4 col-md-5">-->
+                            <!--<button class="btn btn-default"><i class="fa fa-times"></i>取消</button>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                        </fieldset>
+                        <legend>
+                            <span>批准人信息</span>
+                            <div class="pull-right">
+                        <span>
+                        <button type="button" class="btn btn-default btn-sm"  style="margin:10px 10px 0px;" onclick="var parent = $(this).parent();parent.toggleClass('hide');parent.siblings().toggleClass('hide')">
+                            <i class="fa fa-edit"></i>
+                            编辑
+                        </button>
+                        </span>
+                        <span class="hide">
+                        <button type="button" class="btn btn-default btn-sm"  style="margin:10px 10px 0px;" onclick="var parent = $(this).parent();parent.toggleClass('hide');parent.siblings().toggleClass('hide')">
+                            <i class="fa fa-check"></i>
+                            保存
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm"  style="margin:10px 10px 0px;" onclick="var parent = $(this).parent();parent.toggleClass('hide');parent.siblings().toggleClass('hide')">
+                            <i class="fa fa-times"></i>
+                            取消
+                        </button>
+                        </span>
+                            </div>
+                        </legend>
+                        <fieldset disabled>
+                            <div class="form-group">
+                                <label class="col-xs-4 col-sm-2 control-label" for="approver">批准人:</label>
+                                <div class="col-xs-8 col-sm-4">
+                                    <input type="text" class="form-control input-sm" id="approver" name="approver" placeholder="批准人...">
+                                </div>
+                                <label class="col-xs-4 col-sm-2 control-label" for="aproEmail">批准人邮箱:</label>
+                                <div class="col-xs-8 col-sm-4">
+                                    <input type="email" class="form-control input-sm" id="aproEmail" name="aproEmail" placeholder="批准人邮箱...">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">备注:</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control input-sm" placeholder="备注...">
+                                <label class="col-xs-4 col-sm-2 control-label" for="approTime">批准时间:</label>
+                                <div class="col-xs-8 col-sm-4">
+                                    <input type="date" class="form-control input-sm" id="approTime" placeholder="批准时间...">
+                                </div>
+                                <label class="col-xs-4 col-sm-2 control-label" for="approRemark">备注:</label>
+                                <div class="col-xs-8 col-sm-4">
+                                    <input type="text" class="form-control input-sm" name="approRemark" id="approRemark" placeholder="批准时间...">
+                                </div>
+                            </div>
+                        </fieldset>
+                        <legend>
+                            <span>财务信息</span>
+                            <div class="pull-right">
+                        <span>
+                        <button type="button" class="btn btn-default btn-sm"  style="margin:10px 10px 0px;" onclick="var parent = $(this).parent();parent.toggleClass('hide');parent.siblings().toggleClass('hide')">
+                            <i class="fa fa-edit"></i>
+                            编辑
+                        </button>
+                        </span>
+                        <span class="hide">
+                        <button type="button" class="btn btn-default btn-sm"  style="margin:10px 10px 0px;" onclick="var parent = $(this).parent();parent.toggleClass('hide');parent.siblings().toggleClass('hide')">
+                            <i class="fa fa-check"></i>
+                            保存
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm"  style="margin:10px 10px 0px;" onclick="var parent = $(this).parent();parent.toggleClass('hide');parent.siblings().toggleClass('hide')">
+                            <i class="fa fa-times"></i>
+                            取消
+                        </button>
+                        </span>
+                            </div>
+                        </legend>
+                        <fieldset disabled>
+                            <div class="form-group">
+                                <label class="col-xs-4 col-sm-2 control-label" for="receiveTime">收票时间:</label>
+                                <div class="col-xs-8 col-sm-4">
+                                    <input type="date" class="form-control input-sm" id="receiveTime" name="" placeholder="收票时间...">
+                                </div>
+                                <label class="col-xs-4 col-sm-2 control-label" for="bxTime">报销时间:</label>
+                                <div class="col-xs-8 col-sm-4">
+                                    <input type="date" class="form-control input-sm" id="bxTime" placeholder="报销时间...">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">收票时间:</label>
-                                <div class="col-sm-6">
-                                    <input type="date" class="form-control input-sm" placeholder="收票时间...">
+                                <label class="col-xs-4 col-sm-2 control-label" for="baoxMoney">报销金额:</label>
+                                <div class="col-xs-8 col-sm-4">
+                                    <input type="text" class="form-control input-sm" id="baoxMoney" name="baoxMoney" placeholder="报销情况...">
+                                </div>
+                                <label class="col-xs-4 col-sm-2 control-label" for="tuipiao">退票金额:</label>
+                                <div class="col-xs-8 col-sm-4">
+                                    <input type="number" class="form-control input-sm" id="tuipiao" name="tuipiao" placeholder="退票金额...">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">报销时间:</label>
-                                <div class="col-sm-6">
-                                    <input type="date" class="form-control input-sm" placeholder="报销时间...">
+                                <label class="col-xs-4 col-sm-2 control-label" for="caiwuRemarks">财务备注:</label>
+                                <div class="col-xs-8 col-sm-4">
+                                    <textarea name="caiwuRemarks" id="caiwuRemarks" cols="30" rows="1" class="form-control" placeholder="财务备注..."></textarea>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">报销情况:</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control input-sm" placeholder="报销情况...">
+                        </fieldset>
+
+                        <fieldset>
+                            <legend> &nbsp;&nbsp;&nbsp;&nbsp;</legend>
+                            <div class="chat-panel panel panel-default">
+                                <div class="panel-heading">
+                                    <i class="fa fa-comments fa-fw"></i> Chat
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">退票金额:</label>
-                                <div class="col-sm-5">
-                                    <input type="number" class="form-control input-sm" placeholder="退票金额...">
+                                <!-- /.panel-heading -->
+                                <div class="panel-body"  style="height:150px;">
+                                    <ul class="chat">
+                                        <li class="left clearfix">
+                                    <span class="chat-img pull-left">
+                                        <img src="app/images/blue_60.png" alt="User Avatar" class="img-circle" />
+                                    </span>
+                                            <div class="chat-body clearfix">
+                                                <div class="header">
+                                                    <strong class="primary-font">Jack Sparrow</strong>
+                                                    <small class="pull-right text-muted">
+                                                        <i class="fa fa-clock-o fa-fw"></i> 12 mins ago
+                                                    </small>
+                                                </div>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li class="right clearfix">
+                                    <span class="chat-img pull-right">
+                                        <img src="app/images/red_60.png" alt="User Avatar" class="img-circle" />
+                                    </span>
+                                            <div class="chat-body clearfix">
+                                                <div class="header">
+                                                    <small class=" text-muted">
+                                                        <i class="fa fa-clock-o fa-fw"></i> 13 mins ago</small>
+                                                    <strong class="pull-right primary-font">Bhaumik Patel</strong>
+                                                </div>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li class="left clearfix">
+                                    <span class="chat-img pull-left">
+                                        <img src="app/images/blue_60.png" alt="User Avatar" class="img-circle" />
+                                    </span>
+                                            <div class="chat-body clearfix">
+                                                <div class="header">
+                                                    <strong class="primary-font">Jack Sparrow</strong>
+                                                    <small class="pull-right text-muted">
+                                                        <i class="fa fa-clock-o fa-fw"></i> 14 mins ago</small>
+                                                </div>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li class="right clearfix">
+                                    <span class="chat-img pull-right">
+                                        <img src="app/images/red_60.png" alt="User Avatar" class="img-circle" />
+                                    </span>
+                                            <div class="chat-body clearfix">
+                                                <div class="header">
+                                                    <small class=" text-muted">
+                                                        <i class="fa fa-clock-o fa-fw"></i> 15 mins ago</small>
+                                                    <strong class="pull-right primary-font">Bhaumik Patel</strong>
+                                                </div>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                                                </p>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="button" class="btn btn-default">确认修改</button>
-                                    <button type="button" class="btn btn-default" style="margin-left: 118px;">取消</button>
+                                <!-- /.panel-body -->
+                                <div class="panel-footer">
+                                    <div class="input-group">
+                                        <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-warning btn-sm" id="btn-chat">
+                                        Send
+                                    </button>
+                                </span>
+                                    </div>
                                 </div>
+                                <!-- /.panel-footer -->
                             </div>
-                        </form>
-                    </div>
+                        </fieldset>
+                        <div class="row">
+                        </div>
+                    </form>
+                    <!--<div class="panel-heading">报销单信息</div>-->
+                    <!--<h4 style="text-align: center">报销单信息</h4>-->
+                    <!--<div class="col-sm-2">-->
+                        <!--&lt;!&ndash;<i class="fa fa-arrow-circle-right"></i>&ndash;&gt;-->
+                        <!--<div class="center-vertical" style="width: 16px;height:20px;">-->
+                            <!--<i class="glyphicon glyphicon-hand-rightl"></i>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-10">-->
+                        <!--<form class="form-horizontal" role="form" style="margin-top: 10px;">-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-sm-3 control-label">批次号:</label>-->
+                                <!--<div class="col-sm-6">-->
+                                    <!--<input type="number" class="form-control input-sm" placeholder="批次号...">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-sm-3 control-label">邮寄时间:</label>-->
+                                <!--<div class="col-sm-6">-->
+                                    <!--<input type="date" class="form-control input-sm" placeholder="邮寄时间...">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-sm-3 control-label">报销人:</label>-->
+                                <!--<div class="col-sm-6">-->
+                                    <!--<input type="email" class="form-control input-sm" placeholder="报销人...">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-sm-3 control-label">报销张数:</label>-->
+                                <!--<div class="col-sm-6">-->
+                                    <!--<input type="number" max="30" min="0" class="form-control input-sm" placeholder="报销张数...">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-sm-3 control-label">报销金额:</label>-->
+                                <!--<div class="col-sm-6">-->
+                                    <!--<input type="number"  class="form-control input-sm" placeholder="报销金额...">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-sm-3 control-label">还款金额:</label>-->
+                                <!--<div class="col-sm-6">-->
+                                    <!--<input type="number" class="form-control input-sm" placeholder="还款金额...">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-sm-3 control-label">银行:</label>-->
+                                <!--<div class="col-sm-6">-->
+                                    <!--<select name="bank" id="bx_bank" class="form-control input-sm">-->
+                                        <!--<option value="jtyh">交通银行</option>-->
+                                        <!--<option value="gs">工商银行</option>-->
+                                        <!--<option value="gd">光大银行</option>-->
+                                        <!--<option value="js">建设银行</option>-->
+                                        <!--<option value="zs">招商银行</option>-->
+                                        <!--<option value="nh">农业银行</option>-->
+                                    <!--</select>-->
+                                    <!--&lt;!&ndash;<input type="text" class="form-control input-sm" placeholder="银行...">&ndash;&gt;-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-sm-3 control-label">卡号:</label>-->
+                                <!--<div class="col-sm-6">-->
+                                    <!--<input type="text" class="form-control input-sm" placeholder="卡号...">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-sm-3 control-label">备注:</label>-->
+                                <!--<div class="col-sm-6">-->
+                                    <!--<input type="text" class="form-control input-sm" placeholder="备注...">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-sm-3 control-label">收票时间:</label>-->
+                                <!--<div class="col-sm-6">-->
+                                    <!--<input type="date" class="form-control input-sm" placeholder="收票时间...">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-sm-3 control-label">报销时间:</label>-->
+                                <!--<div class="col-sm-6">-->
+                                    <!--<input type="date" class="form-control input-sm" placeholder="报销时间...">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-sm-3 control-label">报销情况:</label>-->
+                                <!--<div class="col-sm-6">-->
+                                    <!--<input type="text" class="form-control input-sm" placeholder="报销情况...">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-sm-3 control-label">退票金额:</label>-->
+                                <!--<div class="col-sm-5">-->
+                                    <!--<input type="number" class="form-control input-sm" placeholder="退票金额...">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<div class="col-sm-offset-2 col-sm-10">-->
+                                    <!--<button type="button" class="btn btn-default">确认修改</button>-->
+                                    <!--<button type="button" class="btn btn-default" style="margin-left: 118px;">取消</button>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</form>-->
+                    <!--</div>-->
                     <!--<div class="panel panel-default">-->
                     <!--</div>-->
                 </div>
@@ -813,10 +1119,12 @@
 <script>
     function showbxInfo(){
         if(/6/.test($('#bx_list')[0].className)){
+            $('#bx_list').removeClass('col-sx-1');
             $('#bx_list').removeClass('col-lg-6');
             $('#bx_info').css('height','0')
         }else{
             $('#bx_list').addClass('col-lg-6');
+            $('#bx_list').addClass('col-sx-1');
             $('#bx_info').css('height','')
         }
     }

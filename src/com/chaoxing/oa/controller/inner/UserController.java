@@ -115,6 +115,7 @@ public class UserController {
 				session.setAttribute(ResourceUtil.getSessionInfoName(), sessionInfo);
 				result.setSuccess(true);
 				result.setMsg("登录成功！~");
+				System.out.println(sessionInfo);
 			}else{
 				result.setMsg( "您输入的密码不正确！");
 			}

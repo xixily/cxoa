@@ -84,6 +84,8 @@ public interface EmployeeInfoService {
 	
 	public int updateShebaoCompanyType(String company, String type);
 	
+	public int updateShebaoCompany(String company);
+	
 	public long getWageDistributionCount(String hql, Map<String, Object> params);
 
 	public int updateWagesRadix(PshebaoDetail pwages);
@@ -169,7 +171,7 @@ public interface EmployeeInfoService {
 	public Map<String, Object> findAddorReduce(Page page, String date, HttpSession session, int i);
 	
 	public Map<String, Object> findYidong(Page page, String date, HttpSession session, int i);
-	
+
 //	public Json 
 
 

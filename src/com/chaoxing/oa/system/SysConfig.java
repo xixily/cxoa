@@ -55,6 +55,7 @@ public class SysConfig {
 	public final static String COMMON_COMPANY = "company";
 	public final static String COMMON_HOUSEHOLD_TYPE = "householdType";
 	public final static String COMMON_LEVEL = "level";
+	public final static String COMMON_BAOXIAO_STATUS = "baoxiao_status";
 	/**
 	 * 缓存 -- employee
 	 */
@@ -68,4 +69,13 @@ public class SysConfig {
 	 */
 	public final static String CACHE_SYSTEM = "system_";
 	public final static String SYSTEM_MENUS = "menus";
+	
+	/**
+	 * 财务 -- cw
+	 */
+	public final static Integer CW_BX_BEGIN = 1;
+	public final static Integer CW_BX_APPROVE_AGREE = 3;//批准
+	public final static Integer CW_BX_APPROVE_DISAGREE = 2;//不批准
+	public final static Integer CW_BX_RECIVED_AGREE = 5;//收票通过
+	public final static Integer CW_BX_RECIVED_DISAGREE = 6;//收票不通过
 }

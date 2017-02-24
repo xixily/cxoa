@@ -600,6 +600,23 @@ public class EmployeeController {
 		return null;
 	}
 	
+	@RequestMapping(value = "/generateCompany")
+	@ResponseBody
+	public Json generateCompany(String company, HttpSession session){
+		Json result = new Json();
+		if(null!=company && !"".equals(company)){
+			if(employeeInfoService.updateShebaoCompany(company)>0){
+				result.setSuccess(true);
+				result.setMsg("社保信息["+ company +"]更新成功！");
+			}else{
+				result.setMsg("社保信息["+ company +"]更新失败");
+			}
+		}else{
+			result.setMsg("公司名称为空！");
+		}
+		return result;
+	}
+	
 	@RequestMapping(value = "/generateCompanyType")
 	@ResponseBody
 	public Json generateCompanyType(String company, String type, HttpSession session){

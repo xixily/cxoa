@@ -16,6 +16,7 @@ import com.chaoxing.oa.entity.page.employee.PUserName;
 import com.chaoxing.oa.entity.page.system.SessionInfo;
 import com.chaoxing.oa.entity.po.commmon.OrganizationStructure;
 import com.chaoxing.oa.entity.po.employee.UserName;
+import com.chaoxing.oa.entity.po.view.RenshiUserName;
 import com.chaoxing.oa.entity.po.view.RoleResourcesV;
 import com.chaoxing.oa.service.UserServiceI;
 
@@ -25,6 +26,8 @@ public class UserServiceImpl implements UserServiceI {
 //	private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
 
 	private BaseDaoI<UserName> usernameDao;
+	@Autowired
+	private BaseDaoI<RenshiUserName> renshiUsernameDao;
 	private BaseDaoI<OrganizationStructure> ogsDao;
 	private BaseDaoI<RoleResourcesV> roleReDao;
 	
@@ -60,10 +63,11 @@ public class UserServiceImpl implements UserServiceI {
 	public SessionInfo findUser(QueryForm userPageInfo) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("email", userPageInfo.getEmail());
-		UserName userName = usernameDao.get("from UserName u where u.email=:email",params);
-		if(null != userName){
+//		UserName userName = usernameDao.get("from UserName u where u.email=:email",params);
+		RenshiUserName rsUserName = renshiUsernameDao.get("from RenshiUserName where email=:email",params);
+		if(null != rsUserName){
 			SessionInfo sessioninfo = new SessionInfo();
-			BeanUtils.copyProperties(userName, sessioninfo);
+			BeanUtils.copyProperties(rsUserName, sessioninfo);
 //			BeanUtils.copyProperties(userName, userPageInfo);
 //			sessioninfo.setRights(userName.getRoleId());
 			return sessioninfo;
@@ -185,13 +189,14 @@ public class UserServiceImpl implements UserServiceI {
 	
 	@Override
 	public PUserName findUserByEmail(String email) {
-		String hql = "from UserName where email=:email ";
+//		String hql = "from UserName where email=:email ";
+		String hql = "from RenshiUserName where email=:email ";
 		Map<String,Object> params = new HashMap<String,Object>();
 		params.put("email", email);
-		List<UserName> user = usernameDao.find(hql,params);
+		List<RenshiUserName> user = renshiUsernameDao.find(hql,params);
 		PUserName pu = null;
 		if(user.size()>0){
-			UserName u = user.get(0);
+			RenshiUserName u = user.get(0);
 			pu = new PUserName();
 			BeanUtils.copyProperties(u, pu);
 		}
