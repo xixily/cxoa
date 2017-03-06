@@ -146,7 +146,7 @@
                         <button type="button" class="btn btn-default btn-sm" app-action="caiwu.baoxiao.updateInfo"  style="margin:10px 10px 0px;" onclick="
                         var parent = $(this).parent();
                         parent.toggleClass('hide');
-                        parent.siblings().toggleClass('hide');
+//                        parent.siblings().toggleClass('hide');
                         ">
                             <i class="fa fa-check"></i>
                             提交申请
@@ -216,11 +216,11 @@
                         <div class="form-group">
                             <label class="col-xs-4 col-sm-2 control-label">邮寄时间:</label>
                             <div class="col-xs-8 col-sm-4">
-                                <input type="date" class="form-control input-sm" name="jTime" placeholder="邮寄时间...">
+                                <input type="date" class="form-control input-sm" name="jtime" placeholder="邮寄时间...">
                             </div>
                             <label class="col-xs-4 col-sm-2 control-label" for="kdno2">快递单号:</label>
                             <div class="col-xs-8 col-sm-4">
-                                <input type="date" class="form-control input-sm" id="kdno2" name="reciveTime" placeholder="快递单号...">
+                                <input type="text" class="form-control input-sm" id="kdno2" name="kdno" placeholder="快递单号...">
                             </div>
                         </div>
                         <div class="form-group">
@@ -267,7 +267,7 @@
                             </div>
                             <label class="col-xs-4 col-sm-2 control-label" for="kdno">快递单号:</label>
                             <div class="col-xs-8 col-sm-4">
-                                <input type="date" class="form-control input-sm" id="kdno" name="reciveTime" placeholder="快递单号...">
+                                <input type="date" class="form-control input-sm" id="kdno" name="kdno" placeholder="快递单号...">
                             </div>
                         </div>
                         <div class="form-group">

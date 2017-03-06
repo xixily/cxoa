@@ -1,4 +1,4 @@
-package com.chaoxing.oa.entity.po.caiwu;
+package com.chaoxing.oa.entity.po.view.pub.caiwu;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -10,17 +10,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-
 @Entity
-@Table(name = "报销表", schema="")
-@DynamicInsert(true)
-@DynamicUpdate(true)
-public class Baoxiao implements Serializable{
-	private static final long serialVersionUID = -8310260669695764416L;
+@Table(name = "报销视图")
+public class BaoxiaoView implements Serializable{
+	private static final long serialVersionUID = 653847779415412260L;
 	private Long id;
 	private Integer uid;//报销人ID
+	private String username;//报销人
+	private String email;//报销人邮箱
 	private Float money;//申报金额
 	private Float huankuan;//还借款金额
 	private Integer number;//报销张数
@@ -41,12 +38,18 @@ public class Baoxiao implements Serializable{
 	private Integer cpid;//出票人id
 	private Float tuipiao;//退票金额
 	private String caiwuRemarks;//财务备注
-//	private Float koujk;//扣借款
+	private Float koujk;//扣借款
 	private Float baoxMoney;//汇款金额
 	private Date baoxTime;//汇款时间
 	private Integer status;//状态
 	private String kunhao;//捆号
 	private Date createTime;//创建时间
+	private String firstLevel;//一级
+	private String secondLevel;//二级
+	private String thirdLevel;//三级
+	private String fourthLevel;//四级
+	private String cellCoreEmail;//细胞核邮箱
+	private String guidanceEmail;//指导邮箱
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Long getId() {
@@ -55,6 +58,14 @@ public class Baoxiao implements Serializable{
 	@Column(name="报销人id")
 	public Integer getUid() {
 		return uid;
+	}
+	@Column(name="报销人")
+	public String getUsername() {
+		return username;
+	}
+	@Column(name="邮箱")
+	public String getEmail() {
+		return email;
 	}
 	@Column(name="申报金额")
 	public Float getMoney() {
@@ -136,10 +147,10 @@ public class Baoxiao implements Serializable{
 	public String getCaiwuRemarks() {
 		return caiwuRemarks;
 	}
-//	@Column(name="扣除借款金额")
-//	public Float getKoujk() {
-//		return koujk;
-//	}
+	@Column(name="扣借款总额")
+	public Float getKoujk() {
+		return koujk;
+	}
 	@Column(name="汇款金额")
 	public Float getBaoxMoney() {
 		return baoxMoney;
@@ -160,11 +171,41 @@ public class Baoxiao implements Serializable{
 	public Date getCreateTime() {
 		return createTime;
 	}
+	@Column(name="一级")
+	public String getFirstLevel() {
+		return firstLevel;
+	}
+	@Column(name="二级")
+	public String getSecondLevel() {
+		return secondLevel;
+	}
+	@Column(name="三级")
+	public String getThirdLevel() {
+		return thirdLevel;
+	}
+	@Column(name="四级")
+	public String getFourthLevel() {
+		return fourthLevel;
+	}
+	@Column(name="细胞核邮箱")
+	public String getCellCoreEmail() {
+		return cellCoreEmail;
+	}
+	@Column(name="指导邮箱")
+	public String getGuidanceEmail() {
+		return guidanceEmail;
+	}
 	public void setId(Long id) {
 		this.id = id;
 	}
 	public void setUid(Integer uid) {
 		this.uid = uid;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public void setMoney(Float money) {
 		this.money = money;
@@ -226,9 +267,9 @@ public class Baoxiao implements Serializable{
 	public void setCaiwuRemarks(String caiwuRemarks) {
 		this.caiwuRemarks = caiwuRemarks;
 	}
-//	public void setKoujk(Float koujk) {
-//		this.koujk = koujk;
-//	}
+	public void setKoujk(Float koujk) {
+		this.koujk = koujk;
+	}
 	public void setBaoxMoney(Float baoxMoney) {
 		this.baoxMoney = baoxMoney;
 	}
@@ -244,7 +285,23 @@ public class Baoxiao implements Serializable{
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	
-	
+	public void setFirstLevel(String firstLevel) {
+		this.firstLevel = firstLevel;
+	}
+	public void setSecondLevel(String secondLevel) {
+		this.secondLevel = secondLevel;
+	}
+	public void setThirdLevel(String thirdLevel) {
+		this.thirdLevel = thirdLevel;
+	}
+	public void setFourthLevel(String fourthLevel) {
+		this.fourthLevel = fourthLevel;
+	}
+	public void setCellCoreEmail(String cellCoreEmail) {
+		this.cellCoreEmail = cellCoreEmail;
+	}
+	public void setGuidanceEmail(String guidanceEmail) {
+		this.guidanceEmail = guidanceEmail;
+	}
 
 }

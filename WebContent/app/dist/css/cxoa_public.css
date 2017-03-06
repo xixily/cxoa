@@ -494,3 +494,9 @@ table.dataTable thead .sorting:after {
 .bx-check button{
   margin: 10px 0;
 }
+.item .save{
+  display: none !important;
+}
+.item.edit .save{
+  display: inline-block !important;
+}

@@ -1,7 +1,7 @@
 package com.chaoxing.oa.controller.pub;
 
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -13,22 +13,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.chaoxing.oa.entity.page.caiwu.PBaoxiao;
-import com.chaoxing.oa.entity.page.caiwu.PBaoxiaoStatus;
 import com.chaoxing.oa.entity.page.common.Json;
 import com.chaoxing.oa.entity.page.common.Page;
-import com.chaoxing.oa.entity.page.employee.PRenshiEmployee;
+import com.chaoxing.oa.entity.page.pub.caiwu.PBaoxiao;
+import com.chaoxing.oa.entity.page.pub.caiwu.PChupiaoBaoxiao;
+import com.chaoxing.oa.entity.page.pub.caiwu.PKoukuan;
 import com.chaoxing.oa.entity.page.pub.caiwu.PSelfBaoxiao;
 import com.chaoxing.oa.entity.page.system.SessionInfo;
 import com.chaoxing.oa.service.PubCaiwuService;
 import com.chaoxing.oa.system.SysConfig;
-import com.chaoxing.oa.system.cache.CacheManager;
 import com.chaoxing.oa.util.ResourceUtil;
-import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
 
 @Controller
 @RequestMapping("/public/caiwu")
@@ -43,7 +43,7 @@ public class PubCaiwuController {
 	}
 	
 	/**
-	 * 查询报销信息
+	 * 个人报销信息查询ypzInit
 	 * @param pbaoxiao
 	 * @param page
 	 * @param session
@@ -53,9 +53,9 @@ public class PubCaiwuController {
 	@ResponseBody
 	public Map<String, Object> findBaoxiao(PBaoxiao pbaoxiao, Page page, HttpSession session){
 		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
-		Map<String, Object> results = publicCaiwuService.findBaoxiao(pbaoxiao,page,sessionInfo.getId());
+		Map<String, Object> results = publicCaiwuService.findBaoxiaoByUid(pbaoxiao,page,sessionInfo.getId());
 		Double lastyear = publicCaiwuService.getLastYear(sessionInfo.getId());
-		Double thisyear = publicCaiwuService.getThisYear(session.getId());
+		Double thisyear = publicCaiwuService.getThisYear(sessionInfo.getId());
 		results.put("lastYearTotal", lastyear);
 		results.put("thisYearTotal", thisyear);
 		results.put("success", true);
@@ -94,6 +94,8 @@ public class PubCaiwuController {
 	 * @param session
 	 * @return
 	 */
+	@RequestMapping(value="/deleteBaoxiao")
+	@ResponseBody
 	public Json removeBaoxiao(PBaoxiao pbaoxiao, HttpSession session){
 		Json result = new Json();
 		SessionInfo sessionInfo = getSessInfo(session);
@@ -116,88 +118,183 @@ public class PubCaiwuController {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="/updateBaoxiao")
+	@RequestMapping(value="/updateSelfBaoxiao")
 	@ResponseBody
 	public Json updateBaoxiao(PSelfBaoxiao psbaoxiao, HttpSession session){
 		Json result = new Json();
-		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
+		SessionInfo sessionInfo = getSessInfo(session);
 		if(null!=psbaoxiao.getId()){
-			PBaoxiao pbaoxiao = publicCaiwuService.getBaoxiao(psbaoxiao.getId());
-			if(pbaoxiao.getUid()==sessionInfo.getId()){
-				BeanUtils.copyProperties(psbaoxiao, pbaoxiao);
-				pbaoxiao.setStatus(SysConfig.CW_BX_BEGIN);
-				if(publicCaiwuService.updateBaoxiao(pbaoxiao)>0){
-					result.setSuccess(true);
-					result.setMsg("更新成功。");
-				}else{
-					result.setMsg("更新失败。");
-				}
+			psbaoxiao.setUid(sessionInfo.getId());
+			PBaoxiao baoxiao = new PBaoxiao();
+			BeanUtils.copyProperties(psbaoxiao, baoxiao);
+			baoxiao.setStatus(SysConfig.CW_BX_BEGIN);
+			if(publicCaiwuService.updateSeltBaoxiao(baoxiao)>0){
+				result.setSuccess(true);
+				result.setMsg("更新成功！");
 			}else{
-				result.setMsg("该批次号对应的信息与当前用户不匹配。");
+				result.setMsg("更新失败，可能是批次号对应的报销人不匹配。");
 			}
-			
 		}else{
 			result.setMsg("没有批次号。");
 		}
 		return result;
 	}
 	
+//	@RequestMapping(value="/testAnno")
+//	@ResponseBody
+//	public Json testAnno(){
+//		class S{
+//			private String type;
+//			private String name;
+//			private String anno;
+//			private Object obj;
+//			
+//			public String getType() {
+//				return type;
+//			}
+//			public String getName() {
+//				return name;
+//			}
+//			public String getAnno() {
+//				return anno;
+//			}
+//			public Object getObj(){
+//				return obj;
+//			}
+//			public void setType(String type) {
+//				this.type = type;
+//			}
+//			public void setName(String name) {
+//				this.name = name;
+//			}
+//			public void setAnno(String anno) {
+//				this.anno = anno;
+//			}
+//			public void setObj(Object obj){
+//				this.obj = obj;
+//			}
+//			
+//		}
+//		Json result = new Json();
+//		Field[] fields = Baoxiao.class.getDeclaredFields();
+//		Baoxiao.class.getMethods();
+//		List<S> lis = new ArrayList<S>();
+//		S s;
+//		Method method;
+//		String mes;
+//		for (Field field : fields) {
+//			s = new S();
+//			s.setType(field.getType().getSimpleName());
+//			s.setName(field.getName());
+//			mes = "get" + field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1);
+//			try {
+//				if(!"getJTime".equals(mes)){
+//					method = Baoxiao.class.getMethod(mes);
+//					if(null != method.getAnnotation(javax.persistence.Column.class)){
+//						s.setObj(method.getAnnotation(javax.persistence.Column.class));
+//						if(!method.getAnnotation(javax.persistence.Column.class).updatable())
+//							s.setAnno("MethodAnno:" +false);
+//					}
+//				}
+//				if(null != field.getAnnotation(javax.persistence.Column.class))
+//					if(field.getAnnotation(javax.persistence.Column.class).updatable())
+//						s.setAnno("@Column.updatable:" + true);
+//				lis.add(s);
+//			} catch (Exception e) {
+//				continue;
+//			}
+//		}
+//		result.setObj(lis);
+//		return result;
+//	}
+	
+	/**
+	 * 查询待审批记录
+	 * @param pbaoxiao
+	 * @param page
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="/queryDaishenpi")
+	@ResponseBody
+	public Map<String, Object> findDaiShenpi(PBaoxiao pbaoxiao, Page page, HttpSession session){
+		SessionInfo sessionInfo = getSessInfo(session);
+		pbaoxiao.setStatus(SysConfig.CW_BX_BEGIN);
+		Map<String, Object> results = publicCaiwuService.findBaoxiaoByLeader(pbaoxiao, page, sessionInfo.getEmail());
+//		Double lastyear = publicCaiwuService.getLastYear(sessionInfo.getEmail());
+//		Double thisyear = publicCaiwuService.getThisYear(sessionInfo.getEmail());
+//		results.put("lastYearTotal", lastyear);
+//		results.put("thisYearTotal", thisyear);
+		results.put("success", true);
+		return results;
+	}
+	
+	/**
+	 * 查询已批准记录
+	 * @param pbaoxiao
+	 * @param page
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="/queryYipizhun")
+	@ResponseBody
+	public Map<String, Object> findYipizhun(PBaoxiao pbaoxiao, Page page, HttpSession session){
+		SessionInfo sessionInfo = getSessInfo(session);
+		pbaoxiao.setStatus(SysConfig.CW_BX_APPROVE_AGREE);
+		Map<String, Object> results = publicCaiwuService.findBaoxiaoByLeader(pbaoxiao, page, sessionInfo.getEmail());
+		Double lastyear = publicCaiwuService.getLastYear(sessionInfo.getEmail());
+		Double thisyear = publicCaiwuService.getThisYear(sessionInfo.getEmail());
+		results.put("lastYearTotal", lastyear);
+		results.put("thisYearTotal", thisyear);
+		results.put("success", true);
+		return results;
+	}
+	
 	/**
 	 * 报销批准
 	 * @param id
-	 * @param aggree
+	 * @param agree
 	 * @param session
 	 * @return
 	 */
 	@RequestMapping(value="/approveBaoxiao")
 	@ResponseBody
-	public Json approveBaoxiao(Long id, String approRemark, boolean aggree, HttpSession session){
+	public Json approveBaoxiao(@RequestParam(value="id",required=true) Long id, String approRemark,@RequestParam(value="agree",required=true) Boolean agree, HttpSession session){
 		Json result = new Json();
 		if(null!=id && id!=0){
 			SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
-			String email = sessionInfo.getEmail();
-			PBaoxiao pbaoxiaos = publicCaiwuService.getBaoxiao(id);
-			pbaoxiaos.setApproRemark(approRemark);
-//			Map<Integer, Integer> pxs = getBaoxiaoStatus();
-			publicCaiwuService.getPreStep(SysConfig.CW_BX_APPROVE_AGREE);
-			if(publicCaiwuService.getPreStep(SysConfig.CW_BX_APPROVE_AGREE) == pbaoxiaos.getStatus()){
-				if(publicCaiwuService.updateApprove(pbaoxiaos,aggree,sessionInfo.getId(), sessionInfo.getEmail())>0){
-					result.setSuccess(true);
-					result.setMsg("批准成功");
-				}else{
-					result.setMsg("批准失败，可能原因是您不没有批准此条记录的权限，请您确认您是此条记录申请人组织架构里的细胞核或者是指导。");
-				}
+			PBaoxiao pbaoxiao = new PBaoxiao();
+			pbaoxiao.setId(id);
+			pbaoxiao.setApproRemark(approRemark);
+			pbaoxiao.setApproid(sessionInfo.getId());
+			pbaoxiao.setApprover(sessionInfo.getUsername());
+			pbaoxiao.setAproEmail(sessionInfo.getEmail());
+			if(publicCaiwuService.updateApprove(pbaoxiao,agree)>0){
+				result.setSuccess(true);
+				result.setMsg("批准成功");
 			}else{
-				result.setMsg("请刷新后重试。");
+				result.setMsg("批准失败，可能原因是您没有批准此条记录的权限或该记录不是处于待批准状态，请您确认您是此条记录申请人组织架构里的细胞核或者是指导。");
 			}
-//			
-//			if(null!=pxs.get(3) && pxs.get(3)==pbaoxiaos.getStatus()){
-//				if(null == pbaoxiaos.getApproid() || pbaoxiaos.getStatus()==1){
-//					PRenshiEmployee employee = publicCaiwuService.getEmployee(pbaoxiaos.getUid());
-//					if(null!=employee && (email==employee.getCellCoreEmail() || email==employee.getGuidanceEmail())){
-//						pbaoxiaos.setApproid(sessionInfo.getId());
-//						pbaoxiaos.setApprover(sessionInfo.getUsername());
-//						pbaoxiaos.setAproEmail(sessionInfo.getEmail());
-//						publicCaiwuService.updateApprove(pbaoxiaos, aggree, sessionInfo.getId(), sessionInfo.getEmail());
-//						if(publicCaiwuService.updateBaoxiao(pbaoxiaos)>0){
-//							result.setSuccess(true);
-//							result.setMsg("批准成功！");
-//						}else{
-//							result.setMsg("入库失败！");
-//						}
-//					}else{
-//						result.setMsg("对不起，您没有批准该记录权限。");
-//					}
-//				}else{
-//					result.setMsg("批次号为：["+pbaoxiaos.getId()+"]的申请单已被：[" + pbaoxiaos.getApprover() + "]批准。");
-//				}
-//			}else{
-//				result.setMsg("改报销当前不是出于待批准状态。");
-//			}
 		}else{
 			result.setMsg("报销信息批次号不存在。");
 		}
 		return result;
+	}
+	
+	/**
+	 * 查询待收票记录
+	 * @param pbaoxiao
+	 * @param page
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="/queryDaishoupiao")
+	@ResponseBody
+	public Map<String, Object> findDaishoupiao(PBaoxiao pbaoxiao, Page page){
+		pbaoxiao.setStatus(SysConfig.CW_BX_APPROVE_AGREE);
+		Map<String, Object> results = publicCaiwuService.findBaoxiao(pbaoxiao, page);
+		results.put("success", true);
+		return results;
 	}
 	
 	/**
@@ -208,7 +305,7 @@ public class PubCaiwuController {
 	 */
 	@RequestMapping(value="/recivedBaoxiao")
 	@ResponseBody
-	public Json recivedBaoxiao(Integer id, Boolean agree, String spRemarks, HttpSession session){
+	public Json recivedBaoxiao(@RequestParam(value="id",required=true) Long id,@RequestParam(value="agree",required=true) Boolean agree, String spRemarks, HttpSession session){
 		Json result = new Json();
 		if(null!= id && id != 0 && null != agree){
 			SessionInfo sessionInfo = getSessInfo(session);
@@ -224,6 +321,22 @@ public class PubCaiwuController {
 	}
 	
 	/**
+	 * 查询待审核记录
+	 * @param pbaoxiao
+	 * @param page
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="/queryDaiShenhe")
+	@ResponseBody
+	public Map<String, Object> findDaiShenhe(PBaoxiao pbaoxiao, Page page){
+		pbaoxiao.setStatus(SysConfig.CW_BX_RECIVED_AGREE);
+		Map<String, Object> results = publicCaiwuService.findBaoxiao(pbaoxiao, page);
+		results.put("success", true);
+		return results;
+	}
+	
+	/**
 	 * 报销单审核
 	 * @param pbaoxiao
 	 * @param agree
@@ -233,21 +346,36 @@ public class PubCaiwuController {
 	 */
 	@RequestMapping(value="/checkBaoxiao")
 	@ResponseBody
-	public Json checkBaoxiao(PBaoxiao pbaoxiao, Boolean agree, Page page, HttpSession session){
+	public Json checkBaoxiao(@RequestParam(value="id",required=true)Long id,@RequestParam(value="agree",required=true) Boolean agree, HttpSession session){
 		Json result = new Json();
-		if(null!=pbaoxiao.getId() && pbaoxiao.getId()!=0){
-			SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
-			pbaoxiao.setCheckerId(sessionInfo.getId());
-			if(null!=pbaoxiao.getId() && 0!= pbaoxiao.getId() && null!=agree){
-				if(agree){
-					pbaoxiao.setStatus(6);
+		if(null != id && id != 0){
+			SessionInfo sessionInfo = getSessInfo(session);
+				if(publicCaiwuService.updateBaoxiaoCheck(id, agree, sessionInfo.getId())>0){
+					result.setSuccess(true);
+					result.setMsg("录库成功!");
 				}else{
-					pbaoxiao.setStatus(7);
+					result.setMsg("录库失败!");
 				}
-				publicCaiwuService.updateBaoxiaoCheck(pbaoxiao,agree);
-			}
+		}else{
+			result.setMsg("批次号不存在。");
 		}
 		return result;
+	}
+	
+	/**
+	 * 查询待出票记录
+	 * @param pbaoxiao
+	 * @param page
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="/queryDaiChupiao")
+	@ResponseBody
+	public Map<String, Object> findDaiChupiao(PBaoxiao pbaoxiao, Page page){
+		pbaoxiao.setStatus(SysConfig.CW_BX_CHECK_AGREE);
+		Map<String, Object> results = publicCaiwuService.findBaoxiao(pbaoxiao, page);
+		results.put("success", true);
+		return results;
 	}
 	
 	/**
@@ -260,21 +388,184 @@ public class PubCaiwuController {
 	 */
 	@RequestMapping(value="/baoxiaoChupiao")
 	@ResponseBody
-	public Json baoxiaoChupiao(PBaoxiao pbaoxiao, Boolean agree, Page page, HttpSession session){
+	public Json baoxiaoChupiao(PChupiaoBaoxiao pbaoxiao, Page page, HttpSession session){
 		Json result = new Json();
 		if(null!=pbaoxiao.getId() && pbaoxiao.getId()!=0){
-			SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
-			pbaoxiao.setCheckerId(sessionInfo.getId());
-			if(null!=pbaoxiao.getId() && 0!= pbaoxiao.getId() && null!=agree){
-				if(agree){
-					pbaoxiao.setStatus(6);
-				}else{
-					pbaoxiao.setStatus(7);
-				}
-				publicCaiwuService.updateBaoxiaoCheck(pbaoxiao,agree);
+			PBaoxiao pbaoxiaos = new PBaoxiao();
+//			PBaoxiao pbaoxiaos = publicCaiwuService.getBaoxiao(pbaoxiao.getId());
+			SessionInfo sessionInfo = getSessInfo(session);
+			BeanUtils.copyProperties(pbaoxiao, pbaoxiaos);
+			pbaoxiaos.setCpid(sessionInfo.getId());
+			if(publicCaiwuService.updateBaoxiaoChupiao(pbaoxiaos) > 0){
+				result.setSuccess(true);
+				result.setMsg("出票成功！");
+			}else{
+				result.setMsg("请确认该申请单是待出票状态，请您刷新后重试。");
 			}
+		}else{
+			result.setMsg("批次号不存在，请您刷新后再试。");
 		}
 		return result;
+	}
+	
+	@RequestMapping(value="/addKoukuan")
+	@ResponseBody
+	public Json addBaoxiaoKjk(PKoukuan pkk){
+		Json result = new Json();
+		if(null != pkk.getBxid() && null != pkk.getMoney()){
+			Serializable sab = publicCaiwuService.addKouJk(pkk);
+			if(!sab.equals(0)){
+				result.setSuccess(true);
+				result.setObj(sab);
+				result.setMsg("添加成功");
+			}
+		}else{
+			result.setMsg("请检查您的必填项是否都数据。");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value="/updateKoukuan")
+	@ResponseBody
+	public Json updateBaoxiaoKjk(PKoukuan pkk){
+		Json result = new Json();
+		if(null != pkk.getId() && null != pkk.getBxid() && null != pkk.getMoney()){
+			if(publicCaiwuService.updateKouJk(pkk)>0){
+				result.setSuccess(true);
+				result.setMsg("更新成功");
+			}
+		}else{
+			result.setMsg("请检查您的必填项是否都数据。");
+		}
+		return null;
+	}
+	
+	@RequestMapping(value="/updateKoukuan")
+	@ResponseBody
+	public Json findBaoxiaoKjk(@RequestParam(value="bxid",required=true)Long bxid){
+		Json result = new Json();
+		if(null != bxid && bxid != 0){
+			publicCaiwuService.findJiekoukuan(bxid);
+		}
+		return result;
+	}
+	
+	@RequestMapping(value="/deleteKoukuan")
+	@ResponseBody
+	public Json deleteBaoxiaoKjk(PKoukuan pkk){
+		return null;
+	}
+	
+	@RequestMapping(value="/updateKoujk")
+	@ResponseBody
+	public Json baoxiaoKjk(@RequestBody List<Map<String, Object>> pkks){
+		Json result = new Json();
+		if(null != pkks && pkks.size() > 0){
+			List<PKoukuan> addLis = new ArrayList<PKoukuan>();
+			List<PKoukuan> updateLis = new ArrayList<PKoukuan>();
+			List<PKoukuan> deleteLis = new ArrayList<PKoukuan>();
+			Iterator<Map<String, Object>> it = pkks.iterator();
+			while(it.hasNext()){
+				PKoukuan  pk = new PKoukuan();
+				Map<String, Object> map = it.next();
+				if(null != map.get("bxid")){
+					Integer flag = null != map.get("flag") ? (Integer) map.get("flag") : 1;
+					if(flag == 1){
+						pk.setBxid((Long) map.get("bxid"));
+						pk.setOrder(null != map.get("order") ? (Integer) map.get("order") : null);
+						pk.setItem(null != map.get("item") ? (String) map.get("item") : null);
+						pk.setMoney(null != map.get("money") ? (Float) map.get("money") : null);
+						pk.setDescription(null != map.get("description") ? (String) map.get("description") : null);
+						addLis.add(pk);
+					}else if(flag == 2){
+						pk.setBxid((Long) map.get("bxid"));
+						pk.setOrder(null != map.get("order") ? (Integer) map.get("order") : null);
+						pk.setItem(null != map.get("item") ? (String) map.get("item") : null);
+						pk.setMoney(null != map.get("money") ? (Float) map.get("money") : null);
+						pk.setDescription(null != map.get("description") ? (String) map.get("description") : null);
+						updateLis.add(pk);
+					}else if(flag == 3){
+						pk.setBxid((Long) map.get("bxid"));
+						pk.setOrder(null != map.get("order") ? (Integer) map.get("order") : null);
+						pk.setItem(null != map.get("item") ? (String) map.get("item") : null);
+						pk.setMoney(null != map.get("money") ? (Float) map.get("money") : null);
+						pk.setDescription(null != map.get("description") ? (String) map.get("description") : null);
+						deleteLis.add(pk);
+					}
+					
+				}
+			}
+//			publicCaiwuService.addKouJKList(addLis);
+//			publicCaiwuService.updateKouJKList(addLis);
+//			publicCaiwuService.deleteKouJKList(addLis);
+		}
+		return result;
+	}
+	
+//	/**
+//	 * 这里可以接受List，Array，Set等，写法是一样的，注意前端写法<br>
+//	 * 另外这个必须要使用MappingJacksonHttpMessageConverter这个消息转换器
+//	 * 请看我上面的配置
+//	 * @param user
+//	 * @return
+//	 */
+//	@ResponseBody
+//	@RequestMapping("user2")
+////	public String user2(@RequestParam(required = false, value = "list[]") List<User> user, HttpServletRequest request){
+//	public String user2(@RequestBody List<Map<String, Object>> user){
+//		System.out.println(user.size());
+//		return "";
+//	}
+	
+//	@RequestMapping(value="/testlist")
+//	@ResponseBody
+//	public Json addKoujk(@RequestParam("kks[]") ArrayList<PKoukuan> kks){
+////	public Json addKoujk(Object kks){
+//		Json result = new Json();
+//		System.out.println(kks);
+//		return result;
+//	}
+//	
+//	//方式一，用list接收前台的数组参数。  
+//	   @RequestMapping(value = "/testList")  
+//	   @ResponseBody  
+//	   public Json testList(@RequestParam(required = false, value = "list[]") List<String> list, HttpServletRequest request){
+//		   Json result = new Json();
+//	       System.out.println("---------------list:\t" + list);  
+//	       return result;  
+//	   }  
+	   
+//	   //方式一，用list接收前台的数组参数。  
+//	   @RequestMapping(value = "/testListObj")  
+//	   @ResponseBody  
+//	   public Json tslist(@RequestParam(required = false, value = "list[]") List<PKoukuan> list, HttpServletRequest request){
+//		   Json result = new Json();
+//		   System.out.println("---------------list:\t" + list);  
+//		   return result;  
+//	   }  
+//	   
+//	   @RequestMapping(value = "/testObj")  
+//	   @ResponseBody  
+//	   public Json tstObj(@RequestBody List<PKoukuan> ts, HttpServletRequest request){
+//		   
+//		   System.out.println("the list size is: " + ts.size());
+//		   return null;
+//	   }
+	   
+	/**
+	 * 查询待汇款记录
+	 * @param pbaoxiao
+	 * @param page
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="/queryDaihuikuan")
+	@ResponseBody
+	public Map<String, Object> findDaihuikuan(PBaoxiao pbaoxiao, Page page){
+		pbaoxiao.setStatus(SysConfig.CW_BX_CHUPIAO);
+		Map<String, Object> results = publicCaiwuService.findBaoxiao(pbaoxiao, page);
+		results.put("success", true);
+		return results;
 	}
 	
 	/**
@@ -298,10 +589,26 @@ public class PubCaiwuController {
 				}else{
 					pbaoxiao.setStatus(7);
 				}
-				publicCaiwuService.updateBaoxiaoCheck(pbaoxiao,agree);
+//				publicCaiwuService.updateBaoxiaoCheck(pbaoxiao,agree);
 			}
 		}
 		return result;
+	}
+	
+	/**
+	 * 查询已汇款记录
+	 * @param pbaoxiao
+	 * @param page
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="/queryYihuikuan")
+	@ResponseBody
+	public Map<String, Object> findYihuikuan(PBaoxiao pbaoxiao, Page page){
+		pbaoxiao.setStatus(SysConfig.CW_BX_YIHUIKUAN);
+		Map<String, Object> results = publicCaiwuService.findBaoxiao(pbaoxiao, page);
+		results.put("success", true);
+		return results;
 	}
 	
 	@RequestMapping(value="/getAllCells")

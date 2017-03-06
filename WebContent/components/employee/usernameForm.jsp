@@ -320,8 +320,16 @@
                   
                     <td>原编号:</td>
                     <td><input class="easyui-textbox" type="text" name="originalNumber" /></td>
-                    <td>办理工资卡:</td>
-                    <td><input class="easyui-textbox" type="text" name="panCard" /></td>
+                  <!--   <td>办理工资卡:</td>
+                    <td><input class="easyui-textbox" type="text" name="panCard" /></td> -->
+                    <td>报税架构:</td>
+                    <td>
+                    <input id="combox_c5" class="easyui-combobox" name="taxStructure" data-options="
+                    url: 'employee/getTxs.action',
+                    valueField:'id',
+                    textField:'name',
+                    " />
+                    </td>
                 </tr>
                 <tr>
                     <td>毕业院校:</td>
@@ -456,6 +464,35 @@
                 <tr>
                 <td>年假累计</td>
                 <td><input class="easyui-textbox" type="text" name="sickLleaveTotal" /></td>
+                <td>是否外籍</td>
+                <td>
+                <input class="easyui-combobox" name="ifForeign" data-options="
+							valueField: 'value',
+							textField: 'text',
+							data: [{
+								text: '是',
+								value: 0
+							},{
+								text: '否',
+								value: 1
+							}]" />
+                </td>
+                <td>是否理工学</td>
+                <td>
+                <input class="easyui-combobox" name="ifEngineering" data-options="
+							valueField: 'value',
+							textField: 'text',
+							data: [{
+								text: '否',
+								value: 0
+							},{
+								text: '外籍或港澳台',
+								value: 1
+							},{
+								text: '留学',
+								value: 2
+							}]" />
+                </td>
                 </tr>
 
                 </table>
@@ -493,13 +530,13 @@
     }
     }
     })
-    $("#textbox_addrss").textbox({
+/*     $("#textbox_addrss").textbox({
     onChange : function(newValue, oldValue) {
     if (oldValue && oldValue.length > 0) {
     return;
     }
     $('#textbox_hukou').textbox('setValue', newValue);
     }
-    })
+    }) */
     })
 </script>

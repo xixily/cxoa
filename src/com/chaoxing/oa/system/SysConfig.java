@@ -78,4 +78,8 @@ public class SysConfig {
 	public final static Integer CW_BX_APPROVE_DISAGREE = 2;//不批准
 	public final static Integer CW_BX_RECIVED_AGREE = 5;//收票通过
 	public final static Integer CW_BX_RECIVED_DISAGREE = 6;//收票不通过
+	public final static Integer CW_BX_CHECK_AGREE = 7;//审核通过
+	public final static Integer CW_BX_CHECK_DISAGREE = 8;//审核不通过
+	public final static Integer CW_BX_CHUPIAO = 9;//已出票
+	public final static Integer CW_BX_YIHUIKUAN = 10;//已汇款
 }

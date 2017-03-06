@@ -85,7 +85,7 @@ var system = {
 					menusEdit = undefined;
 					menusAdd = undefined;
 					$.post('employee/updateOrsaveOS.action',data,function(result){
-						result = eval("(" + result + ")");
+//						result = eval("(" + result + ")");
 						if(result.success){
 							t.treegrid('reload');
 //						employee.menus.remove();
@@ -116,7 +116,7 @@ var system = {
 				menusEdit = data.id;
 				if (data){
 					$.post('employee/deleteOS.action',data,function(result){
-						result = eval("(" + result + ")");
+//						result = eval("(" + result + ")");
 						if(result.success){
 							$('#treegrid_menus').treegrid('pop', menusEdit);
 							menusEdit = undefined;

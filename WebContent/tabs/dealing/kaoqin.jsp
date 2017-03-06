@@ -42,7 +42,6 @@
 			},
 			onBeforeLoad : function(param){
 				 $.get('employee/getIfGenerateKaoqin.action',null,function(result){
-				 	result = eval('('+result+')');
 					 if(result.success){
 						 if(result.obj == 1){
 							 $('#kaoqin_generate').switchbutton('check');

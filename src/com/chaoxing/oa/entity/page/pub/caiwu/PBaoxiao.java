@@ -1,9 +1,11 @@
-package com.chaoxing.oa.entity.page.caiwu;
+package com.chaoxing.oa.entity.page.pub.caiwu;
 
 
 public class PBaoxiao {
 	private Long id;
 	private Integer uid;//报销人ID
+	private String username;//报销人
+	private String email;//报销人邮箱
 	private Float money;//申报金额
 	private Float huankuan;//还借款金额
 	private Integer number;//报销张数
@@ -11,9 +13,11 @@ public class PBaoxiao {
 	private String bank;//银行
 	private String account;//账号
 	private Integer approid;//批准人ID
+	private String approver;//批准人
+	private String aproEmail;//批准人邮箱
 	private String aproTime;//批准时间
 	private String approRemark;//领导意见
-	private String jTime;//邮寄时间
+	private String jtime;//邮寄时间
 	private String kdno;//快递单号
 	private Integer reciverId;//收票人Id
 	private String reciveTime;//收票时间
@@ -28,11 +32,25 @@ public class PBaoxiao {
 	private Integer status;//状态
 	private String kunhao;//捆号
 	private String createTime;//创建时间
+	//架构信息
+	private String firstLevel;//一级
+	private String secondLevel;//二级
+	private String thirdLevel;//三级
+	private String fourthLevel;//四级
+	private String cellCoreEmail;//细胞核邮箱
+	private String guidanceEmail;//指导邮箱
+	
 	public Long getId() {
 		return id;
 	}
 	public Integer getUid() {
 		return uid;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public String getEmail() {
+		return email;
 	}
 	public Float getMoney() {
 		return money;
@@ -55,14 +73,20 @@ public class PBaoxiao {
 	public Integer getApproid() {
 		return approid;
 	}
+	public String getApprover() {
+		return approver;
+	}
+	public String getAproEmail() {
+		return aproEmail;
+	}
 	public String getAproTime() {
 		return aproTime;
 	}
 	public String getApproRemark() {
 		return approRemark;
 	}
-	public String getjTime() {
-		return jTime;
+	public String getJtime() {
+		return jtime;
 	}
 	public String getKdno() {
 		return kdno;
@@ -106,11 +130,35 @@ public class PBaoxiao {
 	public String getCreateTime() {
 		return createTime;
 	}
+	public String getFirstLevel() {
+		return firstLevel;
+	}
+	public String getSecondLevel() {
+		return secondLevel;
+	}
+	public String getThirdLevel() {
+		return thirdLevel;
+	}
+	public String getFourthLevel() {
+		return fourthLevel;
+	}
+	public String getCellCoreEmail() {
+		return cellCoreEmail;
+	}
+	public String getGuidanceEmail() {
+		return guidanceEmail;
+	}
 	public void setId(Long id) {
 		this.id = id;
 	}
 	public void setUid(Integer uid) {
 		this.uid = uid;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public void setMoney(Float money) {
 		this.money = money;
@@ -133,14 +181,20 @@ public class PBaoxiao {
 	public void setApproid(Integer approid) {
 		this.approid = approid;
 	}
+	public void setApprover(String approver) {
+		this.approver = approver;
+	}
+	public void setAproEmail(String aproEmail) {
+		this.aproEmail = aproEmail;
+	}
 	public void setAproTime(String aproTime) {
 		this.aproTime = aproTime;
 	}
 	public void setApproRemark(String approRemark) {
 		this.approRemark = approRemark;
 	}
-	public void setjTime(String jTime) {
-		this.jTime = jTime;
+	public void setJtime(String jtime) {
+		this.jtime = jtime;
 	}
 	public void setKdno(String kdno) {
 		this.kdno = kdno;
@@ -184,7 +238,23 @@ public class PBaoxiao {
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
-	
-	
+	public void setFirstLevel(String firstLevel) {
+		this.firstLevel = firstLevel;
+	}
+	public void setSecondLevel(String secondLevel) {
+		this.secondLevel = secondLevel;
+	}
+	public void setThirdLevel(String thirdLevel) {
+		this.thirdLevel = thirdLevel;
+	}
+	public void setFourthLevel(String fourthLevel) {
+		this.fourthLevel = fourthLevel;
+	}
+	public void setCellCoreEmail(String cellCoreEmail) {
+		this.cellCoreEmail = cellCoreEmail;
+	}
+	public void setGuidanceEmail(String guidanceEmail) {
+		this.guidanceEmail = guidanceEmail;
+	}
 	
 }

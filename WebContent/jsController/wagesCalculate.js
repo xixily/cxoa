@@ -21,7 +21,7 @@ var wagesCalculate = {
 //				callback(session.shebaoRadio)
 //			}else{
 				$.post(url, params, function(result){
-					var result =  eval("(" + result + ")");
+//					var result =  eval("(" + result + ")");
 					if(result.success){
 						session.shebaoRadio = result.obj;
 						callback(result.obj);

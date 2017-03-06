@@ -2,7 +2,7 @@ package com.chaoxing.oa.entity.page.pub.caiwu;
 
 public class PSelfBaoxiao {
 	private Long id;
-	private String jTime;//邮寄时间
+	private String jtime;//邮寄时间
 	private Integer uid;//报销人ID
 	private String username;//报销人
 	private String email;//报销人邮箱
@@ -13,11 +13,12 @@ public class PSelfBaoxiao {
 	private String bank;//银行
 	private String account;//账号
 	private String explain;//说明
+	private String kdno;//快递单号
 	public Long getId() {
 		return id;
 	}
-	public String getjTime() {
-		return jTime;
+	public String getJtime() {
+		return jtime;
 	}
 	public Integer getUid() {
 		return uid;
@@ -49,11 +50,14 @@ public class PSelfBaoxiao {
 	public String getExplain() {
 		return explain;
 	}
+	public String getKdno() {
+		return kdno;
+	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public void setjTime(String jTime) {
-		this.jTime = jTime;
+	public void setJtime(String jtime) {
+		this.jtime = jtime;
 	}
 	public void setUid(Integer uid) {
 		this.uid = uid;
@@ -85,6 +89,8 @@ public class PSelfBaoxiao {
 	public void setExplain(String explain) {
 		this.explain = explain;
 	}
-	
+	public void setKdno(String kdno) {
+		this.kdno = kdno;
+	}
 	
 }

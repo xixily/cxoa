@@ -79,6 +79,9 @@ public class RenshiUserName implements Serializable {
 	private String bumentiaozhengReport;//部门调整报表
 //	private BigDecimal sickLleaveTotal;//病假累计
 //	private BigDecimal annualLleave;//年假累计
+	private Integer ifForeign;//外籍
+	private Byte ifEngineering;//理工 
+	private String txStruct;
 	
 	public RenshiUserName() {
 		super();
@@ -643,5 +646,27 @@ public class RenshiUserName implements Serializable {
 	public void setZhuanzhengReport(String zhuanzhengReport) {
 		this.zhuanzhengReport = zhuanzhengReport;
 	}
+	@Column(name="是否外籍")
+	public Integer getIfForeign() {
+		return ifForeign;
+	}
+	@Column(name="是否理工")
+	public Byte getIfEngineering() {
+		return ifEngineering;
+	}
+	public void setIfForeign(Integer ifForeign) {
+		this.ifForeign = ifForeign;
+	}
+	public void setIfEngineering(Byte ifEngineering) {
+		this.ifEngineering = ifEngineering;
+	}
+	@Column(name="报税架构")
+	public String getTxStruct() {
+		return txStruct;
+	}
+	public void setTxStruct(String txStruct) {
+		this.txStruct = txStruct;
+	}
+	
 	
 }

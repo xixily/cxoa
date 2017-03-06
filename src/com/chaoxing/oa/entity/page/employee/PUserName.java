@@ -74,6 +74,9 @@ public class PUserName {
 	private String chargedBy;//负责人
 	private BigDecimal sickLleaveTotal;//病假累计
 	private BigDecimal annualLleave;//年假累计
+	private Integer ifForeign;//外籍
+	private Byte ifEngineering;//理工 
+	private String txStruct;
 	
 	public String getUsername() {
 		return username;
@@ -525,6 +528,24 @@ public class PUserName {
 				+ fourthLevel + ", zhuanruGongsiTime=" + zhuanruGongsiTime + ", ruzhiReport=" + ruzhiReport
 				+ ", lizhiReport=" + lizhiReport + ", zhuanzhengReport=" + zhuanzhengReport + ", bumentiaozhengReport="
 				+ bumentiaozhengReport + ", baoxianTongzhidan=" + baoxianTongzhidan + "]";
+	}
+	public Integer getIfForeign() {
+		return ifForeign;
+	}
+	public void setIfForeign(Integer ifForeign) {
+		this.ifForeign = ifForeign;
+	}
+	public Byte getIfEngineering() {
+		return ifEngineering;
+	}
+	public void setIfEngineering(Byte ifEngineering) {
+		this.ifEngineering = ifEngineering;
+	}
+	public String getTxStruct() {
+		return txStruct;
+	}
+	public void setTxStruct(String txStruct) {
+		this.txStruct = txStruct;
 	}
 	
 

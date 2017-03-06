@@ -612,7 +612,7 @@ var employee = {
 		var userInfo = $('#employee_datas').datagrid('getSelected');
 		var url = "user/deleteUserName.action";
 		$.post(url, userInfo, function(result) {
-			result = eval("("+ result + ")");
+//			result = eval("("+ result + ")");
 			confirmDialog.destoryDialog(confirmId);
 			$('#employee_datas').datagrid('reload');
 //			if (result.success) {
@@ -1045,7 +1045,7 @@ var employee = {
 			}
 			if(changes.radix || changes.company || changes.accountBank || changes.account){
 				$.post("employee/updateGridWages.action",row,function(result){
-					var result =  eval("(" + result + ")");
+//					var result =  eval("(" + result + ")");
 					if(result.success){
 						employee.wages.refresh_wagesData(result.msg);
 					}else{
@@ -1083,7 +1083,7 @@ var employee = {
 				if(session.formData.sercret=='on'){// session.formData.ifSecret
 					if(session.user.roleId=='0'||session.user.roleId=='100'){
 						$.post("employee/deleteWages.action", selected,function(result) {
-							var result =  eval("(" + result + ")");
+//							var result =  eval("(" + result + ")");
 							confirmDialog.destoryDialog(confirmId);
 							if (result.success) {
 								employee.wages.refresh_wagesData(result.msg);
@@ -1096,7 +1096,7 @@ var employee = {
 					}
 				}else{
 					$.post("employee/deleteWages.action", selected,function(result) {
-						var result =  eval("(" + result + ")");
+//						var result =  eval("(" + result + ")");
 						confirmDialog.destoryDialog(confirmId);
 						if (result.success) {
 							employee.wages.refresh_wagesData(result.msg);
@@ -1259,7 +1259,7 @@ var employee = {
 					function(confirmId){
 						var data = row;
 						$.post(url, data, function(result){
-							var result =  eval("(" + result + ")");
+//							var result =  eval("(" + result + ")");
 							confirmDialog.destoryDialog(confirmId);
 							if (!result.success) {
 								if(shebaoAdd){
@@ -1335,7 +1335,7 @@ var employee = {
 					function(confirmId){
 						$.post('employee/deleteShebao.action', selectedData, function(result){
 							confirmDialog.destoryDialog(confirmId);
-							var result =  eval("(" + result + ")");
+//							var result =  eval("(" + result + ")");
 							$.messager.alert("删除结果", result.msg);
 							$('#datagrid_shebao').datagrid('reload');
 						})
@@ -1400,7 +1400,7 @@ shebaoSummary : {
 		if(shebaoSummaryInfo&&shebaoSummaryInfo.company&&shebaoSummaryInfo.company!=''){
 			shebaoSummaryInfo.locked = (shebaoSummaryInfo.locked||shebaoSummaryInfo.locked=='未锁定')?0:1;
 			$.post(url,shebaoSummaryInfo,function(result){
-				var result =  eval("(" + result + ")");
+//				var result =  eval("(" + result + ")");
 				if(result.success){
 					$('#datagrid_shebaoSummary').datagrid('reload');
 				}
@@ -1711,7 +1711,7 @@ shebaoSummary : {
 				function(confirmId){
 					var data = row;
 					$.post(url, data, function(result){
-						var result =  eval("(" + result + ")");
+//						var result =  eval("(" + result + ")");
 						confirmDialog.destoryDialog(confirmId);
 						if (!result.success) {
 							$('#datagrid_shebaoCompany').datagrid('getData').rows[index] = session.editRow;
@@ -1778,7 +1778,7 @@ shebaoSummary : {
 			confirmDialog.createDialog(
 					message,function(confirmId){
 						$.post('employee/generateCompanyType.action',data,function(result){
-							var result =  eval("(" + result + ")");
+//							var result =  eval("(" + result + ")");
 							confirmDialog.destoryDialog(confirmId);
 							$.messager.alert('消息', result.msg, 'info');
 						});
@@ -1818,7 +1818,7 @@ shebaoSummary : {
 							if (result) {
 								$.post('employee/updateWagesRadix.action', obj, function(result){
 									confirmDialog.destoryDialog(confirmId);
-									var result =  eval("(" + result + ")");
+//									var result =  eval("(" + result + ")");
 									if(result.success){
 										var index = $('#datagrid_shebaoCompany').datagrid('getRowIndex',checkeds[n]);
 										$('#datagrid_shebaoCompany').datagrid('refreshRow',index);
@@ -1859,7 +1859,7 @@ shebaoSummary : {
 			var data = {};
 			data.locked = checked;
 			$.post(url,data,function(result){
-				result = eval("("+result+")");
+//				result = eval("("+result+")");
 				if(result.success){
 					disabledButton('kaoqin_toolbar',checked?checked:false);
 					$('#kaoqin_generate').switchbutton('enable');
@@ -1906,7 +1906,7 @@ shebaoSummary : {
 //					function(confirmId){
 						var data = row;
 						$.post(url, data, function(result){
-							var result =  eval("(" + result + ")");
+//							var result =  eval("(" + result + ")");
 //							confirmDialog.destoryDialog(confirmId);
 							if (!result.success) {
 								$('#datagrid_kaoqin').datagrid('getData').rows[index] = session.editKaoqinRow;
@@ -1940,7 +1940,7 @@ shebaoSummary : {
 			    data.year = calendar.year;
 			    data.month = calendar.month;
 			    $.post('employee/generateWagesDates.action', data, function(result){
-					var result =  eval("(" + result + ")");
+//					var result =  eval("(" + result + ")");
 					var saveNums = 0;
 					if(result.success){
 						var query = "";
@@ -1968,7 +1968,7 @@ shebaoSummary : {
 //					function(confirmId){
 						var data = row;
 						$.post(url, data, function(result){
-							var result =  eval("(" + result + ")");
+//							var result =  eval("(" + result + ")");
 							confirmDialog.destoryDialog(confirmId);
 							if (!result.success) {
 								if(wagesDateAdd){
@@ -2005,7 +2005,7 @@ shebaoSummary : {
 			confirmDialog.createDialog(
 					message,function(confirmId){
 						$.post('employee/deleteWagesDate.action',selectedRow,function(result){
-							var result =  eval("(" + result + ")");
+//							var result =  eval("(" + result + ")");
 							confirmDialog.destoryDialog(confirmId);
 							if(result.success){
 								$('#datagrid_wagesDate').datagrid('reload');
@@ -2033,7 +2033,7 @@ shebaoSummary : {
 					message,function(confirmId){
 							confirmDialog.destoryDialog(confirmId);
 							$.post('employee/generateKaoqin.action',{},function(result){
-								var result =  eval("(" + result + ")");
+//								var result =  eval("(" + result + ")");
 								if(result.success){
 									$('#datagrid_kaoqin').datagrid('reload');
 								}
@@ -2071,7 +2071,7 @@ shebaoSummary : {
 			var kaoqinInfo = $('#datagrid_kaoqin').datagrid('getSelected');
 			var url = "employee/deleteKaoqin.action";
 			$.post(url, kaoqinInfo, function(result) {
-				var result =  eval("(" + result + ")");
+//				var result =  eval("(" + result + ")");
 				if(result.success){
 					$('#datagrid_kaoqin').datagrid('reload');
 				}
@@ -2120,7 +2120,7 @@ shebaoSummary : {
 //					function(confirmId){
 						var data = row;
 						$.post(url, data, function(result){
-							var result =  eval("(" + result + ")");
+//							var result =  eval("(" + result + ")");
 //							confirmDialog.destoryDialog(confirmId);
 							if (!result.success) {
 								if(wagesDateAdd){
@@ -2159,7 +2159,7 @@ shebaoSummary : {
 					message,function(confirmId){
 							confirmDialog.destoryDialog(confirmId);
 							$.post('employee/generateMonthWages.action',{},function(result){
-								var result =  eval("(" + result + ")");
+//								var result =  eval("(" + result + ")");
 								if(result.success){
 									$('#datagrid_monthWages').datagrid('reload');
 								}
@@ -2202,7 +2202,7 @@ shebaoSummary : {
 					'您确定工资已经发放完毕了吗？',function(confirmId){
 							confirmDialog.destoryDialog(confirmId);
 							$.post('employee/fangfa.action',null,function(result){
-								result = eval("("+result+")");
+//								result = eval("("+result+")");
 								$.messager.alert('发放提示',result.msg); 
 							})
 						});
@@ -2313,7 +2313,7 @@ shebaoSummary : {
 				jiagouEdit = undefined;
 				jiagouAdd = undefined;
 				$.post('employee/updateOrsaveOS.action',data,function(result){
-					result = eval("(" + result + ")");
+//					result = eval("(" + result + ")");
 					if(result.success){
 //						t.treegrid('reload');
 						t.treegrid({onLoadSuccess:function(){
@@ -2354,7 +2354,7 @@ shebaoSummary : {
 			jiagouEdit = data.id;
 			if (data){
 				$.post('employee/deleteOS.action',data,function(result){
-					result = eval("(" + result + ")");
+//					result = eval("(" + result + ")");
 					if(result.success){
 						$('#treegrid_jiagou').treegrid('pop', jiagouEdit);
 						jiagouEdit = undefined;

@@ -58,7 +58,7 @@ var hetong = {
 							fahuoInfo.d_contact!='' && fahuoInfo.d_tel && fahuoInfo.d_tel!=''&& fahuoInfo.sender && fahuoInfo.sender!=''){
 						if(fahuoInfo.j_company!=''){
 							$.post('hetong/sendKuaidi.action', fahuoInfo, function(result){
-								var result =  eval("(" + result + ")");
+//								var result =  eval("(" + result + ")");
 								if(result.success){
 									$('#' + data_id).datagrid('reload');
 								}
@@ -100,7 +100,7 @@ var hetong = {
 				var mailno = info.mailno;
 				if(info && info.orderid!=0 && info.mailno && info.mailno!=""){
 					$.post('hetong/queryKuaidiList.action',info,function(result){
-						result = eval("(" + result + ")");
+//						result = eval("(" + result + ")");
 						if(result.success){
 							info = result.obj;
 							if(info){
@@ -259,7 +259,7 @@ var hetong = {
 							var data = fahuoInfo;
 							var url = 'hetong/createCode128C.action';
 							$.post(url, data, function(result){
-								var result =  eval("(" + result + ")");
+//								var result =  eval("(" + result + ")");
 								confirmDialog.destoryDialog(confirmId);
 								if (!result.success) {
 									// TODO 根据返回的结果去打印
@@ -327,7 +327,7 @@ var hetong = {
 						function(confirmId){
 							var data = row;
 							$.post(url, data, function(result){
-								var result =  eval("(" + result + ")");
+//								var result =  eval("(" + result + ")");
 								confirmDialog.destoryDialog(confirmId);
 								if (!result.success) {
 									$('#datagrid_fapiao').datagrid('refreshRow',index);

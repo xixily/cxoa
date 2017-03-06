@@ -18,6 +18,11 @@
 
 	<!-- 自动扫描controller包下的所有类，使其认为spring mvc的控制器 -->
 	<context:component-scan base-package="com.chaoxing.oa.controller" />
+	<!-- 会自动注册DefaultAnnotationHandlerMapping和AnnotationMethodHandlerAdapter两个bean 
+	AnnotationMethodHandlerAdapter将会初始化7个转换器，S
+	可以通过调用AnnotationMethodHandlerAdapter的getMessageConverts()方法来获取转换器的一个集合 List<HttpMessageConverter> -->
+	<!-- 在使用@RequstBody 接收JSON 数据串的时候发现报 415 数据不匹配错误 -->
+	<mvc:annotation-driven />
 	
 	<!-- 要配置一个缓存初始化 -->
 <!-- 	<bean id="sysCache" class="com.chaoxing.oa.system.cache.CacheUtil">
@@ -104,6 +109,7 @@
 						<value>/employee/getFourThLevel.action</value>
 						<value>/employee/getOStruct.action</value>
 						<value>/employee/getCompany.action</value>
+						<value>/employee/getTxs.action</value>
 						<value>/employee/getInsuranceCompany.action</value>
 						<value>/system/queryMenus.action</value>
 						<value>/user/modifyPassword.action</value>

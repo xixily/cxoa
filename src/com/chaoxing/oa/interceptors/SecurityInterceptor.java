@@ -77,8 +77,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
 					if (urls.contains(url)) {
 						return true;
 					} else {
-						request.setAttribute("msg", "{\"msg\":\"对不起，您没有访问此资源的权限。\"}");
-//						request.setAttribute("msg", "{\"msg\":\"您没有访问此资源的权限！请联系超管赋予您[" + url + "]的资源访问权限！\"}");
+						request.setAttribute("msg", "对不起，您没有访问此资源的权限！");
 						request.getRequestDispatcher("/error/noSecurity.jsp").forward(request, response);
 						return false;
 					}

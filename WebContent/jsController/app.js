@@ -1,3 +1,20 @@
+(function($){
+	var post = $.post;
+	$.post = undefined;
+	function post_mask(url, data, callback, dataType){
+		post(url,data,function(data, textStatus, jqXHR){
+			if(typeof data == "string"){
+				try{
+					data = eval("(" + data + ")");
+				}catch(e){
+					data = {msg: data};
+				}
+			}
+			callback(data, textStatus, jqXHR);
+		},dataType)
+	}
+	$.post = post_mask;
+})($);
 $.ajaxSetup({
     cache: true
 });
@@ -57,7 +74,7 @@ function generateWagesDate(){
 }
 function init(){
 	$.post('employee/getCompany.action',{},function(result){
-		var result =  eval("(" + result + ")");
+//		var result =  eval("(" + result + ")");
 		if(result){
 			session.companys = result;
 		}

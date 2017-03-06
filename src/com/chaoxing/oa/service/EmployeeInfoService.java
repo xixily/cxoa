@@ -23,6 +23,7 @@ import com.chaoxing.oa.entity.page.employee.PshebaoDetail;
 import com.chaoxing.oa.entity.page.employee.Pwages;
 import com.chaoxing.oa.entity.page.system.PSystemConfig;
 import com.chaoxing.oa.entity.page.system.SessionInfo;
+import com.chaoxing.oa.entity.po.commmon.TxStructs;
 import com.chaoxing.oa.entity.po.employee.UserName;
 
 public interface EmployeeInfoService {
@@ -171,6 +172,8 @@ public interface EmployeeInfoService {
 	public Map<String, Object> findAddorReduce(Page page, String date, HttpSession session, int i);
 	
 	public Map<String, Object> findYidong(Page page, String date, HttpSession session, int i);
+
+	public List<TxStructs> findTxs();
 
 //	public Json 
 

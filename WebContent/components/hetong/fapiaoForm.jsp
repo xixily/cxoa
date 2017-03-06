@@ -58,7 +58,6 @@
 						'您确定要更新吗？',
 						function(confirmId){
 							$.post('hetong/updateFapiao.action', data, function(result){
-								var result =  eval('(' + result + ')');
 								confirmDialog.destoryDialog(confirmId);
 								if (!result.success) {
 									$('#datagrid_fapiao').datagrid('refreshRow',index);

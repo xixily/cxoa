@@ -75,6 +75,57 @@
 	};
     $.fn.serializeJson = serializeJson;
 
+    //直接表单取值
+	function getDataFromForm(jq,otherString) {
+		var form = jq ? $(jq) : this;
+		var data = {};
+		var inputs = form.find("input,textarea,select");
+		if (inputs) {
+			for (var i = 0; i < inputs.length; i++) {
+				var ele = $(inputs[i]);
+				var name = ele.attr("name");
+				var value = $.trim(ele.val());
+				if (value.indexOf("****") != -1 && ele.attr("shieldedTel")) {
+					value = ele.attr("shieldedTel") || '';
+				}
+				if (ele[0].type == 'checkbox') {
+					var isGroup = ele.attr("fieldgroup");
+					if (isGroup) {
+						if (!ele[0].checked) {
+							continue;
+						}
+					} else {
+						value = ele[0].checked;
+					}
+				} else if (ele[0].type == 'radio') {
+					if (ele[0].checked)
+						data[name] = value; else continue;
+				}
+				if (!name)
+					continue;
+
+				if (name.match(/\w\[\]/g)) {
+					name = name.substring(0, name.length - 2);
+					if (!data[name]) {
+						data[name] = new Array();
+					}
+					data[name].push(value);
+				} else if ((ele[0].tagName).toLowerCase() == "select" && ele[0].name == 'role') {
+					data[name] = new Array();
+					var options = ele[0].options;
+					for (var j = 0, len = options.length; j < len; j++) {
+						data[name].push(options[j].value);
+					}
+				}else {
+					data[name] = value;
+
+				}
+			}
+		}
+		return data;
+	}
+    $.fn.getDataFromForm = getDataFromForm;
+
 	/**
 	 * 将josn对象赋值给form
 	 * @param {dom} 指定的选择器

@@ -33,6 +33,7 @@ import com.chaoxing.oa.entity.page.employee.Pwage_;
 import com.chaoxing.oa.entity.page.employee.Pwages;
 import com.chaoxing.oa.entity.page.system.PSystemConfig;
 import com.chaoxing.oa.entity.page.system.SessionInfo;
+import com.chaoxing.oa.entity.po.commmon.TxStructs;
 import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.system.SysConfig;
 import com.chaoxing.oa.system.cache.CacheManager;
@@ -167,6 +168,12 @@ public class EmployeeController {
 //			System.out.println("xml:" + xml);
 //			System.out.println("verifyCode:" + verifyCode);
 		return employeeInfoService.findCompany();
+	}
+	
+	@RequestMapping(value = "/getTxs")
+	@ResponseBody
+	public List<TxStructs> getTxs(){
+		return employeeInfoService.findTxs();
 	}
 	
 	@RequestMapping(value = "/getInsuranceCompany")

@@ -1,4 +1,4 @@
-package com.chaoxing.oa.entity.page.caiwu;
+package com.chaoxing.oa.entity.page.pub.caiwu;
 
 public class PBaoxiaoStatus {
 	private int status;

@@ -342,6 +342,22 @@ $(function() {//监听屏幕变化，重组slider 导航条
     }
 
     $.appGet = appGet;
+
+    var post = $.post;
+    $.post = undefined;
+    function post_mask(url, data, callback, dataType){
+        post(url,data,function(data, textStatus, jqXHR){
+            if(typeof data == "string"){
+                try{
+                    data = eval("(" + data + ")");
+                }catch(e){
+                    data = {msg: data};
+                }
+            }
+            callback(data, textStatus, jqXHR);
+        },dataType)
+    }
+    $.post = post_mask;
 })($);
 
 /**
@@ -636,7 +652,7 @@ function sideBarClick(){
                     }
                 }catch(e){
                     console.log("没有找到app-action");
-//                    return false;
+                    return false;
                 }
             }
         });
@@ -659,7 +675,8 @@ function initClickHandler() {
             console.log('form 表单校验失败！');
             return false;
         }
-        var data = frm.serializeJson();
+        var data = frm.getDataFromForm();
+//        var data = frm.serializeJson();
 //        console.log('o%', data);
         var actionHandler = eval(action);//jQuery.gloabEval()全局方法
         if (actionHandler) {

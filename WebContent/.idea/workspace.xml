@@ -16,75 +16,93 @@
     <option name="PATCH_PATH" value="" />
   </component>
   <component name="DockManager">
-    <window id="1">
+    <window id="2">
       <content type="file-editors">
         <state>
           <leaf>
-            <file leaf-file-name="baoxiaoShenhe.html" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/app/views/caiwu/baoxiaoShenhe.html">
+            <file leaf-file-name="baoxiaoManager.html" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/app/views/caiwu/baoxiaoManager.html">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="0.39732888">
-                    <caret line="1805" column="91" selection-start-line="1805" selection-start-column="91" selection-end-line="1805" selection-end-column="91" />
+                  <state vertical-scroll-proportion="0.0">
+                    <caret line="147" column="51" selection-start-line="147" selection-start-column="51" selection-end-line="147" selection-end-column="51" />
                     <folding>
-                      <element signature="n#ul#0;n#div#0;n#!!top" expanded="false" />
-                      <element signature="n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
+                      <element signature="n#div#1;n#div#0;n#!!top" expanded="false" />
+                      <element signature="n#div#0;n#div#1;n#div#2;n#div#0;n#!!top" expanded="false" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="baoxiaoApprove.html" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/app/views/caiwu/baoxiaoApprove.html">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="0.0">
+                    <caret line="217" column="101" selection-start-line="217" selection-start-column="89" selection-end-line="217" selection-end-column="101" />
+                    <folding>
+                      <element signature="n#div#0;n#ul#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-                      <element signature="n#fieldset#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-                      <element signature="n#fieldset#1;n#form#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-                      <element signature="n#style#0;n#button#0;n#span#0;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#style#0;n#button#1;n#span#0;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#style#0;n#button#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
+                      <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                      <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                      <element signature="n#style#0;n#button#0;n#span#0;n#div#0;n#legend#1;n#form#0;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                      <element signature="n#style#0;n#button#1;n#span#0;n#div#0;n#legend#1;n#form#0;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                      <element signature="n#style#0;n#button#0;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#span#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#span#0;n#div#2;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+                      <element signature="n#style#0;n#div#0;n#li#0;n#span#0;n#ul#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+                      <element signature="n#style#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="baoxiaoShenhe.html" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/app/views/caiwu/baoxiaoShenhe.html">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="0.47407407">
+                    <caret line="1910" column="64" selection-start-line="1910" selection-start-column="64" selection-end-line="1910" selection-end-column="64" />
+                    <folding>
+                      <element signature="n#ul#0;n#div#0;n#!!top" expanded="false" />
+                      <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                      <element signature="n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
+                      <element signature="n#style#0;n#button#0;n#span#0;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                      <element signature="n#style#0;n#button#1;n#span#0;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                      <element signature="n#style#0;n#button#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                      <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+                      <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+                      <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+                      <element signature="n#style#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+                      <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#style#0;n#div#0;n#li#0;n#span#0;n#ul#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#fieldset#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
-                      <element signature="n#fieldset#1;n#form#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
-                      <element signature="n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#style#0;n#button#0;n#span#0;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#button#1;n#span#0;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#fieldset#2;n#form#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#style#0;n#div#1;n#div#0;n#fieldset#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#li#0;n#ul#0;n#div#1;n#div#0;n#fieldset#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
-                      <element signature="n#li#1;n#ul#0;n#div#1;n#div#0;n#fieldset#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#style#0;n#button#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#style#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#style#0;n#div#0;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#div#0;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#style#0;n#span#0;n#div#1;n#div#0;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#style#0;n#span#0;n#div#2;n#div#0;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#div#0;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#style#0;n#div#0;n#li#0;n#span#0;n#ul#0;n#div#0;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#fieldset#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
+                      <element signature="n#legend#0;n#fieldset#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
+                      <element signature="n#div#0;n#fieldset#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#div#1;n#fieldset#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#div#2;n#fieldset#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
-                      <element signature="n#div#3;n#fieldset#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
-                      <element signature="n#div#4;n#fieldset#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
-                      <element signature="n#fieldset#1;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
-                      <element signature="n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#style#0;n#button#0;n#span#0;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#button#0;n#span#1;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#button#1;n#span#1;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#button#0;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#div#3;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#style#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#div#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#!!top" expanded="false" />
-                      <element signature="n#button#0;n#div#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#!!top" expanded="false" />
-                      <element signature="n#ul#0;n#div#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#div#0;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -94,48 +112,22 @@
                       <element signature="n#style#0;n#div#0;n#div#1;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#div#0;n#li#0;n#span#0;n#ul#0;n#div#0;n#div#1;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#div#1;n#div#1;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#div#1;n#div#1;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#style#0;n#button#0;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
-                      <element signature="n#div#0;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#style#0;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#style#0;n#div#0;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#div#0;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#span#0;n#div#1;n#div#0;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#span#0;n#div#2;n#div#0;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#div#0;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#style#0;n#div#0;n#li#0;n#span#0;n#ul#0;n#div#0;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
-                      <element signature="n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#style#0;n#button#0;n#span#0;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#button#0;n#span#1;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#button#1;n#span#1;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#fieldset#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#legend#1;n#form#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#div#0;n#legend#1;n#form#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
-                      <element signature="n#fieldset#1;n#form#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
                       <element signature="n#legend#2;n#form#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
-                      <element signature="n#fieldset#2;n#form#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
-                      <element signature="n#style#0;n#h4#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#div#2;n#div#0;n#!!top" expanded="false" />
-                      <element signature="n#style#0;n#h4#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-                    </folding>
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="baoxiaoApprove.html" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/app/views/caiwu/baoxiaoApprove.html">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="-15.285714">
-                    <caret line="618" column="38" selection-start-line="618" selection-start-column="38" selection-end-line="618" selection-end-column="38" />
-                    <folding>
-                      <element signature="n#div#0;n#div#0;n#!!top" expanded="false" />
                     </folding>
                   </state>
                 </provider>
@@ -155,47 +147,23 @@
       <file leaf-file-name="caiwu.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/js/center/caiwu.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6637717">
-              <caret line="965" column="50" selection-start-line="965" selection-start-column="50" selection-end-line="965" selection-end-column="50" />
+            <state vertical-scroll-proportion="0.54466504">
+              <caret line="700" column="60" selection-start-line="700" selection-start-column="60" selection-end-line="700" selection-end-column="60" />
               <folding>
                 <element signature="n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#findCells#0;n#findCells#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#find2#0;n#find2#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#findYbx#0;n#findYbx#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#append#0;n#append#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#append2#0;n#append2#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#showInfo#0;n#showInfo#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#showInfo2#0;n#showInfo2#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#disable#0;n#disable#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#validator2#0;n#validator2#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#submitApprove#0;n#submitApprove#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#updateInfo#0;n#updateInfo#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#pageData#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#pageData_ypz#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#init#0;n#init#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#ypzInit#0;n#ypzInit#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#showInfo#0;n#showInfo#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#showYpzInfo#0;n#showYpzInfo#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#find#0;n#find#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#findYbx#0;n#findYbx#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#findYbx2#0;n#findYbx2#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#append_ypz#0;n#append_ypz#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="e#25712#25754#0" expanded="false" />
-                <element signature="n#!!block;n#agree#0;n#agree#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#disAgree#0;n#disAgree#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#submitAgree#0;n#submitAgree#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#updateInfo#0;n#updateInfo#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+                <element signature="e#16494#16536#0" expanded="false" />
                 <element signature="n#!!block;n#pageData#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#pageData_dsp#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#pageData_dcp#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#pageData_dhk#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#pageData_yhk#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#init#0;n#init#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#init_dsp#0;n#init_dsp#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#init_dcp#0;n#init_dcp#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#init_dhk#0;n#init_dhk#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#init_yhk#0;n#init_yhk#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#find#0;n#find#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#find_dsp#0;n#find_dsp#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#find_dcp#0;n#find_dcp#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
@@ -204,57 +172,36 @@
                 <element signature="n#!!block;n#append#0;n#append#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#append_dsp#0;n#append_dsp#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#append_dcp#0;n#append_dcp#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#append_dhk#0;n#append_dhk#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#append_yhk#0;n#append_yhk#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#sh_disagree#0;n#sh_disagree#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#sh_agree#0;n#sh_agree#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#sendMessager#0;n#sendMessager#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#addMessager#0;n#addMessager#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#openCheck#0;n#openCheck#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#openCheck#0;n#openCheck#1;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#openShouPiao#0;n#openShouPiao#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#submitCheck#0;n#submitCheck#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#submitDaiShoupiao#0;n#submitDaiShoupiao#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#submitDaiChoupiao#0;n#submitDaiChoupiao#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#cp_remove_all#0;n#cp_remove_all#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#chupiao_getList#0;n#chupiao_getList#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#showInfo#0;n#showInfo#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#init#0;n#init#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#find#0;n#find#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#append#0;n#append#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="e#51907#52482#0" expanded="false" />
                 <element signature="n#!!block;n#validator#0;n#validator#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <element signature="n#!!block;n#listRefresh#0;n#listRefresh#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
                 <element signature="n#!!block;n#getNowFormatDate#0;n#getNowFormatDate#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-                <marker date="1487831359599" expanded="true" signature="41386:41404" placeholder="..." />
+                <marker date="1488771904327" expanded="true" signature="34666:34684" placeholder="..." />
+                <marker date="1488771904327" expanded="true" signature="34886:34904" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bxsq.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/bxsq.html">
+      <file leaf-file-name="cxoa_public.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/dist/css/cxoa_public.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.413793">
-              <caret line="75" column="54" selection-start-line="75" selection-start-column="54" selection-end-line="75" selection-end-column="212" />
-              <folding>
-                <element signature="n#div#5;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#div#6;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#thead#0;n#table#0;n#div#0;n#div#0;n#div#0;n#fieldset#3;n#form#0;n#div#0;n#div#7;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#div#10;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#style#0;n#a#0;n#th#0;n#tr#1;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#10;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#th#0;n#tr#2;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#10;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#th#0;n#tr#3;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#10;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#td#2;n#tr#4;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#10;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#div#11;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#div#12;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <marker date="1487666082284" expanded="true" signature="50231:50249" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="baoxiaoManager.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/caiwu/baoxiaoManager.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.785714">
-              <caret line="441" column="63" selection-start-line="441" selection-start-column="63" selection-end-line="441" selection-end-column="63" />
-              <folding>
-                <element signature="n#div#1;n#div#0;n#!!top" expanded="false" />
-                <element signature="n#div#2;n#div#0;n#!!top" expanded="false" />
-              </folding>
+            <state vertical-scroll-proportion="-14.964286">
+              <caret line="485" column="21" selection-start-line="485" selection-start-column="21" selection-end-line="485" selection-end-column="21" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -262,64 +209,15 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/js/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.694915">
-              <caret line="222" column="53" selection-start-line="222" selection-start-column="53" selection-end-line="222" selection-end-column="53" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="shenhe.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/shenhe.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.2528734">
-              <caret line="166" column="48" selection-start-line="166" selection-start-column="42" selection-end-line="166" selection-end-column="48" />
-              <folding>
-                <element signature="n#style#0;n#th#1;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#th#1;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <marker date="1487667255747" expanded="true" signature="6983:7001" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bootstrap-editable.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/vendor/bootstrap-editable/bootstrap-editable.js">
-          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="2620" column="29" selection-start-line="2620" selection-start-column="18" selection-end-line="2620" selection-end-column="29" />
+              <caret line="49" column="94" selection-start-line="49" selection-start-column="94" selection-end-line="49" selection-end-column="94" />
               <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <element signature="e#72385#72622#0" expanded="false" />
-                <element signature="e#72665#73568#0" expanded="false" />
-                <element signature="e#73666#73764#0" expanded="false" />
-                <element signature="e#73814#74116#0" expanded="false" />
-                <marker date="1487576561192" expanded="true" signature="122707:122741" placeholder="..." />
+                <element signature="e#3240#3625#0" expanded="false" />
+                <element signature="e#3656#4363#0" expanded="false" />
+                <element signature="e#4446#5060#0" expanded="false" />
+                <element signature="e#5100#6502#0" expanded="false" />
+                <element signature="e#6550#6735#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="baoxiaoInfo.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/baoxiaoInfo.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="368" column="50" selection-start-line="368" selection-start-column="50" selection-end-line="368" selection-end-column="50" />
-              <folding>
-                <element signature="n#div#2;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="baoxiaoInfo2.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/baoxiaoInfo2.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.0357144">
-              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -328,10 +226,8 @@
         <entry file="file://$PROJECT_DIR$/app/js/utils/formHelp.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="137" column="21" selection-start-line="137" selection-start-column="8" selection-end-line="137" selection-end-column="21" />
-              <folding>
-                <element signature="e#2021#2903#0" expanded="false" />
-              </folding>
+              <caret line="80" column="22" selection-start-line="80" selection-start-column="22" selection-end-line="80" selection-end-column="22" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -350,11 +246,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/data/menus.json" />
-        <option value="$PROJECT_DIR$/app/data/menulist.json" />
-        <option value="$PROJECT_DIR$/app/js/utils/CXJSBridge.js" />
-        <option value="$PROJECT_DIR$/test/iframe.html" />
-        <option value="$PROJECT_DIR$/login_client.html" />
         <option value="$PROJECT_DIR$/error/app_nosession.jsp" />
         <option value="$PROJECT_DIR$/app/dist/css/login.css" />
         <option value="$PROJECT_DIR$/login-2.html" />
@@ -373,34 +264,39 @@
         <option value="$PROJECT_DIR$/app/js/center/hetong.js" />
         <option value="$PROJECT_DIR$/app/views/caiwu/apply.html" />
         <option value="$PROJECT_DIR$/app/js/center/head.js" />
-        <option value="$PROJECT_DIR$/jsController/center/hetong.js" />
         <option value="$PROJECT_DIR$/app/app_application.html" />
         <option value="$PROJECT_DIR$/app/app_index.html" />
         <option value="$PROJECT_DIR$/index.jsp" />
         <option value="$PROJECT_DIR$/toolBar/employee/shebaoCompany_toolbar.jsp" />
-        <option value="$PROJECT_DIR$/jsController/center/employee.js" />
         <option value="$PROJECT_DIR$/app/bxs.html" />
         <option value="$PROJECT_DIR$/app/views/hetong/cells.html" />
-        <option value="$PROJECT_DIR$/jsController/app.js" />
         <option value="$PROJECT_DIR$/app/views/hetong/users.html" />
         <option value="$PROJECT_DIR$/app/views/hetong/contracts.html" />
         <option value="$PROJECT_DIR$/app/baoxiaoInfo2.html" />
         <option value="$PROJECT_DIR$/app/vendor/bootstrapvalidator-master/demo/attribute.html" />
         <option value="$PROJECT_DIR$/app/vendor/bootstrapvalidator-master/demo/html5.html" />
         <option value="$PROJECT_DIR$/app/vendor/bootstrapvalidator-master/demo/choice.html" />
-        <option value="$PROJECT_DIR$/app/dist/css/cxoa_public.css" />
-        <option value="$PROJECT_DIR$/app/js/utils/formHelp.js" />
         <option value="$PROJECT_DIR$/app/baoxiaoInfo.html" />
-        <option value="$PROJECT_DIR$/app/views/caiwu/baoxiaoApprove.html" />
         <option value="$PROJECT_DIR$/app/vendor/bootstrap-editable/bootstrap-editable.js" />
         <option value="$PROJECT_DIR$/app/vendor/bootstrap-editable/bootstrap-editable.css" />
         <option value="$PROJECT_DIR$/app/bxsq.html" />
         <option value="$PROJECT_DIR$/app/shenhe.html" />
         <option value="$PROJECT_DIR$/app_index.html" />
+        <option value="$PROJECT_DIR$/jsController/system.js" />
+        <option value="$PROJECT_DIR$/jsController/wagesCalculate.js" />
+        <option value="$PROJECT_DIR$/jsController/center/employee.js" />
+        <option value="$PROJECT_DIR$/jsController/center/hetong.js" />
+        <option value="$PROJECT_DIR$/components/hetong/fapiaoForm.jsp" />
+        <option value="$PROJECT_DIR$/tabs/dealing/kaoqin.jsp" />
+        <option value="$PROJECT_DIR$/tabs/employee/kaoqin.jsp" />
+        <option value="$PROJECT_DIR$/jsController/app.js" />
+        <option value="$PROJECT_DIR$/app/views/caiwu/baoxiaoApprove.html" />
         <option value="$PROJECT_DIR$/app/views/caiwu/baoxiaoManager.html" />
         <option value="$PROJECT_DIR$/app/js/app.js" />
-        <option value="$PROJECT_DIR$/app/js/center/caiwu.js" />
+        <option value="$PROJECT_DIR$/app/js/utils/formHelp.js" />
+        <option value="$PROJECT_DIR$/app/dist/css/cxoa_public.css" />
         <option value="$PROJECT_DIR$/app/views/caiwu/baoxiaoShenhe.html" />
+        <option value="$PROJECT_DIR$/app/js/center/caiwu.js" />
       </list>
     </option>
   </component>
@@ -440,18 +336,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-        <subPane subId="Tests" />
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -498,33 +382,27 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WebContent" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WebContent" />
+              <option name="myItemId" value="dist" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="caiwu" />
+              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
+      </pane>
+      <pane id="Scratches" />
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <subPane subId="Tests" />
       </pane>
     </panes>
   </component>
@@ -643,7 +521,7 @@
     <frame x="1358" y="-8" width="1696" height="1026" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22074789" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1610374" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39932886" sideWeight="0.50241256" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -658,7 +536,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.45302013" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1196868" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -716,93 +594,30 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/app/views/caiwu/baoxiaoShenhe.html</url>
-          <line>1219</line>
+          <line>1217</line>
           <option name="timeStamp" value="50" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/app/views/caiwu/baoxiaoShenhe.html</url>
-          <line>1523</line>
+          <line>1521</line>
           <option name="timeStamp" value="52" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/app/views/caiwu/baoxiaoShenhe.html</url>
+          <line>125</line>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/app/views/caiwu/baoxiaoApprove.html</url>
+          <line>135</line>
+          <option name="timeStamp" value="60" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="54" />
+      <option name="time" value="65" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/views/caiwu/baoxiaoApprove.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#div#0;n#div#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/vendor/bootstrapvalidator-master/demo/enable2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6781609">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/vendor/bootstrapvalidator-master/demo/event.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.9425287">
-          <caret line="209" column="91" selection-start-line="209" selection-start-column="85" selection-end-line="209" selection-end-column="91" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/vendor/bootstrapvalidator-master/demo/event2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.218391">
-          <caret line="27" column="34" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/vendor/bootstrapvalidator-master/demo/event3.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6781609">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/vendor/bootstrapvalidator-master/demo/feedbackIcons.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.6321838">
-          <caret line="128" column="46" selection-start-line="128" selection-start-column="46" selection-end-line="128" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/vendor/bootstrapvalidator-master/demo/file.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6781609">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/vendor/bootstrapvalidator-master/demo/group.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.9770114">
-          <caret line="108" column="87" selection-start-line="108" selection-start-column="81" selection-end-line="108" selection-end-column="87" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/vendor/bootstrapvalidator-master/demo/i18n.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33290488">
-          <caret line="96" column="74" selection-start-line="96" selection-start-column="68" selection-end-line="96" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/vendor/bootstrapvalidator-master/demo/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33290488">
-          <caret line="237" column="87" selection-start-line="237" selection-start-column="81" selection-end-line="237" selection-end-column="87" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/vendor/bootstrapvalidator-master/demo/invisible.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33290488">
@@ -922,14 +737,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/dist/css/cxoa_public.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="488" column="16" selection-start-line="488" selection-start-column="16" selection-end-line="488" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jslib/xheditor-1.1.14/jquery/jquery-1.4.4.src.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33294797">
@@ -964,16 +771,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/utils/formHelp.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="137" column="21" selection-start-line="137" selection-start-column="8" selection-end-line="137" selection-end-column="21" />
-          <folding>
-            <element signature="e#2021#2903#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/app_application.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.40860215">
@@ -1002,14 +799,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="2620" column="29" selection-start-line="2620" selection-start-column="18" selection-end-line="2620" selection-end-column="29" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#72385#72622#0" expanded="false" />
-            <element signature="e#72665#73568#0" expanded="false" />
-            <element signature="e#73666#73764#0" expanded="false" />
-            <element signature="e#73814#74116#0" expanded="false" />
-            <marker date="1487576561192" expanded="true" signature="122707:122741" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1017,7 +806,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="172" column="42" selection-start-line="172" selection-start-column="42" selection-end-line="172" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1025,28 +813,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jslib/jquery-easyui-1.5/jquery.easyui.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33294797">
-          <caret line="4014" column="2" selection-start-line="4014" selection-start-column="2" selection-end-line="4014" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app_index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.7706094">
-          <caret line="313" column="21" selection-start-line="313" selection-start-column="21" selection-end-line="313" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/baoxiaoInfo2.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.0357144">
+        <state vertical-scroll-proportion="0.0">
           <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding />
         </state>
@@ -1054,201 +826,239 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/shenhe.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.2528734">
+        <state vertical-scroll-proportion="0.0">
           <caret line="166" column="48" selection-start-line="166" selection-start-column="42" selection-end-line="166" selection-end-column="48" />
-          <folding>
-            <element signature="n#style#0;n#th#1;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#th#1;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <marker date="1487667255747" expanded="true" signature="6983:7001" placeholder="..." />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-114.35714">
+          <caret line="297" column="22" selection-start-line="297" selection-start-column="22" selection-end-line="297" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/bxsq.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.413793">
+        <state vertical-scroll-proportion="0.0">
           <caret line="75" column="54" selection-start-line="75" selection-start-column="54" selection-end-line="75" selection-end-column="212" />
-          <folding>
-            <element signature="n#div#5;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#div#6;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#thead#0;n#table#0;n#div#0;n#div#0;n#div#0;n#fieldset#3;n#form#0;n#div#0;n#div#7;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#div#10;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#a#0;n#th#0;n#tr#1;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#10;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#th#0;n#tr#2;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#10;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#th#0;n#tr#3;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#10;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#td#2;n#tr#4;n#tbody#0;n#table#0;n#div#0;n#div#0;n#div#10;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#div#11;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#div#12;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <marker date="1487666082284" expanded="true" signature="50231:50249" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/app.js">
+    <entry file="file://$PROJECT_DIR$/jsController/north.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.694915">
-          <caret line="222" column="53" selection-start-line="222" selection-start-column="53" selection-end-line="222" selection-end-column="53" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="92" column="46" selection-start-line="92" selection-start-column="46" selection-end-line="92" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsController/system.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="119" column="43" selection-start-line="119" selection-start-column="43" selection-end-line="119" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsController/wagesCalculate.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="24" column="39" selection-start-line="24" selection-start-column="39" selection-end-line="24" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsController/center/hetong.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="330" column="71" selection-start-line="330" selection-start-column="71" selection-end-line="330" selection-end-column="71" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tabs/employee/kaoqin.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.392858">
+          <caret line="51" column="19" selection-start-line="51" selection-start-column="19" selection-end-line="51" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/components/hetong/fapiaoForm.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.392858">
+          <caret line="66" column="31" selection-start-line="66" selection-start-column="31" selection-end-line="66" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsController/center/employee.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="45" selection-start-line="11" selection-start-column="45" selection-end-line="11" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tabs/dealing/kaoqin.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.9285715">
+          <caret line="39" column="32" selection-start-line="39" selection-start-column="32" selection-end-line="39" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/caiwu/baoxiaoManager.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.785714">
-          <caret line="441" column="63" selection-start-line="441" selection-start-column="63" selection-end-line="441" selection-end-column="63" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="147" column="51" selection-start-line="147" selection-start-column="51" selection-end-line="147" selection-end-column="51" />
           <folding>
             <element signature="n#div#1;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#div#2;n#div#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/center/caiwu.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6637717">
-          <caret line="965" column="50" selection-start-line="965" selection-start-column="50" selection-end-line="965" selection-end-column="50" />
-          <folding>
-            <element signature="n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#findCells#0;n#findCells#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#find2#0;n#find2#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#findYbx#0;n#findYbx#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#append#0;n#append#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#append2#0;n#append2#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#showInfo#0;n#showInfo#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#showInfo2#0;n#showInfo2#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#disable#0;n#disable#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#validator2#0;n#validator2#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#submitApprove#0;n#submitApprove#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#updateInfo#0;n#updateInfo#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#pageData#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#pageData_ypz#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#init#0;n#init#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#ypzInit#0;n#ypzInit#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#showInfo#0;n#showInfo#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#showYpzInfo#0;n#showYpzInfo#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#find#0;n#find#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#findYbx#0;n#findYbx#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#findYbx2#0;n#findYbx2#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#append_ypz#0;n#append_ypz#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="e#25712#25754#0" expanded="false" />
-            <element signature="n#!!block;n#agree#0;n#agree#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#disAgree#0;n#disAgree#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#submitAgree#0;n#submitAgree#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#updateInfo#0;n#updateInfo#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#pageData#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#pageData_dsp#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#pageData_dcp#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#pageData_dhk#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#pageData_yhk#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#init#0;n#init#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#init_dsp#0;n#init_dsp#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#init_dcp#0;n#init_dcp#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#init_dhk#0;n#init_dhk#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#init_yhk#0;n#init_yhk#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#find#0;n#find#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#find_dsp#0;n#find_dsp#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#find_dcp#0;n#find_dcp#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#find_dhk#0;n#find_dhk#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#find_yhk#0;n#find_yhk#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#append#0;n#append#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#append_dsp#0;n#append_dsp#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#append_dcp#0;n#append_dcp#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#append_yhk#0;n#append_yhk#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#sh_disagree#0;n#sh_disagree#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#sh_agree#0;n#sh_agree#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#openCheck#0;n#openCheck#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#openCheck#0;n#openCheck#1;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#chupiao_getList#0;n#chupiao_getList#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#showInfo#0;n#showInfo#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#init#0;n#init#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#find#0;n#find#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#append#0;n#append#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="e#51907#52482#0" expanded="false" />
-            <element signature="n#!!block;n#validator#0;n#validator#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#listRefresh#0;n#listRefresh#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <element signature="n#!!block;n#getNowFormatDate#0;n#getNowFormatDate#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
-            <marker date="1487831359599" expanded="true" signature="41386:41404" placeholder="..." />
+            <element signature="n#div#0;n#div#1;n#div#2;n#div#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/caiwu/baoxiaoApprove.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.285714">
-          <caret line="618" column="38" selection-start-line="618" selection-start-column="38" selection-end-line="618" selection-end-column="38" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="217" column="101" selection-start-line="217" selection-start-column="89" selection-end-line="217" selection-end-column="101" />
           <folding>
-            <element signature="n#div#0;n#div#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/caiwu/baoxiaoShenhe.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39732888">
-          <caret line="1805" column="91" selection-start-line="1805" selection-start-column="91" selection-end-line="1805" selection-end-column="91" />
-          <folding>
-            <element signature="n#ul#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
+            <element signature="n#div#0;n#ul#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#fieldset#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#fieldset#1;n#form#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#button#0;n#span#0;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#1;n#span#0;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#span#0;n#div#0;n#legend#1;n#form#0;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#1;n#span#0;n#div#0;n#legend#1;n#form#0;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#div#2;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#li#0;n#span#0;n#ul#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jslib/jquery-easyui-1.5/jquery.easyui.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="4025" column="2" selection-start-line="4025" selection-start-column="2" selection-end-line="4025" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsController/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.3220339">
+          <caret line="168" column="30" selection-start-line="168" selection-start-column="30" selection-end-line="168" selection-end-column="30" />
+          <folding>
+            <element signature="e#417#513#0" expanded="false" />
+            <element signature="n#!!block;n#SFservice#0" expanded="false" />
+            <element signature="n#!!block;n#generateWagesDate#0" expanded="false" />
+            <element signature="n#!!block;n#init#0" expanded="false" />
+            <element signature="e#2470#2569#0" expanded="false" />
+            <element signature="n#!!doc;n#login#0" expanded="false" />
+            <element signature="n#!!block;n#login#0" expanded="false" />
+            <element signature="n#!!doc;n#initClickHandler#0" expanded="false" />
+            <element signature="n#!!doc;n#getDataOfForm#0" expanded="false" />
+            <element signature="n#!!doc;n#sendAction#0" expanded="false" />
+            <element signature="n#!!block;n#sendAction#0" expanded="false" />
+            <element signature="n#!!doc;n#sendActionE#0" expanded="false" />
+            <element signature="n#!!block;n#sendActionE#0" expanded="false" />
+            <element signature="n#!!doc;n#formartDate#0" expanded="false" />
+            <element signature="n#!!block;n#formartDate#0" expanded="false" />
+            <element signature="n#!!doc;n#disabledForm#0" expanded="false" />
+            <element signature="n#!!block;n#disabledForm#0" expanded="false" />
+            <element signature="n#!!block;n#disabledButton#0" expanded="false" />
+            <element signature="n#!!block;n#closeDialog#0" expanded="false" />
+            <element signature="n#!!block;n#clearForm#0" expanded="false" />
+            <element signature="n#!!block;n#submitForm#0" expanded="false" />
+            <element signature="e#11755#11862#0" expanded="false" />
+            <element signature="e#11912#12206#0" expanded="false" />
+            <element signature="e#12283#12429#0" expanded="false" />
+            <element signature="e#12430#12454#0" expanded="false" />
+            <element signature="e#12497#12809#0" expanded="false" />
+            <element signature="n#!!doc;n#myformatter#0" expanded="false" />
+            <element signature="n#!!block;n#myformatter#0" expanded="false" />
+            <element signature="n#!!doc;n#myparser#0" expanded="false" />
+            <element signature="n#!!block;n#myparser#0" expanded="false" />
+            <element signature="e#13403#13485#0" expanded="false" />
+            <element signature="e#13505#14102#0" expanded="false" />
+            <element signature="e#14104#14181#0" expanded="false" />
+            <element signature="e#14203#14569#0" expanded="false" />
+            <element signature="e#14572#14649#0" expanded="false" />
+            <element signature="e#14670#17141#0" expanded="false" />
+            <element signature="n#!!block;n#load#0" expanded="false" />
+            <element signature="n#!!block;n#disLoad#0" expanded="false" />
+            <element signature="e#17676#17765#0" expanded="false" />
+            <element signature="e#17859#17995#0" expanded="false" />
+            <element signature="e#18047#18135#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/utils/formHelp.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="80" column="22" selection-start-line="80" selection-start-column="22" selection-end-line="80" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/images/5_ysh_wtg.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/dist/css/cxoa_public.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.964286">
+          <caret line="485" column="21" selection-start-line="485" selection-start-column="21" selection-end-line="485" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/caiwu/baoxiaoShenhe.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.47407407">
+          <caret line="1910" column="64" selection-start-line="1910" selection-start-column="64" selection-end-line="1910" selection-end-column="64" />
+          <folding>
+            <element signature="n#ul#0;n#div#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#button#0;n#span#0;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#1;n#span#0;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#0;n#li#0;n#span#0;n#ul#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#fieldset#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#fieldset#1;n#form#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#button#0;n#span#0;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#button#1;n#span#0;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#fieldset#2;n#form#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#1;n#div#0;n#fieldset#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#li#0;n#ul#0;n#div#1;n#div#0;n#fieldset#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#li#1;n#ul#0;n#div#1;n#div#0;n#fieldset#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#button#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#0;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#1;n#div#0;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#2;n#div#0;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#div#0;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#0;n#li#0;n#span#0;n#ul#0;n#div#0;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#fieldset#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
+            <element signature="n#legend#0;n#fieldset#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
+            <element signature="n#div#0;n#fieldset#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#div#1;n#fieldset#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#div#2;n#fieldset#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#div#3;n#fieldset#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#div#4;n#fieldset#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#fieldset#1;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#button#0;n#span#0;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#button#0;n#span#1;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#button#1;n#span#1;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#button#0;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#3;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#button#0;n#div#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#ul#0;n#div#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -1258,36 +1068,86 @@
             <element signature="n#style#0;n#div#0;n#div#1;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#li#0;n#span#0;n#ul#0;n#div#0;n#div#1;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#1;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#1;n#div#1;n#div#2;n#div#3;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#button#0;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#div#0;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#0;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#div#1;n#div#0;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#div#2;n#div#0;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#0;n#li#0;n#span#0;n#ul#0;n#div#0;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#button#0;n#span#0;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#button#0;n#span#1;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#button#1;n#span#1;n#div#0;n#legend#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#fieldset#0;n#form#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#legend#1;n#form#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#div#0;n#legend#1;n#form#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#fieldset#1;n#form#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#legend#2;n#form#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#fieldset#2;n#form#0;n#div#1;n#div#1;n#div#1;n#div#4;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#h4#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#2;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#h4#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="49" column="94" selection-start-line="49" selection-start-column="94" selection-end-line="49" selection-end-column="94" />
+          <folding>
+            <element signature="e#3240#3625#0" expanded="false" />
+            <element signature="e#3656#4363#0" expanded="false" />
+            <element signature="e#4446#5060#0" expanded="false" />
+            <element signature="e#5100#6502#0" expanded="false" />
+            <element signature="e#6550#6735#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/center/caiwu.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.54466504">
+          <caret line="700" column="60" selection-start-line="700" selection-start-column="60" selection-end-line="700" selection-end-column="60" />
+          <folding>
+            <element signature="n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#append#0;n#append#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#disable#0;n#disable#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#validator2#0;n#validator2#0;n#!!block;n#baoxiao#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#pageData#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#showInfo#0;n#showInfo#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#showYpzInfo#0;n#showYpzInfo#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#findYbx2#0;n#findYbx2#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#append_ypz#0;n#append_ypz#0;n#!!block;n#baoxiaoAppro#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="e#16494#16536#0" expanded="false" />
+            <element signature="n#!!block;n#pageData#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#pageData_dhk#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#pageData_yhk#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#find#0;n#find#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#find_dsp#0;n#find_dsp#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#find_dcp#0;n#find_dcp#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#find_dhk#0;n#find_dhk#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#find_yhk#0;n#find_yhk#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#append#0;n#append#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#append_dsp#0;n#append_dsp#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#append_dcp#0;n#append_dcp#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#append_dhk#0;n#append_dhk#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#append_yhk#0;n#append_yhk#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#sh_disagree#0;n#sh_disagree#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#sh_agree#0;n#sh_agree#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#sendMessager#0;n#sendMessager#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#addMessager#0;n#addMessager#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#openCheck#0;n#openCheck#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#openCheck#0;n#openCheck#1;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#openShouPiao#0;n#openShouPiao#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#submitCheck#0;n#submitCheck#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#submitDaiShoupiao#0;n#submitDaiShoupiao#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#submitDaiChoupiao#0;n#submitDaiChoupiao#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#cp_remove_all#0;n#cp_remove_all#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#chupiao_getList#0;n#chupiao_getList#0;n#!!block;n#baoxiaoCheck#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#init#0;n#init#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#validator#0;n#validator#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#getNowFormatDate#0;n#getNowFormatDate#0;n#!!block;n#caiwu#0;n#!!top" expanded="false" />
+            <marker date="1488771904327" expanded="true" signature="34666:34684" placeholder="..." />
+            <marker date="1488771904327" expanded="true" signature="34886:34904" placeholder="..." />
           </folding>
         </state>
       </provider>

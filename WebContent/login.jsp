@@ -93,7 +93,7 @@ font-family:verdana,helvetica,arial,sans-serif;
     }
     });
     if(!(/chrome/.test(window.navigator.userAgent.toLowerCase()))){
-    alert("当前系统不支持该浏览器，请选择chrome浏览器登录！");
+    alert("当前系统不支持该浏览器，请选择chrome（谷歌）浏览器登录！");
     }else{
     $('#dlg').dialog({modal: true});
     if(localStorage.user && localStorage.user != ''){

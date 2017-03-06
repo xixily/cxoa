@@ -46,6 +46,7 @@ import com.chaoxing.oa.entity.po.commmon.HouseholdType;
 import com.chaoxing.oa.entity.po.commmon.Level;
 import com.chaoxing.oa.entity.po.commmon.OrganizationStructure;
 import com.chaoxing.oa.entity.po.commmon.ShebaoType;
+import com.chaoxing.oa.entity.po.commmon.TxStructs;
 import com.chaoxing.oa.entity.po.commmon.WagesDate;
 import com.chaoxing.oa.entity.po.employee.KaoQin;
 import com.chaoxing.oa.entity.po.employee.MonthKaoqin;
@@ -118,6 +119,8 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	private BaseDaoI<ShebaoAR> shebaoARDao;
 	@Autowired
 	private BaseDaoI<Yidong> yidongDao;
+	@Autowired
+	private BaseDaoI<TxStructs> txsDao;
 	
 
 //	@Override
@@ -375,6 +378,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		}
 		return plevels;
 	}
+	
 	@Override
 	public List<PCompany> findCompany() {
 		List<Company> cmopanys = companyDao.find("from Company");
@@ -392,6 +396,12 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		}
 		return pcompanys;
 	}
+	
+	@Override
+	public List<TxStructs> findTxs() {
+		return txsDao.find("from TxStructs");
+	}
+
 
 	@Override
 	public List<PComboBox> findForthLevel() {
@@ -2334,5 +2344,6 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		shifa = yingfa.subtract(selfTax).setScale(2, BigDecimal.ROUND_HALF_UP);
 		monthSalary.setShifaTotal(shifa);
 	}
+
 
 }

@@ -67,6 +67,9 @@ public class PRenshiEmployee implements Serializable{
 	private String lizhiReport;//离职报表
 	private String zhuanzhengReport;//转正报表
 	private String bumentiaozhengReport;//部门调整报表
+	private Integer ifForeign;//外籍
+	private Byte ifEngineering;//理工 
+	private String txStruct;
 	
 	public int getId() {
 		return id;
@@ -448,6 +451,23 @@ public class PRenshiEmployee implements Serializable{
 	public void setDegreeCertificate(String degreeCertificate) {
 		this.degreeCertificate = degreeCertificate;
 	}
-	
+	public Integer getIfForeign() {
+		return ifForeign;
+	}
+	public void setIfForeign(Integer ifForeign) {
+		this.ifForeign = ifForeign;
+	}
+	public Byte getIfEngineering() {
+		return ifEngineering;
+	}
+	public void setIfEngineering(Byte ifEngineering) {
+		this.ifEngineering = ifEngineering;
+	}
+	public String getTxStruct() {
+		return txStruct;
+	}
+	public void setTxStruct(String txStruct) {
+		this.txStruct = txStruct;
+	}
 	
 }

@@ -86,7 +86,9 @@ public class UserName implements Serializable {
 	private String chargedBy;//负责人
 	private BigDecimal sickLleaveTotal;//病假累计
 	private BigDecimal annualLleave;//年假累计
-//	private String
+	private Integer ifForeign;//外籍
+	private Byte ifEngineering;//理工 
+	private String txStruct;
 	
 	@Id
 	@Column(name="ID", nullable=false)
@@ -549,5 +551,27 @@ public class UserName implements Serializable {
 	public void setBaoxianTongzhidan(String baoxianTongzhidan) {
 		this.baoxianTongzhidan = baoxianTongzhidan;
 	}
+	@Column(name="是否外籍", columnDefinition=" int DEFAULT '0'")
+	public Integer getIfForeign() {
+		return ifForeign;
+	}
+	public void setIfForeign(Integer ifForeign) {
+		this.ifForeign = ifForeign;
+	}
+	@Column(name="是否理工", columnDefinition=" int DEFAULT '0'")
+	public Byte getIfEngineering() {
+		return ifEngineering;
+	}
+	public void setIfEngineering(Byte ifEngineering) {
+		this.ifEngineering = ifEngineering;
+	}
+	@Column(name="报税架构")
+	public String getTxStruct() {
+		return txStruct;
+	}
+	public void setTxStruct(String txStruct) {
+		this.txStruct = txStruct;
+	}
+	
 
 }

@@ -70,7 +70,7 @@
                                         <li><a><span class="sr-only">explain</span>说明</a></li>
                                         <li><a><span class="sr-only">reciveTime</span>收票时间</a></li>
                                         <li><a><span class="sr-only">baoxTime</span>报销时间</a></li>
-                                        <li><a><span class="sr-only">status</span>报销情况</a></li>
+                                        <!--<li><a><span class="sr-only">status</span>报销情况</a></li>-->
                                         <li><a><span class="sr-only">tuipiao</span>退票金额</a></li>
                                         <li><a><span class="sr-only">caiwuRemarks</span>财务备注</a></li>
                                     </ul>
@@ -92,8 +92,8 @@
             <div id="cw_bx_body">
                 <!--<div class="panel-heading">发票报销</div>-->
                 <div id="cw_bx_sum" class="row" style="padding-top: 10px;">
-                    <div class="col-xs-4 col-lg-4"><span style="font-size: 12px;color: gray" >去年：<span app-data="lastYearTotal"></span> 元</span></div>
-                    <div class="col-xs-4 col-lg-4"><span style="font-size: 12px;color: gray" >今年：<span app-data="thisYearTotal"></span> 元</span></div>
+                    <!--<div class="col-xs-4 col-lg-4"><span style="font-size: 12px;color: gray" >去年：<span app-data="lastYearTotal"></span> 元</span></div>-->
+                    <!--<div class="col-xs-4 col-lg-4"><span style="font-size: 12px;color: gray" >今年：<span app-data="thisYearTotal"></span> 元</span></div>-->
                     <div class="col-xs-4col-lg-4"><span style="font-size: 12px;color: gray" >总数：<span app-data="total"></span> 次</span></div>
                 </div>
                 <!-- 报销信息-->
@@ -215,7 +215,7 @@
                                 <div class="form-group">
                                     <label class="col-xs-4 col-sm-2 control-label">邮寄时间:</label>
                                     <div class="col-xs-8 col-sm-4">
-                                        <input type="date" class="form-control input-sm" name="jTime" placeholder="邮寄时间...">
+                                        <input type="date" class="form-control input-sm" name="jtime" placeholder="邮寄时间...">
                                     </div>
                                     <label class="col-xs-4 col-sm-2 control-label" for="kdno3">快递单号:</label>
                                     <div class="col-xs-8 col-sm-4">
@@ -502,7 +502,7 @@
                                 <div class="form-group">
                                     <label class="col-xs-4 col-sm-2 control-label" for="ybx_jTime">邮寄时间:</label>
                                     <div class="col-xs-8 col-sm-4">
-                                        <input type="date" class="form-control input-sm" id="ybx_jTime" name="jTime" placeholder="邮寄时间...">
+                                        <input type="date" class="form-control input-sm" id="ybx_jTime" name="jtime" placeholder="邮寄时间...">
                                     </div>
                                     <label class="col-xs-4 col-sm-2 control-label" for="kdno2">快递单号:</label>
                                     <div class="col-xs-8 col-sm-4">
@@ -600,7 +600,7 @@
                                 <label class="col-xs-3 col-sm-2 control-label" for="approRemark_">意见:</label>
                                 <div class="col-xs-9 col-sm-10">
                                     <input type="hidden"name="id">
-                                    <input type="hidden"name="checked">
+                                    <input type="hidden"name="agree">
                                     <textarea name="approRemark" id="approRemark_" cols="30" rows="3" class="form-control" placeholder="领导意见..."></textarea>
                                 </div>
                             </div>

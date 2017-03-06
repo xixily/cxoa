@@ -4,10 +4,11 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import com.chaoxing.oa.entity.page.caiwu.PBaoxiao;
-import com.chaoxing.oa.entity.page.caiwu.PBaoxiaoStatus;
 import com.chaoxing.oa.entity.page.common.Page;
 import com.chaoxing.oa.entity.page.employee.PRenshiEmployee;
+import com.chaoxing.oa.entity.page.pub.caiwu.PBaoxiao;
+import com.chaoxing.oa.entity.page.pub.caiwu.PBaoxiaoStatus;
+import com.chaoxing.oa.entity.page.pub.caiwu.PKoukuan;
 
 public interface PubCaiwuService {
 
@@ -16,23 +17,47 @@ public interface PubCaiwuService {
 	 */
 	public PBaoxiao getBaoxiao(Long long1);
 	
-	public Map<String, Object> findBaoxiao(PBaoxiao pbaoxiao, Page page, int id);
+	public Map<String, Object> findBaoxiaoByUid(PBaoxiao pbaoxiao, Page page, Integer id);
+
+	public Map<String, Object> findBaoxiao(PBaoxiao pbaoxiao, Page page);
+	
+	public Map<String, Object> findBaoxiaoByLeader(PBaoxiao pbaoxiao, Page page, String email);
 
 	public Serializable addBaoxiao(PBaoxiao pbaoxiao);
 
 	public int deleteBaoxiao(Long id, Integer uid);
 	
 	public long updateBaoxiao(PBaoxiao pBaoxiao);
+	//跟人报销更新
+	public int updateSeltBaoxiao(PBaoxiao psbaoxiao);
 	//去年总报销额
 	public Double getLastYear(int id);
+	public Double getLastYear(String email);
 	//今年已经报销
-	public Double getThisYear(String id);
+	public Double getThisYear(int id);
+	public Double getThisYear(String email);
 
-	public int updateApprove(PBaoxiao pbaoxiaos, boolean b, int id, String email);
+	public int updateApprove(PBaoxiao pbaoxiaos, boolean agree);
 
-	public void updateBaoxiaoCheck(PBaoxiao pbaoxiao, boolean agree);
+	public int updateBaoxiaoReceive(Long id, boolean agree, String spRemarks, Integer uid);
 
-	public int updateBaoxiaoReceive(Integer id, boolean agree, String spRemarks, Integer uid);
+	public int updateBaoxiaoCheck(Long id, boolean agree, Integer uid);
+
+	public int updateBaoxiaoChupiao(PBaoxiao pbaoxiaos);
+	
+	public Serializable addKouJk(PKoukuan pkk);
+	
+	public int deleteKouJk(int id);
+	
+	public int updateKouJk(PKoukuan pkk);
+	
+	public int addKouJKList(List<PKoukuan> lis);
+//	
+//	public int updateKouJKList(List<PKoukuan> addLis);
+//
+//	public int deleteKouJKList(List<PKoukuan> addLis);
+	
+	public List<PKoukuan> findJiekoukuan(Long bxid);
 	
 	public int getNextStep(Integer statu, int st);
 	
@@ -52,6 +77,7 @@ public interface PubCaiwuService {
 	public List<PBaoxiaoStatus> findAllBaoxiaoStatus();
 
 	public void findAllCells(String email);
+
 
 
 }
