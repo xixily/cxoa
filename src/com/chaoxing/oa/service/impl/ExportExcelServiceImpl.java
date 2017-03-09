@@ -196,6 +196,9 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 					sxffWriter.setStringData(pRenshiEmployee.getMaritalStatus());
 					sxffWriter.createCell();
 					sxffWriter.setStringData(pRenshiEmployee.getRecruitmentSources());
+					sxffWriter.createCell();
+					sxffWriter.setStringData(pRenshiEmployee.getDueSocialSecurity());
+					
 				}
 			}
 //			for (PRenshiEmployee pRenshiEmployee : renshiEmployees) {
@@ -1648,7 +1651,7 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 		sxffWriter.setStringData("终止时间");
 		if(flag){
 			sxffWriter.createCell();
-			sxffWriter.setStringData("转正钱工资");
+			sxffWriter.setStringData("转正前工资");
 			sxffWriter.createCell();
 			sxffWriter.setStringData("转正后工资");
 			sxffWriter.createCell();
@@ -1736,6 +1739,8 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 			sxffWriter.setStringData("婚姻状况");
 			sxffWriter.createCell();
 			sxffWriter.setStringData("招聘来源");
+			sxffWriter.createCell();
+			sxffWriter.setStringData("投保时间");
 		}
 		}
 

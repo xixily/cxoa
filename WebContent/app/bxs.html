@@ -23,6 +23,20 @@
     </style>
 </head>
 <body>
+<script type="text/javascript">
+    function test(){
+        var tt = '';
+        tt = "<form><input id=\"combox_c1\" class=\"easyui-combobox\" name=\"company\" data-options=\"url: 'employee/getCompany.action',valueField:'id',textField:'cmopany',\" />" +
+                "<a id=\"btn\" href=\"#\" class=\"easyui-linkbutton do_action\" appaction=\"need_data\" data-options=\"iconCls:'icon-excel'\">下载</a>";
+        $.messager.alert("下载：",tt);
+       // =if(EXACT(D3,"中层及以上管理人员"),1,if(EXACT(D3,"专业技术人员"),2,if(EXACT(D3,"办事人员和有关人员"),3,if(EXACT(D3,"商业、服务业人员")),4,0)))
+
+
+    }
+    function need_data(data){
+        console.log(data);
+    }
+</script>
 
 <div class="container">
     <!-- 修改-->

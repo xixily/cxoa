@@ -37,11 +37,13 @@ import com.chaoxing.oa.entity.page.employee.PShebao;
 import com.chaoxing.oa.entity.page.employee.PShebaoType;
 import com.chaoxing.oa.entity.page.employee.PWagesDate;
 import com.chaoxing.oa.entity.page.employee.PYidong;
+import com.chaoxing.oa.entity.page.employee.PgridWage;
 import com.chaoxing.oa.entity.page.employee.PshebaoDetail;
 import com.chaoxing.oa.entity.page.employee.Pwages;
 import com.chaoxing.oa.entity.page.system.PSystemConfig;
 import com.chaoxing.oa.entity.page.system.SessionInfo;
 import com.chaoxing.oa.entity.po.commmon.Company;
+import com.chaoxing.oa.entity.po.commmon.CountStructure;
 import com.chaoxing.oa.entity.po.commmon.HouseholdType;
 import com.chaoxing.oa.entity.po.commmon.Level;
 import com.chaoxing.oa.entity.po.commmon.OrganizationStructure;
@@ -121,6 +123,8 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	private BaseDaoI<Yidong> yidongDao;
 	@Autowired
 	private BaseDaoI<TxStructs> txsDao;
+	@Autowired
+	private BaseDaoI<CountStructure> cstDao;
 	
 
 //	@Override
@@ -401,7 +405,12 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	public List<TxStructs> findTxs() {
 		return txsDao.find("from TxStructs");
 	}
+	
 
+	@Override
+	public List<CountStructure> findCountStructure() {
+		return cstDao.find("from CountStructure");
+	}
 
 	@Override
 	public List<PComboBox> findForthLevel() {
@@ -889,6 +898,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		BeanUtils.copyProperties(wage, pwage);
 		return pwage;
 	}
+	
 	@Override
 	public int updateWages(Pwages pwages) {
 		WageDistribution wage = new WageDistribution();
@@ -902,6 +912,48 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		}
 	}
 	
+	@Override
+	public int updateWageShebao(Pwages pwage) {
+		String hql = "update WageDistribution set radix=:radix,company=:company,householdType=:householdType,rubaoTime=:rubaoTime,subEndowmentIinsurance=:sei,"
+				+ "subMedicare=:sum,subUnemployedInsurance=:suu,subHouseIinsurance=:suh,cEndowmentIinsurance=:ce,cMedicare=:cm,cUnemployedInsurance=:cu,"
+				+ "cHouseIinsurance=:ch,cInjuryInsurance=:ci,cBirthIinsurance=:cb where id=:id";
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("radix", pwage.getRadix());
+		params.put("company", pwage.getCompany());
+		params.put("householdType", pwage.getHouseholdType());
+		params.put("rubaoTime", pwage.getRubaoTime());
+		params.put("sei", pwage.getSubEndowmentIinsurance());
+		params.put("sum", pwage.getSubMedicare());
+		params.put("suu", pwage.getSubUnemployedInsurance());
+		params.put("suh", pwage.getSubHouseIinsurance());
+		params.put("ce", pwage.getcEndowmentIinsurance());
+		params.put("cm", pwage.getcMedicare());
+		params.put("cu", pwage.getcUnemployedInsurance());
+		params.put("ch", pwage.getcHouseIinsurance());
+		params.put("ci", pwage.getcInjuryInsurance());
+		params.put("cb", pwage.getcBirthIinsurance());
+		params.put("id", pwage.getId());
+		return wageDistributionDao.executeHql(hql,params);
+		
+	}
+
+	@Override
+	public int updateGridWage(PgridWage pgridWage) {
+		String hql = "update WageDistribution set identityCard=:idcard,company=:company,accountBank=:accountBank,account=:account,householdType=:householdType,"
+				+ "rubaoTime=:rubaoTime,taxStructure=:taxStructure,countId=:countId where id=:id";
+		Map<String,Object> params = new HashMap<String, Object>();
+		params.put("idcard", pgridWage.getIdentityCard());
+		params.put("company", pgridWage.getCompany());
+		params.put("accountBank", pgridWage.getAccount());
+		params.put("account", pgridWage.getAccount());
+		params.put("householdType", pgridWage.getHouseholdType());
+		params.put("rubaoTime", pgridWage.getRubaoTime());
+		params.put("taxStructure",  pgridWage.getTaxStructure());
+		params.put("countId", pgridWage.getCountId());
+		params.put("id", pgridWage.getId());
+		return wageDistributionDao.executeHql(hql,params);
+	}
+
 	@Override
 	public int updateWagesRadix(PshebaoDetail pwages) {
 		Map<String, Object> params = new HashMap<String, Object>();

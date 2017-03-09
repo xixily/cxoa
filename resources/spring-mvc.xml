@@ -164,6 +164,7 @@
 						<value>/employee/updateMonthWages.action</value>
 						<value>/employee/updateKaoqin.action</value>
 						<value>/employee/updateGridWages.action</value>
+						<value>/employee/updateGridShebaoWages.action</value>
 						<value>/employee/unluckeShebaoSummary.action</value>
 						<value>/employee/luckedShebaoSummary.action</value>
 						<value>/employee/lockedKaoqin.action</value>

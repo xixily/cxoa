@@ -698,34 +698,25 @@ var caiwu = {
             caiwu.baoxiaoCheck.cp_remove_all();
             var src = $(event.currentTarget);
             var id = src.closest('form').find('input[name="id"]').val();
-            $('#cp_table').find('input[name="id"]').val(id);
-            //TODO
-
-            $.post()
-            var result = {
-                msg: '请求成功！',
-                obj: [
-                    {cp_name:'差旅费', cp_money:1000, cp_remarks:'2016.12.24 差旅费借款'},
-                    {cp_name:'标书费', cp_money:500, cp_remarks:'2016.12.27 标书费借款'},
-                    {cp_name:'交通费', cp_money:700, cp_remarks:'2017.02.01 交通费借款'},
-                    {cp_name:'燃油费', cp_money:300, cp_remarks:'2017.01.23 借款'}
-                ]
+            if(!id || id==0){
+                $.messager.alert("提示：", "批次号不存在，请刷新页面后重试。");
+                return false;
             }
-//            $.post('',{id:id},function(result){
-//                result = eval("(" + result + ")");
-//                if(result.success){
+            $('#cp_table').find('input[name="id"]').val(id);
+            $.post('public/caiwu/queryKoujiekuan.action',{bxid:id},function(result){
+                if(result.success){
                     var objs = result.obj;
                     var total = 0 ;
                     $.each(objs, function(i,obj){
                         caiwu.baoxiaoCheck.chupiao_add($('#cp_add_tr'),obj);
-                        total += obj.cp_money;
+                        total += obj.money;
                     })
                     caiwu.baoxiaoCheck.cp_setkjk(total);
                     $('#bx_dcp_dialog').modal('toggle');
-//                }else{
-//                    $.messager.alert('失败提示：',obj.msg);
-//                }
-//            })
+                }else{
+                    $.messager.alert('失败提示：',obj.msg);
+                }
+            })
         },
         cpConfirm: function(data, src){
             $.messager.confirm('提示：','您确定要通过该条审核记录吗？',function(){
@@ -794,15 +785,15 @@ var caiwu = {
         },
         chupiao_add: function(e,obj){
             var dom = e ? e.closest('tr'):$('#cp_add_tr');
-            obj = obj ? obj : {cp_name:'', cp_money:0, cp_remarks:''};
+            obj = obj ? obj : {item:'', money:0, description:''};
             var lastRow = Number($(dom.prev().find('span')[0]).text());
             var row = $('<tr class="item">' +
                     '<th scope="row"><sapn class="hide" app-data="id"></sapn><span app-data="order">' + (lastRow+1) + '</span>' +
                     '<a href="javascript:void(0)" onclick="caiwu.baoxiaoCheck.chupiao_remove($(this))"  style="margin-left: 12px;"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a>' +
                     '<a class="save" href="javascript:void(0)" onclick="caiwu.baoxiaoCheck.chupiao_save($(this))" style="margin-left: 12px;"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span></a></th>' +
-                    '<td><a href="javascript:void (0)" data-type="text" app-data="item" data-pk="1" data-title="报销项目" class="e-text">'+ obj.cp_name +'</a></td>' +
-                    '<td><a href="javascript:void (0)" data-type="text" app-data="money" data-pk="1" data-title="金额" data-name="fp_money"  class="e-money">'+ obj.cp_money +'</a></td>' +
-                    '<td><a href="javascript:void (0)" data-type="textarea" app-data="description" data-name="sh_remarks" data-title="审核说明"  class="e-text">'+ obj.cp_remarks +'</a></td>' +
+                    '<td><a href="javascript:void (0)" data-type="text" app-data="item" data-pk="1" data-title="报销项目" class="e-text">'+ obj.item +'</a></td>' +
+                    '<td><a href="javascript:void (0)" data-type="text" app-data="money" data-pk="1" data-title="金额" data-name="fp_money"  class="e-money">'+ obj.money +'</a></td>' +
+                    '<td><a href="javascript:void (0)" data-type="textarea" app-data="description" data-name="sh_remarks" data-title="审核说明"  class="e-text">'+ obj.description +'</a></td>' +
                     '</tr>');
             dom.before(row);/** after before append prepend  appendTo */
             caiwu.baoxiaoCheck.chupiao_initEdit(dom.prev());
@@ -838,10 +829,10 @@ var caiwu = {
                 data[obj.attr('app-data')] = obj.html();
             })
             if(data.money && data.money!=0){
-                var url = data.id ? 'public/caiwu/addKoukuan.action' : 'public/caiwu/updateKoukuan.action';
+                var url = data.id && data.id != '' ? 'public/caiwu/addKoujiekuan.action' : 'public/caiwu/updateKoujiekuan.action';
                 $.post(url, data, function(result){
                     if(result.success){
-                        row.toggleClass('edit');
+                        row.removeClass('edit');
                         row.find('[app-data="id"]').html = result.obj;
                     }
                     $.messager.alert("更新提示：", result.msg);
@@ -885,11 +876,11 @@ var caiwu = {
                 }
             })
             dom.find('a.e-text').on('save', function(event, params){
-                $(event.currentTarget).closest('tr').toggleClass('edit')
+                $(event.currentTarget).closest('tr').addClass('edit')
             });
             dom.find('a.e-money').on('save',function(event,params){
-                $(event.currentTarget).closest('tr').toggleClass('edit')
-                var moneylist = $('#cp_table').find('[app-data="cp_money"]');
+                $(event.currentTarget).closest('tr').addClass('edit')
+                var moneylist = $('#cp_table').find('[app-data="money"]');
                 var total = Number(params.newValue)!=NaN ? Number(params.newValue):0;
                 var click_a = this;
                 var temp = 0;

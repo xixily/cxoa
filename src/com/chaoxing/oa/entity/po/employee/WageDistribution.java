@@ -56,11 +56,13 @@ public class WageDistribution implements Serializable{
 	private Double cSickPayTotal;//累计带薪病假
 	private Double annualLleave;//年假累计
 	private String workPhone;//办公电话
-	private Integer internalNumber;//内部编号
+	private Integer IntegerernalNumber;//内部编号
 	private Double sickLleaveTotal;//病假累计
 	private String rubaoTime;//入保时间
 	private Double lishiSalary;//历史工资
 	private String tiaoxinRecord;//调薪报表
+	private String taxStructure;//报税架构
+	private Integer countId;//统计架构
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -196,7 +198,7 @@ public class WageDistribution implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@GenericGenerator(name = "paymentable_codeGenerator", strategy = "native")
 	public Integer getInternalNumber() {
-		return internalNumber;
+		return IntegerernalNumber;
 	}
 	@Column(name="病假累计")
 	public Double getSickLleaveTotal() {
@@ -213,6 +215,14 @@ public class WageDistribution implements Serializable{
 	@Column(name = "调薪报表")
 	public String getTiaoxinRecord() {
 		return tiaoxinRecord;
+	}
+	@Column(name="报税架构")
+	public String getTaxStructure() {
+		return taxStructure;
+	}
+	@Column(name="统计架构")
+	public Integer getCountId() {
+		return countId;
 	}
 	public void setTiaoxinRecord(String tiaoxinRecord) {
 		this.tiaoxinRecord = tiaoxinRecord;
@@ -313,11 +323,16 @@ public class WageDistribution implements Serializable{
 	public void setWorkPhone(String workPhone) {
 		this.workPhone = workPhone;
 	}
-	public void setInternalNumber(Integer internalNumber) {
-		this.internalNumber = internalNumber;
+	public void setInternalNumber(Integer IntegerernalNumber) {
+		this.IntegerernalNumber = IntegerernalNumber;
 	}
 	public void setSickLleaveTotal(Double sickLleaveTotal) {
 		this.sickLleaveTotal = sickLleaveTotal;
 	}
-	
+	public void setTaxStructure(String taxStructure) {
+		this.taxStructure = taxStructure;
+	}
+	public void setCountId(Integer countId) {
+		this.countId = countId;
+	}
 	}

@@ -86,6 +86,7 @@ public class MonthWages implements Serializable{
 	private Float bufaSalary;//补发工资
 	private Double lishiSalary;//历史工资
 	private String taxStructure;//报税架构
+	private Integer countId;//统计架构
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -357,6 +358,10 @@ public class MonthWages implements Serializable{
 	public String getTaxStructure() {
 		return taxStructure;
 	}
+	@Column(name="统计架构")
+	public Integer getCountId() {
+		return countId;
+	}
 	public void setLishiSalary(Double lishiSalary) {
 		this.lishiSalary = lishiSalary;
 	}
@@ -558,5 +563,7 @@ public class MonthWages implements Serializable{
 	public void setTaxStructure(String taxStructure) {
 		this.taxStructure = taxStructure;
 	}
-	
+	public void setCountId(Integer countId) {
+		this.countId = countId;
+	}
 }

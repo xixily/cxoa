@@ -19,10 +19,12 @@ import com.chaoxing.oa.entity.page.employee.PMonthWages;
 import com.chaoxing.oa.entity.page.employee.PShebao;
 import com.chaoxing.oa.entity.page.employee.PShebaoType;
 import com.chaoxing.oa.entity.page.employee.PWagesDate;
+import com.chaoxing.oa.entity.page.employee.PgridWage;
 import com.chaoxing.oa.entity.page.employee.PshebaoDetail;
 import com.chaoxing.oa.entity.page.employee.Pwages;
 import com.chaoxing.oa.entity.page.system.PSystemConfig;
 import com.chaoxing.oa.entity.page.system.SessionInfo;
+import com.chaoxing.oa.entity.po.commmon.CountStructure;
 import com.chaoxing.oa.entity.po.commmon.TxStructs;
 import com.chaoxing.oa.entity.po.employee.UserName;
 
@@ -55,6 +57,10 @@ public interface EmployeeInfoService {
 
 	public int updateWages(Pwages pwages);
 
+	public int updateWageShebao(Pwages pwage);
+
+	public int updateGridWage(PgridWage pgridWage);
+	
 	public Map<String, Object> findAllShebaoRadio(QueryForm queryForm);
 
 	public List<PShebao> findShebaoRadioByCompany(String company);
@@ -174,6 +180,8 @@ public interface EmployeeInfoService {
 	public Map<String, Object> findYidong(Page page, String date, HttpSession session, int i);
 
 	public List<TxStructs> findTxs();
+
+	public List<CountStructure> findCountStructure();
 
 //	public Json 
 

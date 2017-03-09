@@ -761,6 +761,7 @@ var employee = {
 			employee.wages.canotEdit('updatewages_form');
 		},
 		openWages : function(src) {
+			editIndex = undefined;
 			disabledForm('updatewages_form', true);
 			session.formData = getDataOfForm($('#updateUsesrname_form')).data;
 			$('#wages_username').html(session.formData.username);
@@ -772,14 +773,15 @@ var employee = {
 				$.messager.alert('提示：','职员id错误，请重新打开职员信息窗口！~');
 				return false;
 			}
+//			employee.wages.toggleEdit(true,queryParam);
 //			session.wadgeData = {};
+			//begin - - - - - - -
 			$('#datagrid_wages').datagrid(
 					{
 						url : "employee/getWagesList.action",
 						queryParams : queryParam,
 						height : 'auto',
 						fitColumns : true,
-//						data : dataGrid,
 						singleSelect : true,// 是否单选
 						rownumbers : true,// 行号
 						pagination : true,// 分页控件
@@ -797,13 +799,13 @@ var employee = {
 							field : 'radix',
 							title : '基数',
 							width : 100,
-							editor : {
-								type : 'numberbox',
-								options : {
-									min : 0,
-									precision : 2
-								}
-							}
+//							editor : {
+//								type : 'numberbox',
+//								options : {
+//									min : 0,
+//									precision : 2
+//								}
+//							}
 						}, {
 							field : 'identityCard',
 							title : '身份证号码',
@@ -827,7 +829,6 @@ var employee = {
 							field : 'accountBank',
 							title : '开户行',
 							width : 100,
-//							editor : 'textbox',
 							editor : {
 								type:'combobox',
 								options:{
@@ -866,7 +867,7 @@ var employee = {
 									}]
 								}
 							}
-								
+
 						}, {
 							field : 'account',
 							title : '职工帐号',
@@ -893,6 +894,30 @@ var employee = {
 							width : 100,
 							editor :{
 								type : 'textbox'
+							}
+						},{
+							field : 'taxStructure',
+							title : '报税架构',
+							width : 100,
+							editor :{
+								type : 'combobox',
+								options: {
+									url: 'employee/getTxs.action',
+									valueField:'name',
+									textField:'name'
+								}
+							}
+						},{
+							field : 'countId',
+							title : '统计架构',
+							width : 100,
+							editor :{
+								type : 'combobox',
+								options: {
+									url: 'employee/getCountst.action',
+									valueField:'id',
+									textField:'name'
+								}
 							}
 						} ] ],
 						//TODO 结束编辑，form表单显示 工资信息
@@ -928,7 +953,7 @@ var employee = {
 											employee.wages.append();
 										}
 									}
-										
+
 								} ,
 								'-',
 								{
@@ -961,20 +986,128 @@ var employee = {
 											confirmDialog.createDialog("您确定要删除吗？",employee.wages.deleWages);
 										}
 									}
-								} ]
+								} ],
+						footer : "#wages_footer",
 					})
-//				$('#userName_info').dialog('close');
-//				$('#updatewages_form').form('clear');
-//				$('#updatewages_form').form({
-//					url : 'employee/updateWages.action'
-//				});
-//				disabledForm('updatewages_form', true);
-//				disabledButton('updatewages_form', true);
-//				employee.wages.form_onchange(false);
-//				$('#dialog_wagesInfo').dialog("open");
-//				
-//			});
+			//end - - - - - - -
 		},
+        toggleEdit: function(flag){
+			editIndex = undefined;
+			disabledForm('updatewages_form', true);
+			session.formData = getDataOfForm($('#updateUsesrname_form')).data;
+			$('#wages_username').html(session.formData.username);
+			$('#wages_identity').html(session.formData.identityCard);
+			$('#wages_company').html(session.formData.company);
+			var queryParam = {};
+			queryParam.id = session.formData.id;
+			if(queryParam.id<0){
+				$.messager.alert('提示：','职员id错误，请重新打开职员信息窗口！~');
+				return false;
+			}
+			$('#datagrid_wages').datagrid(
+					{
+						url : "employee/getWagesList.action",
+						queryParams : queryParam,
+						height : 'auto',
+						fitColumns : true,
+						singleSelect : true,// 是否单选
+						rownumbers : true,// 行号
+						pagination : true,// 分页控件
+						pageSize : 5,
+						pageList : [ 5, 15, 20, 30, 50, 100 ],
+						columns : [ [ {
+							field : 'id',
+							title : '工资编号',
+							width : 80
+						}, {
+							field : 'salary',
+							title : '工资总额',
+							width : 100
+						}, {
+							field : 'radix',
+							title : '基数',
+							width : 100,
+							editor : {
+								type : 'numberbox',
+								options : {
+									min : 0,
+									precision : 2
+								}
+							}
+						}, {
+							field : 'identityCard',
+							title : '身份证号码',
+							width : 120,
+						}, {
+							field : 'company',
+							title : '公司名称',
+							width : 100,
+							editor:{
+								type:'combobox',
+								options:{
+									valueField:'cmopany',
+									textField:'cmopany',
+									method:'get',
+									url:'employee/getCompany.action',
+									required:true
+								}
+							}
+						}, {
+							field : 'accountBank',
+							title : '开户行',
+							width : 100,
+						}, {
+							field : 'account',
+							title : '职工帐号',
+							width : 180,
+						}, {
+							field : 'householdType',
+							title : '户口性质',
+							width : 100,
+							editor:{
+								type:'combobox',
+								options:{
+									valueField:'householdType',
+									textField:'householdType',
+									method:'get',
+									url:'employee/getHouseholdType.action',
+									required:true
+								}
+							},
+//							editor : 'textbox',
+						},{
+							field : 'rubaoTime',
+							title : '入保时间',
+							width : 100,
+							editor :{
+								type : 'textbox'
+							}
+						},{
+							field : 'txStructure',
+							title : '报税架构',
+							width : 100,
+						} ] ],
+						//TODO 结束编辑，form表单显示 工资信息
+						onClickRow : employee.wages.viewWages,
+						//TODO 双击进入编辑状态，并关闭之前状态
+						onDblClickRow : employee.wages.onDblClickRow,
+						//TODO 结束编辑,向后台直接请求
+						onEndEdit : employee.wages.onEndEdit_,
+						onLoadSuccess : function(){
+							employee.wages.updateHtml();
+//							$('#userName_info').dialog('close');
+							$('#updatewages_form').form('clear');
+							$('#updatewages_form').form({
+								url : 'employee/updateWages.action'
+							});
+							employee.wages.form_onchange(false);
+							disabledForm('updatewages_form', true);
+							disabledButton('updatewages_form', true);
+							$('#dialog_wagesInfo').dialog("open");
+						},
+						footer : "#wages_footer",
+					})
+        },
 		viewWages : function(index,row){//显示
 			session.append = false;
 			employee.wages.form_onchange(false);
@@ -1033,7 +1166,11 @@ var employee = {
 				return false;
 			}
 		},
-		onEndEdit : function(index, row,changes) {
+		onEndEdit_: function(index, row,changes){
+			employee.wages.onEndEdit(index, row,changes,true)
+		},
+		onEndEdit : function(index, row,changes,flag) {
+			var url = flag ? "employee/updateGridShebaoWages.action" : "employee/updateGridWages.action" ;
 			if (session.append) {
 				return false
 			};
@@ -1043,9 +1180,9 @@ var employee = {
 				$.messager.alert('tips', '您没有输入公司名称或户口性质，请重新填写！', 'info');
 				return false;
 			}
-			if(changes.radix || changes.company || changes.accountBank || changes.account){
-				$.post("employee/updateGridWages.action",row,function(result){
-//					var result =  eval("(" + result + ")");
+			if(!isEmpty(changes)){
+//			if(changes.radix || changes.company || changes.accountBank || changes.account){
+				$.post(url ,row, function(result){
 					if(result.success){
 						employee.wages.refresh_wagesData(result.msg);
 					}else{

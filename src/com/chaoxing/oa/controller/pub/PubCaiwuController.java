@@ -392,7 +392,6 @@ public class PubCaiwuController {
 		Json result = new Json();
 		if(null!=pbaoxiao.getId() && pbaoxiao.getId()!=0){
 			PBaoxiao pbaoxiaos = new PBaoxiao();
-//			PBaoxiao pbaoxiaos = publicCaiwuService.getBaoxiao(pbaoxiao.getId());
 			SessionInfo sessionInfo = getSessInfo(session);
 			BeanUtils.copyProperties(pbaoxiao, pbaoxiaos);
 			pbaoxiaos.setCpid(sessionInfo.getId());
@@ -408,7 +407,7 @@ public class PubCaiwuController {
 		return result;
 	}
 	
-	@RequestMapping(value="/addKoukuan")
+	@RequestMapping(value="/addKoujiekuan")
 	@ResponseBody
 	public Json addBaoxiaoKjk(PKoukuan pkk){
 		Json result = new Json();
@@ -425,10 +424,11 @@ public class PubCaiwuController {
 		return result;
 	}
 	
-	@RequestMapping(value="/updateKoukuan")
+	@RequestMapping(value="/updateKoujiekuan")
 	@ResponseBody
 	public Json updateBaoxiaoKjk(PKoukuan pkk){
 		Json result = new Json();
+		System.out.println(pkk);
 		if(null != pkk.getId() && null != pkk.getBxid() && null != pkk.getMoney()){
 			if(publicCaiwuService.updateKouJk(pkk)>0){
 				result.setSuccess(true);
@@ -437,20 +437,22 @@ public class PubCaiwuController {
 		}else{
 			result.setMsg("请检查您的必填项是否都数据。");
 		}
-		return null;
+		return result;
 	}
 	
-	@RequestMapping(value="/updateKoukuan")
+	@RequestMapping(value="/queryKoujiekuan")
 	@ResponseBody
 	public Json findBaoxiaoKjk(@RequestParam(value="bxid",required=true)Long bxid){
 		Json result = new Json();
 		if(null != bxid && bxid != 0){
-			publicCaiwuService.findJiekoukuan(bxid);
+			List<PKoukuan> pks = publicCaiwuService.findJiekoukuan(bxid);
+			result.setSuccess(true);
+			result.setObj(pks);
 		}
 		return result;
 	}
 	
-	@RequestMapping(value="/deleteKoukuan")
+	@RequestMapping(value="/deleteKoujiekuan")
 	@ResponseBody
 	public Json deleteBaoxiaoKjk(PKoukuan pkk){
 		return null;

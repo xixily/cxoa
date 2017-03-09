@@ -1287,6 +1287,20 @@ Array.prototype.selectLike = function(exp/*类似于SQL中的模糊查询字符�
 	}
 	return arr;
 };
+var isEmpty = function(e){
+	var obj;
+	for(obj in e){
+		return false;
+	}
+	return true;
+}
+//Object.prototype.isEmpty = function(){
+//	var obj;
+//	for(obj in this){
+//		return false;
+//	}
+//	return true;
+//}
 var TIPS = "提示";
 var UPDATETIPS = "更新提示：";
 var REMOVETIPS = "删除提示：";

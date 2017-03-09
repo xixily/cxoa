@@ -28,11 +28,14 @@ import com.chaoxing.oa.entity.page.employee.PMonthWages;
 import com.chaoxing.oa.entity.page.employee.PShebao;
 import com.chaoxing.oa.entity.page.employee.PShebaoType;
 import com.chaoxing.oa.entity.page.employee.PWagesDate;
+import com.chaoxing.oa.entity.page.employee.PgridWage;
 import com.chaoxing.oa.entity.page.employee.PshebaoDetail;
 import com.chaoxing.oa.entity.page.employee.Pwage_;
 import com.chaoxing.oa.entity.page.employee.Pwages;
+import com.chaoxing.oa.entity.page.employee.ShebaoWage;
 import com.chaoxing.oa.entity.page.system.PSystemConfig;
 import com.chaoxing.oa.entity.page.system.SessionInfo;
+import com.chaoxing.oa.entity.po.commmon.CountStructure;
 import com.chaoxing.oa.entity.po.commmon.TxStructs;
 import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.system.SysConfig;
@@ -176,6 +179,13 @@ public class EmployeeController {
 		return employeeInfoService.findTxs();
 	}
 	
+	
+	@RequestMapping(value = "/getCountst")
+	@ResponseBody
+	public List<CountStructure> getCountSturcture(){
+		return employeeInfoService.findCountStructure();
+	}
+	
 	@RequestMapping(value = "/getInsuranceCompany")
 	@ResponseBody
 	public List<PComboBox> getInsuranceCompany(){
@@ -206,45 +216,81 @@ public class EmployeeController {
 	
 	@RequestMapping(value = "/updateGridWages")
 	@ResponseBody
-	public Json updatePartWages(Pwages pwage){
+	public Json updateGridWage(PgridWage pgridWage){
 		Json result = new Json();
-		PSystemConfig ps = employeeInfoService.getSysconfig(pwage.getCompany(), SysConfig.SHEBAO_SUMMARY);
-		if(ps==null || ps.getLocked()==0){
-			if(pwage!=null&&pwage.getId()!=null&&pwage.getId()!=0){
-				Pwages target = employeeInfoService.getWages(pwage.getId());
-				if(target!=null){
-					target.setRadix(pwage.getRadix());
-					target.setCompany(pwage.getCompany());
-					target.setHouseholdType(pwage.getHouseholdType());
-					target.setRubaoTime(pwage.getRubaoTime());
-					if(pwage.getIdentityCard()!=null){
-						target.setIdentityCard(pwage.getIdentityCard());
-					}
-					if(pwage.getAccountBank()!=null){
-						target.setAccountBank(pwage.getAccountBank());
-					}
-					if(pwage.getAccount()!=null){
-						target.setAccount(pwage.getAccount());
-					}
-					if(caculateWages(target)==1){
-						if(employeeInfoService.updateWages(target)!=0){
-							result.setSuccess(true);
-							result.setMsg("<strong>"+ target.getUsername() + ":" +target.getId() +"</strong>更新成功！");
-						}else{
-							result.setMsg("更新失败！");
-						}
-					}else{
-						result.setMsg("社保计算失败！");
-					}
-				}else{
-					result.setMsg("没有<strong>"+ pwage.getUsername() + ":" +pwage.getId() + "</strong>该条工资信息！");
-				}
+		if(null != pgridWage.getId() && pgridWage.getId() != 0){
+			if(employeeInfoService.updateGridWage(pgridWage)>0){
+				result.setMsg("工资编号：[" + pgridWage.getId() + "]更新成功。");
+				result.setSuccess(true);
 			}
 		}else{
-			result.setMsg("社保公司[" + pwage.getCompany() +"]已被锁定，请您联系社保管理员解锁！~");
+			result.setMsg("工资ID不存在");
 		}
 		return result;
 	}
+	
+	@RequestMapping(value = "/updateGridShebaoWages")
+	@ResponseBody
+	public Json updateShebaoWage(ShebaoWage shebaoWage){
+		Json result = new Json();
+		PSystemConfig ps = employeeInfoService.getSysconfig(shebaoWage.getCompany(), SysConfig.SHEBAO_SUMMARY);
+		if(ps==null || ps.getLocked()==0){
+			Pwages pwage = new Pwages();
+			BeanUtils.copyProperties(shebaoWage, pwage);
+			if(caculateWages(pwage)>0){
+				if(employeeInfoService.updateWageShebao(pwage)>0){
+					result.setSuccess(true);
+					result.setMsg("工资编号：[" + shebaoWage.getId() + "]更新成功。");
+				}else{
+					result.setMsg("入库失败，请刷新后重试。");
+				}
+			}
+		}else{
+			result.setMsg("社保公司[" + shebaoWage.getCompany() +"]已被锁定，请您联系社保管理员解锁！~");
+		}
+		
+		return result;
+	}
+	
+//	public Json updatePartWages(Pwages pwage){
+//		Json result = new Json();
+//		PSystemConfig ps = employeeInfoService.getSysconfig(pwage.getCompany(), SysConfig.SHEBAO_SUMMARY);
+//		if(ps==null || ps.getLocked()==0){
+//			if(pwage!=null&&pwage.getId()!=null&&pwage.getId()!=0){
+//				Pwages target = employeeInfoService.getWages(pwage.getId());
+//				if(target!=null){
+//					target.setRadix(pwage.getRadix());
+//					target.setCompany(pwage.getCompany());
+//					target.setHouseholdType(pwage.getHouseholdType());
+//					target.setRubaoTime(pwage.getRubaoTime());
+//					if(pwage.getIdentityCard()!=null){
+//						target.setIdentityCard(pwage.getIdentityCard());
+//					}
+//					if(pwage.getAccountBank()!=null){
+//						target.setAccountBank(pwage.getAccountBank());
+//					}
+//					if(pwage.getAccount()!=null){
+//						target.setAccount(pwage.getAccount());
+//					}
+//					if(caculateWages(target)==1){
+//						if(employeeInfoService.updateWages(target)!=0){
+//							result.setSuccess(true);
+//							result.setMsg("<strong>"+ target.getUsername() + ":" +target.getId() +"</strong>更新成功！");
+//						}else{
+//							result.setMsg("更新失败！");
+//						}
+//					}else{
+//						result.setMsg("社保计算失败！");
+//					}
+//				}else{
+//					result.setMsg("没有<strong>"+ pwage.getUsername() + ":" +pwage.getId() + "</strong>该条工资信息！");
+//				}
+//			}
+//		}else{
+//			result.setMsg("社保公司[" + pwage.getCompany() +"]已被锁定，请您联系社保管理员解锁！~");
+//		}
+//		return result;
+//	}
 	
 	public int caculateWages(Pwages pwage){
 		if(pwage.getRadix()==null){
@@ -513,6 +559,7 @@ public class EmployeeController {
 		}
 		return result;
 	}
+	
 	@RequestMapping(value = "/getHouseholdType")
 	@ResponseBody
 	public List<PHouseholdType> getHouseholdType(){

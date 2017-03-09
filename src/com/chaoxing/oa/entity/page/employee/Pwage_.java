@@ -27,6 +27,8 @@ public class Pwage_ {
 	private String rubaoTime;//计划入保时间
 	private Double lishiSalary;//历史工资
 	private String tiaoxinRecord;//调薪报表
+	private String taxStructure;//报税架构
+	private Integer countId;//统计架构
 	public Integer getId() {
 		return id;
 	}
@@ -176,6 +178,18 @@ public class Pwage_ {
 	}
 	public void setTiaoxinRecord(String tiaoxinRecord) {
 		this.tiaoxinRecord = tiaoxinRecord;
+	}
+	public String getTaxStructure() {
+		return taxStructure;
+	}
+	public void setTaxStructure(String taxStructure) {
+		this.taxStructure = taxStructure;
+	}
+	public Integer getCountId() {
+		return countId;
+	}
+	public void setCountId(Integer countId) {
+		this.countId = countId;
 	}
 	
 }

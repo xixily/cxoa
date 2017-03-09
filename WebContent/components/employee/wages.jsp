@@ -257,5 +257,14 @@
                 
                 </table>
         </form>
+    	<br/>
+    	<span style="clear:both"></span>
+        <div id ="wages_footer">
+        <span>选择模式: </span>
+        <select onchange="if(this.value == 0){employee.wages.openWages()}else{employee.wages.toggleEdit()}">
+        <option value="0">工资模式</option>
+        <option value="1">社保模式</option>
+        </select><br/>
+        </div>
     </div>
 </div>

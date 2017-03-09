@@ -462,7 +462,7 @@ public class PubCaiwuServiceImpl implements PubCaiwuService {
 	
 	@Override
 	public List<PKoukuan> findJiekoukuan(Long bxid) {
-		String hql = "from KoukuanItem t where id=:bxid";
+		String hql = "from KoukuanItem t where bxid=:bxid";
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("bxid", bxid);
 		List<KoukuanItem> kks = koukuanDao.find(hql, params);

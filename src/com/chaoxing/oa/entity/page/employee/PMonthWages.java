@@ -68,6 +68,7 @@ public class PMonthWages {
 	private Float bufaSalary;//补发工资
 	private Double lishiSalary;//历史工资
 	private String taxStructure;//报税架构
+	private Integer countId;//统计架构
 	public Integer getId() {
 		return id;
 	}
@@ -469,6 +470,12 @@ public class PMonthWages {
 	}
 	public void setBufaSalary(Float bufaSalary) {
 		this.bufaSalary = bufaSalary;
+	}
+	public Integer getCountId() {
+		return countId;
+	}
+	public void setCountId(Integer countId) {
+		this.countId = countId;
 	}
 	
 }
