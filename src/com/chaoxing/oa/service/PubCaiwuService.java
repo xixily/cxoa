@@ -47,11 +47,13 @@ public interface PubCaiwuService {
 	
 	public Serializable addKouJk(PKoukuan pkk);
 	
-	public int deleteKouJk(int id);
+	public int deleteKouJk(Long id);
 	
 	public int updateKouJk(PKoukuan pkk);
 	
 	public int addKouJKList(List<PKoukuan> lis);
+	
+	public int deleteKjkByBxid(Long bxid);
 //	
 //	public int updateKouJKList(List<PKoukuan> addLis);
 //
@@ -77,7 +79,6 @@ public interface PubCaiwuService {
 	public List<PBaoxiaoStatus> findAllBaoxiaoStatus();
 
 	public void findAllCells(String email);
-
 
 
 }

@@ -44,12 +44,5 @@ public class PKoukuan {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	@Override
-	public String toString() {
-		return "PKoukuan [id=" + id + ", bxid=" + bxid + ", order=" + order + ", item=" + item + ", money=" + money
-				+ ", description=" + description + "]";
-	}
-	
 
 }

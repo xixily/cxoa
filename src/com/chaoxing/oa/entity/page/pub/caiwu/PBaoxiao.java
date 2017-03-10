@@ -28,6 +28,7 @@ public class PBaoxiao {
 	private String caiwuRemarks;//财务备注
 	private Float koujk;//扣借款
 	private Float baoxMoney;//汇款金额
+	private Float huikuan;//汇款金额
 	private String baoxTime;//汇款时间
 	private Integer status;//状态
 	private String kunhao;//捆号
@@ -255,6 +256,12 @@ public class PBaoxiao {
 	}
 	public void setGuidanceEmail(String guidanceEmail) {
 		this.guidanceEmail = guidanceEmail;
+	}
+	public Float getHuikuan() {
+		return huikuan;
+	}
+	public void setHuikuan(Float huikuan) {
+		this.huikuan = huikuan;
 	}
 	
 }

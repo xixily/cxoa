@@ -455,7 +455,31 @@ public class PubCaiwuController {
 	@RequestMapping(value="/deleteKoujiekuan")
 	@ResponseBody
 	public Json deleteBaoxiaoKjk(PKoukuan pkk){
-		return null;
+		Json result = new Json();
+		if(null != pkk.getId()){
+			if(publicCaiwuService.deleteKouJk(pkk.getId())>0){
+				result.setSuccess(true);
+				result.setMsg("删除成功！");
+			}else{
+				result.setMsg("删除失败！");
+			}
+		}else{
+			result.setMsg("对不起，借款id不存在。");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value="/removeAllKjk")
+	@ResponseBody
+	public Json removeAllKjk(@RequestParam(value="bxid", required=true)Long bxid){
+		Json result = new Json();
+		if(null != bxid && bxid!=0){
+			result.setSuccess(true);
+			result.setMsg("已经删除了[" + publicCaiwuService.deleteKjkByBxid(bxid) + "]条记录。");
+		}else{
+			result.setMsg("报销id不存在，无法删除。");
+		}
+		return result;
 	}
 	
 	@RequestMapping(value="/updateKoujk")

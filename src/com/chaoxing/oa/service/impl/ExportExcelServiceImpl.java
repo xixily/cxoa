@@ -200,9 +200,27 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 					sxffWriter.setStringData(pRenshiEmployee.getDueSocialSecurity());
 					
 				}
+				sxffWriter.createCell();
+				if(null != pRenshiEmployee.getIfForeign()){
+					if(pRenshiEmployee.getIfForeign() == 0){
+						sxffWriter.setStringData("否");
+					}else if(pRenshiEmployee.getIfForeign() == 1){
+						sxffWriter.setStringData("外籍或港澳台");
+					}else{
+						sxffWriter.setStringData("留学");
+					}
+				}else{
+					sxffWriter.setStringData("");
+				}
+				sxffWriter.createCell();
+				if(null != pRenshiEmployee.getIfEngineering()){
+					sxffWriter.setStringData(pRenshiEmployee.getIfEngineering()==0 ? "是":"否");
+				}else{
+					sxffWriter.setStringData("");
+				}
+				sxffWriter.createCell();
+				sxffWriter.setStringData(pRenshiEmployee.getZhuanzhengTime());
 			}
-//			for (PRenshiEmployee pRenshiEmployee : renshiEmployees) {
-//			}
 			sxffWriter.flush();
 			return filePath;
 		} catch (IOException e) {
@@ -1742,6 +1760,12 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 			sxffWriter.createCell();
 			sxffWriter.setStringData("投保时间");
 		}
+		sxffWriter.createCell();
+		sxffWriter.setStringData("是否外籍");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("是否理工学");
+		sxffWriter.createCell();
+		sxffWriter.setStringData("转入本公司时间");
 		}
 
 

@@ -944,7 +944,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		Map<String,Object> params = new HashMap<String, Object>();
 		params.put("idcard", pgridWage.getIdentityCard());
 		params.put("company", pgridWage.getCompany());
-		params.put("accountBank", pgridWage.getAccount());
+		params.put("accountBank", pgridWage.getAccountBank());
 		params.put("account", pgridWage.getAccount());
 		params.put("householdType", pgridWage.getHouseholdType());
 		params.put("rubaoTime", pgridWage.getRubaoTime());

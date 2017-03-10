@@ -695,7 +695,7 @@ var caiwu = {
         openKoukuan: function(event, checked){
             event.preventDefault();//关闭默认事件
             event.stopImmediatePropagation();
-            caiwu.baoxiaoCheck.cp_remove_all();
+            caiwu.baoxiaoCheck.cp_page_remove();
             var src = $(event.currentTarget);
             var id = src.closest('form').find('input[name="id"]').val();
             if(!id || id==0){
@@ -714,7 +714,7 @@ var caiwu = {
                     caiwu.baoxiaoCheck.cp_setkjk(total);
                     $('#bx_dcp_dialog').modal('toggle');
                 }else{
-                    $.messager.alert('失败提示：',obj.msg);
+                    $.messager.alert('失败提示：',result.msg);
                 }
             })
         },
@@ -723,6 +723,7 @@ var caiwu = {
                 $.post("public/caiwu/baoxiaoChupiao.action", data, function(result){
                     if(result.success){
                         $('#cw_cp_btn').toggleClass("hide");
+                        $('.do_action[app-action="caiwu.baoxiaoCheck.find_dcp"]').trigger('click');
                     }
                     $.messager.alert("提示：",result.msg);
                 })
@@ -787,8 +788,9 @@ var caiwu = {
             var dom = e ? e.closest('tr'):$('#cp_add_tr');
             obj = obj ? obj : {item:'', money:0, description:''};
             var lastRow = Number($(dom.prev().find('span')[0]).text());
+            obj.order = obj.order ? obj.order : (lastRow+1)
             var row = $('<tr class="item">' +
-                    '<th scope="row"><sapn class="hide" app-data="id"></sapn><span app-data="order">' + (lastRow+1) + '</span>' +
+                    '<th scope="row"><sapn class="hide" app-data="id">' + obj.id +'</sapn><span app-data="order">' + obj.order + '</span>' +
                     '<a href="javascript:void(0)" onclick="caiwu.baoxiaoCheck.chupiao_remove($(this))"  style="margin-left: 12px;"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a>' +
                     '<a class="save" href="javascript:void(0)" onclick="caiwu.baoxiaoCheck.chupiao_save($(this))" style="margin-left: 12px;"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span></a></th>' +
                     '<td><a href="javascript:void (0)" data-type="text" app-data="item" data-pk="1" data-title="报销项目" class="e-text">'+ obj.item +'</a></td>' +
@@ -800,8 +802,89 @@ var caiwu = {
         },
         chupiao_remove: function(e){
             var row = e.closest('tr');
-            row.remove();
-            var moneylist = $('[app-data="sh_money"]');
+            var data = app.getAppData(row);
+            if(data && data.id){
+                $.post('public/caiwu/deleteKoujiekuan.action', data, function(result){
+                    if(result.success){
+                        row.remove();
+                        var moneylist = $('[app-data="sh_money"]');
+                        var total = 0;
+                        var temp = 0;
+                        $.each(moneylist,function(i,obj){
+                            try{
+                                temp = Number($(obj).html()) != NaN ? Number($(obj).html()): 0;
+                            }catch(e){
+                                temp = 0;
+                            }
+                            total += temp
+                        })
+                        $('[app-data="sh_total"]').html(total);
+                    }
+                    $.messager.alert(result.msg);
+                })
+            }else{
+                row.remove();
+                var moneylist = $('[app-data="sh_money"]');
+                var total = 0;
+                var temp = 0;
+                $.each(moneylist,function(i,obj){
+                    try{
+                        temp = Number($(obj).html()) != NaN ? Number($(obj).html()): 0;
+                    }catch(e){
+                        temp = 0;
+                    }
+                    total += temp
+                })
+                $('[app-data="sh_total"]').html(total);
+            }
+        },
+        chupiao_save: function(e){
+            var row = e.closest('tr');
+            var data = app.getAppData(row);
+            var id = $("#cp_table").find('input[name="id"]').val();
+            if(!id || id===0){
+                $.messager.alert("提示：","报销批次号不存在，请刷新页面后重试。")
+                return false;
+            }
+            data.bxid = id;
+            if(data.money && data.money!=0){
+                var url = (data.id && data.id != '') ?  'public/caiwu/updateKoujiekuan.action' :'public/caiwu/addKoujiekuan.action';
+                $.post(url, data, function(result){
+                    if(result.success){
+                        row.removeClass('edit');
+                        row.find('[app-data="id"]').html = result.obj;
+                        caiwu.baoxiaoCheck.cp_setkjk();
+                    }
+                    $.messager.alert("更新提示：", result.msg);
+                })
+            }else{
+                $.messager.alert("数据提示：","请您先输入金额");
+            }
+        },
+        cp_remove_all: function(e){
+            var data = {};
+            data.bxid = $('#cp_table').find('input[name="id"]').val();
+            if(data.bxid){
+                $.post('public/caiwu/removeAllKjk.action',data,function(result){
+                    if(result.success){
+                        caiwu.baoxiaoCheck.cp_page_remove();
+                    }
+                    $.messager.alert("删除提示：",result.msg);
+                })
+            }
+        },
+        cp_page_remove: function(){
+            var table = $('#cp_dk_table');
+            try{
+                table.find('tr.item').remove();
+//                            $('[app-data="sh_total"]').html(0);
+                caiwu.baoxiaoCheck.cp_setkjk(0);
+            }catch(e){
+                console.log('nothing to do .');
+            }
+        },
+        cp_setkjk: function(){
+            var moneylist =  $('#cp_dk_table [app-data="money"]');
             var total = 0;
             var temp = 0;
             $.each(moneylist,function(i,obj){
@@ -812,48 +895,7 @@ var caiwu = {
                 }
                 total += temp
             })
-            $('[app-data="sh_total"]').html(total);
-        },
-        chupiao_save: function(e){
-            var row = e.closest('tr');
-            var app_datas = row.find('[app-data]');
-            var data = {};
-            var id = $("#cp_table").find('input[name="id"]').val();
-            if(!id || id===0){
-                $.messager.alert("提示：","报销批次号不存在，请刷新页面后重试。")
-                return false;
-            }
-            data.bxid = id;
-            $.each(app_datas, function(i, obj){
-                obj = $(obj);
-                data[obj.attr('app-data')] = obj.html();
-            })
-            if(data.money && data.money!=0){
-                var url = data.id && data.id != '' ? 'public/caiwu/addKoujiekuan.action' : 'public/caiwu/updateKoujiekuan.action';
-                $.post(url, data, function(result){
-                    if(result.success){
-                        row.removeClass('edit');
-                        row.find('[app-data="id"]').html = result.obj;
-                    }
-                    $.messager.alert("更新提示：", result.msg);
-                })
-            }else{
-                $.messager.alert("数据提示：","请您先输入金额");
-            }
-        },
-        cp_remove_all: function(e){
-//            var table = e ? e.closest('table') : $('#cp_dk_table');
-            var table = $('#cp_dk_table');
-            try{
-                table.find('tr.item').remove();
-                $('[app-data="sh_total"]').html(0);
-//                caiwu.baoxiaoCheck.cp_setkjk(0);
-            }catch(e){
-                console.log('nothing to do .');
-            }
-        },
-        cp_setkjk: function(value){
-            value = value ? Number(value) : 0;
+            value = total ? Number(total) : 0;
             $('[app-data="sh_total"]').html(value);
             $('#cp_kjk').val(value);
         },

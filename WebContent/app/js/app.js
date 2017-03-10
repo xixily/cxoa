@@ -779,6 +779,21 @@ function queryParams(){
 function show(){
     alert('toggle');
 }
+function getAppData(src){
+    if(!src) return false;
+    var data = {};
+    var app_datas = $(src).find('[app-data]');
+    $.each(app_datas , function(i, obj){
+        obj = $(obj);
+        if(obj.html() != "undefined"){
+            data[obj.attr('app-data')] = obj.html();
+        }else{
+            data[obj.attr('app-data')] = undefined;
+        }
+    })
+    return data;
+}
+app.getAppData = getAppData;
 var responsiveHandler = {
     run: function(){
         $.each(responsiveHandler.handler,function(i,obj){

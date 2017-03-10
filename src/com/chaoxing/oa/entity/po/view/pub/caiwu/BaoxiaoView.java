@@ -40,6 +40,7 @@ public class BaoxiaoView implements Serializable{
 	private String caiwuRemarks;//财务备注
 	private Float koujk;//扣借款
 	private Float baoxMoney;//汇款金额
+	private Float huikuan;//汇款金额
 	private Date baoxTime;//汇款时间
 	private Integer status;//状态
 	private String kunhao;//捆号
@@ -151,9 +152,13 @@ public class BaoxiaoView implements Serializable{
 	public Float getKoujk() {
 		return koujk;
 	}
-	@Column(name="汇款金额")
+	@Column(name="报销金额")
 	public Float getBaoxMoney() {
 		return baoxMoney;
+	}
+	@Column(name="汇款金额")
+	public Float getHuikuan() {
+		return huikuan;
 	}
 	@Column(name="汇款时间")
 	public Date getBaoxTime() {
@@ -272,6 +277,9 @@ public class BaoxiaoView implements Serializable{
 	}
 	public void setBaoxMoney(Float baoxMoney) {
 		this.baoxMoney = baoxMoney;
+	}
+	public void setHuikuan(Float huikuan) {
+		this.huikuan = huikuan;
 	}
 	public void setBaoxTime(Date baoxTime) {
 		this.baoxTime = baoxTime;

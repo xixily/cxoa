@@ -408,12 +408,13 @@ public class PubCaiwuServiceImpl implements PubCaiwuService {
 
 	@Override
 	public int updateBaoxiaoChupiao(PBaoxiao pbaoxiaos) {
-		String hql = "update Baoxiao set cpid=:cpid,tuipiao=:tuipiao,caiwuRemarks=:caiwuRemarks,baoxMoney=:baoxMoney,status=:nstatus where id=:id and status=:status";
+		String hql = "update Baoxiao set cpid=:cpid,tuipiao=:tuipiao,caiwuRemarks=:caiwuRemarks,huikuan=:huikuan,baoxMoney=:baoxMoney,status=:nstatus where id=:id and status=:status";
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("cpid", pbaoxiaos.getCpid());
 		params.put("tuipiao", pbaoxiaos.getTuipiao());
 		params.put("caiwuRemarks", pbaoxiaos.getCaiwuRemarks());
 //		params.put("koujk", pbaoxiaos.getKoujk());
+		params.put("huikuan", pbaoxiaos.getHuikuan());
 		params.put("baoxMoney", pbaoxiaos.getBaoxMoney());
 		params.put("nstatus", SysConfig.CW_BX_CHUPIAO);
 		params.put("status", getPreStep(SysConfig.CW_BX_CHUPIAO));
@@ -435,9 +436,16 @@ public class PubCaiwuServiceImpl implements PubCaiwuService {
 	}
 
 	@Override
-	public int deleteKouJk(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteKouJk(Long id) {
+		KoukuanItem kk = new KoukuanItem();
+		kk.setId(id);
+		try {
+			koukuanDao.delete(kk);
+			return 1;
+		} catch (Exception e) {
+			logger.error("publicCaiwuService.deleteKouJk:[" + e);
+			return 0;
+		}
 	}
 
 	@Override
@@ -460,6 +468,14 @@ public class PubCaiwuServiceImpl implements PubCaiwuService {
 		return 0;
 	}
 	
+	@Override
+	public int deleteKjkByBxid(Long bxid) {
+		String hql ="delete from KoukuanItem where bxid=:bxid";
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("bxid", bxid);
+		return koukuanDao.executeHql(hql,params);
+	}
+
 	@Override
 	public List<PKoukuan> findJiekoukuan(Long bxid) {
 		String hql = "from KoukuanItem t where bxid=:bxid";

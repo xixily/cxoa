@@ -34,7 +34,7 @@ public class KoukuanItem implements Serializable {
 	public Long getBxid() {
 		return bxid;
 	}
-	@Column
+	@Column(name="order_")
 	public Integer getOrder() {
 		return order;
 	}
