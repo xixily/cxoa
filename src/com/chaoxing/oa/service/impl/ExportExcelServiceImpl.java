@@ -893,7 +893,7 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 		sxffWriter.createCell();
 		sxffWriter.setStringData("户口性质");
 		sxffWriter.createCell();
-		sxffWriter.setStringData("户口地址");
+		sxffWriter.setStringData("家庭地址");
 		sxffWriter.createCell();
 		sxffWriter.setStringData("学历");
 		sxffWriter.createCell();

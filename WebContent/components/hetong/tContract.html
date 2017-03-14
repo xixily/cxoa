@@ -60,19 +60,21 @@
                     textField:'fourthLevel',
                     labelPosition:'top',
                     onSelect: function(rec){
-                    	$.each(session.organizationStructure, function(i, obj){
-                    	if(obj.fourthLevel == rec.fourthLevel){
-                    		$('#updateUsesrname_form').form('load',{
-                    			firstLevel : obj.firstLevel,
-                    			secondLevel : obj.secondLevel,
-                    			thirdLevel : obj.thirdLevel,
-                    			departmentId : obj.departmentId
-                    		});
-                    	}
-                    	})
+                        var id = rec.id;
+                        $('#updateUsesrname_form').form('load',{
+                        firstLevel : session.ostructure[id].firstLevel,
+                        secondLevel : session.ostructure[id].secondLevel,
+                        thirdLevel : session.ostructure[id].thirdLevel,
+                        cellCore : session.ostructure[id].cellCore,
+                        departmentId : session.ostructure[id].departmentId,
+                        txStruct : session.ostructure[id].taxStructure
+                        });
 		            },
 			        onLoadSuccess: function(res){
-			        session.organizationStructure = res;
+                        session.ostructure = {};
+                        $.each(res, function(i, obj){
+                            session.ostructure[obj.id] = obj;
+                        })
 			        }
                     ">
                 </td>

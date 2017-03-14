@@ -366,6 +366,8 @@ public class EmployeeController {
 				String ifSecret = employeeInfoService.getUserInfo(queryForm).getIfSecret();
 				if(sessionInfo.getRoleId()<=1||sessionInfo.getRoleId()==100||ifSecret.equals("off")){
 					Pwages mw = employeeInfoService.getWages(pwages.getId());
+					pwages.setTaxStructure(mw.getTaxStructure());
+					pwages.setCountId(mw.getCountId());
 //					pwages.getSubEndowmentIinsurance(m);
 					BeanUtils.copyProperties(pwages, mw);
 					if(employeeInfoService.updateWages(mw)!=0){
@@ -439,28 +441,22 @@ public class EmployeeController {
 	@ResponseBody
 	public Json addWages(Pwage_ pwages, HttpSession session){
 		Json result = new Json();
-//		PSystemConfig ps = employeeInfoService.getSysconfig(pwages.getCompany(), SysConfig.SHEBAO_SUMMARY);
-//		if(ps!=null && ps.getLocked()==1&&(pwages.getRadix()!=0||pwages.getSubEndowmentIinsurance()!=0||pwages.getSubMedicare()!=0||
-//				pwages.getSubUnemployedInsurance()!=0||pwages.getSubHouseIinsurance()!=0)){
-//			result.setMsg("该社保公司已被社保管理员锁定，请您把社保基数置0，或者与社保管理员联系。");
-//		}else{
-			QueryForm queryForm = new QueryForm();
-			queryForm.setId(pwages.getEmployeeId());
-			SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());	
-			String ifSecret = employeeInfoService.getUserInfo(queryForm).getIfSecret();
-			if(sessionInfo.getRoleId()<=1||sessionInfo.getRoleId()==100||ifSecret.equals("off")){
-				Pwages pw = new Pwages();
-				BeanUtils.copyProperties(pwages, pw);
-				if(employeeInfoService.addWages(pw)!=0){
-					result.setSuccess(true);
-					result.setMsg("添加成功！");
-				}else{
-					result.setMsg("添加失败！");
-				}
+		QueryForm queryForm = new QueryForm();
+		queryForm.setId(pwages.getEmployeeId());
+		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());	
+		String ifSecret = employeeInfoService.getUserInfo(queryForm).getIfSecret();
+		if(sessionInfo.getRoleId()<=1||sessionInfo.getRoleId()==100||ifSecret.equals("off")){
+			Pwages pw = new Pwages();
+			BeanUtils.copyProperties(pwages, pw);
+			if(employeeInfoService.addWages(pw)!=0){
+				result.setSuccess(true);
+				result.setMsg("添加成功！");
 			}else{
-				result.setMsg("对不起，您没有删除权限~！");
+				result.setMsg("添加失败！");
 			}
-//		}
+		}else{
+			result.setMsg("对不起，您没有删除权限~！");
+		}
 		return result;
 	}
 	

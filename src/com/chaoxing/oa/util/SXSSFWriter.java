@@ -19,6 +19,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
 import com.chaoxing.oa.entity.page.common.ExportModelVo;
+import com.microsoft.schemas.office.visio.x2012.main.CellType;
 
 public class SXSSFWriter {
 	public static final String DEFAULT_FOLDER = ResourceUtil.getDownloadDirectory();
@@ -42,7 +43,6 @@ public class SXSSFWriter {
 		File file = new File(DEFAULT_FOLDER + this.fileName);
 		file.createNewFile();
 		outputStream = new BufferedOutputStream(new FileOutputStream(file),1024);
-//		oututStream = new FileOutputStream(file)
 		wb = new SXSSFWorkbook(500);
 		dataFormat = wb.createDataFormat();
 		numbericStyle = wb.createCellStyle();
@@ -85,22 +85,15 @@ public class SXSSFWriter {
 	}
 
 	public void setNumbericData(BigDecimal numberic) {
-		this.cell.setCellType(Cell.CELL_TYPE_NUMERIC);
-
+		this.cell.setCellStyle(numbericStyle);
 		DecimalFormat format = new DecimalFormat("0.00");
 		this.cell.setCellValue(Double.valueOf(format.format(numberic
 				.doubleValue())));
-		this.cell.setCellStyle(numbericStyle);
-		// this.cell.setCellValue(1234.34567);
 	}
 
 	public void setIntegerData(Integer inte) {
 		this.cell.setCellType(Cell.CELL_TYPE_NUMERIC);
-
-		//DecimalFormat format = new DecimalFormat("0");
 		this.cell.setCellValue(inte);
-		//this.cell.setCellStyle(numbericStyle);
-		// this.cell.setCellValue(1234.34567);
 	}
 	
 	public void setDouble(Double dd) {

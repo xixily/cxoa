@@ -784,6 +784,17 @@ var caiwu = {
 //                })
 //            }
         },
+        submitDaihuikuan: function(){
+            $.messager.confirm("下载提示","执行下载操作同时会直接汇款操作，之后您可以在已汇款查询这些信息，你确定要执行吗？",function(result){
+                $.post('public/caiwu/baoxiaoHuikuan.action',{},function(result){
+                    $.messager.alert('操作提示：',result.msg);
+                    if(result.success){
+                        app.downloadForm.download('public/file/daihuikuanExport.action',{});
+                    }
+
+                })
+            })
+        },
         chupiao_add: function(e,obj){
             var dom = e ? e.closest('tr'):$('#cp_add_tr');
             obj = obj ? obj : {item:'', money:0, description:''};
@@ -971,7 +982,8 @@ var caiwu = {
         7: "5_ysh_dcp.png",
         8: "5_ysh_wtg.png",
         9: "6_ycp_dhk.png",
-        10: "7_ycp_yhk.png",
+//        10: "7_ycp_yhk.png",
+        10: "8_end.png",
         11: "8_end.png"
     },
     showInfo: function(dom, pageData){

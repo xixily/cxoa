@@ -103,23 +103,24 @@
                     <input id="form_hidden_departmentId" type="hidden" name="departmentId" />
                     <input id="combox" class="easyui-combobox" name="fourthLevel" data-options="
                     url: 'employee/getOStruct.action',
-                    valueField:'fourthLevel',
+                    valueField:'id',
                     textField:'fourthLevel',
                     onSelect: function(rec){
-                    	$.each(session.organizationStructure, function(i, obj){
-                    	if(obj.fourthLevel == rec.fourthLevel){
-                    		$('#updateUsesrname_form').form('load',{
-                    			firstLevel : obj.firstLevel,
-                    			secondLevel : obj.secondLevel,
-                    			thirdLevel : obj.thirdLevel,
-                                cellCore : obj.cellCore,
-                    			departmentId : obj.departmentId
-                    		});
-                    	}
-                    	})
+                        var obj = session.ostructure[rec.id]
+                        $('#updateUsesrname_form').form('load',{
+                        firstLevel : obj.firstLevel,
+                        secondLevel : obj.secondLevel,
+                        thirdLevel : obj.thirdLevel,
+                        cellCore : obj.cellCore,
+                        departmentId : obj.departmentId,
+                        txStruct : obj.taxStructure
+                        });
 		            },
 			        onLoadSuccess: function(res){
-			        session.organizationStructure = res;
+                        session.ostructure = {};
+                        $.each(res, function(i, obj){
+                            session.ostructure[obj.id] = obj;
+                        })
 			        }
                     ">
                     </td>
@@ -324,7 +325,7 @@
                     <td><input class="easyui-textbox" type="text" name="panCard" /></td> -->
                     <td>报税架构:</td>
                     <td>
-                    <input id="combox_c5" class="easyui-combobox" name="taxStructure" data-options="
+                    <input id="combox_c5" class="easyui-combobox" name="txStruct" data-options="
                     url: 'employee/getTxs.action',
                     valueField:'id',
                     textField:'name',

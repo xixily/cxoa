@@ -1287,6 +1287,9 @@ Array.prototype.selectLike = function(exp/*类似于SQL中的模糊查询字符�
 	}
 	return arr;
 };
+String.prototype.trim_ = function(gloabal){
+	return gloabal ? this.replace(/\s/g,"") : this.replace(/(^\s+)|(\s+$)/g,"");
+};
 var isEmpty = function(e){
 	var obj;
 	for(obj in e){

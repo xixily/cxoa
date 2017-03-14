@@ -746,6 +746,17 @@ var employee = {
 		alert(dom);
 	},
 	wages : {
+		getCountId: function(txStruct, position){
+			txStruct = txStruct.trim_();
+			if(txStruct=="办公室" ){
+				return 4;
+			}else if (txStruct == "销售"){
+				return 3;
+			}else if (txStruct == "技术服务" || xStruct == "研发"){
+				return 2;
+			}
+			return 0;
+		},
 		refresh_wagesData : function(mesg){
 			$('#datagrid_wages').datagrid({
 				url:'employee/getWagesList.action',
@@ -763,10 +774,14 @@ var employee = {
 		openWages : function(src) {
 			editIndex = undefined;
 			disabledForm('updatewages_form', true);
+			$('#wages_footer>select').val(0);
 			session.formData = getDataOfForm($('#updateUsesrname_form')).data;
+			var dptId = Number(session.formData.departmentId);
 			$('#wages_username').html(session.formData.username);
 			$('#wages_identity').html(session.formData.identityCard);
-			$('#wages_company').html(session.formData.company);
+			$('#wages_hidden_taxS').val(session.ostructure[dptId].taxStructure);
+			$('#wages_hidden_eid').val(session.formData.id);
+			$('#wages_hidden_countId').val(employee.wages.getCountId(session.ostructure[dptId].taxStructure));
 			var queryParam = {};
 			queryParam.id = session.formData.id;
 			if(queryParam.id<0){
@@ -795,17 +810,6 @@ var employee = {
 							field : 'salary',
 							title : '工资总额',
 							width : 100
-						}, {
-							field : 'radix',
-							title : '基数',
-							width : 100,
-//							editor : {
-//								type : 'numberbox',
-//								options : {
-//									min : 0,
-//									precision : 2
-//								}
-//							}
 						}, {
 							field : 'identityCard',
 							title : '身份证号码',
@@ -1020,10 +1024,6 @@ var employee = {
 							title : '工资编号',
 							width : 80
 						}, {
-							field : 'salary',
-							title : '工资总额',
-							width : 100
-						}, {
 							field : 'radix',
 							title : '基数',
 							width : 100,
@@ -1034,10 +1034,6 @@ var employee = {
 									precision : 2
 								}
 							}
-						}, {
-							field : 'identityCard',
-							title : '身份证号码',
-							width : 120,
 						}, {
 							field : 'company',
 							title : '公司名称',
@@ -1053,14 +1049,6 @@ var employee = {
 								}
 							}
 						}, {
-							field : 'accountBank',
-							title : '开户行',
-							width : 100,
-						}, {
-							field : 'account',
-							title : '职工帐号',
-							width : 180,
-						}, {
 							field : 'householdType',
 							title : '户口性质',
 							width : 100,
@@ -1074,7 +1062,6 @@ var employee = {
 									required:true
 								}
 							},
-//							editor : 'textbox',
 						},{
 							field : 'rubaoTime',
 							title : '入保时间',
@@ -1082,10 +1069,6 @@ var employee = {
 							editor :{
 								type : 'textbox'
 							}
-						},{
-							field : 'txStructure',
-							title : '报税架构',
-							width : 100,
 						} ] ],
 						//TODO 结束编辑，form表单显示 工资信息
 						onClickRow : employee.wages.viewWages,
@@ -1198,7 +1181,9 @@ var employee = {
 //			$('#wages_edit').css('display', 'none');
 			if (employee.wages.endEditing()) {
 				$('#updatewages_form').form('clear');
-				$('#updatewages_form').form('load', session.formData);
+				var txs = $("#wages_hidden_taxS").val();
+				var countid = $('#wages_hidden_countId').val();
+				$('#updatewages_form').form('load', $.extend({},session.formData,{taxStructure:txs,countId:countid}));
 				$('#updatewages_form input[class="easyui-numberbox numberbox-f textbox-f"]').each(function() {
 							$(this).numberbox({value : 0});
 						});

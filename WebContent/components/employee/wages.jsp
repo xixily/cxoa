@@ -19,6 +19,9 @@
 		<span class = "spanFont"><strong>工资总额：</strong><span id="wages_totalSalary"></span>元</span> 
 		<span class="btn-separator" style="margin:0 30px;"></span>
 		<span class = "spanFont"><strong>公司名称：</strong><span id="wages_company"></span></span> 
+		<input id="wages_hidden_taxS" type="hidden" name="txStruct" />
+		<input id="wages_hidden_eid" type="hidden" name="employeeId" />
+		<input id="wages_hidden_countId" type="hidden" name="countId" />
 		<!-- <input id="wages_hidden_employeeid" type="hidden" name="employeeId" /> -->
 		<br/>
 	</div>
@@ -33,7 +36,9 @@
             <table>
                 <tr>
                		<td>工资编号</td>
-                    <td> 
+                    <td>
+                    <input type="hidden" name="taxStructure"/>
+                    <input type="hidden" name="countId"/>
                     <input id="wages_id" class="easyui-textbox" type="text" name="id" />
                     </td>
                     <td>姓名:</td>

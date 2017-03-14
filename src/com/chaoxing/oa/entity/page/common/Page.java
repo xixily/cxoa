@@ -30,5 +30,19 @@ public class Page {
 		this.order = order;
 	}
 	
-	
+	public Page() {
+		super();
+	}
+	public Page(Integer page, Integer rows, String sort, String order) {
+		super();
+		this.page = page;
+		this.rows = rows;
+		this.sort = sort;
+		this.order = order;
+	}
+	public Page(Integer page, Integer rows) {
+		super();
+		this.page = page;
+		this.rows = rows;
+	}
 }

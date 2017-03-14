@@ -339,6 +339,32 @@ public class PubCaiwuServiceImpl implements PubCaiwuService {
 		}
 		return value1;
 	}
+	
+	
+
+	@Override
+	public Long getBaoxiaoTotal(PBaoxiao pbaoxiao, Date min, Date max) {
+		Map<String, Object> params = new HashMap<String, Object>();
+//		String sql = "select sum(t.baoxMoney) from BaoxiaoView t where ";
+		StringBuffer hql = new StringBuffer("select sum(t.baoxMoney) from BaoxiaoView t where ");
+		try {
+			hql.append(SqlHelper.prepareAndSql(pbaoxiao, params, true));
+			List<Object> bxvs = objectDao.find(hql.toString(), params);
+			if(null!=bxvs && bxvs.size()>0){
+				Double value = (Double) bxvs.get(0);
+				if(null != value){
+					return value.longValue();
+				}else{
+					return 0l;
+				}
+				
+			}
+		} catch (Exception e) {
+			logger.error("PubCaiwuServiceImpl.getBaoxiaoTotal:" + e);
+			System.out.println(e);
+		}
+		return null;
+	}
 
 	/**
 	 * 合同
@@ -422,6 +448,15 @@ public class PubCaiwuServiceImpl implements PubCaiwuService {
 		return baoxiaoDao.executeHql(hql,params);
 	}
 	
+	@Override
+	public int updateBaoxiaoHuikuan() {
+		String hql = "update Baoxiao set status=:nstatus where status=:status";
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("status", SysConfig.CW_BX_CHUPIAO);
+		params.put("nstatus", SysConfig.CW_BX_YIHUIKUAN);
+		return baoxiaoDao.executeHql(hql,params);
+	}
+
 	@Override
 	public Serializable addKouJk(PKoukuan pkk) {
 		KoukuanItem kk = new KoukuanItem();

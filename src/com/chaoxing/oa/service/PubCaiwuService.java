@@ -1,6 +1,7 @@
 package com.chaoxing.oa.service;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +37,14 @@ public interface PubCaiwuService {
 	//今年已经报销
 	public Double getThisYear(int id);
 	public Double getThisYear(String email);
+	//根据条件汇总
+	/**
+	 * 查询时间t在区间 min<=t<max的记录总额
+	 * @param pbaoxiao
+	 * @param min 区间下限
+	 * @param max 区间上限
+	 */
+	public Long getBaoxiaoTotal(PBaoxiao pbaoxiao, Date min, Date max);
 
 	public int updateApprove(PBaoxiao pbaoxiaos, boolean agree);
 
@@ -44,6 +53,8 @@ public interface PubCaiwuService {
 	public int updateBaoxiaoCheck(Long id, boolean agree, Integer uid);
 
 	public int updateBaoxiaoChupiao(PBaoxiao pbaoxiaos);
+
+	public int updateBaoxiaoHuikuan();
 	
 	public Serializable addKouJk(PKoukuan pkk);
 	

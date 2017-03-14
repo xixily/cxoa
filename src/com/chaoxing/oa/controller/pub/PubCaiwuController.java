@@ -2,6 +2,8 @@ package com.chaoxing.oa.controller.pub;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -294,6 +296,15 @@ public class PubCaiwuController {
 		pbaoxiao.setStatus(SysConfig.CW_BX_APPROVE_AGREE);
 		Map<String, Object> results = publicCaiwuService.findBaoxiao(pbaoxiao, page);
 		results.put("success", true);
+		Calendar cal = Calendar.getInstance();
+		cal.set(cal.get(Calendar.YEAR), 0, 1, 0, 0, 0);//2017.01.01 00:00:00
+		Date thisYear = cal.getTime();
+		cal.add(Calendar.YEAR, 1);
+		Date afterYear = cal.getTime();//2018.01.01
+		cal.add(Calendar.YEAR, -2);
+		Date lastYear = cal.getTime();
+		results.put("lastYearTotal", publicCaiwuService.getBaoxiaoTotal(pbaoxiao, lastYear, thisYear));
+		results.put("thisYearTotal", publicCaiwuService.getBaoxiaoTotal(pbaoxiao, thisYear, afterYear));
 		return results;
 	}
 	
@@ -333,6 +344,15 @@ public class PubCaiwuController {
 		pbaoxiao.setStatus(SysConfig.CW_BX_RECIVED_AGREE);
 		Map<String, Object> results = publicCaiwuService.findBaoxiao(pbaoxiao, page);
 		results.put("success", true);
+		Calendar cal = Calendar.getInstance();
+		cal.set(cal.get(Calendar.YEAR), 0, 1, 0, 0, 0);//2017.01.01 00:00:00
+		Date thisYear = cal.getTime();
+		cal.add(Calendar.YEAR, 1);
+		Date afterYear = cal.getTime();//2018.01.01
+		cal.add(Calendar.YEAR, -2);
+		Date lastYear = cal.getTime();
+		results.put("lastYearTotal", publicCaiwuService.getBaoxiaoTotal(pbaoxiao, lastYear, thisYear));
+		results.put("thisYearTotal", publicCaiwuService.getBaoxiaoTotal(pbaoxiao, thisYear, afterYear));
 		return results;
 	}
 	
@@ -375,6 +395,15 @@ public class PubCaiwuController {
 		pbaoxiao.setStatus(SysConfig.CW_BX_CHECK_AGREE);
 		Map<String, Object> results = publicCaiwuService.findBaoxiao(pbaoxiao, page);
 		results.put("success", true);
+		Calendar cal = Calendar.getInstance();
+		cal.set(cal.get(Calendar.YEAR), 0, 1, 0, 0, 0);//2017.01.01 00:00:00
+		Date thisYear = cal.getTime();
+		cal.add(Calendar.YEAR, 1);
+		Date afterYear = cal.getTime();//2018.01.01
+		cal.add(Calendar.YEAR, -2);
+		Date lastYear = cal.getTime();
+		results.put("lastYearTotal", publicCaiwuService.getBaoxiaoTotal(pbaoxiao, lastYear, thisYear));
+		results.put("thisYearTotal", publicCaiwuService.getBaoxiaoTotal(pbaoxiao, thisYear, afterYear));
 		return results;
 	}
 	
@@ -484,7 +513,7 @@ public class PubCaiwuController {
 	
 	@RequestMapping(value="/updateKoujk")
 	@ResponseBody
-	public Json baoxiaoKjk(@RequestBody List<Map<String, Object>> pkks){
+	public Json baoxiaoKjk(@RequestBody List<Map<String, Object>> pkks){//没有用到的方法
 		Json result = new Json();
 		if(null != pkks && pkks.size() > 0){
 			List<PKoukuan> addLis = new ArrayList<PKoukuan>();
@@ -590,6 +619,15 @@ public class PubCaiwuController {
 	public Map<String, Object> findDaihuikuan(PBaoxiao pbaoxiao, Page page){
 		pbaoxiao.setStatus(SysConfig.CW_BX_CHUPIAO);
 		Map<String, Object> results = publicCaiwuService.findBaoxiao(pbaoxiao, page);
+		Calendar cal = Calendar.getInstance();
+		cal.set(cal.get(Calendar.YEAR), 0, 1, 0, 0, 0);//2017.01.01 00:00:00
+		Date thisYear = cal.getTime();
+		cal.add(Calendar.YEAR, 1);
+		Date afterYear = cal.getTime();//2018.01.01
+		cal.add(Calendar.YEAR, -2);
+		Date lastYear = cal.getTime();
+		results.put("lastYearTotal", publicCaiwuService.getBaoxiaoTotal(pbaoxiao, lastYear, thisYear));
+		results.put("thisYearTotal", publicCaiwuService.getBaoxiaoTotal(pbaoxiao, thisYear, afterYear));
 		results.put("success", true);
 		return results;
 	}
@@ -606,17 +644,10 @@ public class PubCaiwuController {
 	@ResponseBody
 	public Json baoxiaoHuikuan(PBaoxiao pbaoxiao, Boolean agree, Page page, HttpSession session){
 		Json result = new Json();
-		if(null!=pbaoxiao.getId() && pbaoxiao.getId()!=0){
-			SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
-			pbaoxiao.setCheckerId(sessionInfo.getId());
-			if(null!=pbaoxiao.getId() && 0!= pbaoxiao.getId() && null!=agree){
-				if(agree){
-					pbaoxiao.setStatus(6);
-				}else{
-					pbaoxiao.setStatus(7);
-				}
-//				publicCaiwuService.updateBaoxiaoCheck(pbaoxiao,agree);
-			}
+		Integer numbers = publicCaiwuService.updateBaoxiaoHuikuan();
+		if(numbers>0){
+			result.setSuccess(true);
+			result.setMsg("批量更新成功，已修改数据[" + numbers + "]条数据。");
 		}
 		return result;
 	}

@@ -25,6 +25,7 @@ public class ShebaoAR implements Serializable {
 	private String nation;
 	private String householdType;
 	private String householdAddress;
+	private String homeAddress;//家庭住址
 	private String degree;
 	private String postCode;
 	private String insurance;
@@ -112,6 +113,10 @@ public class ShebaoAR implements Serializable {
 	@Column(name="户口地址")
 	public String getHouseholdAddress() {
 		return householdAddress;
+	}
+	@Column(name="家庭地址")
+	public String getHomeAddress() {
+		return homeAddress;
 	}
 	@Column(name="学历")
 	public String getDegree() {
@@ -390,7 +395,8 @@ public class ShebaoAR implements Serializable {
 	public void setcBirthIinsurance(Double cBirthIinsurance) {
 		this.cBirthIinsurance = cBirthIinsurance;
 	}
-	
-	
+	public void setHomeAddress(String homeAddress) {
+		this.homeAddress = homeAddress;
+	}
 
 }
