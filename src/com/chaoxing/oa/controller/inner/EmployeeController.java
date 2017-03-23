@@ -40,8 +40,8 @@ import com.chaoxing.oa.entity.po.commmon.TxStructs;
 import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.system.SysConfig;
 import com.chaoxing.oa.system.cache.CacheManager;
-import com.chaoxing.oa.util.DateUtil;
-import com.chaoxing.oa.util.ResourceUtil;
+import com.chaoxing.oa.util.system.DateUtil;
+import com.chaoxing.oa.util.system.ResourceUtil;
 
 @Controller
 @RequestMapping("/employee")
@@ -60,7 +60,20 @@ public class EmployeeController {
 	@ResponseBody
 	@SystemControllerLog(description="查询username")
 	public Map<String, Object> getRenshiUserName(QueryForm queryForm, HttpSession session){
-		Map<String, Object> userInfos = employeeInfoService.findRenshiUserName(queryForm, session);
+		SessionInfo sessionInfo = (SessionInfo)session.getAttribute(ResourceUtil.getSessionInfoName());
+		Integer roleId = sessionInfo.getRoleId();
+		Map<String, Object> userInfos = null;
+		if(roleId != 109){
+			userInfos = employeeInfoService.findRenshiUserName(queryForm, session);
+			return userInfos;
+		}else{
+			return getcnUserName(queryForm, session);
+		}
+		
+	}
+	
+	public Map<String, Object> getcnUserName(QueryForm queryForm, HttpSession session){
+		Map<String, Object> userInfos = employeeInfoService.findcnUserName(queryForm, session);
 		return userInfos;
 	}
 	
