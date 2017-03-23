@@ -16,7 +16,7 @@ import com.chaoxing.oa.entity.page.hetong.PFapiao;
 import com.chaoxing.oa.entity.page.pub.hetong.UserList;
 import com.chaoxing.oa.entity.page.system.SessionInfo;
 import com.chaoxing.oa.service.PubHetongService;
-import com.chaoxing.oa.util.ResourceUtil;
+import com.chaoxing.oa.util.system.ResourceUtil;
 
 @Controller
 @RequestMapping("/public/hetong")

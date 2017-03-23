@@ -1,6 +1,7 @@
 package com.chaoxing.oa.service;
 
 
+import com.chaoxing.oa.entity.page.caiwu.PCNUsername;
 import com.chaoxing.oa.entity.page.common.QueryForm;
 import com.chaoxing.oa.entity.page.employee.PUserName;
 import com.chaoxing.oa.entity.page.system.SessionInfo;
@@ -12,6 +13,8 @@ public interface UserServiceI {
 	public SessionInfo findUser(QueryForm userInfo);
 	
 	public PUserName getUserName(int id);
+	
+	public PCNUsername getCNUsername(Integer id, Integer uid);
 
 	public int deleteUserName(QueryForm queryForm);
 

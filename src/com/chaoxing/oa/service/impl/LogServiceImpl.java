@@ -17,7 +17,7 @@ import com.chaoxing.oa.entity.page.system.PLog;
 import com.chaoxing.oa.entity.po.system.Log;
 import com.chaoxing.oa.service.LogService;
 import com.chaoxing.oa.system.SysConfig;
-import com.chaoxing.oa.util.SqlHelper;
+import com.chaoxing.oa.util.system.SqlHelper;
 
 @Service("logService")
 public class LogServiceImpl implements LogService {

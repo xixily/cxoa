@@ -13,9 +13,9 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
-import com.chaoxing.oa.util.Md5AndBase64;
-import com.chaoxing.oa.util.ResourceUtil;
+import com.chaoxing.oa.util.data.Md5AndBase64;
 import com.chaoxing.oa.util.http.HttpProvider;
+import com.chaoxing.oa.util.system.ResourceUtil;
 
 public class TestHttpProvider {
 	public static void main(String[] args) {

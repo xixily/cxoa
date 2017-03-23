@@ -10,8 +10,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.chaoxing.oa.entity.page.system.SessionInfo;
-import com.chaoxing.oa.util.IpUtil;
-import com.chaoxing.oa.util.ResourceUtil;
+import com.chaoxing.oa.util.http.IpUtil;
+import com.chaoxing.oa.util.system.ResourceUtil;
 
 public class SecurityInterceptor implements HandlerInterceptor {
 

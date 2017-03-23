@@ -19,7 +19,7 @@
 		var opts = $.data(target, 'form').options;
 		$.extend(opts, options||{});
 		
-		var param = $.extend({}, opts.queryParams);
+		var param = $.extend({}, opts.queryParams);//queryForm
 		if (opts.onSubmit.call(target, param) == false){return;}
 
 		// $(target).find('.textbox-text:focus').blur();
@@ -58,7 +58,6 @@
 		} else {
 			$(target).submit();
 		}
-
 		if (opts.dirty){
 			disabledFields.removeAttr('disabled');
 		}

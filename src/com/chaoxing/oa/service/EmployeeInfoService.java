@@ -33,6 +33,8 @@ public interface EmployeeInfoService {
 
 	public Map<String, Object> findRenshiUserName(QueryForm queryForm, HttpSession session);
 	
+	public Map<String, Object> findcnUserName(QueryForm queryForm, HttpSession session);
+	
 	public Map<String, Object> findRenshiUserName(QueryForm queryForm, HttpSession session, int isExport);
 	
 	public Map<String, Object> findRenshiQuick(Page page, Integer type, HttpSession session);

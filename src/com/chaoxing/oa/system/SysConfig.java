@@ -1,6 +1,6 @@
 package com.chaoxing.oa.system;
 
-import com.chaoxing.oa.util.ResourceUtil;
+import com.chaoxing.oa.util.system.ResourceUtil;
 
 public class SysConfig {
 	/**

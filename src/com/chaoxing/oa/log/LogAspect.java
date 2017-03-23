@@ -12,7 +12,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.chaoxing.oa.entity.page.system.SessionInfo;
-import com.chaoxing.oa.util.ResourceUtil;
+import com.chaoxing.oa.util.system.ResourceUtil;
 
 @Aspect
 @Component

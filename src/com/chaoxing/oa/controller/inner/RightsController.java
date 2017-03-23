@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.chaoxing.oa.entity.page.system.PMenu;
 import com.chaoxing.oa.entity.page.system.SessionInfo;
 import com.chaoxing.oa.service.RoleMenuService;
-import com.chaoxing.oa.util.ResourceUtil;
+import com.chaoxing.oa.util.system.ResourceUtil;
 
 @Controller
 @RequestMapping("/menu")

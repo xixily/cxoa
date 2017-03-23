@@ -752,7 +752,7 @@ var employee = {
 				return 4;
 			}else if (txStruct == "销售"){
 				return 3;
-			}else if (txStruct == "技术服务" || xStruct == "研发"){
+			}else if (txStruct == "技术服务" || txStruct == "研发"){
 				return 2;
 			}
 			return 0;

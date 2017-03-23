@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import com.chaoxing.oa.annotation.SystemServiceLog;
 import com.chaoxing.oa.dao.BaseDaoI;
+import com.chaoxing.oa.entity.page.caiwu.PCNUsername;
 import com.chaoxing.oa.entity.page.common.Json;
 import com.chaoxing.oa.entity.page.common.PComboBox;
 import com.chaoxing.oa.entity.page.common.PCompany;
@@ -70,9 +71,9 @@ import com.chaoxing.oa.entity.po.view.Yidong;
 import com.chaoxing.oa.service.EmployeeInfoService;
 import com.chaoxing.oa.system.SysConfig;
 import com.chaoxing.oa.system.cache.CacheManager;
-import com.chaoxing.oa.util.DateUtil;
-import com.chaoxing.oa.util.ResourceUtil;
-import com.chaoxing.oa.util.SqlHelper;
+import com.chaoxing.oa.util.system.DateUtil;
+import com.chaoxing.oa.util.system.ResourceUtil;
+import com.chaoxing.oa.util.system.SqlHelper;
 
 @Service("employeeInfoService")
 public class EmployeeInfoServiceImpl implements EmployeeInfoService {
@@ -150,7 +151,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	public Map<String, Object> findRenshiUserName(QueryForm queryForm, HttpSession session) {
 		return findRenshiUserName(queryForm, session, 0);
 	}
-	
+
 	@Override
 	public Map<String, Object> findRenshiUserName(QueryForm queryForm, HttpSession session, int isExport) {
 //		System.out.println(queryForm);
@@ -160,10 +161,10 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 		StringBuffer hql = new StringBuffer("from RenshiUserName t where 1=1 ");
 		addCondition(hql, queryForm, params);
 		SessionInfo userInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
-		if(userInfo.getRoleId() > 1 && !(userInfo.getRoleId()==100)){
-			hql.append(" and t.renshiRight like :renshiRight ");
-			params.put("renshiRight", "%" + userInfo.getUsername() + "%");
-		}
+//		if(userInfo.getRoleId() > 1 && !(userInfo.getRoleId()==100)){
+//			hql.append(" and t.renshiRight like :renshiRight ");
+//			params.put("renshiRight", "%" + userInfo.getUsername() + "%");
+//		}
 		String sort = "id";
 		String order = SysConfig.DESC;
 		if(queryForm.getSort() != null){
@@ -184,6 +185,45 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 			if(renshiUserName!=null){
 				PRenshiEmployee renshiEmployeeInfo = new PRenshiEmployee();
 				BeanUtils.copyProperties(renshiUserName, renshiEmployeeInfo);
+				renshiEmployeeInfos.add(renshiEmployeeInfo);
+			}
+		}
+		long total = getRenshiUserNameCount(hql.toString(),params);
+		userInfos.put("total", total);
+		userInfos.put("rows", renshiEmployeeInfos);
+		return userInfos;
+	}
+	
+	@Override
+	public Map<String, Object> findcnUserName(QueryForm queryForm, HttpSession session) {
+		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
+		Integer id = sessionInfo.getId();
+		List<PCNUsername> renshiEmployeeInfos = new ArrayList<PCNUsername>();
+		Map<String, Object> userInfos = new HashMap<String, Object>();
+		Map<String, Object> params = new HashMap<String, Object>();
+		StringBuffer hql = new StringBuffer("from RenshiUserName t where 1=1 ");
+		addCondition(hql, queryForm, params);
+		String sort = "id";
+		String order = SysConfig.DESC;
+		if(queryForm.getSort() != null){
+			sort = queryForm.getSort();
+			if(queryForm.getOrder() != null){
+				order = queryForm.getOrder();
+			}
+		}
+		hql.append(" order by t." + sort + " " + order);
+		int intPage = 0;
+		int pageSize = 30000;//最多导出30000条数据
+		intPage = (queryForm == null || queryForm.getPage() == 0) ? 1 : queryForm.getPage();
+		pageSize = (queryForm == null || queryForm.getRows() == 0 || queryForm.getRows()>500) ? 100 : queryForm.getRows();
+		List<RenshiUserName> renshiUsernames = userNameDao.find(hql.toString(), params, intPage, pageSize);
+		for (RenshiUserName renshiUserName : renshiUsernames) {
+			if(renshiUserName!=null){
+				PCNUsername renshiEmployeeInfo = new PCNUsername();
+				BeanUtils.copyProperties(renshiUserName, renshiEmployeeInfo);
+				if(id != 11){
+					renshiEmployeeInfo.setManagementSystem(null);
+				}
 				renshiEmployeeInfos.add(renshiEmployeeInfo);
 			}
 		}

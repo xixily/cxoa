@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.chaoxing.oa.entity.page.pub.caiwu.PBaoxiao;
-import com.chaoxing.oa.util.SXSSFWriter;
+import com.chaoxing.oa.util.io.SXSSFWriter;
 @Service("pubFileOperatorService")
 public class PubFileOperatorServiceImpl implements com.chaoxing.oa.service.PubFileOperatorService {
 	private Logger logger = Logger.getLogger(this.getClass());

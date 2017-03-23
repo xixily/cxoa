@@ -5,21 +5,21 @@ public class QueryForm {
 	/**
 	 * 分页项
 	 */
-	private int page;
-	private int rows;
+	private Integer page;
+	private Integer rows;
 	private String sort;
 	private String order;
 	/**
 	 * 信息项
 	 */
 	private String ip;
-//	private int ID;//ID
-	private int id;//ID
+//	private Integer ID;//ID
+	private Integer id;//ID
 	private String email;//邮箱
 	private String username;//用户姓名
 	private String password;//用户密码
-	private int rights;//权限(判断是否为人事)
-	private int departmentId;//部门ID
+	private Integer rights;//权限(判断是否为人事)
+	private Integer departmentId;//部门ID
 	private String position;//职位
 	private String sex;//性别
 	private String identityCard;//身份号
@@ -100,10 +100,10 @@ public class QueryForm {
 	public String getLevelc() {
 		return levelc;
 	}
-	public int getPage() {
+	public Integer getPage() {
 		return page;
 	}
-	public int getRows() {
+	public Integer getRows() {
 		return rows;
 	}
 	public String getSort() {
@@ -115,7 +115,7 @@ public class QueryForm {
 	public String getIp() {
 		return ip;
 	}
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	public String getEmail() {
@@ -127,10 +127,10 @@ public class QueryForm {
 	public String getPassword() {
 		return password;
 	}
-	public int getRights() {
+	public Integer getRights() {
 		return rights;
 	}
-	public int getDepartmentId() {
+	public Integer getDepartmentId() {
 		return departmentId;
 	}
 	public String getPosition() {
@@ -328,10 +328,10 @@ public class QueryForm {
 	public void setZhuanzhengReport(String zhuanzhengReport) {
 		this.zhuanzhengReport = zhuanzhengReport;
 	}
-	public void setPage(int page) {
+	public void setPage(Integer page) {
 		this.page = page;
 	}
-	public void setRows(int rows) {
+	public void setRows(Integer rows) {
 		this.rows = rows;
 	}
 	public void setSort(String sort) {
@@ -343,7 +343,7 @@ public class QueryForm {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public void setEmail(String email) {
@@ -355,10 +355,10 @@ public class QueryForm {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public void setRights(int rights) {
+	public void setRights(Integer rights) {
 		this.rights = rights;
 	}
-	public void setDepartmentId(int departmentId) {
+	public void setDepartmentId(Integer departmentId) {
 		this.departmentId = departmentId;
 	}
 	public void setPosition(String position) {

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chaoxing.oa.dao.BaseDaoI;
+import com.chaoxing.oa.entity.page.caiwu.PCNUsername;
 import com.chaoxing.oa.entity.page.common.QueryForm;
 import com.chaoxing.oa.entity.page.employee.PUserName;
 import com.chaoxing.oa.entity.page.system.SessionInfo;
@@ -96,7 +97,32 @@ public class UserServiceImpl implements UserServiceI {
 		}
 		return pusername;
 	}
-
+	
+	@Override
+	public PCNUsername getCNUsername(Integer id, Integer uid) {
+		PCNUsername pusername = null; 
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("id", id);
+		UserName username = usernameDao.get("from UserName u where u.id = :id", params);
+		if(username!=null){
+			OrganizationStructure ogs = ogsDao.get("from OrganizationStructure o where o.id=" + username.getDepartmentId());
+			pusername = new PCNUsername();
+			BeanUtils.copyProperties(username, pusername);
+//			BeanUtils.copyProperties(ogs, pusername);//这里部门ID传入pusername了
+			pusername.setDepartmentId(ogs.getId());
+			pusername.setFirstLevel(ogs.getFirstLevel());
+			pusername.setSecondLevel(ogs.getSecondLevel());
+			pusername.setThirdLevel(ogs.getThirdLevel());
+			pusername.setFourthLevel(ogs.getFourthLevel());
+			pusername.setCellCore(ogs.getCellCore());
+			pusername.setId(username.getId());
+			if(uid != 11){
+				pusername.setManagementSystem(null);
+			}
+		}
+		return pusername;
+	}
+	
 	@Override
 	public int deleteUserName(QueryForm queryForm) {
 		UserName u = new UserName();

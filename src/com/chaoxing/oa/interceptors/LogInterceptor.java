@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.chaoxing.oa.entity.page.system.PLog;
 import com.chaoxing.oa.entity.page.system.SessionInfo;
 import com.chaoxing.oa.service.LogService;
-import com.chaoxing.oa.util.ResourceUtil;
+import com.chaoxing.oa.util.system.ResourceUtil;
 
 public class LogInterceptor implements HandlerInterceptor {
 	

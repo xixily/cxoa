@@ -30,7 +30,7 @@ import com.chaoxing.oa.entity.page.pub.caiwu.PSelfBaoxiao;
 import com.chaoxing.oa.entity.page.system.SessionInfo;
 import com.chaoxing.oa.service.PubCaiwuService;
 import com.chaoxing.oa.system.SysConfig;
-import com.chaoxing.oa.util.ResourceUtil;
+import com.chaoxing.oa.util.system.ResourceUtil;
 
 @Controller
 @RequestMapping("/public/caiwu")

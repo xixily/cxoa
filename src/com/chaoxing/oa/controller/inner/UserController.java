@@ -17,14 +17,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.chaoxing.oa.entity.page.caiwu.PCNUsername;
 import com.chaoxing.oa.entity.page.common.Json;
 import com.chaoxing.oa.entity.page.common.QueryForm;
 import com.chaoxing.oa.entity.page.employee.PUserName;
 import com.chaoxing.oa.entity.page.system.SessionInfo;
 import com.chaoxing.oa.service.UserServiceI;
 import com.chaoxing.oa.system.SysConfig;
-import com.chaoxing.oa.util.IpUtil;
-import com.chaoxing.oa.util.ResourceUtil;
+import com.chaoxing.oa.util.http.IpUtil;
+import com.chaoxing.oa.util.system.ResourceUtil;
 
 @Controller
 @RequestMapping("/user")
@@ -129,11 +130,37 @@ public class UserController {
 	@ResponseBody
 	public Json getUserName(QueryForm queryForm, HttpSession session) {
 		Json result = new Json();
-		PUserName pusername = userService.getUserName(queryForm.getId());
-		if (pusername != null) {
+		if(null != queryForm.getId()){
+			SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
+			Integer roleId = sessionInfo.getRoleId();
+			if(roleId != 109){
+				PUserName pusername = userService.getUserName(queryForm.getId());
+				if (pusername != null) {
+					result.setSuccess(true);
+					result.setMsg("获取员工信息成功");
+					result.setObj(pusername);
+				} else {
+					result.setErrorCode(SysConfig.REQUEST_ERROR);
+					result.setMsg("获取员工编号：" + queryForm.getId() + " 职员信息失败！");
+				}
+			}else{
+				return getCNUsername(queryForm,session);
+			}
+		}else{
+			result.setMsg("员工id为空，请确认是否选择员工！");
+		}
+		return result;
+	}
+	
+	public Json getCNUsername(QueryForm queryForm, HttpSession session){
+		Json result = new Json();
+		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ResourceUtil.getSessionInfoName());
+		Integer id = sessionInfo.getId();
+		PCNUsername pncu = userService.getCNUsername(queryForm.getId(), id);
+		if (pncu != null) {
 			result.setSuccess(true);
 			result.setMsg("获取员工信息成功");
-			result.setObj(pusername);
+			result.setObj(pncu);
 		} else {
 			result.setErrorCode(SysConfig.REQUEST_ERROR);
 			result.setMsg("获取员工编号：" + queryForm.getId() + " 职员信息失败！");

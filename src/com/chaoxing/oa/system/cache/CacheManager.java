@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
 
 import org.apache.log4j.Logger;
 
-import com.chaoxing.oa.util.ResourceUtil;
+import com.chaoxing.oa.util.system.ResourceUtil;
 
 public class CacheManager {
 	private final static Logger logger = Logger.getLogger(CacheUtil.class);

@@ -23,9 +23,9 @@ import com.chaoxing.oa.entity.page.system.PMenu;
 import com.chaoxing.oa.entity.page.system.SessionInfo;
 import com.chaoxing.oa.service.RoleMenuService;
 import com.chaoxing.oa.service.UserServiceI;
-import com.chaoxing.oa.util.DES;
-import com.chaoxing.oa.util.IpUtil;
-import com.chaoxing.oa.util.ResourceUtil;
+import com.chaoxing.oa.util.data.DES;
+import com.chaoxing.oa.util.http.IpUtil;
+import com.chaoxing.oa.util.system.ResourceUtil;
 import com.google.gson.JsonObject;
 
 @Controller

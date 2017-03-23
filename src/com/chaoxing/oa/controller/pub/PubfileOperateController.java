@@ -16,7 +16,7 @@ import com.chaoxing.oa.entity.page.common.Page;
 import com.chaoxing.oa.entity.page.pub.caiwu.PBaoxiao;
 import com.chaoxing.oa.service.PubCaiwuService;
 import com.chaoxing.oa.service.PubFileOperatorService;
-import com.chaoxing.oa.util.FileOperateUtil;
+import com.chaoxing.oa.util.io.FileOperateUtil;
 
 @Controller
 @RequestMapping(value = "/public/file")
