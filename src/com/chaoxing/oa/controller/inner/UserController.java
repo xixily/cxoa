@@ -186,23 +186,14 @@ public class UserController {
 	
 	@RequestMapping(value = "deleteUserName")
 	@ResponseBody
-	public Json deleteUserName(QueryForm pu, HttpSession session) {
-		System.out.println(pu);
+	public Json deleteUserName(Integer id, HttpSession session) {
 		Json result = new Json();
-		if (pu.getId() == 0) {
-			result.setErrorCode(SysConfig.REQUEST_ERROR);
-			result.setMsg("您要查询的职员信息不存在！");
-			return result;
-		}
-		int r = 0;
-		r = userService.deleteUserName(pu);
-		if (r != 0) {
-			result.setSuccess(true);
-			result.setMsg("删除成功！");
-		} else {
-			result.setSuccess(false);
-			result.setErrorCode(SysConfig.REQUEST_ERROR);
-			result.setMsg("删除失败");
+		if(null != id && id != 0){
+			if(userService.deleteUser(id)>0){
+				result.setMsg("删除id："+id + "员工成功。");
+			}
+		}else{
+			result.setMsg("职员编号存在问题，请刷新浏览器后重试。");
 		}
 		return result;
 	}

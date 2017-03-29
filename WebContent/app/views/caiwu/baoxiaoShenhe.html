@@ -2,7 +2,7 @@
     <ul class="nav nav-tabs" role="tablist" style="margin-top: 16px;">
         <li role="presentation"><a href="#bx_receiving" data-toggle="tab"
                                    onclick="caiwu.baoxiaoCheck.init_dsp()">待收票</a></li>
-        <li role="presentation" class="active"><a href="#bx_approving" data-toggle="tab">待审核</a></li>
+        <li role="presentation" class="active"><a href="#bx_approving" data-toggle="tab" onclick="caiwu.baoxiaoCheck.init()">待审核</a></li>
         <li role="presentation"><a href="#bx_dcp" data-toggle="tab" onclick="caiwu.baoxiaoCheck.init_dcp()">待出票</a></li>
         <li role="presentation"><a href="#bx_dhk" data-toggle="tab" onclick="caiwu.baoxiaoCheck.init_dhk()">待汇款</a></li>
         <li role="presentation"><a href="#bx_yhk" data-toggle="tab" onclick="caiwu.baoxiaoCheck.init_yhk()">已汇款</a></li>
@@ -676,7 +676,7 @@
                         </form>
                             <fieldset>
                                 <legend> &nbsp;&nbsp;&nbsp;&nbsp;</legend>
-                                <div class="chat-panel panel panel-default">
+                                <div id="sh_chat" class="chat-panel panel panel-default">
                                     <div class="panel-heading">
                                         <i class="fa fa-comments fa-fw"></i> Chat
                                     </div>
@@ -2061,10 +2061,14 @@
                 closest.html(text);
                 closest.append(hidden[0]);
             })
+            var hichat = new Chat('#sh_chat');
+            hichat.init();
         });
         $(document).on('change','input.bx-relavtive',function(event){
             var result = Number($('input.bx-relavtive[name="baoxMoney"]').val()) - Number($('input.bx-relavtive[name="tuipiao"]').val()) - Number($('input.bx-relavtive[name="koujk"]').val());
             $('#huikuan2').val(result);
         })
+
+
     </script>
 </div>

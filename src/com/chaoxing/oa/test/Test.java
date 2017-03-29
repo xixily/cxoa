@@ -34,8 +34,11 @@ public class Test {
 //		System.out.println("list size:"+lis.size());
 		
 //		char[] str = new char [2147483646];
-		
-		System.out.println(Integer.MAX_VALUE);
+		String idcard = "362424199301252517";
+		String right = idcard.substring(6).substring(0, 4);
+		System.out.println(idcard.substring(6).substring(0, 4));
+		System.out.println(Math.round(Math.random()*10));
+//		System.out.println(Integer.MAX_VALUE);
 //		int i = 708600000;
 //		boolean flag = true;
 //		char[] str;

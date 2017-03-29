@@ -1531,6 +1531,26 @@ public class ExportExcelServiceImpl implements ExportExcelService {
 		if(isMonthWages==1){
 			sxffWriter.createCell();
 			sxffWriter.setStringData("报税架构");
+			sxffWriter.createCell();
+			sxffWriter.setStringData("统计架构");
+			sxffWriter.createCell();
+			sxffWriter.setStringData("户口性质");
+			sxffWriter.createCell();
+			sxffWriter.setStringData("户口地址");
+			sxffWriter.createCell();
+			sxffWriter.setStringData("年龄");
+			sxffWriter.createCell();
+			sxffWriter.setStringData("是否外籍");
+			sxffWriter.createCell();
+			sxffWriter.setStringData("是否理工学");
+			sxffWriter.createCell();
+			sxffWriter.setStringData("转入本公司时间");
+			sxffWriter.createCell();
+			sxffWriter.setStringData("毕业时间");
+			sxffWriter.createCell();
+			sxffWriter.setStringData("投保时间");
+			sxffWriter.createCell();
+			sxffWriter.setStringData("级别");
 		}
 		if(isMonthWages==0){
 			sxffWriter.createCell();

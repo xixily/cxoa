@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 //import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ import com.chaoxing.oa.service.UserServiceI;
 @Service("userService")
 public class UserServiceImpl implements UserServiceI {
 
-//	private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
+	private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
 
 	private BaseDaoI<UserName> usernameDao;
 	@Autowired
@@ -134,6 +135,19 @@ public class UserServiceImpl implements UserServiceI {
 			return 0;
 		}
 		return 1;
+	}
+	
+	@Override
+	public int deleteUser(Integer id) {
+		UserName u = new UserName();
+		u.setId(id);
+		try{
+			usernameDao.delete(u);
+			return 1;
+		}catch(Exception e){
+			logger.error("删除员工失败：" + e);
+			return 0;
+		}
 	}
 
 	@Override

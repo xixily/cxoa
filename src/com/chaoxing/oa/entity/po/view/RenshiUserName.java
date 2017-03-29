@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Table(name = "人事username", schema = "")
 public class RenshiUserName implements Serializable {
 	private static final long serialVersionUID = -206738471078895098L;
-	private String renshiRight;// 人事权限
+//	private String renshiRight;// 人事权限
 	private String firstLevel;//一级
 	private String secondLevel;//二级
 	private String thirdLevel;//三级
@@ -92,93 +92,93 @@ public class RenshiUserName implements Serializable {
 		this.id = id;
 	}
 
-	public RenshiUserName(String renshiRight, String firstLevel, String secondLevel, String thirdLevel,
-			String fourthLevel, String cellCore, String cellCoreEmail, String guidance, String guidanceEmail, int id,
-			String username, String password, Integer departmentId, String position, String sex, String identityCard,
-			String borthDay, String nation, String degree, String graduatedSchool, String major, String phoneNumber,
-			String homeAddress, String homeNumber, String hiredate, String zhuanzhengTime, String pastLeaveTime,
-			String earlyEntryDate, String householdType, String insurance, String insuranceCompany, String company,
-			String resume, String photo, String identityCardCopy, String familyRegister, String leavingCertificate,
-			String contract, String managementSystem, String entryForm, String signedTime, String terminationTime,
-			String registeredAddress, String postcode, String remarks, String contractNumber, String dueSocialSecurity,
-			String socialSecurityHospital, String level, String recruitmentSources, String contractRenewal,
-			String originalNumber, String secrecyAgreement, String reportForm, String panCard, String leaveTime,
-			String workPlace, String email, String ifSecret, String maritalStatus, Integer roleId, String ruzhiReport,
-			String lizhiReport, String zhuanzhengReport, String bumentiaozhengReport) {
-		super();
-		this.renshiRight = renshiRight;
-		this.firstLevel = firstLevel;
-		this.secondLevel = secondLevel;
-		this.thirdLevel = thirdLevel;
-		this.fourthLevel = fourthLevel;
-		this.cellCore = cellCore;
-		this.cellCoreEmail = cellCoreEmail;
-		this.guidance = guidance;
-		this.guidanceEmail = guidanceEmail;
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.departmentId = departmentId;
-		this.position = position;
-		this.sex = sex;
-		this.identityCard = identityCard;
-		this.borthDay = borthDay;
-		this.nation = nation;
-		this.degree = degree;
-		this.graduatedSchool = graduatedSchool;
-		this.major = major;
-		this.phoneNumber = phoneNumber;
-		this.homeAddress = homeAddress;
-		this.homeNumber = homeNumber;
-		this.hiredate = hiredate;
-		this.zhuanzhengTime = zhuanzhengTime;
-		this.pastLeaveTime = pastLeaveTime;
-		this.earlyEntryDate = earlyEntryDate;
-		this.householdType = householdType;
-		this.insurance = insurance;
-		this.insuranceCompany = insuranceCompany;
-		this.company = company;
-		this.resume = resume;
-		this.photo = photo;
-		this.identityCardCopy = identityCardCopy;
-		this.familyRegister = familyRegister;
-		this.leavingCertificate = leavingCertificate;
-		this.contract = contract;
-		this.managementSystem = managementSystem;
-		this.entryForm = entryForm;
-		this.signedTime = signedTime;
-		this.terminationTime = terminationTime;
-		this.registeredAddress = registeredAddress;
-		this.postcode = postcode;
-		this.remarks = remarks;
-		this.contractNumber = contractNumber;
-		this.dueSocialSecurity = dueSocialSecurity;
-		this.socialSecurityHospital = socialSecurityHospital;
-		this.level = level;
-		this.recruitmentSources = recruitmentSources;
-		this.contractRenewal = contractRenewal;
-		this.originalNumber = originalNumber;
-		this.secrecyAgreement = secrecyAgreement;
-		this.reportForm = reportForm;
-		this.panCard = panCard;
-		this.leaveTime = leaveTime;
-		this.workPlace = workPlace;
-		this.email = email;
-		this.ifSecret = ifSecret;
-		this.maritalStatus = maritalStatus;
-		this.roleId = roleId;
-		this.ruzhiReport = ruzhiReport;
-		this.lizhiReport = lizhiReport;
-		this.zhuanzhengReport = zhuanzhengReport;
-		this.bumentiaozhengReport = bumentiaozhengReport;
-	}
-	@Column(name="人事权限")
-	public String getRenshiRight() {
-		return renshiRight;
-	}
-	public void setRenshiRight(String renshiRight) {
-		this.renshiRight = renshiRight;
-	}
+//	public RenshiUserName(String renshiRight, String firstLevel, String secondLevel, String thirdLevel,
+//			String fourthLevel, String cellCore, String cellCoreEmail, String guidance, String guidanceEmail, int id,
+//			String username, String password, Integer departmentId, String position, String sex, String identityCard,
+//			String borthDay, String nation, String degree, String graduatedSchool, String major, String phoneNumber,
+//			String homeAddress, String homeNumber, String hiredate, String zhuanzhengTime, String pastLeaveTime,
+//			String earlyEntryDate, String householdType, String insurance, String insuranceCompany, String company,
+//			String resume, String photo, String identityCardCopy, String familyRegister, String leavingCertificate,
+//			String contract, String managementSystem, String entryForm, String signedTime, String terminationTime,
+//			String registeredAddress, String postcode, String remarks, String contractNumber, String dueSocialSecurity,
+//			String socialSecurityHospital, String level, String recruitmentSources, String contractRenewal,
+//			String originalNumber, String secrecyAgreement, String reportForm, String panCard, String leaveTime,
+//			String workPlace, String email, String ifSecret, String maritalStatus, Integer roleId, String ruzhiReport,
+//			String lizhiReport, String zhuanzhengReport, String bumentiaozhengReport) {
+//		super();
+////		this.renshiRight = renshiRight;
+//		this.firstLevel = firstLevel;
+//		this.secondLevel = secondLevel;
+//		this.thirdLevel = thirdLevel;
+//		this.fourthLevel = fourthLevel;
+//		this.cellCore = cellCore;
+//		this.cellCoreEmail = cellCoreEmail;
+//		this.guidance = guidance;
+//		this.guidanceEmail = guidanceEmail;
+//		this.id = id;
+//		this.username = username;
+//		this.password = password;
+//		this.departmentId = departmentId;
+//		this.position = position;
+//		this.sex = sex;
+//		this.identityCard = identityCard;
+//		this.borthDay = borthDay;
+//		this.nation = nation;
+//		this.degree = degree;
+//		this.graduatedSchool = graduatedSchool;
+//		this.major = major;
+//		this.phoneNumber = phoneNumber;
+//		this.homeAddress = homeAddress;
+//		this.homeNumber = homeNumber;
+//		this.hiredate = hiredate;
+//		this.zhuanzhengTime = zhuanzhengTime;
+//		this.pastLeaveTime = pastLeaveTime;
+//		this.earlyEntryDate = earlyEntryDate;
+//		this.householdType = householdType;
+//		this.insurance = insurance;
+//		this.insuranceCompany = insuranceCompany;
+//		this.company = company;
+//		this.resume = resume;
+//		this.photo = photo;
+//		this.identityCardCopy = identityCardCopy;
+//		this.familyRegister = familyRegister;
+//		this.leavingCertificate = leavingCertificate;
+//		this.contract = contract;
+//		this.managementSystem = managementSystem;
+//		this.entryForm = entryForm;
+//		this.signedTime = signedTime;
+//		this.terminationTime = terminationTime;
+//		this.registeredAddress = registeredAddress;
+//		this.postcode = postcode;
+//		this.remarks = remarks;
+//		this.contractNumber = contractNumber;
+//		this.dueSocialSecurity = dueSocialSecurity;
+//		this.socialSecurityHospital = socialSecurityHospital;
+//		this.level = level;
+//		this.recruitmentSources = recruitmentSources;
+//		this.contractRenewal = contractRenewal;
+//		this.originalNumber = originalNumber;
+//		this.secrecyAgreement = secrecyAgreement;
+//		this.reportForm = reportForm;
+//		this.panCard = panCard;
+//		this.leaveTime = leaveTime;
+//		this.workPlace = workPlace;
+//		this.email = email;
+//		this.ifSecret = ifSecret;
+//		this.maritalStatus = maritalStatus;
+//		this.roleId = roleId;
+//		this.ruzhiReport = ruzhiReport;
+//		this.lizhiReport = lizhiReport;
+//		this.zhuanzhengReport = zhuanzhengReport;
+//		this.bumentiaozhengReport = bumentiaozhengReport;
+//	}
+//	@Column(name="人事权限")
+//	public String getRenshiRight() {
+//		return renshiRight;
+//	}
+//	public void setRenshiRight(String renshiRight) {
+//		this.renshiRight = renshiRight;
+//	}
 	@Column(name="一级")
 	public String getFirstLevel() {
 		return firstLevel;

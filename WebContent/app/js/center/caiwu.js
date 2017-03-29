@@ -505,6 +505,7 @@ var caiwu = {
                 event.stopImmediatePropagation();
                 caiwu.showInfo($(this), $.extend({},caiwu.baoxiaoCheck.pageData));
             })
+
         },
         init_dsp: function(){
             $('#dsp_find_btn_').trigger('click');

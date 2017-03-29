@@ -18,6 +18,8 @@ public interface UserServiceI {
 
 	public int deleteUserName(QueryForm queryForm);
 
+	public int deleteUser(Integer id);
+
 	public long addUserName(PUserName username);
 
 	public long updateUserName(PUserName username);
